@@ -1,0 +1,14 @@
+{
+  "name": "pk",
+  "app_id": "",
+  "proxies": [
+    {
+      "path": "/v1",
+      "proxyUrl": "http://api.roscontrol.com/v1"
+    },
+    {
+      "path": "/files",
+      "proxyUrl": "http://api.roscontrol.com/files"
+    }
+  ]
+}

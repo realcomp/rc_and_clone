@@ -1,0 +1,102 @@
+/* Empty. Add your own CSS if you like */
+#mainContainer {
+	font-family: 'Roboto', sans-serif;
+	background: transparent;
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	max-width: 640px;
+	margin-left: auto;
+	margin-right: auto;
+}
+.pane, .view {
+	background: #transparent;
+}
+.bar.bar-stable {
+	background: #c80020;
+	border: 0;
+	height: 80px;
+	color: #FFF;
+}
+.has-header {
+	top: 80px;
+}
+.back-text {
+	display: none !important;
+}
+.bar .title + .buttons {
+	right: 25px;
+}
+.bar-stable .button.button-clear {
+	color: #FFF;
+	font-size: 16px;
+}
+.bar.bar-stable .title,
+.bar-stable .button.button-icon,
+.bar-stable .button.button-clear {
+	color: #FFF;
+	font-weight: normal;
+	font-size: 32px;
+	top: 17px;
+}
+.bar-stable .button.button-clear {
+	left: 10px;
+}
+.bar .button.button-icon .icon:before,
+.bar .button.button-icon:before,
+.bar .button.button-icon.icon-left:before,
+.bar .button.button-icon.icon-right:before,
+.bar .button.button-clear .icon:before,
+.bar .button.button-clear.icon:before,
+.bar .button.button-clear.icon-left:before,
+.bar .button.button-clear.icon-right:before {
+	font-size: 54px;
+}
+.main__category-wrap {
+
+}
+.main__category-item {
+	height: 314px;
+	display: block;
+	border: 0;
+	text-align: center;
+	background-attachment: fixed;
+	background-position: center;
+}
+.main__category-item > a {
+	background: none !important;
+}
+.main__category-item .item-content {
+	padding: 52px 0 0 0 !important;
+}
+
+.main__category-icon,
+.main__category-name,
+.main__category-tested {
+	background: none;
+	border: 0;
+	color: #FFF;
+}
+.main__category-icon {
+	display: inline-block;
+	background-repeat: no-repeat;
+	background-position: 0 0;
+	padding: 0;
+	width: 138px;
+	height: 92px;
+}
+.main__category-name {
+	font-size: 36px;
+	color: #FFF;
+}
+.main__category-tested {
+	margin: 17px auto 0;
+  padding: 14px 0;
+  width: 165px;
+	background: #009400;
+	font-size: 21px;
+	box-shadow: none;
+}
+

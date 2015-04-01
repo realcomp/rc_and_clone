@@ -1,0 +1,18 @@
+<ion-view>
+<ion-nav-title> Рейтинг товаров </ion-nav-title>
+  <ion-content>
+  	<h1 style="text-align: center;margin-bottom: 0;" >{{ inf }}</h1>
+    <ion-list class="main__category-wrap">
+      <ion-item class="main__category-item" ng-repeat="item in roots | orderBy:'position'" href="#/app/category/?cat={{item.id}}" ng-style="{'background': 'url(http://api.roscontrol.com/assets/icons/ios2x/' + item.background + ')'}">
+      		<ion-item class="main__category-icon" ng-style="{'background': 'url(http://api.roscontrol.com/assets/icons/ios2x/' + item.icon + ')'}">
+	      	</ion-item>
+	      	<ion-item class="main__category-name">
+	        	{{ item.name}}
+	        </ion-item>
+	      	<ion-item class="main__category-tested">
+	      		{{ item.product_tested_count.count }} тестов
+	      	</ion-item>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>
