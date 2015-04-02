@@ -8,6 +8,8 @@ angular.module('db-services', ['db.config'])
     self.loaded = false;
     self.deferred = $q.defer();
 
+    var ptables = {};
+
     self.loading = function() {
         return self.deferred.promise;
     };
@@ -27,9 +29,12 @@ angular.module('db-services', ['db.config'])
  
         angular.forEach(DB_CONFIG.tables, function(table) {
             var columns = [];
+            ptables[table.name] = {places: [], fields: []};
  
             angular.forEach(table.columns, function(column) {
                 columns.push(column.name + ' ' + column.type);
+                ptables[table.name].places.push('?');
+                ptables[table.name].fields.push(column.name);
             });
  
             var query = 'CREATE TABLE IF NOT EXISTS ' + table.name + ' (' + columns.join(',') + ')';
@@ -160,20 +165,8 @@ angular.module('db-services', ['db.config'])
                 return;
             }
 
-            var fields = [];
-            var places = [];
-
-            angular.forEach(DB_CONFIG.tables, function(table) {
-                if (table.name == 'categories') {
-                    angular.forEach(table.columns, function(column) {
-                        fields.push(column.name);
-                        places.push('?');
-                    });
-                    return false;
-                }
-            });
-
-            var query = 'INSERT INTO categories ('+fields.join(',')+') VALUES ('+places.join(',')+')';
+            var tname = 'categories';
+            var query = 'INSERT INTO ' + tname + ' ('+ptables[tname].fields.join(',')+') VALUES ('+ptables[tname].places.join(',')+')';
             var values = [
                 category.id,
                 category.root,
@@ -205,20 +198,8 @@ angular.module('db-services', ['db.config'])
 
     self.slice_product = function(data) {
         angular.forEach(data, function(product) {
-            var fields = [];
-            var places = [];
-
-            angular.forEach(DB_CONFIG.tables, function(table) {
-                if (table.name == 'products') {
-                    angular.forEach(table.columns, function(column) {
-                        fields.push(column.name);
-                        places.push('?');
-                    });
-                    return false;
-                }
-            });
-
-            var query = 'INSERT INTO products ('+fields.join(',')+') VALUES ('+places.join(',')+')';
+            var tname = 'products';
+            var query = 'INSERT INTO ' + tname + ' ('+ptables[tname].fields.join(',')+') VALUES ('+ptables[tname].places.join(',')+')';
             var values = [
                 product.id,
                 product.category_id,
