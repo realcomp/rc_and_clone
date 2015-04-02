@@ -9,11 +9,6 @@ app.controller('MainCtrl', function($scope, Category) {
 	$scope.title = 'Рейтинг товаров';
 	setTimeout(function() {
 		Category.roots().then(function(roots) {
-		angular.forEach(roots, function(root) {
-      Category.countProductsByObj(root, true).then(function(count) {
-        root['product_tested_count'] = count;
-      });
-    });
     $scope.roots = roots;
     $scope.inf = '';
   	});
@@ -53,6 +48,7 @@ app.controller('CategoryCtrl', function($scope, $location, $stateParams, $ionicH
 							angular.forEach(products, function(product) {
 		      			$scope.products.push(product);
 		    			});
+		    			console.log($scope.products);
 						}
 						else {
 							$scope.noInformation = 'В данной категории пока нет продуктов!';
