@@ -1,7 +1,7 @@
 {
-  "name": "pk",
-  "version": "1.0.0",
-  "description": "pk: An Ionic project",
+  "name": "rk",
+  "version": "0.0.1",
+  "description": "rk: An Ionic project",
   "dependencies": {
     "gulp": "^3.5.6",
     "gulp-sass": "^0.7.1",

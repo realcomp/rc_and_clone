@@ -3,24 +3,22 @@
 app.controller('funcController', function($scope) {
 
 	// Вернет класс оформления для рейтинга
-	$scope.productRatingType = function(rating, tested, dangerLevel) {
-		$scope.rating = null;
+	$scope.productRatingType = function(product) {
+		product.ratingv = product.rating;
 		//console.log(rating, tested, dangerLevel)
 
-  	if(tested == 0) {
-  		$scope.rating = '?';
+  	if(product.tested == 0) {
+  		product.ratingv = '?';
   		return 'product__rating-wait';
   	}
-  	else if(tested && (dangerLevel >= 2)) {
-  		$scope.rating = 'X';
+  	else if(product.tested && (product.danger_level > 1)) {
+  		product.ratingv = 'X';
   		return 'product__rating-black';
   	}
-  	else if(tested && (dangerLevel == 1)) {
-  		$scope.rating = rating;
+  	else if(product.tested && (product.danger_level == 1)) {
   		return 'product__rating-violation';
   	}
   	else {
-  		$scope.rating = rating;
   		return 'product__rating-green';
   	}
 
