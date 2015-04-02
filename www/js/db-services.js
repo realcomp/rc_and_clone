@@ -45,6 +45,7 @@ angular.module('db-services', ['db.config'])
 
                     if (self.meta_db && self.meta_db.version == self.meta_server.version) {
                         //console.log("version db eq with server "+self.meta_server.version);
+                        self.loaded = true;
                         return;
                     }
 
@@ -91,7 +92,12 @@ angular.module('db-services', ['db.config'])
                         self.slice_company(slice.data);
                     }
                 });
-                self.query('INSERT INTO metadata VALUES (?, "", "")', [meta.version]).then(function(res){console.log("INSERT VERSION "+meta.version);}, function(err){console.error("INSERT VERSION", err);});
+                self.query('INSERT INTO metadata VALUES (?, "", "")', [meta.version]).then(
+                    function(res){
+                        console.log("INSERT VERSION "+meta.version);
+                }, function(err){
+                    console.error("INSERT VERSION", err);
+                });
             },
             function(err){
                 console.log(err);
@@ -142,7 +148,7 @@ angular.module('db-services', ['db.config'])
             ];
 //            console.log(query, values);
             self.query(query, values).then(function(res){
-                    console.log("Insert " + res.insertId);
+//                    console.log("Insert " + res.insertId);
                 }, function(err){
                     console.error(err);
                 });
@@ -252,7 +258,7 @@ angular.module('db-services', ['db.config'])
     self.getById = function(id) {
         return DB.query('SELECT * FROM categories WHERE id = ?', [id])
         .then(function(result){
-            return DB.fetchAll(result);
+            return DB.fetch(result);
         });
     };
 
