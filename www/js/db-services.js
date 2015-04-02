@@ -27,8 +27,10 @@ angular.module('db-services', ['db.config'])
             });
  
             var query = 'CREATE TABLE IF NOT EXISTS ' + table.name + ' (' + columns.join(',') + ')';
-            self.query(query).then(function(res){console.log(query);}, function(err){ console.error(err); });
-            //console.log('Table ' + table.name + ' initialized');
+            self.query(query).then(function(res){
+                console.log(query);
+                console.info('Table ' + table.name + ' initialized');
+            }, function(err){ console.error(err); });
         });
 
         self.query('SELECT * FROM metadata ORDER BY version DESC LIMIT 1').then(function(res){
@@ -76,7 +78,8 @@ angular.module('db-services', ['db.config'])
         url = url.replace('http://api.roscontrol.com', '');
         //console.log("DEBUG url", url);
         $http.get(url).then(function(resp){
-            console.info("version "+resp.data.version, "full dump " + resp.data.full_dump);
+                console.info("version "+resp.data.version, "full dump " + resp.data.full_dump);
+                console.info("slices count "+resp.data.slices.length);
                 var slices = resp.data.slices;
 //                console.log(resp.data);
 
@@ -94,10 +97,12 @@ angular.module('db-services', ['db.config'])
                     }
                 });
 
+                console.info("recount data");
                 // подсчет количества продуктов для категории
                 // подсчет детей в категории
                 self.query('SELECT * FROM categories').then(function(res){
                     var categories = self.fetchAll(res);
+                    console.info("recount categories, count "+categories.length);
                     angular.forEach(categories, function(category){
                         // подсчет количества продуктов для категории
                         self.query('SELECT count(*) as count FROM products JOIN categories ON (products.category_id = categories.id) WHERE categories.root = ? AND categories.lft >= ? AND categories.rgt <= ?', [category.root, category.lft, category.rgt])

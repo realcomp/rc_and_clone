@@ -54,6 +54,13 @@ angular.module('db.config', [])
                 {name: 'id', type: 'integer primary key'},
                 {name: 'name', type: 'text'}
             ]
+        },
+        {
+            name: 'ratings',
+            columns: [
+                {name: 'id', type: 'integer primary key'},
+                {name: 'name', type: 'text'}
+            ]
         }
     ]
 });
