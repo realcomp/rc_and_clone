@@ -1,9 +1,16 @@
 var app = angular.module('starter.controllers', []);
 
 // Контроллер главной
-app.controller('MainCtrl', function($scope, Category, DB) {
+app.controller('MainCtrl', function($scope, $ionicLoading, Category, DB) {
 
 	console.log('controller');
+	$scope.loadingIndicator = $ionicLoading.show({
+	    content: 'Loading Data',
+	    animation: 'fade-in',
+	    showBackdrop: false,
+	    maxWidth: 200,
+	    showDelay: 500
+	});
 	$scope.roots = [];
 	$scope.inf = 'ЗАГРУЖАЮ';
 	$scope.title = 'Рейтинг товаров';
@@ -17,6 +24,7 @@ app.controller('MainCtrl', function($scope, Category, DB) {
     });
     $scope.roots = roots;
     $scope.inf = '';
+	$ionicLoading.hide();
   	});
 	})
 

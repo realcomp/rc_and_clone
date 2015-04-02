@@ -69,7 +69,6 @@ angular.module('db-services', ['db.config'])
 
                     //console.log(resp.data);
                     self.load(self.meta_server);
-                    console.log("loaded", self.loaded);
                     self.query('SELECT * FROM metadata ORDER BY version DESC LIMIT 1').then(function(result){
                             //console.log("result meta", result);
                         }, function(err){
@@ -118,7 +117,9 @@ angular.module('db-services', ['db.config'])
                     }
                 });
 
-/*                console.info("recount data");
+				console.info("slices end");
+
+				/*                console.info("recount data");
                 // подсчет количества продуктов для категории
                 // подсчет детей в категории
                 self.query('SELECT * FROM categories').then(function(res){
