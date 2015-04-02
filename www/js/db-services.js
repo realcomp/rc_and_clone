@@ -92,6 +92,28 @@ angular.module('db-services', ['db.config'])
                         self.slice_company(slice.data);
                     }
                 });
+
+                // подсчет количества продуктов для категории
+                // подсчет детей в категории
+                self.query('SELECT * FROM categories').then(function(res){
+                    var categories = self.fetchAll(res);
+                    angular.forEach(categories, function(category){
+                        // подсчет количества продуктов для категории
+                        self.query('SELECT count(*) as count FROM products JOIN categories ON (products.category_id = categories.id) WHERE categories.root = ? AND categories.lft >= ? AND categories.rgt <= ?', [category.root, category.lft, category.rgt])
+                        .then(function(res){
+                            var count = self.fetch(res);
+                            self.query('UPDATE categories SET product_count = ? WHERE id = ? AND product_count != ?', [count.count > 0 ? count.count : 0, category.id, count.count > 0 ? count.count : 0]);
+                        });
+
+                        // подсчет детей в категории
+                        self.query('SELECT count(*) as count FROM categories WHERE categories.root = ? AND categories.lft > ? AND categories.rgt < ?', [category.root, category.lft, category.rgt])
+                        .then(function(res){
+                            var count = self.fetch(res);
+                            self.query('UPDATE categories SET subcat_count = ? WHERE id = ? AND subcat_count != ?', [count.count > 0 ? count.count : 0, category.id, count.count > 0 ? count.count : 0]);
+                        });
+                    });
+                });
+
                 self.query('INSERT INTO metadata VALUES (?, "", "")', [meta.version]).then(
                     function(res){
                         console.log("INSERT VERSION "+meta.version);
@@ -133,14 +155,14 @@ angular.module('db-services', ['db.config'])
                 category.rgt,
                 category.lvl,
                 category.parent_id,
-                category.disposable,
+                category.disposable == true ? 1 : 0,
                 category.position,
-                category.product_count,
-                category.subcat_count,
-                category.show_brand,
-                category.show_name_in_product_list,
-                category.icon,
-                category.background,
+                category.product_count ? category.product_count : 0,
+                category.subcat_count ? category.subcat_count : 0,
+                category.show_brand == true ? 1 : 0,
+                category.show_name_in_product_list == true ? 1 : 0,
+                category.icon ? category.icon : '',
+                category.background ? category.background : '',
                 category.name,
                 JSON.stringify(category.price_postfix),
                 JSON.stringify(category.rating_ids),
@@ -177,7 +199,7 @@ angular.module('db-services', ['db.config'])
                 product.company_id,
                 product.danger_level,
                 product.rating,
-                product.tested,
+                product.tested == true ? 1 : 0,
                 product.price,
                 product.name,
                 product.thumbnail,
@@ -280,7 +302,7 @@ angular.module('db-services', ['db.config'])
                 return count;
             }
 
-            var qtested = tested ? ' AND products.tested = \'true\' ' : '';
+            var qtested = tested ? ' AND products.tested = 1 ' : '';
             DB.query('SELECT count(*) as count FROM products JOIN categories ON (products.category_id=categories.id) WHERE categories.root = ? AND categories.lft >= ? AND categories.rgt <= ?'+qtested, [cat.root, cat.lft, cat.rgt])
                 .then(function(result){
                     count.count = DB.fetch(result).count;
@@ -291,9 +313,11 @@ angular.module('db-services', ['db.config'])
         });
     };
 
-    self.countByObjProducts = function(category, tested) {
-        var qtested = tested ? ' AND products.tested = \'true\' ' : '';
-        return DB.query('SELECT count(*) as count FROM products JOIN categories ON (products.category_id=categories.id) WHERE categories.root = ? AND categories.lft >= ? AND categories.rgt <= ?'+qtested, [category.root, category.lft, category.rgt])
+    self.countProductsByObj = function(category, tested) {
+        var qtested = tested ? ' AND products.tested = 1 ' : '';
+        var sql = 'SELECT count(*) as count FROM products JOIN categories ON (products.category_id=categories.id) WHERE categories.root = ? AND categories.lft >= ? AND categories.rgt <= ?' + qtested;
+//        console.log(sql, [category.root, category.lft, category.rgt]);
+        return DB.query(sql, [category.root, category.lft, category.rgt])
             .then(function(result){
                 return DB.fetch(result);
             });

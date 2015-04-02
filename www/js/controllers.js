@@ -10,7 +10,7 @@ app.controller('MainCtrl', function($scope, Category) {
 	setTimeout(function() {
 		Category.roots().then(function(roots) {
 		angular.forEach(roots, function(root) {
-      Category.countProducts(root.id, true).then(function(count) {
+      Category.countProductsByObj(root, true).then(function(count) {
         root['product_tested_count'] = count;
       });
     });
