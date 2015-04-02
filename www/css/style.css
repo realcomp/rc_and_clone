@@ -75,7 +75,19 @@
   background: #093;
   cursor: pointer;
 }
-
+.product__rating-wait {
+	background: #b0b0b0;
+}
+.product__rating-black {
+	background: #000;
+}
+.product__rating-violation {
+	color: #765e00;
+  background: #fc0;
+}
+.product__rating-green {
+	background: #093;
+}
 
 
 
@@ -145,6 +157,8 @@
   float: left;	
 }
 .product__category .product__category-name {
+	margin-top: 30px;
+	margin-left: 15px;
 	font-size: 16px;
 	float: left;
 }
@@ -152,7 +166,6 @@
 	float: right;
   margin-top: 15px;
 }
-
 
 
 /* 

@@ -8,8 +8,13 @@ app.controller('MainCtrl', function($scope, Category, DB) {
 	$scope.inf = 'ЗАГРУЖАЮ';
 	$scope.title = 'Рейтинг товаров';
 	DB.loading().then(function() {
-console.log("controler loading");
+		console.log("controler loading");
 		Category.roots().then(function(roots) {
+			angular.forEach(roots, function(root) {		
+      Category.countProductsByObj(root, true).then(function(count) {		
+        root['product_tested_count'] = count;		
+      });
+    });
     $scope.roots = roots;
     $scope.inf = '';
   	});
@@ -82,3 +87,5 @@ app.controller('ProductCtrl', function($scope, $location, $stateParams, $ionicHi
 	});
 
 });
+
+
