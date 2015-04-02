@@ -299,8 +299,8 @@ angular.module('db-services', ['db.config'])
         var w = '';
 
         if (lvl) {
-            w = ' AND lvl = ?';
-            params.push(lvl);
+            w = ' AND lvl = (SELECT lvl + ? FROM categories WHERE id = ?)';
+            params.push(lvl, id);
         }
 
         return DB.query('SELECT * FROM categories WHERE root = (SELECT root FROM categories WHERE id = ?) AND lft > (SELECT lft FROM categories WHERE id = ?) AND rgt < (SELECT rgt FROM categories WHERE id = ?)'
