@@ -1,4 +1,8 @@
-/* Empty. Add your own CSS if you like */
+/* 
+*
+*** GLOBAL ***
+*
+*/
 #mainContainer {
 	font-family: 'Roboto', sans-serif;
 	background: transparent;
@@ -54,9 +58,14 @@
 .bar .button.button-clear.icon-right:before {
 	font-size: 54px;
 }
-.main__category-wrap {
 
-}
+
+/* 
+*
+*** MAIN ***
+*
+*/
+
 .main__category-item {
 	height: 314px;
 	display: block;
@@ -100,3 +109,18 @@
 	box-shadow: none;
 }
 
+
+/* 
+*
+*** CATEGORY ***
+*
+*/
+
+
+
+
+/* 
+*
+*** PRODUCT ***
+*
+*/

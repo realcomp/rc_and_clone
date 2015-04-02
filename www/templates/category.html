@@ -1,16 +1,18 @@
-<ion-nav-title> {{ CategoryTitle }} </ion-nav-title>
-<ion-content>
-  <ion-list>
-	  <ion-item ng-if="categories" ng-repeat="category in categories" href="#/app/category/{{ category.id }}">
-	  	{{ category.name }}
-	  	<span class="badge badge-assertive">{{ category.product_count }}</span>
-	  </ion-item>
-	  <ion-item ng-else-if="products" ng-repeat="product in products" href="#/app/product/{{ product.id }}">
-	  	{{ product.name }}
-	  </ion-item>
-	  <div>
-	  	{{ noInformation }}
-	  </div>
-	</ion-list>
-</ion-content>
+<ion-view>
+	<ion-nav-title> {{ title }} </ion-nav-title>
+	<ion-content>
+	  <ion-list>
+		  <ion-item ng-if="categories" ng-repeat="category in categories" href="#/app/category/{{ category.id }}">
+		  	{{ category.name }}
+		  	<span class="badge badge-assertive">{{ category.product_count }}</span>
+		  </ion-item>
+		  <ion-item ng-else-if="products" ng-repeat="product in products" href="#/app/product/{{ product.id }}">
+		  	{{ product.name }}
+		  </ion-item>
+		  <div>
+		  	{{ noInformation }}
+		  </div>
+		</ion-list>
+	</ion-content>
 </ion-view>
+

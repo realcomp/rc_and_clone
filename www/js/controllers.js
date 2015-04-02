@@ -34,7 +34,8 @@ app.controller('CategoryCtrl', function($scope, $location, $stateParams, $ionicH
 	}
 
 	Category.getById($stateParams.id).then(function(category) {
-      $scope.CategoryTitle = category.name
+      $scope.title = category.name
+      	console.log($scope.title)
       $scope.categories = [];
       $scope.noInformation = '';
 
@@ -78,7 +79,7 @@ app.controller('ProductCtrl', function($scope, $location, $stateParams, $ionicHi
 	}
 
 	Product.getById($stateParams.id).then(function(product) {
-      $scope.Productitle = product.name
+      $scope.title = product.name
       $scope.product = product;
       console.log(product)
 	});
