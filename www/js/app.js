@@ -50,6 +50,16 @@ app.config(function($stateProvider, $urlRouterProvider) {
         controller: 'CategoryCtrl'
       }
     }
+  })
+
+  .state('app.product', {
+    url: "/product/:id",
+    views: {
+      'menuContent': {
+        templateUrl: "templates/product.html",
+        controller: 'ProductCtrl'
+      }
+    }
   });
 
   // Default Router
