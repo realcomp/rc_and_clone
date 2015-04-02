@@ -66,4 +66,22 @@ app.controller('CategoryCtrl', function($scope, $location, $stateParams, $ionicH
 });
 
 // Контроллер товаров
+app.controller('ProductCtrl', function($scope, $location, $stateParams, $ionicHistory, Product) {
 
+	var onlyNumber = !isNaN(parseFloat($stateParams.id)) && isFinite($stateParams.id) && (0 < $stateParams.id);
+	if(!onlyNumber) {
+		$ionicHistory.nextViewOptions({
+   		disableBack: true
+		});
+		$location.path('/');
+		return false;
+	}
+
+	Product.getById($stateParams.id).then(function(product) {
+      $scope.CategoryTitle = category.name
+      $scope.categories = [];
+      $scope.noInformation = '';
+
+	});
+
+});

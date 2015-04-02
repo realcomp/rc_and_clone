@@ -52,6 +52,16 @@ app.config(function($stateProvider, $urlRouterProvider) {
     }
   });
 
+  .state('app.product', {
+    url: "/product/:id",
+    views: {
+      'menuContent': {
+        templateUrl: "templates/product.html",
+        controller: 'ProductCtrl'
+      }
+    }
+  });
+
   // Default Router
   $urlRouterProvider.otherwise('/app/main');
 });
