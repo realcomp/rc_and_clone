@@ -50,7 +50,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
         controller: 'CategoryCtrl'
       }
     }
-  });
+  })
 
   .state('app.product', {
     url: "/product/:id",

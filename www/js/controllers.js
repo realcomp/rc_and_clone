@@ -78,10 +78,9 @@ app.controller('ProductCtrl', function($scope, $location, $stateParams, $ionicHi
 	}
 
 	Product.getById($stateParams.id).then(function(product) {
-      $scope.CategoryTitle = category.name
-      $scope.categories = [];
-      $scope.noInformation = '';
-
+      $scope.Productitle = product.name
+      $scope.product = product;
+      console.log(product)
 	});
 
 });
