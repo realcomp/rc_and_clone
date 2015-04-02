@@ -295,7 +295,7 @@ angular.module('db-services', ['db.config'])
      * получить дочерние каталоги по ид родителя, но лучше вызывать childsByObj
     **/
     self.childsById = function(id) {
-        return DB.query('SELECT * FROM categories WHERE lft > (SELECT lft FROM categories WHERE id = ?) AND rgt < (SELECT rgt FROM categories WHERE id = ?) ORDER BY lft', [id, id])
+        return DB.query('SELECT * FROM categories WHERE root = (SELECT root FROM categories WHERE id = ?) AND lft > (SELECT lft FROM categories WHERE id = ?) AND rgt < (SELECT rgt FROM categories WHERE id = ?) ORDER BY lft', [id, id, id])
         .then(function(result){
             return DB.fetchAll(result);
         });
@@ -305,7 +305,7 @@ angular.module('db-services', ['db.config'])
      * получить дочерние каталоги по объекту родителя
     **/
     self.childsByObj = function(category) {
-        return DB.query('SELECT * FROM categories WHERE lft > ? AND rgt < ? ORDER BY lft', [category.lft, category.rgt])
+        return DB.query('SELECT * FROM categories WHERE root = ? AND lft > ? AND rgt < ? ORDER BY lft', [category.root, category.lft, category.rgt])
         .then(function(result){
             return DB.fetchAll(result);
         });
