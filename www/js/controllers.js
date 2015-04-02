@@ -1,18 +1,19 @@
 var app = angular.module('starter.controllers', []);
 
 // Контроллер главной
-app.controller('MainCtrl', function($scope, Category) {
+app.controller('MainCtrl', function($scope, Category, DB) {
 
 	console.log('controller');
 	$scope.roots = [];
 	$scope.inf = 'ЗАГРУЖАЮ';
 	$scope.title = 'Рейтинг товаров';
-	setTimeout(function() {
+	DB.loading().then(function() {
+console.log("controler loading");
 		Category.roots().then(function(roots) {
     $scope.roots = roots;
     $scope.inf = '';
   	});
-	}, 1000)
+	})
 
 });
 

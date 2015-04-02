@@ -6,9 +6,15 @@ angular.module('db-services', ['db.config'])
     self.meta_server = null;
     self.meta_db = null;
     self.loaded = false;
- 
+    self.deferred = $q.defer();
+
+    self.loading = function() {
+        return self.deferred.promise;
+    };
+
     self.init = function() {
-    		console.log('db init');
+    	console.log('db init');
+ 
         if (window.cordova) {
             //console.log("use cordova sqlite");
         // Use self.db = window.sqlitePlugin.openDatabase({name: DB_CONFIG.name}); in production
@@ -48,6 +54,7 @@ angular.module('db-services', ['db.config'])
                     if (self.meta_db && self.meta_db.version == self.meta_server.version) {
                         //console.log("version db eq with server "+self.meta_server.version);
                         self.loaded = true;
+                        self.deferred.resolve({loaded: true});
                         return;
                     }
 
@@ -60,13 +67,22 @@ angular.module('db-services', ['db.config'])
                     console.log("loaded", self.loaded);
                     self.query('SELECT * FROM metadata ORDER BY version DESC LIMIT 1').then(function(result){
                             //console.log("result meta", result);
-                        }, function(err){ console.error(err); });
+                        }, function(err){
+                            self.deferred.resolve({loaded: false});
+                            console.error(err);
+                        });
                 },
                 function(err){
+                    self.deferred.resolve({loaded: false});
                     console.log(err);
                 });
-            }, function(err){console.error("META ",err);}
+            }, function(err){
+                self.deferred.resolve({loaded: false});
+                console.error("META ",err);
+            }
         );
+
+        return self.deferred.promise;
     };
 
     /*
@@ -122,14 +138,17 @@ angular.module('db-services', ['db.config'])
 
                 self.query('INSERT INTO metadata VALUES (?, "", "")', [meta.version]).then(
                     function(res){
-                        self.loaded = true;
                         console.log("INSERT VERSION "+meta.version);
+                        self.deferred.resolve({loaded: true});
+                        self.loaded = true;
                 }, function(err){
                     console.error("INSERT VERSION", err);
+                    self.deferred.resolve({loaded: false});
                 });
             },
             function(err){
                 console.log(err);
+                self.deferred.resolve({loaded: false});
             }
         );
     };
