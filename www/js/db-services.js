@@ -57,7 +57,6 @@ angular.module('db-services', ['db.config'])
 
                     //console.log(resp.data);
                     self.load(self.meta_server);
-                    self.loaded = true;
                     console.log("loaded", self.loaded);
                     self.query('SELECT * FROM metadata ORDER BY version DESC LIMIT 1').then(function(result){
                             //console.log("result meta", result);
@@ -123,6 +122,7 @@ angular.module('db-services', ['db.config'])
 
                 self.query('INSERT INTO metadata VALUES (?, "", "")', [meta.version]).then(
                     function(res){
+                        self.loaded = true;
                         console.log("INSERT VERSION "+meta.version);
                 }, function(err){
                     console.error("INSERT VERSION", err);
@@ -164,8 +164,8 @@ angular.module('db-services', ['db.config'])
                 category.parent_id,
                 category.disposable == true ? 1 : 0,
                 category.position,
-                category['stats']['product_count'] ? category['stats']['product_count'] : 0,
-                category['stats']['subcategory_count'] ? category['stats']['subcategory_count'] : 0,
+                'stats' in category && 'product_count' in category['stats'] ? category['stats']['product_count'] : 0,
+                'stats' in category && 'subcategory_count' in category['stats'] ? category['stats']['subcategory_count'] : 0,
                 category.show_brand == true ? 1 : 0,
                 category.show_name_in_product_list == true ? 1 : 0,
                 category.icon ? category.icon : '',
