@@ -10,7 +10,7 @@ app.controller('MainCtrl', function($scope, Category) {
 	setTimeout(function() {
 		Category.roots().then(function(roots) {
 		angular.forEach(roots, function(root) {
-      Category.countProducts(root.id, true).then(function(count) {
+      Category.countProductsByObj(root, true).then(function(count) {
         root['product_tested_count'] = count;
       });
     });
@@ -41,10 +41,11 @@ app.controller('CategoryCtrl', function($scope, $location, $stateParams, $ionicH
 				//console.log(innerCategoryObj);
 									console.log(categories);
 				angular.forEach(categories, function(cat) {
-      		Category.countProducts(cat.id).then(function(count) {
-        		cat['product_count'] = count;
+      		Category.countProductsByObj(cat).then(function(count) {
+        		console.log(count)
+        		cat['product_count2'] = count.count;
+        		console.log(cat)
         		$scope.categories.push(cat);
-        		console.log($scope.categories)
       		});
     		});
 			});
