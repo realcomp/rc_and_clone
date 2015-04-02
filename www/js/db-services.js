@@ -351,9 +351,9 @@ angular.module('db-services', ['db.config'])
     };
 
     self.getById = function(id) {
-        return DB.query('SELECT * FROM categories WHERE id = ?', [id])
+        return DB.query('SELECT * FROM products WHERE category_id = ?', [id])
         .then(function(result){
-            return DB.fetch(result);
+            return DB.fetchAll(result);
         });
     };
 

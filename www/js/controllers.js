@@ -22,7 +22,7 @@ app.controller('MainCtrl', function($scope, Category) {
 });
 
 // Страница категорий
-app.controller('CategoryCtrl', function($scope, $location, $stateParams, $ionicHistory, Category) {
+app.controller('CategoryCtrl', function($scope, $location, $stateParams, $ionicHistory, Category, Product) {
 
 	var onlyNumber = !isNaN(parseFloat($stateParams.id)) && isFinite($stateParams.id) && (0 < $stateParams.id);
 	if(!onlyNumber) {
@@ -38,15 +38,18 @@ app.controller('CategoryCtrl', function($scope, $location, $stateParams, $ionicH
       $scope.categories = [];
 
 			Category.childsByObj(category, category.lvl+1).then(function(categories) {
-				//console.log(innerCategoryObj);
-									console.log(categories);
-				angular.forEach(categories, function(cat) {
-      		Category.countProducts(cat.id).then(function(count) {
-        		cat['product_count'] = count;
-        		$scope.categories.push(cat);
-        		console.log($scope.categories)
-      		});
-    		});
+
+				if(categories.length > 0) {
+					angular.forEach(categories, function(cat) {
+	      		$scope.categories.push(cat);
+	    		});
+				}
+				else {
+					Product.getById($stateParams.id).then(function(products) {
+						console.log(products);
+					});
+				}
+
 			});
 
 	});
