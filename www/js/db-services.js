@@ -291,6 +291,14 @@ angular.module('db-services', ['db.config'])
         });
     };
 
+    self.countByObjProducts = function(category, tested) {
+        var qtested = tested ? ' AND products.tested = \'true\' ' : '';
+        return DB.query('SELECT count(*) as count FROM products JOIN categories ON (products.category_id=categories.id) WHERE categories.root = ? AND categories.lft >= ? AND categories.rgt <= ?'+qtested, [category.root, category.lft, category.rgt])
+            .then(function(result){
+                return DB.fetch(result);
+            });
+    };
+
     /*
      * получить дочерние каталоги по ид родителя, но лучше вызывать childsByObj
     **/
