@@ -71,25 +71,26 @@ angular.module('db-services', ['db.config'])
     ** загрузка базы из json
     */ 
     self.load = function(meta) {
+        console.info("Load db "+meta.file);
         var url = meta.file;
         url = url.replace('http://api.roscontrol.com', '');
         //console.log("DEBUG url", url);
         $http.get(url).then(function(resp){
+            console.info("version "+resp.data.version, "full dump " + resp.data.full_dump);
                 var slices = resp.data.slices;
 //                console.log(resp.data);
 
                 angular.forEach(slices, function(slice){
 //                    console.log(slice);
-//                    console.log("slice type "+slice.entity_type);
+//                    console.log("slice type "+slice.entity_type, slice.min_id, slice.max_id);
                     if (slice.entity_type == 'category') {
-                        console.log("slice", slice.min_id, slice.max_id);
                         self.slice_category(slice.data);
                     } else if (slice.entity_type == 'product') {
-                        console.log("slice", slice.min_id, slice.max_id);
                         self.slice_product(slice.data);
                     } else if (slice.entity_type == 'company') {
-                        console.log("slice", slice.min_id, slice.max_id);
                         self.slice_company(slice.data);
+                    } else if (slice.entity_type == 'rating') {
+                        self.slice_rating(slice.data);
                     }
                 });
 
@@ -223,7 +224,23 @@ angular.module('db-services', ['db.config'])
             ];
 //            console.log(query, values);
             self.query(query, values).then(function(res){
-                    console.log("Insert " + res.insertId);
+//                    console.log("Insert " + res.insertId);
+                }, function(err){
+                    console.error(err);
+                });
+        });
+    };
+
+    self.slice_rating = function(data) {
+        angular.forEach(data, function(rating) {
+            var query = 'INSERT INTO ratings (id,name) VALUES (?,?)';
+            var values = [
+                rating.id,
+                rating.name,
+            ];
+//            console.log(query, values);
+            self.query(query, values).then(function(res){
+//                    console.log("Insert " + res.insertId);
                 }, function(err){
                     console.error(err);
                 });
@@ -368,7 +385,7 @@ angular.module('db-services', ['db.config'])
     var self = this;
 
     self.all = function() {
-        return DB.query('SELECT * FROM categories')
+        return DB.query('SELECT * FROM products')
         .then(function(result){
             return DB.fetchAll(result);
         });
@@ -388,10 +405,45 @@ angular.module('db-services', ['db.config'])
         });
     };
 
-    self.roots = function() {
-        return DB.query('SELECT * FROM categories WHERE lvl = 0')
+    return self;
+})
+
+// Resource service example
+.factory('Company', function(DB) {
+    var self = this;
+
+    self.all = function() {
+        return DB.query('SELECT * FROM companies')
         .then(function(result){
             return DB.fetchAll(result);
+        });
+    };
+
+    self.getById = function(id) {
+        return DB.query('SELECT * FROM companies WHERE id = ?', [id])
+        .then(function(result){
+            return DB.fetch(result);
+        });
+    };
+
+    return self;
+})
+
+// Resource service example
+.factory('Rating', function(DB) {
+    var self = this;
+
+    self.all = function() {
+        return DB.query('SELECT * FROM ratings ORDER BY id')
+        .then(function(result){
+            return DB.fetchAll(result);
+        });
+    };
+
+    self.getById = function(id) {
+        return DB.query('SELECT * FROM ratings WHERE id = ?', [id])
+        .then(function(result){
+            return DB.fetch(result);
         });
     };
 
