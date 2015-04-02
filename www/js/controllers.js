@@ -1,6 +1,6 @@
 var app = angular.module('starter.controllers', []);
 
-// Главная страница приложения
+// Контроллер главной
 app.controller('MainCtrl', function($scope, Category) {
 
 	console.log('controller');
@@ -21,8 +21,8 @@ app.controller('MainCtrl', function($scope, Category) {
 
 });
 
-// Страница категорий
-app.controller('CategoryCtrl', function($scope, $location, $stateParams, $ionicHistory, Category) {
+// Контроллер категорий
+app.controller('CategoryCtrl', function($scope, $location, $stateParams, $ionicHistory, Category, Product) {
 
 	var onlyNumber = !isNaN(parseFloat($stateParams.id)) && isFinite($stateParams.id) && (0 < $stateParams.id);
 	if(!onlyNumber) {
@@ -36,20 +36,34 @@ app.controller('CategoryCtrl', function($scope, $location, $stateParams, $ionicH
 	Category.getById($stateParams.id).then(function(category) {
       $scope.CategoryTitle = category.name
       $scope.categories = [];
+      $scope.noInformation = '';
 
 			Category.childsByObj(category, category.lvl+1).then(function(categories) {
-				//console.log(innerCategoryObj);
-									console.log(categories);
-				angular.forEach(categories, function(cat) {
-      		Category.countProductsByObj(cat).then(function(count) {
-        		console.log(count)
-        		cat['product_count2'] = count.count;
-        		console.log(cat)
-        		$scope.categories.push(cat);
-      		});
-    		});
+
+				if(categories.length > 0) {
+					angular.forEach(categories, function(cat) {
+	      		$scope.categories.push(cat);
+	    		});
+				}
+				else {
+					Product.getByCategoryId($stateParams.id).then(function(products) {
+						if(products.length > 0) {
+							$scope.products = [];
+							angular.forEach(products, function(product) {
+		      			$scope.products.push(product);
+		    			});
+						}
+						else {
+							$scope.noInformation = 'В данной категории пока нет продуктов!';
+						}
+					});
+				}
+
 			});
 
 	});
 
 });
+
+// Контроллер товаров
+
