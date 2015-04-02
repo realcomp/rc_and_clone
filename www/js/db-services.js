@@ -58,6 +58,7 @@ angular.module('db-services', ['db.config'])
                     //console.log(resp.data);
                     self.load(self.meta_server);
                     self.loaded = true;
+                    console.log("loaded", self.loaded);
                     self.query('SELECT * FROM metadata ORDER BY version DESC LIMIT 1').then(function(result){
                             //console.log("result meta", result);
                         }, function(err){ console.error(err); });
@@ -97,7 +98,7 @@ angular.module('db-services', ['db.config'])
                     }
                 });
 
-                console.info("recount data");
+/*                console.info("recount data");
                 // подсчет количества продуктов для категории
                 // подсчет детей в категории
                 self.query('SELECT * FROM categories').then(function(res){
@@ -118,7 +119,7 @@ angular.module('db-services', ['db.config'])
                             self.query('UPDATE categories SET subcat_count = ? WHERE id = ? AND subcat_count != ?', [count.count > 0 ? count.count : 0, category.id, count.count > 0 ? count.count : 0]);
                         });
                     });
-                });
+                });*/
 
                 self.query('INSERT INTO metadata VALUES (?, "", "")', [meta.version]).then(
                     function(res){
@@ -163,8 +164,8 @@ angular.module('db-services', ['db.config'])
                 category.parent_id,
                 category.disposable == true ? 1 : 0,
                 category.position,
-                category.product_count ? category.product_count : 0,
-                category.subcat_count ? category.subcat_count : 0,
+                category['stats']['product_count'] ? category['stats']['product_count'] : 0,
+                category['stats']['subcategory_count'] ? category['stats']['subcategory_count'] : 0,
                 category.show_brand == true ? 1 : 0,
                 category.show_name_in_product_list == true ? 1 : 0,
                 category.icon ? category.icon : '',
