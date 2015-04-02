@@ -42,12 +42,12 @@ app.config(function($stateProvider, $urlRouterProvider) {
     }
   })
 
-  .state('app.load', {
-    url: "/load",
+  .state('app.category', {
+    url: "/category/:id",
     views: {
       'menuContent': {
-        templateUrl: "templates/load.html",
-        controller: 'Loading'
+        templateUrl: "templates/category.html",
+        controller: 'CategoryCtrl'
       }
     }
   });
