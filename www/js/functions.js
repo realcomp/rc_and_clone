@@ -54,7 +54,6 @@ app.controller('funcController', function($scope) {
       title: "Черный список", active : false 
     }
   ];
-
   $scope.tabsCategory = function(o) {
     for (var i = 0; i <= $scope.tabsCatProductType.length - 1; i++) {
       $scope.tabsCatProductType[i].active = false;
@@ -62,12 +61,12 @@ app.controller('funcController', function($scope) {
     $scope.tabsCatProductType[o].active = true;
 
   };
-
   $scope.tabsClass = function(item) {
   	if(item.active) {
   		return 'product__category-tabs-active';
   	}
   	return 'product__category-tabs-deactive';
   }
+  
 
 });

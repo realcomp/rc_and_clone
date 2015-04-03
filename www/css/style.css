@@ -107,7 +107,12 @@
   background: url('../img/loader.gif') no-repeat;
   z-index: 2;
 }
-
+.product__empty {
+	margin: 10px 0;
+	display: block;
+	font-size: 16px;
+	text-align: center;
+}
 
 
 /* 
