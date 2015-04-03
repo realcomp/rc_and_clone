@@ -40,7 +40,7 @@
 			</div>
 
 			<div ng-if="tabsCatProductType[1].active">
-				<ion-item ng-if="productsWait === 0">Нет товаров в статусе "Ожидают проверки"!</ion-item>
+				<ion-item ng-if="productsWait.length === 0">Нет товаров в статусе "Ожидают проверки"!</ion-item>
 				<ion-item ng-repeat="product in productsWait | orderBy:'-rating'" class="product__category" href="#/app/product/{{ product.id }}">
 				  	<span class="product__category-thumbnail">
 				  		<img ng-src="{{ product.thumbnail }}" alt="{{ product.name }}">
@@ -67,8 +67,8 @@
 				</ion-item>
 			</div>
 
-		  <div>
-		  	{{ noProducts }}
+		  <div ng-if="noProducts">
+		  	111111
 		  </div>
 
 		</ion-list>

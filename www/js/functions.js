@@ -42,10 +42,10 @@ app.controller('funcController', function($scope) {
   	return result;
 	};
 
-	//
+	// Табы на странице категорий с товарами
   $scope.tabsCatProductType = [
   	{
-		  title : "Проверянные товары", active : true,
+		  title : "Проверянные", active : true,
 		},
     { 
       title: "Ожидают проверки", active : false 
