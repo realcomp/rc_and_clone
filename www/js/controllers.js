@@ -115,12 +115,17 @@ app.controller('ProductCtrl', function($scope, $location, $stateParams, $ionicHi
 		return false;
 	}
 
+	$scope.reviews = null;
 	Product.getById($stateParams.id).then(function(product) {
       $scope.title = product.name
       $scope.product = product;
       console.log(product)
 	});
 
+	Product.reviews($stateParams.id).then(function(resp){
+		$scope.reviews = resp.data;
+		console.log(resp.data);
+	});
 });
 
 

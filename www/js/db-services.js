@@ -448,7 +448,7 @@ var count_cat = 0;
 })
 
 // Resource service example
-.factory('Product', function(DB) {
+.factory('Product', function($http, DB) {
     var self = this;
 
     self.all = function() {
@@ -470,6 +470,12 @@ var count_cat = 0;
         .then(function(result){
             return DB.fetch(result);
         });
+    };
+
+    self.reviews = function(id, user_id) {
+		var params = ['product_id='+id];
+
+        return $http.get('/v1/catalog/reviews?' + params.join('&'));
     };
 
     return self;

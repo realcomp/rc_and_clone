@@ -6,5 +6,13 @@
   	<img width="300" height="300px" ng-src="{{ product.images }}">
 
   </div>
+
+  <ion-spinner ng-if="!reviews"></ion-spinner>
+
+  <ion-list ng-if="reviews">
+    <ion-item ng-repeat="review in reviews.items">
+	  {{ review.text }}
+	</ion-item>
+  </ion-list>
 </ion-content>
 </ion-view>
