@@ -42,7 +42,7 @@
 				<ion-item ng-repeat="product in productsPositive | filter:query | orderBy: orderProp" class="product__category" href="#/app/product/{{ product.id }}">
 				  	<span class="product__category-thumbnail">
 				  		<img ng-src="{{ product.thumbnail }}" alt="{{ product.name }}">
-				  		<span class="img-loader"></span>
+				  		<ion-spinner icon="circles" class="loader"></ion-spinner>
 				  	</span>
 				  	<span class="product__category-name">{{ product.name }}</span>
 				  	<span class="product__category-rating product-rating" ng-class="productRatingType(product)">
@@ -56,7 +56,7 @@
 				<ion-item ng-repeat="product in productsWait | filter:query | orderBy: orderProp" class="product__category" href="#/app/product/{{ product.id }}">
 				  	<span class="product__category-thumbnail">
 				  		<img ng-src="{{ product.thumbnail }}" alt="{{ product.name }}">
-				  		<span class="img-loader"></span>
+				  		<ion-spinner icon="circles" class="loader"></ion-spinner>
 				  	</span>
 				  	<span class="product__category-name">{{ product.name }}</span>
 				  	<span class="product__category-rating product-rating" ng-class="productRatingType(product)">
@@ -70,7 +70,7 @@
 				<ion-item ng-repeat="product in productsBlack | filter:query | orderBy: orderProp" class="product__category" href="#/app/product/{{ product.id }}">
 				  	<span class="product__category-thumbnail">
 				  		<img ng-src="{{ product.thumbnail }}" alt="{{ product.name }}">
-				  		<span class="img-loader"></span>
+				  		<ion-spinner icon="circles" class="loader"></ion-spinner>
 				  	</span>
 				  	<span class="product__category-name">{{ product.name }}</span>
 				  	<span class="product__category-rating product-rating" ng-class="productRatingType(product)">
