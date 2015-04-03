@@ -210,7 +210,7 @@
 .product__category-tabs {
 	display: inline-block;
 	width: 33.3%;
-	margin: 10px 0;
+	margin: 10px 0 12px 0px;
   font-size: 15px;
   border-right: 1px solid #FFF;
   cursor: pointer;
@@ -227,6 +227,10 @@
 .product__category-tabs-active{
 	background: #C80020;
 }
+.product__category-filter-wrap {
+	margin: 0 0 10px 0;
+}
+
 
 
 /* 

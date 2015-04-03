@@ -32,7 +32,7 @@ app.controller('MainCtrl', function($scope, $ionicLoading, $interval, Category, 
     });
     $scope.roots = roots;
     $scope.inf = '';
-	$ionicLoading.hide();
+		$ionicLoading.hide();
   	});
 	})
 

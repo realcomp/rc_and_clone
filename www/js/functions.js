@@ -2,6 +2,8 @@
 // Контроллер для функций
 app.controller('funcController', function($scope) {
 
+	$scope.orderProp = '-rating';
+
 	// Вернет класс оформления для рейтинга
 	$scope.productRatingType = function(product) {
 		product.ratingv = product.rating;
@@ -67,6 +69,6 @@ app.controller('funcController', function($scope) {
   	}
   	return 'product__category-tabs-deactive';
   }
-  
+
 
 });
