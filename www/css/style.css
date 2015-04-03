@@ -4,8 +4,6 @@
 *
 */
 #mainContainer {
-	font-family: 'Roboto', sans-serif;
-	background: transparent;
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -14,14 +12,16 @@
 	max-width: 640px;
 	margin-left: auto;
 	margin-right: auto;
+	font-family: 'Roboto', sans-serif;
+	background: transparent;
 }
 .pane, .view {
 	background: #transparent;
 }
 .bar.bar-stable {
+	height: 80px;
 	background: #c80020;
 	border: 0;
-	height: 80px;
 	color: #FFF;
 }
 .has-header {
@@ -40,10 +40,10 @@
 .bar.bar-stable .title,
 .bar-stable .button.button-icon,
 .bar-stable .button.button-clear {
+	top: 17px;
 	color: #FFF;
 	font-weight: normal;
 	font-size: 32px;
-	top: 17px;
 }
 .bar-stable .button.button-clear {
 	left: 10px;
@@ -88,6 +88,17 @@
 .product__rating-green {
 	background: #093;
 }
+.img-loader {
+	display: block;
+	width: 48px;
+  height: 48px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: -24px 0 0 -24px;
+  background: url('../img/loader.gif') no-repeat;
+  z-index: 2;
+}
 
 
 
@@ -98,8 +109,8 @@
 */
 
 .main__category-item {
-	height: 314px;
 	display: block;
+	height: 314px;
 	border: 0;
 	text-align: center;
 	background-attachment: fixed;
@@ -121,20 +132,20 @@
 }
 .main__category-icon {
 	display: inline-block;
-	background-repeat: no-repeat;
-	background-position: 0 0;
-	padding: 0;
 	width: 138px;
 	height: 92px;
+	padding: 0;
+	background-repeat: no-repeat;
+	background-position: 0 0;
 }
 .main__category-name {
 	font-size: 36px;
 	color: #FFF;
 }
 .main__category-tested {
+	width: 165px;
 	margin: 17px auto 0;
   padding: 14px 0;
-  width: 165px;
 	background: #009400;
 	font-size: 21px;
 	box-shadow: none;
@@ -154,13 +165,21 @@
 }
 .product__category .product__category-thumbnail {
 	width: 80px;
-  float: left;	
+	height: 80px;
+  float: left;
+  position: relative;	
+}
+.product__category .product__category-thumbnail img {
+	display: block;
+	width: 100%;
+	max-width: 100%;
+	position: relative;
+	z-index: 3;
 }
 .product__category .product__category-name {
-	margin-top: 30px;
-	margin-left: 15px;
-	font-size: 16px;
 	float: left;
+	margin: 30px 0 0 15px;
+	font-size: 16px;
 }
 .product__category .product__category-rating {
 	float: right;

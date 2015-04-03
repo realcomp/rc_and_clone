@@ -7,7 +7,10 @@
 		  	<span class="badge badge-assertive">{{ category.product_count }}</span>
 		  </ion-item>
 		  <ion-item ng-else-if="products" ng-repeat="product in products | orderBy:'-rating'" class="product__category" href="#/app/product/{{ product.id }}">
-		  	<img class="product__category-thumbnail" src="{{ product.thumbnail }}" alt="{{ product.name }}">
+		  	<span class="product__category-thumbnail">
+		  		<img src="{{ product.thumbnail }}" alt="{{ product.name }}">
+		  		<span class="img-loader"></span>
+		  	</span>
 		  	<span class="product__category-name">{{ product.name }}</span>
 		  	<span class="product__category-rating product-rating" ng-class="productRatingType(product)">
 		  		{{ product.ratingv }}
