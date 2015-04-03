@@ -1,9 +1,14 @@
 var app = angular.module('starter.controllers', []);
 
 // Контроллер главной
-app.controller('MainCtrl', function($scope, $ionicLoading, Category, DB) {
+app.controller('MainCtrl', function($scope, $ionicLoading, $interval, Category, DB) {
 
 	console.log('controller');
+	$scope.percent = DB.percentLoading();
+	var getPercent = function(){ $scope.percent = DB.percentLoading(); };
+	var intervalPercent = $interval(function(){
+		getPercent();
+	}, 500);
 	$scope.loadingIndicator = $ionicLoading.show({
 	    content: 'Loading Data',
 	    animation: 'fade-in',
@@ -15,6 +20,8 @@ app.controller('MainCtrl', function($scope, $ionicLoading, Category, DB) {
 	$scope.inf = 'ЗАГРУЖАЮ';
 	$scope.title = 'Рейтинг товаров';
 	DB.loading().then(function() {
+		$scope.percent = 100;
+		$interval.cancel( intervalPercent );
 		console.log("controler loading");
 		Category.roots().then(function(roots) {
 			angular.forEach(roots, function(root) {		
