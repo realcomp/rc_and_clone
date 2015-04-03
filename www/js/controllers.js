@@ -22,6 +22,7 @@ app.controller('MainCtrl', function($scope, $ionicLoading, $interval, Category, 
 	DB.loading().then(function() {
 		$scope.percent = 100;
 		$interval.cancel( intervalPercent );
+		intervalPercent = undefined;
 		console.log("controler loading");
 		Category.roots().then(function(roots) {
 			angular.forEach(roots, function(root) {		
