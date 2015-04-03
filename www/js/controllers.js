@@ -131,6 +131,7 @@ app.controller('ProductCtrl', function($scope, $location, $stateParams, $ionicHi
 		$scope.reviews = reviews;
 		console.log(reviews);
 	});
+	});
 });
 
 
