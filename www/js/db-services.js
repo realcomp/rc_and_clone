@@ -472,10 +472,21 @@ var count_cat = 0;
         });
     };
 
-    self.reviews = function(id, user_id) {
+    self.reviews = function(id, user_id, limit, offset) {
 		var params = ['product_id='+id];
 
-        return $http.get('/v1/catalog/reviews?' + params.join('&'));
+		if (limit) {
+			params.push('limit=' + limit);
+		}
+
+		if (offset) {
+			params.push('offset=' + offset);
+		}
+
+        return $http.get('/v1/catalog/reviews?' + params.join('&'))
+		.then(function(resp){
+			return resp.data;
+		});
     };
 
     return self;
@@ -518,6 +529,45 @@ var count_cat = 0;
         .then(function(result){
             return DB.fetch(result);
         });
+    };
+
+    return self;
+})
+
+// Resource service example
+.factory('Article', function($http) {
+    var self = this;
+
+    self.list = function(category_id, rubric, limit, offset) {
+		var params = [];
+
+		if (category_id) {
+			params.push('category_id=' + category_id);
+		}
+
+		if (rubric) {
+			params.push('rubric=' + rubric);
+		}
+
+		if (limit) {
+			params.push('limit=' + limit);
+		}
+
+		if (offset) {
+			params.push('offset=' + offset);
+		}
+
+        return $http.get('/v1/articles' + params.length ? '?' + params.join('&') : '')
+		.then(function(resp){
+			return resp.data;
+		});
+    };
+
+    self.getById = function(id) {
+        return $http.get('/v1/articles/' + id)
+		.then(function(resp){
+			return resp.data;
+		});
     };
 
     return self;

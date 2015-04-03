@@ -121,9 +121,9 @@ app.controller('ProductCtrl', function($scope, $location, $stateParams, $ionicHi
       console.log(product)
 	});
 
-	Product.reviews($stateParams.id).then(function(resp){
-		$scope.reviews = resp.data;
-		console.log(resp.data);
+	Product.reviews($stateParams.id).then(function(reviews){
+		$scope.reviews = reviews;
+		console.log(reviews);
 	});
 });
 
