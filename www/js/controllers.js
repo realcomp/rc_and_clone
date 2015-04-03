@@ -127,6 +127,9 @@ app.controller('ProductCtrl', function($scope, $location, $stateParams, $ionicHi
 	   	item.created_date = dateObj;
 	   	console.log($scope.reviews);
 	  });
+	Product.reviews($stateParams.id).then(function(reviews){
+		$scope.reviews = reviews;
+		console.log(reviews);
 	});
 });
 
