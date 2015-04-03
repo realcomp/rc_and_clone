@@ -52,7 +52,6 @@ app.controller('CategoryCtrl', function($scope, $location, $stateParams, $ionicH
 
 	Category.getById($stateParams.id).then(function(category) {
       $scope.title = category.name
-      	console.log($scope.title)
       $scope.categories = [];
       $scope.noProducts = '';
 
@@ -67,7 +66,6 @@ app.controller('CategoryCtrl', function($scope, $location, $stateParams, $ionicH
 					Product.getByCategoryId($stateParams.id).then(function(products) {
 						if(products.length > 0) {
 
-							// #1 Нужен ли массив всех продуктов в категории?	
 							$scope.products = [];
 
 							$scope.productsPositive = [];
@@ -75,7 +73,7 @@ app.controller('CategoryCtrl', function($scope, $location, $stateParams, $ionicH
 							$scope.productsWait = [];
 
 							angular.forEach(products, function(product) {
-								// #1
+
 		      			$scope.products.push(product);
 
 		      			if(!product.tested) {
@@ -100,7 +98,6 @@ app.controller('CategoryCtrl', function($scope, $location, $stateParams, $ionicH
 				}
 
 			});
-
 	});
 
 });

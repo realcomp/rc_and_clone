@@ -14,8 +14,7 @@
 	<!-- END categories list -->
 
 	<!-- products list -->
-  <div ng-else-if="products">
-
+  <div ng-elseif="products">
 		<ul class="product__category-tabs-wrap">
 	    <li class="product__category-tabs" ng-repeat="t in tabsCatProductType" ng-click="tabsCategory($index)">
 	      <span ng-class="tabsClass(t)">
