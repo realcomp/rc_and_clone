@@ -4,10 +4,10 @@
 
 	<!-- categories list -->
 	<div ng-if="categories"> 
-	  <ion-list ng-if="categories">
-		  <ion-item ng-repeat="category in categories" href="#/app/category/{{ category.id }}">
+	  <ion-list ng-if="categories" class="categories-list">
+		  <ion-item class="item-icon-right" ng-repeat="category in categories" href="#/app/category/{{ category.id }}">
 		  	{{ category.name }}
-		  	<span class="badge badge-assertive">{{ category.product_count }}</span>
+		  	<i class="icon ion-chevron-right"></i>
 		  </ion-item>
 		</ion-list>
 	</div> 
@@ -24,6 +24,7 @@
   	</ul>
 
 		<ion-list>
+
 			<div ng-if="tabsCatProductType[0].active">
 				<ion-item ng-if="productsPositive.length === 0">В этой категории пока нет проверянных товаров!</ion-item>
 				<ion-item ng-repeat="product in productsPositive | orderBy:'-rating'" class="product__category" href="#/app/product/{{ product.id }}">
@@ -53,22 +54,23 @@
 			</div>
 
 			<div ng-if="tabsCatProductType[2].active">
-			<ion-item ng-if="productsBlack.length === 0">Ни один товар в категории не попал в черный список!</ion-item>
-			<ion-item ng-repeat="product in productsBlack | orderBy:'-rating'" class="product__category" href="#/app/product/{{ product.id }}">
-			  	<span class="product__category-thumbnail">
-			  		<img ng-src="{{ product.thumbnail }}" alt="{{ product.name }}">
-			  		<span class="img-loader"></span>
-			  	</span>
-			  	<span class="product__category-name">{{ product.name }}</span>
-			  	<span class="product__category-rating product-rating" ng-class="productRatingType(product)">
-			  		{{ product.ratingv }}
-			  	</span>
-			</ion-item>
+				<ion-item ng-if="productsBlack.length === 0">Ни один товар в категории не попал в черный список!</ion-item>
+				<ion-item ng-repeat="product in productsBlack | orderBy:'-rating'" class="product__category" href="#/app/product/{{ product.id }}">
+				  	<span class="product__category-thumbnail">
+				  		<img ng-src="{{ product.thumbnail }}" alt="{{ product.name }}">
+				  		<span class="img-loader"></span>
+				  	</span>
+				  	<span class="product__category-name">{{ product.name }}</span>
+				  	<span class="product__category-rating product-rating" ng-class="productRatingType(product)">
+				  		{{ product.ratingv }}
+				  	</span>
+				</ion-item>
 			</div>
 
 		  <div>
 		  	{{ noProducts }}
 		  </div>
+
 		</ion-list>
 
 	</div>
