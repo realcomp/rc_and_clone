@@ -66,6 +66,11 @@
 .item .item-content.activated {
     background: #FFF; 
 }
+.wrapping-list .item-content, .wrapping-list .item,
+.wrapping-list .item-content, .wrapping-list .item p {
+  overflow: initial;
+  white-space: normal;
+}
 
 
 /* 

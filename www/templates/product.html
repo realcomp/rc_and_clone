@@ -1,18 +1,37 @@
 <ion-view>
-<ion-nav-title> {{ title  }} </ion-nav-title>
-<ion-content>
-  <div style="margin-top: 100px;">
-  	<h2>{{ product.name }}</h2>
-  	<img width="300" height="300px" ng-src="{{ product.images }}">
+	<ion-nav-title> {{ title  }} </ion-nav-title>
+	<ion-content ng-controller='funcController'>
+	  <div style="margin-top: 100px;">
+	  	<h2>{{ product.name }}</h2>
+	  	<img width="200" height="200px" ng-src="{{ product.images }}">
+	  	<span class="product-rating" ng-class="productRatingType(product)">
+				{{ product.ratingv }}
+			</span>
 
-  </div>
+	  </div>
 
-  <ion-spinner ng-if="!reviews"></ion-spinner>
-
-  <ion-list ng-if="reviews">
-    <ion-item ng-repeat="review in reviews.items">
-	  {{ review.text }}
-	</ion-item>
-  </ion-list>
-</ion-content>
+	  <ion-spinner icon="circles" ng-if="!reviews"></ion-spinner>
+		
+		<p>Всего отзывов: {{ reviews.total_count }}</p>
+	  <ion-list class="wrapping-list" ng-if="reviews">
+	    <ion-item ng-repeat="review in reviews.items">
+	    <p><strong>Автор:</strong></p>
+	    <p>{{ review.user.name }}</p>
+	    <p><strong>Дата:</strong></p>
+	    <p>{{ review.created_date }}</p>
+	    <p><strong>Оценка:</strong></p>
+	    <p>{{ review.mark }} из 5</p>
+		  <p><strong>Достоинства: </strong></p>
+		  <p>{{ review.advantages }}</p>
+		  <p><strong>Недостатки: </strong></p>
+		  <p>{{ review.disadvantages }}</p>
+		  <p><strong>Комментарий: </strong></p>
+		  <p>{{ review.text }}</p>
+		</ion-item>
+	  </ion-list>
+	  <ion-slide-box>
+  <ion-slide>1</ion-slide>
+  <ion-slide>2</ion-slide>
+</ion-slide-box>
+	</ion-content>
 </ion-view>

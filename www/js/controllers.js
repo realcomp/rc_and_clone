@@ -87,9 +87,6 @@ app.controller('CategoryCtrl', function($scope, $location, $stateParams, $ionicH
 		      			}
 
 		    			});
-		    			console.log('positive', $scope.productsPositive);
-		    			console.log('wait', $scope.productsWait);
-		    			console.log('black', $scope.productsBlack);
 						}
 						else {
 							$scope.noProducts = true;
@@ -123,7 +120,13 @@ app.controller('ProductCtrl', function($scope, $location, $stateParams, $ionicHi
 
 	Product.reviews($stateParams.id).then(function(resp){
 		$scope.reviews = resp.data;
-		console.log(resp.data);
+		angular.forEach(resp.data.items, function(item) {
+	   	var date = item.created_at;
+	   	date = date.split('T').splice(0, 1).join('-').split('-');
+	   	dateObj = date[2] + '.' + date[1] + '.' + date[0];
+	   	item.created_date = dateObj;
+	   	console.log($scope.reviews);
+	  });
 	});
 });
 

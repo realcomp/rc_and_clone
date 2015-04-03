@@ -6,6 +6,8 @@ app.controller('funcController', function($scope) {
 
 	// Вернет класс оформления для рейтинга
 	$scope.productRatingType = function(product) {
+
+		console.log('РЕЙТИНГ', product);
 		product.ratingv = product.rating;
 
   	if(product.tested == 0) {
