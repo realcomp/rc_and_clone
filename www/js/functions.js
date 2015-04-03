@@ -2,6 +2,8 @@
 // Контроллер для функций
 app.controller('funcController', function($scope) {
 
+	$scope.orderProp = '-rating';
+
 	// Вернет класс оформления для рейтинга
 	$scope.productRatingType = function(product) {
 		product.ratingv = product.rating;
@@ -42,10 +44,10 @@ app.controller('funcController', function($scope) {
   	return result;
 	};
 
-	//
+	// Табы на странице категорий с товарами
   $scope.tabsCatProductType = [
   	{
-		  title : "Проверянные товары", active : true,
+		  title : "Проверянные", active : true,
 		},
     { 
       title: "Ожидают проверки", active : false 
@@ -54,7 +56,6 @@ app.controller('funcController', function($scope) {
       title: "Черный список", active : false 
     }
   ];
-
   $scope.tabsCategory = function(o) {
     for (var i = 0; i <= $scope.tabsCatProductType.length - 1; i++) {
       $scope.tabsCatProductType[i].active = false;
@@ -62,12 +63,12 @@ app.controller('funcController', function($scope) {
     $scope.tabsCatProductType[o].active = true;
 
   };
-
   $scope.tabsClass = function(item) {
   	if(item.active) {
   		return 'product__category-tabs-active';
   	}
   	return 'product__category-tabs-deactive';
   }
+
 
 });

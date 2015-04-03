@@ -96,18 +96,22 @@
 .product__rating-green {
 	background: #093;
 }
-.img-loader {
-	display: block;
-	width: 48px;
-  height: 48px;
+.loader {
+  display: block;
+  width: 30px;
+  height: 30px;
   position: absolute;
   top: 50%;
   left: 50%;
-  margin: -24px 0 0 -24px;
-  background: url('../img/loader.gif') no-repeat;
+  margin: -15px 0 0 -15px;
   z-index: 2;
 }
-
+.product__empty {
+	margin: 10px 0;
+	display: block;
+	font-size: 16px;
+	text-align: center;
+}
 
 
 /* 
@@ -205,7 +209,7 @@
 .product__category-tabs {
 	display: inline-block;
 	width: 33.3%;
-	margin: 10px 0;
+	margin: 10px 0 12px 0px;
   font-size: 15px;
   border-right: 1px solid #FFF;
   cursor: pointer;
@@ -222,6 +226,10 @@
 .product__category-tabs-active{
 	background: #C80020;
 }
+.product__category-filter-wrap {
+	margin: 0 0 10px 0;
+}
+
 
 
 /* 

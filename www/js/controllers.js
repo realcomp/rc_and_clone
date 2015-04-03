@@ -32,7 +32,7 @@ app.controller('MainCtrl', function($scope, $ionicLoading, $interval, Category, 
     });
     $scope.roots = roots;
     $scope.inf = '';
-	$ionicLoading.hide();
+		$ionicLoading.hide();
   	});
 	})
 
@@ -53,8 +53,7 @@ app.controller('CategoryCtrl', function($scope, $location, $stateParams, $ionicH
 	Category.getById($stateParams.id).then(function(category) {
       $scope.title = category.name
       $scope.categories = [];
-      $scope.noProducts = '';
-	  $scope.products = false;
+      $scope.noProducts = false;
 
 			Category.childsByObj(category, category.lvl+1).then(function(categories) {
 
@@ -93,7 +92,7 @@ app.controller('CategoryCtrl', function($scope, $location, $stateParams, $ionicH
 		    			console.log('black', $scope.productsBlack);
 						}
 						else {
-							$scope.noProducts = 'Извините, товаров пока не добавлены!';
+							$scope.noProducts = true;
 						}
 					});
 				}

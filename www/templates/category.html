@@ -14,23 +14,35 @@
 	<!-- END categories list -->
 
 	<!-- products list -->
-  <div ng-elseif="products">
-		<ul ng-if="products" class="product__category-tabs-wrap">
-	    <li class="product__category-tabs" ng-repeat="t in tabsCatProductType" ng-click="tabsCategory($index)">
-	      <span ng-class="tabsClass(t)">
-	      	{{t.title}}
+  <div ng-if="products.length > 0">
+
+		<ul class="product__category-tabs-wrap">
+	    <li class="product__category-tabs" ng-repeat="tab in tabsCatProductType" ng-click="tabsCategory($index)">
+	      <span ng-class="tabsClass(tab)">
+	      	{{tab.title}}
 	      </span>
 	    </li>
   	</ul>
+		
+		<div class="product__category-filter-wrap">
+  	<select ng-model="orderProp">
+	  	<option value="-rating">по рейтингу</option>
+	  	<option value="rating">по рейтингу(по возврастанию)</option>
+	  	<option value="-danger_level">по опасности</option>
+	  	<option value="danger_level">по опасности(по возврастанию)</option>
+	  	<option value="-price">по цене</option>
+	  	<option value="price">по цене(по возврастанию)</option>
+  	</select>
+  	</div>
 
 		<ion-list>
 
 			<div ng-if="tabsCatProductType[0].active">
 				<ion-item ng-if="productsPositive.length === 0">В этой категории пока нет проверянных товаров!</ion-item>
-				<ion-item ng-repeat="product in productsPositive | orderBy:'-rating'" class="product__category" href="#/app/product/{{ product.id }}">
+				<ion-item ng-repeat="product in productsPositive | filter:query | orderBy: orderProp" class="product__category" href="#/app/product/{{ product.id }}">
 				  	<span class="product__category-thumbnail">
 				  		<img ng-src="{{ product.thumbnail }}" alt="{{ product.name }}">
-				  		<span class="img-loader"></span>
+				  		<ion-spinner icon="circles" class="loader"></ion-spinner>
 				  	</span>
 				  	<span class="product__category-name">{{ product.name }}</span>
 				  	<span class="product__category-rating product-rating" ng-class="productRatingType(product)">
@@ -40,11 +52,11 @@
 			</div>
 
 			<div ng-if="tabsCatProductType[1].active">
-				<ion-item ng-if="productsWait === 0">Нет товаров в статусе "Ожидают проверки"!</ion-item>
-				<ion-item ng-repeat="product in productsWait | orderBy:'-rating'" class="product__category" href="#/app/product/{{ product.id }}">
+				<ion-item ng-if="productsWait.length === 0">Нет товаров в статусе "Ожидают проверки"!</ion-item>
+				<ion-item ng-repeat="product in productsWait | filter:query | orderBy: orderProp" class="product__category" href="#/app/product/{{ product.id }}">
 				  	<span class="product__category-thumbnail">
 				  		<img ng-src="{{ product.thumbnail }}" alt="{{ product.name }}">
-				  		<span class="img-loader"></span>
+				  		<ion-spinner icon="circles" class="loader"></ion-spinner>
 				  	</span>
 				  	<span class="product__category-name">{{ product.name }}</span>
 				  	<span class="product__category-rating product-rating" ng-class="productRatingType(product)">
@@ -55,10 +67,10 @@
 
 			<div ng-if="tabsCatProductType[2].active">
 				<ion-item ng-if="productsBlack.length === 0">Ни один товар в категории не попал в черный список!</ion-item>
-				<ion-item ng-repeat="product in productsBlack | orderBy:'-rating'" class="product__category" href="#/app/product/{{ product.id }}">
+				<ion-item ng-repeat="product in productsBlack | filter:query | orderBy: orderProp" class="product__category" href="#/app/product/{{ product.id }}">
 				  	<span class="product__category-thumbnail">
 				  		<img ng-src="{{ product.thumbnail }}" alt="{{ product.name }}">
-				  		<span class="img-loader"></span>
+				  		<ion-spinner icon="circles" class="loader"></ion-spinner>
 				  	</span>
 				  	<span class="product__category-name">{{ product.name }}</span>
 				  	<span class="product__category-rating product-rating" ng-class="productRatingType(product)">
@@ -67,14 +79,14 @@
 				</ion-item>
 			</div>
 
-		  <div>
-		  	{{ noProducts }}
-		  </div>
-
 		</ion-list>
 
 	</div>
 	<!-- END products list -->
+
+	<div ng-if="noProducts">
+  	<span class="product__empty">Товары в эту категорию еще не были добавлены..</span>
+  </div>
 		
 	</ion-content>
 </ion-view>
