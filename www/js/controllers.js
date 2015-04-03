@@ -54,7 +54,7 @@ app.controller('CategoryCtrl', function($scope, $location, $stateParams, $ionicH
       $scope.title = category.name
       	console.log($scope.title)
       $scope.categories = [];
-      $scope.noInformation = '';
+      $scope.noProducts = '';
 
 			Category.childsByObj(category, category.lvl+1).then(function(categories) {
 
@@ -66,14 +66,35 @@ app.controller('CategoryCtrl', function($scope, $location, $stateParams, $ionicH
 				else {
 					Product.getByCategoryId($stateParams.id).then(function(products) {
 						if(products.length > 0) {
+
+							// #1 Нужен ли массив всех продуктов в категории?	
 							$scope.products = [];
+
+							$scope.productsPositive = [];
+							$scope.productsBlack = [];
+							$scope.productsWait = [];
+
 							angular.forEach(products, function(product) {
+								// #1
 		      			$scope.products.push(product);
+
+		      			if(!product.tested) {
+		      				$scope.productsWait.push(product);
+		      			}
+		      			else if(product.tested && product.danger_level > 1) {
+		      				$scope.productsBlack.push(product);
+		      			}
+		      			else {
+		      				$scope.productsPositive.push(product);
+		      			}
+
 		    			});
-		    			console.log($scope.products);
+		    			console.log('positive', $scope.productsPositive);
+		    			console.log('wait', $scope.productsWait);
+		    			console.log('black', $scope.productsBlack);
 						}
 						else {
-							$scope.noInformation = 'В данной категории пока нет продуктов!';
+							$scope.noProducts = 'Извините, товаров пока не добавлены!';
 						}
 					});
 				}

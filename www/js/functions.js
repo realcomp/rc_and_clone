@@ -5,7 +5,6 @@ app.controller('funcController', function($scope) {
 	// Вернет класс оформления для рейтинга
 	$scope.productRatingType = function(product) {
 		product.ratingv = product.rating;
-		//console.log(rating, tested, dangerLevel)
 
   	if(product.tested == 0) {
   		product.ratingv = '?';
@@ -24,22 +23,51 @@ app.controller('funcController', function($scope) {
 
   }
 
+  // Вернет слово в правильном склонении
   $scope.declension = function(num, expressions) {
-	    var result;
-	    count = num % 100;
-	    if (count >= 5 && count <= 20) {
-	        result = expressions['2'];
-	    } else {
-	        count = count % 10;
-	        if (count == 1) {
-	            result = expressions['0'];
-	        } else if (count >= 2 && count <= 4) {
-	            result = expressions['1'];
-	        } else {
-	            result = expressions['2'];
-	        }
-	    }
-	  	return result;
-		}
+    var result;
+    count = num % 100;
+    if (count >= 5 && count <= 20) {
+        result = expressions['2'];
+    } else {
+        count = count % 10;
+        if (count == 1) {
+            result = expressions['0'];
+        } else if (count >= 2 && count <= 4) {
+            result = expressions['1'];
+        } else {
+            result = expressions['2'];
+        }
+    }
+  	return result;
+	};
+
+	//
+  $scope.tabsCatProductType = [
+  	{
+		  title : "Проверянные товары", active : true,
+		},
+    { 
+      title: "Ожидают проверки", active : false 
+    },
+    { 
+      title: "Черный список", active : false 
+    }
+  ];
+
+  $scope.tabsCategory = function(o) {
+    for (var i = 0; i <= $scope.tabsCatProductType.length - 1; i++) {
+      $scope.tabsCatProductType[i].active = false;
+    }
+    $scope.tabsCatProductType[o].active = true;
+
+  };
+
+  $scope.tabsClass = function(item) {
+  	if(item.active) {
+  		return 'product__category-tabs-active';
+  	}
+  	return 'product__category-tabs-deactive';
+  }
 
 });
