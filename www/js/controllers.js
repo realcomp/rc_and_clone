@@ -1,13 +1,28 @@
 var app = angular.module('starter.controllers', []);
 
 // Контроллер главной
-app.controller('MainCtrl', function($scope, Category, DB) {
+app.controller('MainCtrl', function($scope, $ionicLoading, $interval, Category, DB) {
 
 	console.log('controller');
+	$scope.percent = DB.percentLoading();
+	var getPercent = function(){ $scope.percent = DB.percentLoading(); };
+	var intervalPercent = $interval(function(){
+		getPercent();
+	}, 500);
+	$scope.loadingIndicator = $ionicLoading.show({
+	    content: 'Loading Data',
+	    animation: 'fade-in',
+	    showBackdrop: false,
+	    maxWidth: 200,
+	    showDelay: 500
+	});
 	$scope.roots = [];
 	$scope.inf = 'ЗАГРУЖАЮ';
 	$scope.title = 'Рейтинг товаров';
 	DB.loading().then(function() {
+		$scope.percent = 100;
+		$interval.cancel( intervalPercent );
+		intervalPercent = undefined;
 		console.log("controler loading");
 		Category.roots().then(function(roots) {
 			angular.forEach(roots, function(root) {		
@@ -17,6 +32,7 @@ app.controller('MainCtrl', function($scope, Category, DB) {
     });
     $scope.roots = roots;
     $scope.inf = '';
+	$ionicLoading.hide();
   	});
 	})
 

@@ -2,16 +2,30 @@ angular.module('db-services', ['db.config'])
 // DB wrapper
 .factory('DB', function($q, $http, DB_CONFIG) {
     var self = this;
+	var load_slices = 0;
+    var ptables = {};
+	var count_slices = 0;
+
     self.db = null;
     self.meta_server = null;
     self.meta_db = null;
     self.loaded = false;
     self.deferred = $q.defer();
 
-    var ptables = {};
-
     self.loading = function() {
         return self.deferred.promise;
+    };
+
+    self.getLoaded = function() {
+        return self.loaded;
+    };
+
+    self.percentLoading = function() {
+		if (self.loaded) {
+			return 100;
+		}
+//		return load_slices;
+        return count_slices ? parseInt(load_slices * 100 / count_slices) : 0;
     };
 
     self.init = function() {
@@ -68,8 +82,8 @@ angular.module('db-services', ['db.config'])
                     });
 
                     //console.log(resp.data);
+					count_slices++;
                     self.load(self.meta_server);
-                    console.log("loaded", self.loaded);
                     self.query('SELECT * FROM metadata ORDER BY version DESC LIMIT 1').then(function(result){
                             //console.log("result meta", result);
                         }, function(err){
@@ -99,16 +113,27 @@ angular.module('db-services', ['db.config'])
         url = url.replace('http://api.roscontrol.com', '');
         //console.log("DEBUG url", url);
         $http.get(url).then(function(resp){
-                console.info("version "+resp.data.version, "full dump " + resp.data.full_dump);
-                console.info("slices count "+resp.data.slices.length);
                 var slices = resp.data.slices;
+				count_slices += slices.length;
+                console.info("version "+resp.data.version, "full dump " + resp.data.full_dump);
+                console.info("slices count "+slices.length);
 //                console.log(resp.data);
+var count = 0;
+var count_cat = 0;
 
                 angular.forEach(slices, function(slice){
+					count++;
 //                    console.log(slice);
 //                    console.log("slice type "+slice.entity_type, slice.min_id, slice.max_id);
+					if (slice.data.length == 0) {
+						load_slices++;
+						return;
+					}
+
                     if (slice.entity_type == 'category') {
+						count_cat++;
                         self.slice_category(slice.data);
+//						console.log("cat data len", slice.data.length, count_cat);
                     } else if (slice.entity_type == 'product') {
                         self.slice_product(slice.data);
                     } else if (slice.entity_type == 'company') {
@@ -118,7 +143,11 @@ angular.module('db-services', ['db.config'])
                     }
                 });
 
-/*                console.info("recount data");
+				console.log("count slice", count);
+				console.log("count cat slice", count_cat);
+				console.info("slices end");
+
+				/*                console.info("recount data");
                 // подсчет количества продуктов для категории
                 // подсчет детей в категории
                 self.query('SELECT * FROM categories').then(function(res){
@@ -144,8 +173,9 @@ angular.module('db-services', ['db.config'])
                 self.query('INSERT INTO metadata VALUES (?, "", "")', [meta.version]).then(
                     function(res){
                         console.log("INSERT VERSION "+meta.version);
-                        self.deferred.resolve({loaded: true});
                         self.loaded = true;
+						load_slices++;
+                        self.deferred.resolve({loaded: true});
                 }, function(err){
                     console.error("INSERT VERSION", err);
                     self.deferred.resolve({loaded: false});
@@ -159,6 +189,9 @@ angular.module('db-services', ['db.config'])
     };
 
     self.slice_category = function(data) {
+		var data_count = data.length;
+		var count = 0;
+
         angular.forEach(data, function(category) {
             if (category.id == 0) {
                 // пропускаем эту пустую категорию, чуваки не умеют работать с нестед деревом
@@ -189,6 +222,12 @@ angular.module('db-services', ['db.config'])
             ];
 //            console.log(query, values);
             self.query(query, values).then(function(res){
+				count ++;
+
+				if (count == data_count) {
+					load_slices++;
+//					console.log("data count", count, data_count, load_slices);
+				}
 //                    console.log("Insert " + res.insertId);
                 }, function(err){
                     console.error(err);
@@ -197,6 +236,9 @@ angular.module('db-services', ['db.config'])
     };
 
     self.slice_product = function(data) {
+		var data_count = data.length;
+		var count = 0;
+
         angular.forEach(data, function(product) {
             var tname = 'products';
             var query = 'INSERT INTO ' + tname + ' ('+ptables[tname].fields.join(',')+') VALUES ('+ptables[tname].places.join(',')+')';
@@ -214,6 +256,11 @@ angular.module('db-services', ['db.config'])
             ];
 //            console.log(query, values);
             self.query(query, values).then(function(res){
+				count ++;
+
+				if (count == data_count) {
+					load_slices++;
+				}
 //                    console.log("Insert " + res.insertId);
                 }, function(err){
                     console.error(err);
@@ -222,6 +269,8 @@ angular.module('db-services', ['db.config'])
     };
 
     self.slice_company = function(data) {
+		var data_count = data.length;
+		var count = 0;
         angular.forEach(data, function(company) {
             var query = 'INSERT INTO companies (id,name) VALUES (?,?)';
             var values = [
@@ -230,6 +279,11 @@ angular.module('db-services', ['db.config'])
             ];
 //            console.log(query, values);
             self.query(query, values).then(function(res){
+				count ++;
+
+				if (count == data_count) {
+					load_slices++;
+				}
 //                    console.log("Insert " + res.insertId);
                 }, function(err){
                     console.error(err);
@@ -238,6 +292,8 @@ angular.module('db-services', ['db.config'])
     };
 
     self.slice_rating = function(data) {
+		var data_count = data.length;
+		var count = 0;
         angular.forEach(data, function(rating) {
             var query = 'INSERT INTO ratings (id,name) VALUES (?,?)';
             var values = [
@@ -246,6 +302,11 @@ angular.module('db-services', ['db.config'])
             ];
 //            console.log(query, values);
             self.query(query, values).then(function(res){
+				count ++;
+
+				if (count == data_count) {
+					load_slices++;
+				}
 //                    console.log("Insert " + res.insertId);
                 }, function(err){
                     console.error(err);

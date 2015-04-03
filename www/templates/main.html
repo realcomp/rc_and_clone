@@ -1,7 +1,10 @@
 <ion-view >
 <ion-nav-title> {{ title }} </ion-nav-title>
   <ion-content>
-  	<h1 style="text-align: center;margin-bottom: 0;" >{{ inf }}</h1>
+    <div ng-hide="percent == 100">
+  	<h1 style="text-align: center;margin-bottom: 0;" >{{ inf }} {{ percent }} %</h1>
+	<progress max="100" value="{{ percent }}"> </progress>
+	</div>
     <ion-list class="main__category-wrap">
       <ion-item class="main__category-item" ng-repeat="item in roots | orderBy:'position'" href="#/app/category/{{item.id}}" ng-style="{'background': 'url(http://api.roscontrol.com/assets/icons/ios2x/' + item.background + ')'}">
       		<ion-item class="main__category-icon" ng-style="{'background': 'url(http://api.roscontrol.com/assets/icons/ios2x/' + item.icon + ')'}">
