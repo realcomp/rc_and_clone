@@ -29,7 +29,7 @@
 				<ion-item ng-if="productsPositive.length === 0">В этой категории пока нет проверянных товаров!</ion-item>
 				<ion-item ng-repeat="product in productsPositive | orderBy:'-rating'" class="product__category" href="#/app/product/{{ product.id }}">
 				  	<span class="product__category-thumbnail">
-				  		<img src="{{ product.thumbnail }}" alt="{{ product.name }}">
+				  		<img ng-src="{{ product.thumbnail }}" alt="{{ product.name }}">
 				  		<span class="img-loader"></span>
 				  	</span>
 				  	<span class="product__category-name">{{ product.name }}</span>
@@ -43,7 +43,7 @@
 				<ion-item ng-if="productsWait === 0">Нет товаров в статусе "Ожидают проверки"!</ion-item>
 				<ion-item ng-repeat="product in productsWait | orderBy:'-rating'" class="product__category" href="#/app/product/{{ product.id }}">
 				  	<span class="product__category-thumbnail">
-				  		<img src="{{ product.thumbnail }}" alt="{{ product.name }}">
+				  		<img ng-src="{{ product.thumbnail }}" alt="{{ product.name }}">
 				  		<span class="img-loader"></span>
 				  	</span>
 				  	<span class="product__category-name">{{ product.name }}</span>
@@ -57,7 +57,7 @@
 			<ion-item ng-if="productsBlack.length === 0">Ни один товар в категории не попал в черный список!</ion-item>
 			<ion-item ng-repeat="product in productsBlack | orderBy:'-rating'" class="product__category" href="#/app/product/{{ product.id }}">
 			  	<span class="product__category-thumbnail">
-			  		<img src="{{ product.thumbnail }}" alt="{{ product.name }}">
+			  		<img ng-src="{{ product.thumbnail }}" alt="{{ product.name }}">
 			  		<span class="img-loader"></span>
 			  	</span>
 			  	<span class="product__category-name">{{ product.name }}</span>
