@@ -54,6 +54,7 @@ app.controller('CategoryCtrl', function($scope, $location, $stateParams, $ionicH
       $scope.title = category.name
       $scope.categories = [];
       $scope.noProducts = '';
+	  $scope.products = false;
 
 			Category.childsByObj(category, category.lvl+1).then(function(categories) {
 
