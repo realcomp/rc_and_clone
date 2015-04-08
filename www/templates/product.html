@@ -11,27 +11,24 @@
 	  </div>
 
 	  <ion-spinner icon="circles" ng-if="!reviews"></ion-spinner>
-		
 		<p>Всего отзывов: {{ reviews.total_count }}</p>
-	  <ion-list class="wrapping-list" ng-if="reviews">
-	    <ion-item ng-repeat="review in reviews.items">
-	    <p><strong>Автор:</strong></p>
-	    <p>{{ review.user.name }}</p>
-	    <p><strong>Дата:</strong></p>
-	    <p>{{ review.created_date }}</p>
-	    <p><strong>Оценка:</strong></p>
-	    <p>{{ review.mark }} из 5</p>
-		  <p><strong>Достоинства: </strong></p>
-		  <p>{{ review.advantages }}</p>
-		  <p><strong>Недостатки: </strong></p>
-		  <p>{{ review.disadvantages }}</p>
-		  <p><strong>Комментарий: </strong></p>
-		  <p>{{ review.text }}</p>
-		</ion-item>
-	  </ion-list>
-	  <ion-slide-box>
-  <ion-slide>1</ion-slide>
-  <ion-slide>2</ion-slide>
-</ion-slide-box>
+		<ion-slide-box ng-if="reviews">            
+      <ion-slide ng-repeat="review in reviews.items">
+        <p><strong>Автор:</strong></p>
+		    <p>{{ review.user.name }}</p>
+		    <p><strong>Дата:</strong></p>
+		    <p>{{ review.created_date }}</p>
+		    <p><strong>Оценка:</strong></p>
+		    <p>{{ review.mark }} из 5</p>
+			  <p><strong>Достоинства: </strong></p>
+			  <p>{{ review.advantages }}</p>
+			  <p><strong>Недостатки: </strong></p>
+			  <p>{{ review.disadvantages }}</p>
+			  <p><strong>Комментарий: </strong></p>
+			  <p>{{ review.text }}</p>
+			  <button ng-click="prevSlide()"> < Туда</button>
+			  <button ng-click="nextSlide()">Сюда ></button>
+      </ion-slide>
+   	</ion-slide-box>
 	</ion-content>
 </ion-view>

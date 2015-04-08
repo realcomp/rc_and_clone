@@ -119,18 +119,20 @@ app.controller('ProductCtrl', function($scope, $location, $stateParams, $ionicHi
 	});
 
 	Product.reviews($stateParams.id).then(function(resp){
-		$scope.reviews = resp.data;
-		angular.forEach(resp.data.items, function(item) {
+		$scope.reviews = resp;
+
+		// Преобразованная дата для каждого элемента
+		angular.forEach(resp.items, function(item) {
 	   	var date = item.created_at;
 	   	date = date.split('T').splice(0, 1).join('-').split('-');
 	   	dateObj = date[2] + '.' + date[1] + '.' + date[0];
 	   	item.created_date = dateObj;
-	   	console.log($scope.reviews);
 	  });
-	Product.reviews($stateParams.id).then(function(reviews){
-		$scope.reviews = reviews;
-		console.log(reviews);
+
+	 	console.log('ОБЬЕКТ С КОММЕНТАРИЯМИ', $scope.reviews);
 	});
+
+
 });
 
 

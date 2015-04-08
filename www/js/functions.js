@@ -1,13 +1,11 @@
 
 // Контроллер для функций
-app.controller('funcController', function($scope) {
+app.controller('funcController', function($scope, $ionicSlideBoxDelegate) {
 
 	$scope.orderProp = '-rating';
 
 	// Вернет класс оформления для рейтинга
 	$scope.productRatingType = function(product) {
-
-		console.log('РЕЙТИНГ', product);
 		product.ratingv = product.rating;
 
   	if(product.tested == 0) {
@@ -70,6 +68,14 @@ app.controller('funcController', function($scope) {
   		return 'product__category-tabs-active';
   	}
   	return 'product__category-tabs-deactive';
+  }
+
+  // Методы для работы слайдера в отзывах
+  $scope.nextSlide = function() {
+    $ionicSlideBoxDelegate.next();
+  }
+  $scope.prevSlide = function() {
+    $ionicSlideBoxDelegate.previous();
   }
 
 
