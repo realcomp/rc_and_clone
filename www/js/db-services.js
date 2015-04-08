@@ -223,7 +223,8 @@ var count_cat = 0;
                 category.name,
                 JSON.stringify(category.price_postfix),
                 JSON.stringify(category.rating_ids),
-                JSON.stringify(category.highlighted_product_ids || [])
+                JSON.stringify(category.highlighted_product_ids || []),
+                'properties' in category && category.properties ? JSON.stringify(category.properties) : ''
             ];
 //            console.log(query, values);
             self.query(query, values).then(function(res){

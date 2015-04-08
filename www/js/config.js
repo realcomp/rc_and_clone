@@ -30,7 +30,8 @@ angular.module('db.config', [])
                 {name: 'name', type: 'text'},
                 {name: 'price_postfix', type: 'text'},
                 {name: 'rating_ids', type: 'text'},
-                {name: 'highlighted_product_ids', type: 'text'}
+                {name: 'highlighted_product_ids', type: 'text'},
+                {name: 'properties', type: 'text'}
             ],
         },
         {
