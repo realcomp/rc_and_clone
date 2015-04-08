@@ -7,11 +7,10 @@
 	  	<span class="product-rating" ng-class="productRatingType(product)">
 				{{ product.ratingv }}
 			</span>
-
 	  </div>
 
 	  <ion-spinner icon="circles" ng-if="!reviews"></ion-spinner>
-		<ion-pane>Всего отзывов: {{ reviews.total_count }}</ion-pane>
+		<span>Всего отзывов: {{ reviews.total_count }}</span>
 		<ion-slide-box ng-if="reviews">            
       <ion-slide ng-repeat="review in reviews.items">
         <p><strong>Автор:</strong></p>
