@@ -132,7 +132,7 @@ app.controller('ProductCtrl', function($scope, $location, $stateParams, $ionicHi
 	 	console.log('ОБЬЕКТ С КОММЕНТАРИЯМИ', $scope.reviews);
 	});
 
-
 });
+
 
 
