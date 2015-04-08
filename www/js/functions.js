@@ -1,6 +1,6 @@
 
-// Контроллер для функций
-app.controller('funcController', function($scope, $ionicSlideBoxDelegate) {
+// Контроллер для общих функций и динамичных элементов
+app.controller('funcController', function($scope, $ionicSlideBoxDelegate, $ionicActionSheet) {
 
 	$scope.orderProp = '-rating';
 
@@ -76,6 +76,27 @@ app.controller('funcController', function($scope, $ionicSlideBoxDelegate) {
   }
   $scope.prevSlide = function() {
     $ionicSlideBoxDelegate.previous();
+  }
+
+  //  Возможно для сортировки будет использовать такую область
+   $scope.asShow = function() {
+		$ionicActionSheet.show({
+			template: '<select ng-model="orderProp">',
+     	buttons: [
+       		{ text: '<option value="-rating">по рейтингу</option>' },
+       		{ text: '<option value="rating">по рейтингу(по возврастанию)</option>' }
+     	],
+  	  titleText: 'Сортировать по:',
+     	cancelText: 'Закрыть',
+     	buttonClicked: function(index) {
+				console.log('Click button ActionSheet');
+       	return true;
+     	},
+      cancelOnStateChange: function() {
+      	console.log('Click close ActionSheet close');
+        return true;
+      }
+   	});
   }
 
 

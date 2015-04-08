@@ -11,7 +11,7 @@
 	  </div>
 
 	  <ion-spinner icon="circles" ng-if="!reviews"></ion-spinner>
-		<p>Всего отзывов: {{ reviews.total_count }}</p>
+		<ion-pane>Всего отзывов: {{ reviews.total_count }}</ion-pane>
 		<ion-slide-box ng-if="reviews">            
       <ion-slide ng-repeat="review in reviews.items">
         <p><strong>Автор:</strong></p>
