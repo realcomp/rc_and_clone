@@ -10,8 +10,9 @@
 	  </div>
 
 	  <ion-spinner icon="circles" ng-if="!reviews"></ion-spinner>
-		<p>Всего отзывов: {{ reviews.total_count }}</p>
-		<p>Средняя оценка: {{ reviews.avg_mark }}</p>
+		<p ng-if="reviews.total_count == 0" >Отзывов пока нет, будьте первым!</p>
+		<p ng-if="reviews.total_count != 0" >Всего отзывов: {{ reviews.total_count }}</p>
+		<p ng-if="reviews.total_count != 0">Средняя оценка: {{ reviews.avg_mark }}</p>
 		<ion-slide-box ng-if="reviews">            
       <ion-slide ng-repeat="review in reviews.items">
         <p><strong>Автор:</strong></p>
@@ -26,9 +27,9 @@
 			  <p>{{ review.disadvantages }}</p>
 			  <p><strong>Комментарий: </strong></p>
 			  <p>{{ review.text }}</p>
-			  <button ng-click="prevSlide()"> < Туда</button>
-			  <button ng-click="nextSlide()">Сюда ></button>
       </ion-slide>
    	</ion-slide-box>
+		<button ng-click="prevSlide()"> < Туда</button>
+	  <button ng-click="nextSlide()">Сюда ></button>
 	</ion-content>
 </ion-view>
