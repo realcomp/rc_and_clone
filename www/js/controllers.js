@@ -112,6 +112,7 @@ app.controller('ProductCtrl', function($scope, $location, $stateParams, $ionicHi
 	}
 
 	$scope.reviews = null;
+
 	Product.getById($stateParams.id).then(function(product) {
       $scope.title = product.name
       $scope.product = product;

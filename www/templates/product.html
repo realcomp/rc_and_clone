@@ -1,7 +1,7 @@
 <ion-view>
 	<ion-nav-title> {{ title  }} </ion-nav-title>
 	<ion-content ng-controller='funcController'>
-	  <div style="margin-top: 100px;">
+	  <div style="margin-top: 100px;" ng-if="product">
 	  	<h2>{{ product.name }}</h2>
 	  	<img width="200" height="200px" ng-src="{{ product.images }}">
 	  	<span class="product-rating" ng-class="productRatingType(product)">
@@ -10,7 +10,8 @@
 	  </div>
 
 	  <ion-spinner icon="circles" ng-if="!reviews"></ion-spinner>
-		<span>Всего отзывов: {{ reviews.total_count }}</span>
+		<p>Всего отзывов: {{ reviews.total_count }}</p>
+		<p>Средняя оценка: {{ reviews.avg_mark }}</p>
 		<ion-slide-box ng-if="reviews">            
       <ion-slide ng-repeat="review in reviews.items">
         <p><strong>Автор:</strong></p>
