@@ -100,7 +100,7 @@ app.controller('CategoryCtrl', function($scope, $location, $stateParams, $ionicH
 });
 
 // Контроллер товаров
-app.controller('ProductCtrl', function($scope, $location, $stateParams, $ionicHistory, Product) {
+app.controller('ProductCtrl', function($scope, $location, $stateParams, $ionicHistory, Product, Category) {
 
 	var onlyNumber = !isNaN(parseFloat($stateParams.id)) && isFinite($stateParams.id) && (0 < $stateParams.id);
 	if(!onlyNumber) {
@@ -113,12 +113,16 @@ app.controller('ProductCtrl', function($scope, $location, $stateParams, $ionicHi
 
 	$scope.reviews = null;
 
+	// Общая информация
 	Product.getById($stateParams.id).then(function(product) {
       $scope.title = product.name
       $scope.product = product;
-      console.log(product)
+      Category.getById(product.category_id).then(function(category) {
+      	$scope.title = category.name;
+      });
 	});
 
+	// Отзывы
 	Product.reviews($stateParams.id).then(function(resp){
 		$scope.reviews = resp;
 
