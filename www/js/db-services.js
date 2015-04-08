@@ -43,13 +43,18 @@ angular.module('db-services', ['db.config'])
  
         angular.forEach(DB_CONFIG.tables, function(table) {
             var columns = [];
-            ptables[table.name] = {places: [], fields: []};
+            var places = [];
+            var fields = [];
+            ptables[table.name] = {places: '', fields: ''};
  
             angular.forEach(table.columns, function(column) {
                 columns.push(column.name + ' ' + column.type);
-                ptables[table.name].places.push('?');
-                ptables[table.name].fields.push(column.name);
+                places.push('?');
+                fields.push(column.name);
             });
+            // оптимизация, чтоб не делать в каждом цикле слайса продукта и категории
+            ptables[table.name].fields = fields.join(',');
+            ptables[table.name].places = places.join(',');
  
             var query = 'CREATE TABLE IF NOT EXISTS ' + table.name + ' (' + columns.join(',') + ')';
             self.query(query).then(function(res){
@@ -199,7 +204,7 @@ var count_cat = 0;
             }
 
             var tname = 'categories';
-            var query = 'INSERT INTO ' + tname + ' ('+ptables[tname].fields.join(',')+') VALUES ('+ptables[tname].places.join(',')+')';
+            var query = 'INSERT INTO ' + tname + ' ('+ptables[tname].fields+') VALUES ('+ptables[tname].places+')';
             var values = [
                 category.id,
                 category.root,
@@ -241,7 +246,7 @@ var count_cat = 0;
 
         angular.forEach(data, function(product) {
             var tname = 'products';
-            var query = 'INSERT INTO ' + tname + ' ('+ptables[tname].fields.join(',')+') VALUES ('+ptables[tname].places.join(',')+')';
+            var query = 'INSERT INTO ' + tname + ' ('+ptables[tname].fields+') VALUES ('+ptables[tname].places+')';
             var values = [
                 product.id,
                 product.category_id,
@@ -252,7 +257,10 @@ var count_cat = 0;
                 product.price,
                 product.name,
                 product.thumbnail,
-                product.images
+                product.images,
+                'test' in product && 'summary' in product.test && product.test.summary ? product.test.summary : '',
+                'test' in product && 'pros' in product.test && product.test.pros ? product.test.pros : '',
+                'test' in product && 'cons' in product.test && product.test.cons ? product.test.cons : ''
             ];
 //            console.log(query, values);
             self.query(query, values).then(function(res){
@@ -265,6 +273,18 @@ var count_cat = 0;
                 }, function(err){
                     console.error(err);
                 });
+
+            if ('property_values' in product) {
+                for (var property_id in product.property_values) {
+                    self.query('INSERT INTO product_properties (product_id, property_id, value) VALUES (?, ?, ?)', [product.id, property_id, product.property_values[property_id]]);
+                }
+            }
+
+            if ('rating_values' in product) {
+                for (var rating_id in product.rating_values) {
+                    self.query('INSERT INTO product_ratings (product_id, rating_id, value) VALUES (?, ?, ?)', [product.id, rating_id, product.rating_values[rating_id]]);
+                }
+            }
         });
     };
 

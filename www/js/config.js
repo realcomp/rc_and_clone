@@ -45,7 +45,28 @@ angular.module('db.config', [])
                 {name: 'price', type: 'real'},
                 {name: 'name', type: 'text'},
                 {name: 'thumbnail', type: 'text'},
-                {name: 'images', type: 'text'}
+                {name: 'images', type: 'text'},
+                {name: 'test_summary', type: 'text'},
+                {name: 'test_pros', type: 'text'},
+                {name: 'test_cons', type: 'text'}
+            ],
+        },
+        {
+            name: 'product_properties',
+            columns: [
+                {name: 'id', type: 'integer primary key'},
+                {name: 'product_id', type: 'integer'},
+                {name: 'property_id', type: 'integer'},
+                {name: 'value', type: 'text'}
+            ],
+        },
+        {
+            name: 'product_ratings',
+            columns: [
+                {name: 'id', type: 'integer primary key'},
+                {name: 'product_id', type: 'integer'},
+                {name: 'rating_id', type: 'integer'},
+                {name: 'value', type: 'integer'}
             ],
         },
         {
