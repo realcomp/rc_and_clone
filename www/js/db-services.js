@@ -1,10 +1,11 @@
 angular.module('db-services', ['db.config'])
 // DB wrapper
-.factory('DB', function($q, $http, DB_CONFIG) {
+.factory('DB', function($q, $http, $rootScope, DB_CONFIG) {
     var self = this;
-	var load_slices = 0;
+	var load_slices = 0; // скоко загрузили
     var ptables = {};
-	var count_slices = 0;
+	var count_slices = 0; // количество слайсев
+    var percent_load = 0; // процент загрузки
 
     self.db = null;
     self.meta_server = null;
@@ -21,11 +22,25 @@ angular.module('db-services', ['db.config'])
     };
 
     self.percentLoading = function() {
-		if (self.loaded) {
-			return 100;
-		}
-//		return load_slices;
+        return percent_load;
+
+        if (self.loaded) {
+            return 100;
+        }
+
         return count_slices ? parseInt(load_slices * 100 / count_slices) : 0;
+    };
+
+    self.inc_load_slices = function() {
+        load_slices++;
+        var pre = percent_load;
+        percent_load = count_slices ? parseInt(load_slices * 100 / count_slices) : 0;
+
+        if (pre != percent_load) {
+            $rootScope.$broadcast('loadUpdate');
+        }
+
+        return load_slices;
     };
 
     self.init = function() {
@@ -131,7 +146,8 @@ var count_cat = 0;
 //                    console.log(slice);
 //                    console.log("slice type "+slice.entity_type, slice.min_id, slice.max_id);
 					if (slice.data.length == 0) {
-						load_slices++;
+						//load_slices++;
+                        self.inc_load_slices();
 						return;
 					}
 
@@ -179,7 +195,8 @@ var count_cat = 0;
                     function(res){
                         console.log("INSERT VERSION "+meta.version);
                         self.loaded = true;
-						load_slices++;
+						//load_slices++;
+                        self.inc_load_slices();
                         self.deferred.resolve({loaded: true});
                 }, function(err){
                     console.error("INSERT VERSION", err);
@@ -231,7 +248,8 @@ var count_cat = 0;
 				count ++;
 
 				if (count == data_count) {
-					load_slices++;
+					//load_slices++;
+                    self.inc_load_slices();
 //					console.log("data count", count, data_count, load_slices);
 				}
 //                    console.log("Insert " + res.insertId);
@@ -268,7 +286,8 @@ var count_cat = 0;
 				count ++;
 
 				if (count == data_count) {
-					load_slices++;
+					//load_slices++;
+                    self.inc_load_slices();
 				}
 //                    console.log("Insert " + res.insertId);
                 }, function(err){
@@ -303,7 +322,8 @@ var count_cat = 0;
 				count ++;
 
 				if (count == data_count) {
-					load_slices++;
+					//load_slices++;
+                    self.inc_load_slices();
 				}
 //                    console.log("Insert " + res.insertId);
                 }, function(err){
