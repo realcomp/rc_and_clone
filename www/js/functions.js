@@ -47,7 +47,7 @@ app.controller('funcController', function($scope, $ionicSlideBoxDelegate, $ionic
 	// Табы на странице категорий с товарами
   $scope.tabsCatProductType = [
   	{
-		  title : "Проверянные", active : true,
+		  title : "Проверянные", active : false,
 		},
     { 
       title: "Ожидают проверки", active : false 
@@ -56,6 +56,8 @@ app.controller('funcController', function($scope, $ionicSlideBoxDelegate, $ionic
       title: "Черный список", active : false 
     }
   ];
+
+
   $scope.tabsCategory = function(o) {
     for (var i = 0; i <= $scope.tabsCatProductType.length - 1; i++) {
       $scope.tabsCatProductType[i].active = false;

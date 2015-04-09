@@ -130,7 +130,7 @@ app.controller('ProductCtrl', function($scope, $location, $stateParams, $ionicHi
 		angular.forEach(resp.items, function(item) {
 	   	var date = item.created_at;
 	   	date = date.split('T').splice(0, 1).join('-').split('-');
-	   	dateObj = date[2] + '.' + date[1] + '.' + date[0];
+	   	dateObj = new Date(item.created_at);
 	   	item.created_date = dateObj;
 	  });
 
@@ -143,7 +143,7 @@ app.controller('ProductCtrl', function($scope, $location, $stateParams, $ionicHi
 app.controller('MenuCtrl', function($scope) {
 	// Тут можно будет проставить ширину для меню на различных устройствах
 	// Через css не сделать :(
-	$scope.menuWidth = 500;
+	$scope.menuWidth = 300;
 });
 
 
