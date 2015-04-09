@@ -129,6 +129,7 @@ app.controller('ProductCtrl', function($scope, $location, $stateParams, $ionicHi
       		cproperties = JSON.parse(category.properties);
       	}
 
+console.log(cproperties);
       	// характеристики товара
       	Product.properties($stateParams.id).then(function(properties){
       		var pproperties = {};
@@ -137,27 +138,15 @@ app.controller('ProductCtrl', function($scope, $location, $stateParams, $ionicHi
       		});
 
       		angular.forEach(cproperties, function(cp){
-      			var flag = false;
-      			var flagm = false;
-      			var mobj = {name: cp.name, p: []};
-      			var obj = {name: cp.name, p: []};
       			angular.forEach(cp.properties, function(prop){
       				if (pproperties[prop.id]) {
 						if (prop.is_main == true) {
-      						flagm = true;
-      						mobj.p.push({name: prop.name, value: pproperties[prop.id].value});
+      						$scope.main_properties.push({name: prop.name, value: pproperties[prop.id].value});
       					} else {
-      						flag = true;
-      						obj.p.push({name: prop.name, value: pproperties[prop.id].value});
+      						$scope.properties.push({name: prop.name, value: pproperties[prop.id].value});
       					}
       				}
       			});
-      			if (flag) {
-      				$scope.properties.push(obj);
-      			}
-      			if (flagm) {
-      				$scope.main_properties.push(obj);
-      			}
       		});
       	});
       });
