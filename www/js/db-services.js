@@ -510,6 +510,20 @@ var count_cat = 0;
 		});
     };
 
+    self.properties = function(id) {
+        return DB.query('SELECT * FROM product_properties WHERE product_id = ?', [id])
+        .then(function(result){
+            return DB.fetchAll(result);
+        });
+    };
+
+    self.ratings = function(id) {
+        return DB.query('SELECT * FROM product_ratings WHERE product_id = ?', [id])
+        .then(function(result){
+            return DB.fetchAll(result);
+        });
+    };
+
     return self;
 })
 
@@ -535,8 +549,26 @@ var count_cat = 0;
 })
 
 // Resource service example
-.factory('Rating', function(DB) {
+.factory('Rating', function(DB, $q) {
     var self = this;
+    var gratings;
+
+    self.allHash = function() {
+        if (gratings) {
+            var deferred = $q.defer();
+            deferred.resolve(gratings);
+            return deferred.promise;
+        }
+
+        return self.all().then(function(ratings){
+            var r = {};
+            angular.forEach(ratings, function(rating){
+                r[rating.id] = rating;
+            });
+            gratings = r;
+            return gratings;
+        });
+    };
 
     self.all = function() {
         return DB.query('SELECT * FROM ratings ORDER BY id')

@@ -100,7 +100,7 @@ app.controller('CategoryCtrl', function($scope, $location, $stateParams, $ionicH
 });
 
 // Контроллер товаров
-app.controller('ProductCtrl', function($scope, $location, $stateParams, $ionicHistory, Product, Category) {
+app.controller('ProductCtrl', function($scope, $location, $stateParams, $ionicHistory, Product, Category, Rating) {
 
 	var onlyNumber = !isNaN(parseFloat($stateParams.id)) && isFinite($stateParams.id) && (0 < $stateParams.id);
 	if(!onlyNumber) {
@@ -112,13 +112,54 @@ app.controller('ProductCtrl', function($scope, $location, $stateParams, $ionicHi
 	}
 
 	$scope.reviews = null;
+	$scope.ratings = [];
+	$scope.main_properties = [];
+	$scope.properties = [];
 
 	// Общая информация
 	Product.getById($stateParams.id).then(function(product) {
       $scope.title = product.name
       $scope.product = product;
       Category.getById(product.category_id).then(function(category) {
+      	$scope.category = category;
       	$scope.title = category.name;
+      	var cproperties = []
+
+      	if (category.properties) {
+      		cproperties = JSON.parse(category.properties);
+      	}
+
+      	// характеристики товара
+      	Product.properties($stateParams.id).then(function(properties){
+      		var pproperties = {};
+      		angular.forEach(properties, function(property){
+      			pproperties[property.property_id] = property;
+      		});
+
+      		angular.forEach(cproperties, function(cp){
+      			var flag = false;
+      			var flagm = false;
+      			var mobj = {name: cp.name, p: []};
+      			var obj = {name: cp.name, p: []};
+      			angular.forEach(cp.properties, function(prop){
+      				if (pproperties[prop.id]) {
+						if (prop.is_main == true) {
+      						flagm = true;
+      						mobj.p.push({name: prop.name, value: pproperties[prop.id].value});
+      					} else {
+      						flag = true;
+      						obj.p.push({name: prop.name, value: pproperties[prop.id].value});
+      					}
+      				}
+      			});
+      			if (flag) {
+      				$scope.properties.push(obj);
+      			}
+      			if (flagm) {
+      				$scope.main_properties.push(obj);
+      			}
+      		});
+      	});
       });
 	});
 
@@ -137,6 +178,17 @@ app.controller('ProductCtrl', function($scope, $location, $stateParams, $ionicHi
 	 	console.log('ОБЬЕКТ С КОММЕНТАРИЯМИ', $scope.reviews);
 	});
 
+	// список названий рейтинга
+	Rating.allHash().then(function(gratings){
+		// рейтинги продуктов
+		Product.ratings($stateParams.id).then(function(ratings){
+			angular.forEach(ratings, function(rating){
+				if (gratings[rating.rating_id]) {
+					$scope.ratings.push({name: gratings[rating.rating_id].name, value: rating.value});
+				}
+			});
+		});
+	});
 });
 
 // Контроллер меню
