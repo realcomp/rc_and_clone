@@ -2,7 +2,7 @@
 // Контроллер для общих функций и динамичных элементов
 app.controller('funcController', function($scope, $ionicSlideBoxDelegate, $ionicActionSheet) {
 
-	$scope.orderProp = '-rating';
+	$scope.orderProp = ['danger_level', '-rating'];
 
 	// Вернет класс оформления для рейтинга
 	$scope.productRatingType = function(product) {
@@ -22,8 +22,7 @@ app.controller('funcController', function($scope, $ionicSlideBoxDelegate, $ionic
   	else {
   		return 'product__rating-green';
   	}
-
-  }
+  };
 
   // Вернет слово в правильном склонении
   $scope.declension = function(num, expressions) {
@@ -44,7 +43,7 @@ app.controller('funcController', function($scope, $ionicSlideBoxDelegate, $ionic
   	return result;
 	};
 
-	// Табы на странице категорий с товарами
+	// Массив с табами на странице категорий с товарами
   $scope.tabsCatProductType = [
   	{
 		  title : "Проверянные", active : false,
@@ -57,7 +56,7 @@ app.controller('funcController', function($scope, $ionicSlideBoxDelegate, $ionic
     }
   ];
 
-
+  // Методы для работы и инициализации
   $scope.tabsCategory = function(o) {
     for (var i = 0; i <= $scope.tabsCatProductType.length - 1; i++) {
       $scope.tabsCatProductType[i].active = false;
@@ -80,7 +79,7 @@ app.controller('funcController', function($scope, $ionicSlideBoxDelegate, $ionic
   		return 'product__category-tabs-active';
   	}
   	return 'product__category-tabs-deactive';
-  }
+  };
 
   // Методы для работы слайдера в отзывах
   $scope.nextSlide = function() {
@@ -90,26 +89,64 @@ app.controller('funcController', function($scope, $ionicSlideBoxDelegate, $ionic
     $ionicSlideBoxDelegate.previous();
   }
 
-  //  Возможно для сортировки будет использовать такую область
-   $scope.asShow = function() {
+  // Сортировка
+   $scope.showSorting = function() {
+
 		$ionicActionSheet.show({
-			template: '<select ng-model="orderProp">',
      	buttons: [
-       		{ text: '<option value="-rating">по рейтингу</option>' },
-       		{ text: '<option value="rating">по рейтингу(по возврастанию)</option>' }
+       		{ text: '<span>Рейтингу</span>' },
+       		{ text: '<span>Рейтингу(по возврастанию)</span>' },
+       		{ text: '<span>Цене</span>' },
+       		{ text: '<span>Цене(по возврастанию)</span>' }
      	],
+
   	  titleText: 'Сортировать по:',
      	cancelText: 'Закрыть',
+
      	buttonClicked: function(index) {
-				console.log('Click button ActionSheet');
+     		switch(index) {
+     			case 0:
+     				$scope.orderProp = ['danger_level', '-rating'];
+     				break;
+     			case 1:
+     				$scope.orderProp = ['danger_level', 'rating'];
+     				break;
+     			case 2:
+     				$scope.orderProp = 'price';
+     				break;
+     			case 3:
+     				$scope.orderProp = '-price';
+     				break;			
+     		}
        	return true;
      	},
+
       cancelOnStateChange: function() {
-      	console.log('Click close ActionSheet close');
         return true;
       }
    	});
-  }
+  };
+
+  // Параметры
+  $scope.showParameters = function() {
+   	
+		$ionicActionSheet.show({
+     	buttons: [
+       		{ text: '<span>Ок</span>' }
+     	],
+
+  	  titleText: 'Когда-нибудь тут будут параметры сортировки:',
+     	cancelText: 'Закрыть',
+
+     	buttonClicked: function(index) {
+       	return true;
+     	},
+
+      cancelOnStateChange: function() {
+        return true;
+      }
+   	});
+  };
 
 
 });
