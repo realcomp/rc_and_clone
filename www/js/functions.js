@@ -65,7 +65,17 @@ app.controller('funcController', function($scope, $ionicSlideBoxDelegate, $ionic
     $scope.tabsCatProductType[o].active = true;
 
   };
-  $scope.tabsClass = function(item) {
+  $scope.tabsInit = false;
+  $scope.tabsClass = function(item, productsCheck, productsWait) {
+
+  	if(!$scope.tabsInit) {
+	  	if(productsCheck.length > 0)
+	  		$scope.tabsCatProductType[0].active = true;
+	  	else if(productsWait.length > 0)
+	  		$scope.tabsCatProductType[1].active = true;
+  	}
+  	$scope.tabsInit = true;
+
   	if(item.active) {
   		return 'product__category-tabs-active';
   	}

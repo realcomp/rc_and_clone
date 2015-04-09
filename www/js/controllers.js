@@ -68,7 +68,7 @@ app.controller('CategoryCtrl', function($scope, $location, $stateParams, $ionicH
 
 							$scope.products = [];
 
-							$scope.productsPositive = [];
+							$scope.productsCheck = [];
 							$scope.productsBlack = [];
 							$scope.productsWait = [];
 
@@ -79,11 +79,11 @@ app.controller('CategoryCtrl', function($scope, $location, $stateParams, $ionicH
 		      			if(!product.tested) {
 		      				$scope.productsWait.push(product);
 		      			}
-		      			else if(product.tested && product.danger_level > 1) {
-		      				$scope.productsBlack.push(product);
-		      			}
 		      			else {
-		      				$scope.productsPositive.push(product);
+			      			if(product.tested && product.danger_level > 1) {
+			      				$scope.productsBlack.push(product);
+			      			}
+		      				$scope.productsCheck.push(product);
 		      			}
 
 		    			});

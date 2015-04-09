@@ -18,7 +18,7 @@
 
 		<ul class="product__category-tabs-wrap">
 	    <li class="product__category-tabs" ng-repeat="tab in tabsCatProductType" ng-click="tabsCategory($index)">
-	      <span ng-class="tabsClass(tab)">
+	      <span ng-class="tabsClass(tab, productsCheck, productsWait)">
 	      	{{tab.title}}
 	      </span>
 	    </li>
@@ -39,8 +39,8 @@
 		<ion-list>
 
 			<div ng-if="tabsCatProductType[0].active">
-				<ion-item ng-if="productsPositive.length === 0">В этой категории пока нет проверянных товаров!</ion-item>
-				<ion-item ng-repeat="product in productsPositive | filter:query | orderBy: orderProp" class="product__category" href="#/app/product/{{ product.id }}">
+				<ion-item ng-if="productsCheck.length === 0">В этой категории пока нет проверянных товаров!</ion-item>
+				<ion-item ng-repeat="product in productsCheck | filter:query | orderBy: orderProp" class="product__category" href="#/app/product/{{ product.id }}">
 				  	<span class="product__category-thumbnail">
 				  		<img ng-src="{{ product.thumbnail }}" alt="{{ product.name }}">
 				  		<ion-spinner icon="circles" class="loader"></ion-spinner>
