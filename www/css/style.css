@@ -89,6 +89,12 @@ a:active {
 .green {
 	background: #093;
 }
+.black {
+	background: #000;
+}
+.grey {
+	background: #d8d8d8;
+}
 
 .product-rating {
 	width: 50px;
@@ -129,7 +135,18 @@ a:active {
 	font-size: 16px;
 	text-align: center;
 }
-
+.danger__level-item {
+	margin: 0;
+}
+.danger__level-text-s {
+	font-size: 13px;
+}
+.danger__level-item  .danger-level {
+	margin-right: 1px;
+  display: inline-block;
+  width: 32px;
+  height: 10px;
+}
 
 /* 
 *
@@ -351,12 +368,12 @@ a:active {
 	vertical-align: top;
 }
 
-/**/
+/* summary */
 .product__single-summary {
 	border-bottom: 1px solid #ddd;
 }
 
-/**/
+/* plus and minus */
 .product__single-plus-and-minus {
 	overflow: hidden;
 	border-bottom: 1px solid #ddd;
@@ -382,12 +399,12 @@ a:active {
 	color: #C74441;
 }
 
-/**/
+/* Wrap */
 .product__single-reviews-wrap {
 	
 }
 
-/**/
+/* Rating */
 .product__single-reviews-rating {
 	border-bottom: 1px solid #ddd;
 }
@@ -398,7 +415,7 @@ a:active {
 	display: block;
 }
 
-/**/
+/* Slider rev */
 .product__single-reviews-slider {
 
 }
@@ -473,4 +490,9 @@ a:active {
   text-align: center;
   border: 0;
   font-size: 15px;
+}
+
+/* Danger level 1 */
+.product__single-dl-1 {
+
 }

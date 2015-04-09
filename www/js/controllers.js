@@ -121,8 +121,12 @@ app.controller('ProductCtrl', function($scope, $location, $stateParams, $ionicHi
      	$scope.title = product.name
       $scope.product = product;
 
-      $scope.arrayMinus = product.test_cons.split(',');
-      $scope.arrayPlus = product.test_pros.split(',');
+      console.log(product);
+
+      if(product.test_cons)      	
+      	$scope.arrayMinus = product.test_cons.split(',');
+      if(product.test_pros)  
+      	$scope.arrayPlus = product.test_pros.split(',');
 
       Category.getById(product.category_id).then(function(category) {
       	$scope.category = category;
@@ -133,7 +137,6 @@ app.controller('ProductCtrl', function($scope, $location, $stateParams, $ionicHi
       		cproperties = JSON.parse(category.properties);
       	}
 
-console.log(cproperties);
       	// характеристики товара
       	Product.properties($stateParams.id).then(function(properties) {
       		var pproperties = {};

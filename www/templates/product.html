@@ -27,7 +27,7 @@
 		 		</div>
 
 		 		<div class="product__single-reviews-slider product__single-wblock">
-		 			<div ng-if="reviews" class="product__single-reviews-slider-head">
+		 			<div ng-if="reviews && reviews.total_count > 0" class="product__single-reviews-slider-head">
 			 			<div class="product__single-slider-count">
 			 				Отзыв {{ currentIndex }} из {{ reviews.total_count }}
 				 		</div>

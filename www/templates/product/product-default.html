@@ -1,6 +1,6 @@
 <div class="product__single-block">
 	<div class="product__single-result">
-		<div class="product-rating">
+		<div class="product-rating" ng-class="product.danger_level == 1 ? 'product__rating-violation' : '' ">
 			{{ product.rating }}
 		</div>
 		<p class="product__single-result-txt">
@@ -22,10 +22,22 @@
 			</div>
 		</div>
 	</div>
+	<div ng-if="product.danger_level == 1" class="product__single-dl-1 product__single-wblock">
+		<p><strong>Товар с нарушением</strong></p>
+		<span class="danger__level-text-s">Степерь опасности:</span>
+		<div class="danger__level-item">
+	    <div class="danger-level black"></div>
+	    <div class="danger-level black"></div>
+	    <div class="danger-level grey"></div>
+	    <div class="danger-level grey"></div>
+    </div>
+		<span class="danger__level-text">Низкая</span>
+	</div>
 	<div class="product__single-summary product__single-wblock">
+		<span ng-if="product.danger_level == 1">Суть нарушения:<br></span>
 		{{ product.test_summary }}
 	</div>
-	<div ng-if="arrayPlus" class="product__single-plus-and-minus product__single-wblock">
+	<div ng-if="arrayPlus.length > 0 || arrayMinus.length > 0" class="product__single-plus-and-minus product__single-wblock">
 		<ul class="product__single-plus">
 			<li ng-repeat="plus in arrayPlus"> <span class="product__single-plus-icon"> + </span> {{ plus }} </li>
 		</ul>
