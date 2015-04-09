@@ -118,8 +118,12 @@ app.controller('ProductCtrl', function($scope, $location, $stateParams, $ionicHi
 
 	// Общая информация
 	Product.getById($stateParams.id).then(function(product) {
-      $scope.title = product.name
+     	$scope.title = product.name
       $scope.product = product;
+
+      $scope.arrayMinus = product.test_cons.split(',');
+      $scope.arrayPlus = product.test_pros.split(',');
+
       Category.getById(product.category_id).then(function(category) {
       	$scope.category = category;
       	$scope.title = category.name;
@@ -130,13 +134,13 @@ app.controller('ProductCtrl', function($scope, $location, $stateParams, $ionicHi
       	}
 
       	// характеристики товара
-      	Product.properties($stateParams.id).then(function(properties){
+      	Product.properties($stateParams.id).then(function(properties) {
       		var pproperties = {};
       		angular.forEach(properties, function(property){
       			pproperties[property.property_id] = property;
       		});
 
-      		angular.forEach(cproperties, function(cp){
+      		angular.forEach(cproperties, function(cp) {
       			var flag = false;
       			var flagm = false;
       			var mobj = {name: cp.name, p: []};
@@ -154,9 +158,11 @@ app.controller('ProductCtrl', function($scope, $location, $stateParams, $ionicHi
       			});
       			if (flag) {
       				$scope.properties.push(obj);
+      				//console.log($scope.properties);
       			}
       			if (flagm) {
       				$scope.main_properties.push(obj);
+      				console.log($scope.main_properties);
       			}
       		});
       	});
@@ -164,15 +170,13 @@ app.controller('ProductCtrl', function($scope, $location, $stateParams, $ionicHi
 	});
 
 	// Отзывы
-	Product.reviews($stateParams.id).then(function(resp){
+	Product.reviews($stateParams.id).then(function(resp) {
 		$scope.reviews = resp;
 
 		// Преобразованная дата для каждого элемента
 		angular.forEach(resp.items, function(item) {
 	   	var date = item.created_at;
-	   	date = date.split('T').splice(0, 1).join('-').split('-');
-	   	dateObj = new Date(item.created_at);
-	   	item.created_date = dateObj;
+	   	item.created_date = new Date(item.created_at);
 	  });
 
 	 	console.log('ОБЬЕКТ С КОММЕНТАРИЯМИ', $scope.reviews);

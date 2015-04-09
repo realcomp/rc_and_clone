@@ -1,35 +1,71 @@
 <ion-view>
 	<ion-nav-title> {{ title  }} </ion-nav-title>
 	<ion-content ng-controller='funcController'>
-	  <div style="margin-top: 100px;" ng-if="product">
-	  	<h2>{{ product.name }}</h2>
-	  	<img width="200" height="200px" ng-src="{{ product.images }}">
-	  	<span class="product-rating" ng-class="productRatingType(product)">
-				{{ product.ratingv }}
-			</span>
-	  </div>
+		<div ng-if="product" class="product__single-wrap">
+			<div class="product__single-head">
+				<h2 class="product__single-name">{{ product.name }}</h2>
+				<div class="product__single-info">
+					<div class="product__single-info-left">
+						<img ng-src="{{ product.images }}">
+					</div>
+					<div class="product__single-info-right">
+						<a href="#">В список покупок</a>
+						<a href="#">У меня есть</a>
+					</div>
+				</div>
+			</div>
+			<div ng-init="productType(product)">  	
+		  		<div ng-include="productTemplate.url"></div>
+		 </div>
+		 <ion-spinner icon="circles" ng-if="!reviews"></ion-spinner>
+		 <div class="product__single-reviews-wrap" ng-if="reviews">
 
-	  <ion-spinner icon="circles" ng-if="!reviews"></ion-spinner>
-		<p ng-if="reviews.total_count == 0" >Отзывов пока нет, будьте первым!</p>
-		<p ng-if="reviews.total_count != 0" >Всего отзывов: {{ reviews.total_count }}</p>
-		<p ng-if="reviews.total_count != 0">Средняя оценка: {{ reviews.avg_mark }}</p>
-		<ion-slide-box ng-if="reviews">            
-      <ion-slide ng-repeat="review in reviews.items">
-        <p><strong>Автор:</strong></p>
-		    <p>{{ review.user.name }}</p>
-		    <p><strong>Дата:</strong></p>
-		    <p>{{ review.created_date }}</p>
-		    <p><strong>Оценка:</strong></p>
-		    <p>{{ review.mark }} из 5</p>
-			  <p><strong>Достоинства: </strong></p>
-			  <p>{{ review.advantages }}</p>
-			  <p><strong>Недостатки: </strong></p>
-			  <p>{{ review.disadvantages }}</p>
-			  <p><strong>Комментарий: </strong></p>
-			  <p>{{ review.text }}</p>
-      </ion-slide>
-   	</ion-slide-box>
-		<button ng-click="prevSlide()"> < Туда</button>
-	  <button ng-click="nextSlide()">Сюда ></button>
+		 		<div class="product__single-reviews-rating product__single-wblock">
+		 			<p class="product__single-reviews-rating-title">Оценки покупателей</p>
+		 				<span>Средняя оценка: &#9734; {{ reviews.avg_mark }} из 5 &#9734;</span>
+		 				<span>Всего: {{ reviews.total_count }} оценки </span>
+		 		</div>
+
+		 		<div class="product__single-reviews-slider product__single-wblock">
+		 			<div ng-if="reviews" class="product__single-reviews-slider-head">
+			 			<div class="product__single-slider-count">
+			 				Отзыв {{ currentIndex }} из {{ reviews.total_count }}
+				 		</div>
+			 			<div class="product__single-slider-nav">
+			 				<button ng-click="prevSlide()">&#9668;</button>
+					  	<button ng-click="nextSlide()">&#9658;</button>
+			 			</div>
+		 			</div>
+				 	<ion-slide-box ng-if="reviews">            
+			      <ion-slide ng-repeat="review in reviews.items">
+				      <div class="product__single-reviews-slider-body">
+				      	<div class="product__single-reviews-slider-top">
+				      		<div class="product__slider-avatar">
+				      			<span ng-if="!review.user.avatar">Нет фото</span>
+				      			<img ng-if="review.user.avatar" ng-src="{{ review.user.avatar }}">
+				      		</div>
+				      		<div class="product__slider-in">
+				      			<p class="product__slider-name">{{ review.user.name }}</p>
+				      			<p class="product__slider-create">{{ review.created_date  | date:'dd-MM-yyyy' }}</p>
+				      		</div>
+				      	</div>
+				      	<div class="product__single-reviews-slider-bottom">
+				      		<p>{{ review.text }}</p>
+				      		<p>
+				      			<strong>Достоинства: </strong>
+							  		{{ review.advantages }}
+							  	</p>
+				      		<p>
+				      			<strong>Недостатки: </strong>
+							  		{{ review.disadvantages }}
+							  	</p>
+				      	</div>
+							</div> 
+			      </ion-slide>
+			   	</ion-slide-box>
+		 		</div>
+				<button class="product__single-add-reviews">Написать отзыв</button>
+		 </div>
+	  </div>
 	</ion-content>
 </ion-view>

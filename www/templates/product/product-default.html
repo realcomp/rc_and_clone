@@ -1,0 +1,36 @@
+<div class="product__single-block">
+	<div class="product__single-result">
+		<div class="product-rating">
+			{{ product.rating }}
+		</div>
+		<p class="product__single-result-txt">
+			Результаты экспертизы
+		</p>
+	</div>
+	<div class="product__single-rating product__single-wblock">
+		<div ng-repeat="rating in ratings">
+			<div class="product__single-rating-row">
+			  <div class="product__single-rating-left">
+			      <div class="product__single-rating-text">{{ rating.name }}</div>
+			      <div class="product__single-rating-data">
+			      	<span class="product__single-rating-irow">
+			      		<i style="width:{{ rating.value }}%" class="green"></i>
+			      	</span>
+			      </div>
+			  </div>
+	  		<div class="product__single-rating-right">{{ rating.value }}</div>
+			</div>
+		</div>
+	</div>
+	<div class="product__single-summary product__single-wblock">
+		{{ product.test_summary }}
+	</div>
+	<div ng-if="arrayPlus" class="product__single-plus-and-minus product__single-wblock">
+		<ul class="product__single-plus">
+			<li ng-repeat="plus in arrayPlus"> <span class="product__single-plus-icon"> + </span> {{ plus }} </li>
+		</ul>
+		<ul class="product__single-minus">
+			<li ng-repeat="minus in arrayMinus"> <span class="product__single-minus-icon"> - </span> {{ minus }} </li>
+		</ul>
+	</div>
+</div>

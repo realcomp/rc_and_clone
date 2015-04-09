@@ -2,8 +2,6 @@
 // Контроллер для общих функций и динамичных элементов
 app.controller('funcController', function($scope, $ionicSlideBoxDelegate, $ionicActionSheet) {
 
-	$scope.orderProp = ['danger_level', '-rating'];
-
 	// Вернет класс оформления для рейтинга
 	$scope.productRatingType = function(product) {
 		product.ratingv = product.rating;
@@ -23,6 +21,35 @@ app.controller('funcController', function($scope, $ionicSlideBoxDelegate, $ionic
   		return 'product__rating-green';
   	}
   };
+
+  $scope.productType = function(product) {
+  	if(product.tested == 0) {
+  		$scope.productTemplate = $scope.productTemplates[1];
+  	}
+  	else if(product.tested && (product.danger_level > 1)) {
+  		$scope.productTemplate = $scope.productTemplates[2];
+  	}
+  	else {
+  		$scope.productTemplate = $scope.productTemplates[0];
+  	}
+  }
+
+  // Шаблоны для разных типов продуктов
+  $scope.productTemplates = [ 
+  	{ 
+  		name: 'product-default',
+  		url: 'templates/product/product-default.html'
+  	},
+    { 
+    	name: 'product-wait',
+  		url: 'templates/product/product-wait.html'
+    },
+    { 
+    	name: 'product-blacklist',
+  		url: 'templates/product/product-blacklist.html'
+    } 
+
+  ];
 
   // Вернет слово в правильном склонении
   $scope.declension = function(num, expressions) {
@@ -44,6 +71,7 @@ app.controller('funcController', function($scope, $ionicSlideBoxDelegate, $ionic
 	};
 
 	// Массив с табами на странице категорий с товарами
+	$scope.orderProp = ['danger_level', '-rating'];
   $scope.tabsCatProductType = [
   	{
 		  title : "Проверянные", active : false,
@@ -82,11 +110,14 @@ app.controller('funcController', function($scope, $ionicSlideBoxDelegate, $ionic
   };
 
   // Методы для работы слайдера в отзывах
+  $scope.currentIndex = 1;
   $scope.nextSlide = function() {
     $ionicSlideBoxDelegate.next();
+    $scope.currentIndex = $ionicSlideBoxDelegate.currentIndex() + 1;
   }
   $scope.prevSlide = function() {
     $ionicSlideBoxDelegate.previous();
+    $scope.currentIndex = $ionicSlideBoxDelegate.currentIndex() + 1;
   }
 
   // Сортировка

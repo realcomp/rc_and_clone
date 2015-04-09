@@ -14,6 +14,7 @@
 	margin-right: auto;
 	font-family: 'Roboto', sans-serif;
 	background: transparent;
+	color: #222;
 }
 .pane, .view {
 	background: #transparent;
@@ -78,6 +79,17 @@
 *** GLOBAL APP ***
 *
 */
+a {
+	color: #354777;
+}
+a:hover,
+a:active {
+	color: #a8001c;
+}
+.green {
+	background: #093;
+}
+
 .product-rating {
 	width: 50px;
   padding: 9px 0;
@@ -242,14 +254,223 @@
 *** PRODUCT ***
 *
 */
+.product__single-wblock {
+	padding: 15px 10px;
+}
 
+.product__single-wrap {
 
+}
+.product__single-head {
 
+}
+.product__single-head img {
+	width: 220px;
+	max-width: 100%;
+}
+.product__single-head .product__single-name {
+	padding: 10px 15px;
+	font-size: 32px;
+	color: #222;
+	border-bottom: 1px solid #ddd;
+}
+.product__single-head .product__single-info {
+	overflow: hidden;
+}
+.product__single-head .product__single-info-left {
+	float: left;
+	width: 250px;
+}
+.product__single-head .product__single-info-right {
+	float: right;
+	width: 250px;
+	padding-top: 80px;
+}
+.product__single-head .product__single-info-right a {
+	display: block;
+	margin-bottom: 10px;
+	font-size: 16px;
+	text-decoration: none;
+}
 
+/**/
+.product__single-result {
+	border-bottom: 1px solid #ddd;
+	border-top: 1px solid #ddd;
+}
+.product__single-result .product-rating,
+.product__single-result .product__single-result-txt {
+	display: inline-block;
+	margin: 0;
+  vertical-align: middle;
+}
+.product__single-result .product__single-result-txt {
+	font-weight: bold;
+  font-size: 14px;
+  margin-left: 10px;
+  color: #222;
+}
 
-/* 
-*
-*** Временные стили ***
-*
-*/
+/**/
+.product__single-rating {
+  margin: 5px 0 0 0;
+  padding-bottom: 0;
+}
+.product__single-rating-row {
+	overflow: hidden;
+	margin-bottom: 15px;
+}
+.product__single-rating-left {
+	width: 90%;
+	float: left;
+}
+.product__single-rating-right {
+	margin-top: 10px;
+	float: right;	
+	font-size: 26px;
+}
+.product__single-rating-text {
+	font-size: 13px;
+  color: #333;
+  margin-bottom: 5px;
+  line-height: 1;
+  text-align: left;
+}
+.product__single-rating-data {
 
+}
+.product__single-rating-irow {
+	display: block;
+	height: 8px;
+  background-color: #d8d8d8;
+  text-align: left;
+}
+.product__single-rating-row i {
+	display: inline-block;
+	height: 100%;
+	vertical-align: top;
+}
+
+/**/
+.product__single-summary {
+	border-bottom: 1px solid #ddd;
+}
+
+/**/
+.product__single-plus-and-minus {
+	overflow: hidden;
+	border-bottom: 1px solid #ddd;
+}
+.product__single-plus-and-minus ul li {
+	margin-bottom: 3px;
+}
+.product__single-plus {
+	float: left;
+	width: 45%;
+}
+.product__single-plus-icon,
+.product__single-minus-icon {
+	color: #199B50;
+	font-size: 20px;
+  vertical-align: top;
+}
+.product__single-minus {
+	float: right;
+	width: 45%;
+}
+.product__single-minus-icon {
+	color: #C74441;
+}
+
+/**/
+.product__single-reviews-wrap {
+	
+}
+
+/**/
+.product__single-reviews-rating {
+	border-bottom: 1px solid #ddd;
+}
+.product__single-reviews-rating-title {
+	font-size: 16px;	
+}
+.product__single-reviews-rating span {
+	display: block;
+}
+
+/**/
+.product__single-reviews-slider {
+
+}
+.product__single-reviews-slider-head {
+	overflow: hidden;
+}
+.product__single-reviews-slider-head {
+
+}
+.product__single-slider-count {
+	width: 150px;
+  float: left;
+}
+.product__single-slider-nav {
+	width: 150px;
+	float: right;
+	margin-top: 5px;
+	text-align: right;
+}
+.product__single-slider-nav button {
+	background: #354777;
+  border: none;
+  color: #FFF;
+}
+.product__single-reviews-slider-body {
+
+}
+.product__single-reviews-slider-top {
+	overflow: hidden;
+}
+.product__slider-avatar {
+	width: 50px;
+  height: 50px;
+  float: left;
+  background: #EDEDED;
+  line-height: 16px;
+  text-align: center;
+  border-radius: 100px;
+}
+.product__slider-avatar img{
+	max-width: 100%;
+  border-radius: 100px;
+}
+.product__slider-avatar span {
+	position: relative;
+  top: 7px;
+}
+.product__slider-in {
+	float: left;
+  margin-top: 5px;
+  margin-left: 10px;
+}
+.product__slider-name {
+	margin-bottom: 2px;
+	color: #354777;
+}
+.product__slider-create {
+
+}
+.product__single-reviews-slider-bottom {
+	margin-top: 5px;
+}
+.product__single-reviews-slider-bottom p strong {
+	display: block;
+}
+.product__single-add-reviews {
+	display: block;
+  width: 100%;
+  padding: 7px 0;
+  color: #FFF;
+  background: #354777;
+  text-align: center;
+  border: 0;
+  font-size: 15px;
+}
