@@ -1,6 +1,22 @@
 angular.module('db-services', ['db.config'])
+
+// Resource service example
+.factory('Url', function() {
+    var self = this;
+
+    self.url = function(url) {
+        if (window.cordova) {
+            return 'http://api.roscontrol.com' + url;
+        }
+
+        return url;
+    };
+
+    return self;
+})
+
 // DB wrapper
-.factory('DB', function($q, $http, $rootScope, DB_CONFIG) {
+.factory('DB', function($q, $http, $rootScope, DB_CONFIG, Url) {
     var self = this;
 	var load_slices = 0; // скоко загрузили
     var ptables = {};
@@ -22,13 +38,12 @@ angular.module('db-services', ['db.config'])
     };
 
     self.percentLoading = function() {
-        return percent_load;
-
         if (self.loaded) {
             return 100;
         }
 
-        return count_slices ? parseInt(load_slices * 100 / count_slices) : 0;
+        return percent_load;
+//        return count_slices ? parseInt(load_slices * 100 / count_slices) : 0;
     };
 
     self.inc_load_slices = function() {
@@ -87,7 +102,7 @@ angular.module('db-services', ['db.config'])
                     //console.log("METADB", self.meta_db);
                 }
 
-                $http.get('/v1/catalog/info').then(function(resp){
+                $http.get(Url.url('/v1/catalog/info')).then(function(resp){
                     self.meta_server = resp.data;
 
                     if (self.meta_db && self.meta_db.version == self.meta_server.version) {
@@ -132,7 +147,7 @@ angular.module('db-services', ['db.config'])
         var url = meta.file;
         url = url.replace('http://api.roscontrol.com', '');
         //console.log("DEBUG url", url);
-        $http.get(url).then(function(resp){
+        $http.get(Url.url(url)).then(function(resp){
                 var slices = resp.data.slices;
 				count_slices += slices.length;
                 console.info("version "+resp.data.version, "full dump " + resp.data.full_dump);
@@ -489,7 +504,7 @@ var count_cat = 0;
 })
 
 // Resource service example
-.factory('Product', function($http, DB) {
+.factory('Product', function($http, DB, Url) {
     var self = this;
 
     self.all = function() {
@@ -524,7 +539,7 @@ var count_cat = 0;
 			params.push('offset=' + offset);
 		}
 
-        return $http.get('/v1/catalog/reviews?' + params.join('&'))
+        return $http.get(Url.url('/v1/catalog/reviews?' + params.join('&')))
 		.then(function(resp){
 			return resp.data;
 		});
@@ -608,7 +623,7 @@ var count_cat = 0;
 })
 
 // Resource service example
-.factory('Article', function($http) {
+.factory('Article', function($http, Url) {
     var self = this;
 
     self.list = function(category_id, rubric, limit, offset) {
@@ -630,7 +645,7 @@ var count_cat = 0;
 			params.push('offset=' + offset);
 		}
 
-        return $http.get('/v1/articles' + params.length ? '?' + params.join('&') : '')
+        return $http.get(Url.url('/v1/articles' + params.length ? '?' + params.join('&') : ''))
 		.then(function(resp){
 			return resp.data;
 		});
