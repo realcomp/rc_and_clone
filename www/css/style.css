@@ -95,6 +95,9 @@ a:active {
 .grey {
 	background: #d8d8d8;
 }
+.button__disabled {
+	background: #D8D8D8 !important;
+}
 
 .product-rating {
 	width: 50px;
@@ -414,6 +417,18 @@ a:active {
 .product__single-reviews-rating span {
 	display: block;
 }
+.product__single-reviews-rating .rating {
+	margin: 3px 0;
+}
+.product__single-reviews-rating .rating li {
+	display: inline-block;
+}
+.product__single-reviews-rating .rating li i {
+	margin-right: 2px;
+	font-size: 24px;
+	color: #354777
+}
+
 
 /* Slider rev */
 .product__single-reviews-slider {
@@ -445,6 +460,7 @@ a:active {
 }
 .product__single-reviews-slider-top {
 	overflow: hidden;
+	margin-top: 10px;
 }
 .product__slider-avatar {
 	width: 50px;
@@ -467,6 +483,22 @@ a:active {
 	float: left;
   margin-top: 5px;
   margin-left: 10px;
+}
+.product__slider-rate {
+	width: 100px;
+  float: right;
+}
+.product__slider-rate .rating {
+	margin: 3px 0;
+	text-align: right;
+}
+.product__slider-rate .rating li {
+	display: inline-block;
+}
+.product__slider-rate .rating li i {
+	margin-right: 1px;
+	font-size: 20px;
+	color: #354777
 }
 .product__slider-name {
 	margin-bottom: 2px;
@@ -492,7 +524,33 @@ a:active {
   font-size: 15px;
 }
 
-/* Danger level 1 */
-.product__single-dl-1 {
+/* properties  */
+.product__single-prop {
+
+}
+.product__single-prop-title {
+	font-weight: bold;
+  color: #222;
+  font-size: 16px;
+}
+.product__single-prop-main,
+.product__single-prop-add {
+	padding-bottom: 15px;
+	border-top: 1px solid #ddd;
+}
+.product__single-prop-ititle {
+  font-size: 14px;
+}
+.product__single-prop-table {
+	width: 100%;
+}
+.product__single-prop-table td{
+	width: 50%;
+	padding: 2px 0;
+}
+.product__single-prop-td-1 {
+	color: #A9A9A9 !important
+}
+.product__single-prop-td-2 {
 
 }

@@ -155,6 +155,7 @@ app.controller('ProductCtrl', function($scope, $location, $stateParams, $ionicHi
       				}
       			});
       		});
+      		console.log($scope.properties);
       	});
       });
 	});
@@ -173,7 +174,7 @@ app.controller('ProductCtrl', function($scope, $location, $stateParams, $ionicHi
 	});
 
 	// список названий рейтинга
-	Rating.allHash().then(function(gratings){
+	Rating.allHash().then(function(gratings) {
 		// рейтинги продуктов
 		Product.ratings($stateParams.id).then(function(ratings){
 			angular.forEach(ratings, function(rating){
@@ -183,6 +184,8 @@ app.controller('ProductCtrl', function($scope, $location, $stateParams, $ionicHi
 			});
 		});
 	});
+
+
 });
 
 // Контроллер меню
