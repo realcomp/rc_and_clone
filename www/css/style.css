@@ -267,6 +267,28 @@ a:active {
 	margin: 0 0 10px 0;
 }
 
+/* footer sorting */
+.bar.footer__sorting.bar-footer {
+	padding: 0;
+	background: #FFF;
+	border-top: 1px solid #DDD;
+}
+.bar.footer__sorting.bar-footer .footer__sorting-item {
+	width: 50%;
+	text-align: center;
+}
+.bar.footer__sorting.bar-footer .footer__sorting-item:first-child {
+	border-right: 1px solid #DDD;
+}
+.bar.footer__sorting.bar-footer .footer__sorting-item .button {
+	width: 100%;
+  height: 45px;
+  display: block;
+	background: none;
+  border: 0;
+  color: #222;
+  font-size: 16px;
+}
 
 
 /* 
