@@ -1,6 +1,6 @@
 angular.module('db.config', [])
 .constant('DB_CONFIG', {
-    name: 'PK1',
+    name: 'rk1',
     tables: [
         {
             name: 'metadata',
