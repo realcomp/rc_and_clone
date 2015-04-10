@@ -1,4 +1,4 @@
-angular.module('db-services', ['db.config'])
+angular.module('db-services', ['db.config', 'ngCordova'])
 
 // Resource service example
 .factory('Url', function() {
@@ -6,7 +6,7 @@ angular.module('db-services', ['db.config'])
 
     self.url = function(url) {
         if (window.cordova) {
-            return 'http://api.roscontrol.com' + url;
+//            return 'http://api.roscontrol.com' + url;
         }
 
         return url;
@@ -16,7 +16,7 @@ angular.module('db-services', ['db.config'])
 })
 
 // DB wrapper
-.factory('DB', function($q, $http, $rootScope, DB_CONFIG, Url) {
+.factory('DB', function($q, $http, $rootScope, $cordovaSQLite, DB_CONFIG, Url) {
     var self = this;
 	var load_slices = 0; // скоко загрузили
     var ptables = {};
@@ -62,12 +62,12 @@ angular.module('db-services', ['db.config'])
     	console.log('db init');
  
         if (window.cordova) {
-            //console.log("use cordova sqlite");
-        // Use self.db = window.sqlitePlugin.openDatabase({name: DB_CONFIG.name}); in production
-            self.db = window.sqlitePlugin.openDatabase({name: DB_CONFIG.name});
-//        self.db = window.openDB({name: DB_CONFIG.name});
+            console.log("use cordova sqlite");
+//            self.db = window.sqlitePlugin.openDatabase({name: DB_CONFIG.name});
+            self.db = $cordovaSQLite.openDB(DB_CONFIG.name + '.sqlite');
+//        self.db = window.openDB({name: DB_CONFIG.name + '.sqlite'});
         } else {
-            //console.log("use open database");
+            console.log("use open database");
             self.db = window.openDatabase(DB_CONFIG.name, '1.0', 'database', -1);
         }
  
@@ -95,19 +95,21 @@ angular.module('db-services', ['db.config'])
 
         self.query('SELECT * FROM metadata ORDER BY version DESC LIMIT 1').then(function(res){
                 var r = self.fetch(res);
-                //console.log("META",r);
+                console.log("META",r);
 
                 if (r && r['version']) {
                     self.meta_db = r;
                     //console.log("METADB", self.meta_db);
                 }
 
+console.log('GET '+Url.url('/v1/catalog/info'));
                 $http.get(Url.url('/v1/catalog/info')).then(function(resp){
                     self.meta_server = resp.data;
 
                     if (self.meta_db && self.meta_db.version == self.meta_server.version) {
-                        //console.log("version db eq with server "+self.meta_server.version);
+                        console.log("version db eq with server "+self.meta_server.version);
                         self.loaded = true;
+                        console.log("DEBUG loaded true meta eq");
                         self.deferred.resolve({loaded: true});
                         return;
                     }
@@ -116,7 +118,7 @@ angular.module('db-services', ['db.config'])
                         self.query('DELETE FROM ' + table.name);
                     });
 
-                    //console.log(resp.data);
+                    console.log(resp.data);
 					count_slices++;
                     self.load(self.meta_server);
                     self.query('SELECT * FROM metadata ORDER BY version DESC LIMIT 1').then(function(result){
@@ -128,7 +130,7 @@ angular.module('db-services', ['db.config'])
                 },
                 function(err){
                     self.deferred.resolve({loaded: false});
-                    console.log(err);
+                    console.error("Error loading "+Url.url('/v1/catalog/info'), err);
                 });
             }, function(err){
                 self.deferred.resolve({loaded: false});
@@ -156,6 +158,8 @@ angular.module('db-services', ['db.config'])
 var count = 0;
 var count_cat = 0;
 
+                self.transaction(function(tx){
+console.log("DEBUG tx");
                 angular.forEach(slices, function(slice){
 					count++;
 //                    console.log(slice);
@@ -168,20 +172,28 @@ var count_cat = 0;
 
                     if (slice.entity_type == 'category') {
 						count_cat++;
-                        self.slice_category(slice.data);
+                        self.slice_category(slice.data, tx);
 //						console.log("cat data len", slice.data.length, count_cat);
                     } else if (slice.entity_type == 'product') {
-                        self.slice_product(slice.data);
+                        self.slice_product(slice.data, tx);
                     } else if (slice.entity_type == 'company') {
-                        self.slice_company(slice.data);
+                        self.slice_company(slice.data, tx);
                     } else if (slice.entity_type == 'rating') {
-                        self.slice_rating(slice.data);
+                        self.slice_rating(slice.data, tx);
                     }
+
+                    self.inc_load_slices();
                 });
+
 
 				console.log("count slice", count);
 				console.log("count cat slice", count_cat);
 				console.info("slices end");
+                    tx.executeSql('INSERT INTO metadata VALUES (?, "", "")', [meta.version], function(tx, res){
+                        console.log("DEBUG loaded set true");
+                        self.deferred.resolve({loaded: true});
+                    });
+                });
 
 				/*                console.info("recount data");
                 // подсчет количества продуктов для категории
@@ -206,7 +218,7 @@ var count_cat = 0;
                     });
                 });*/
 
-                self.query('INSERT INTO metadata VALUES (?, "", "")', [meta.version]).then(
+/*                self.query('INSERT INTO metadata VALUES (?, "", "")', [meta.version]).then(
                     function(res){
                         console.log("INSERT VERSION "+meta.version);
                         self.loaded = true;
@@ -216,16 +228,16 @@ var count_cat = 0;
                 }, function(err){
                     console.error("INSERT VERSION", err);
                     self.deferred.resolve({loaded: false});
-                });
+                });*/
             },
             function(err){
-                console.log(err);
+                console.error("Error load ", Url.url(url), err);
                 self.deferred.resolve({loaded: false});
             }
         );
     };
 
-    self.slice_category = function(data) {
+    self.slice_category = function(data, tx) {
 		var data_count = data.length;
 		var count = 0;
 
@@ -259,7 +271,9 @@ var count_cat = 0;
                 'properties' in category && category.properties ? JSON.stringify(category.properties) : ''
             ];
 //            console.log(query, values);
-            self.query(query, values).then(function(res){
+            tx.executeSql(query, values);
+/*            self.query(query, values).then(function(res){
+            tx.executeSql(query, values, function(res){
 				count ++;
 
 				if (count == data_count) {
@@ -270,11 +284,11 @@ var count_cat = 0;
 //                    console.log("Insert " + res.insertId);
                 }, function(err){
                     console.error(err);
-                });
+                });*/
         });
     };
 
-    self.slice_product = function(data) {
+    self.slice_product = function(data, tx) {
 		var data_count = data.length;
 		var count = 0;
 
@@ -297,7 +311,8 @@ var count_cat = 0;
                 'test' in product && 'cons' in product.test && product.test.cons ? product.test.cons : ''
             ];
 //            console.log(query, values);
-            self.query(query, values).then(function(res){
+            tx.executeSql(query, values);
+/*            self.query(query, values).then(function(res){
 				count ++;
 
 				if (count == data_count) {
@@ -307,23 +322,25 @@ var count_cat = 0;
 //                    console.log("Insert " + res.insertId);
                 }, function(err){
                     console.error(err);
-                });
+                });*/
 
             if ('property_values' in product) {
                 for (var property_id in product.property_values) {
-                    self.query('INSERT INTO product_properties (product_id, property_id, value) VALUES (?, ?, ?)', [product.id, property_id, product.property_values[property_id]]);
+//                    self.query('INSERT INTO product_properties (product_id, property_id, value) VALUES (?, ?, ?)', [product.id, property_id, product.property_values[property_id]]);
+                    tx.executeSql('INSERT INTO product_properties (product_id, property_id, value) VALUES (?, ?, ?)', [product.id, property_id, product.property_values[property_id]]);
                 }
             }
 
             if ('rating_values' in product) {
                 for (var rating_id in product.rating_values) {
-                    self.query('INSERT INTO product_ratings (product_id, rating_id, value) VALUES (?, ?, ?)', [product.id, rating_id, product.rating_values[rating_id]]);
+//                    self.query('INSERT INTO product_ratings (product_id, rating_id, value) VALUES (?, ?, ?)', [product.id, rating_id, product.rating_values[rating_id]]);
+                    tx.executeSql('INSERT INTO product_ratings (product_id, rating_id, value) VALUES (?, ?, ?)', [product.id, rating_id, product.rating_values[rating_id]]);
                 }
             }
         });
     };
 
-    self.slice_company = function(data) {
+    self.slice_company = function(data, tx) {
 		var data_count = data.length;
 		var count = 0;
         angular.forEach(data, function(company) {
@@ -333,7 +350,8 @@ var count_cat = 0;
                 company.name,
             ];
 //            console.log(query, values);
-            self.query(query, values).then(function(res){
+            tx.executeSql(query, values);
+/*            self.query(query, values).then(function(res){
 				count ++;
 
 				if (count == data_count) {
@@ -343,11 +361,11 @@ var count_cat = 0;
 //                    console.log("Insert " + res.insertId);
                 }, function(err){
                     console.error(err);
-                });
+                });*/
         });
     };
 
-    self.slice_rating = function(data) {
+    self.slice_rating = function(data, tx) {
 		var data_count = data.length;
 		var count = 0;
         angular.forEach(data, function(rating) {
@@ -357,7 +375,8 @@ var count_cat = 0;
                 rating.name,
             ];
 //            console.log(query, values);
-            self.query(query, values).then(function(res){
+            tx.executeSql(query, values);
+/*            self.query(query, values).then(function(res){
 				count ++;
 
 				if (count == data_count) {
@@ -366,8 +385,20 @@ var count_cat = 0;
 //                    console.log("Insert " + res.insertId);
                 }, function(err){
                     console.error(err);
-                });
+                });*/
         });
+    };
+
+    self.transaction = function(cb) {
+        return self.db.transaction(cb);
+        var deferred = $q.defer();
+ 
+        self.db.transaction(function(transaction) {
+            console.log("DEBUG transaction");
+            deferred.resolve(transaction);
+        });
+ 
+        return deferred.promise;
     };
 
     self.query = function(query, bindings) {
