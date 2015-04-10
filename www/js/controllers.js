@@ -155,6 +155,7 @@ app.controller('ProductCtrl', function($scope, $location, $stateParams, $ionicHi
       				}
       			});
       		});
+      		console.log($scope.properties);
       	});
       });
 	});

@@ -96,7 +96,7 @@ a:active {
 	background: #d8d8d8;
 }
 .button__disabled {
-	background: #C0C0C0 !important;
+	background: #D8D8D8 !important;
 }
 
 .product-rating {
@@ -524,7 +524,33 @@ a:active {
   font-size: 15px;
 }
 
-/* Danger level 1 */
-.product__single-dl-1 {
+/* properties  */
+.product__single-prop {
+
+}
+.product__single-prop-title {
+	font-weight: bold;
+  color: #222;
+  font-size: 16px;
+}
+.product__single-prop-main,
+.product__single-prop-add {
+	padding-bottom: 15px;
+	border-top: 1px solid #ddd;
+}
+.product__single-prop-ititle {
+  font-size: 14px;
+}
+.product__single-prop-table {
+	width: 100%;
+}
+.product__single-prop-table td{
+	width: 50%;
+	padding: 2px 0;
+}
+.product__single-prop-td-1 {
+	color: #A9A9A9 !important
+}
+.product__single-prop-td-2 {
 
 }
