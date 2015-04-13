@@ -17,10 +17,10 @@
       <h1 class="title">Навигация</h1>
     </ion-header-bar>
     <ion-content>
-    	<a href="#" ng-click="login()">
+    	<a ng-if="!checkAuthorization()" href="#" ng-click="login()">
     		<span>Авторизоваться</span>
     	</a>
-    		<a href="#" ng-click="logout()">
+    	<a ng-if="checkAuthorization()" href="#" ng-click="logout()">
     		<span>Выйти</span>
     	</a>
       <ion-list>

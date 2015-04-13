@@ -195,7 +195,7 @@ app.controller('MenuCtrl', function($scope) {
 	// Через css не сделать :(
 	$scope.menuWidth = 300;
 });
-
+ 
 
 // Контроллер авторизации
 app.controller('AuthorizationCtrl', function($scope, $http, $ionicModal, Authorization) {
@@ -242,8 +242,17 @@ app.controller('AuthorizationCtrl', function($scope, $http, $ionicModal, Authori
 		});
 
   };
+
+  // Разлогиниться
+  $scope.logout = function() {
+  	localStorage.removeItem('pk_userprofile');
+  }
+
+  // Проверка авторизации
+  $scope.checkAuthorization = function() {
+  	var retrievedObject = localStorage.getItem('pk_userprofile');
+  	$scope.userProfile = retrievedObject;
+  	return retrievedObject ? true : false; 
+  }
+
 });
-
-
-// var retrievedObject = localStorage.getItem('testObject');
-//console.log('retrievedObject: ', JSON.parse(retrievedObject));
