@@ -198,7 +198,7 @@ app.controller('MenuCtrl', function($scope) {
  
 
 // Контроллер авторизации
-app.controller('AuthorizationCtrl', function($scope, $http, $ionicModal, Authorization) {
+app.controller('AuthorizationCtrl', function($scope, $http, $ionicModal, User) {
   	
   // Шаблон
   $ionicModal.fromTemplateUrl('templates/login.html', {
@@ -225,12 +225,9 @@ app.controller('AuthorizationCtrl', function($scope, $http, $ionicModal, Authori
 
   	$scope.loginResult = '';
 		
-		Authorization.login($scope.loginData).then(function(result) {
+		User.login($scope.loginData.username, $scope.loginData.password).then(function(profile) {
 			//window.localStorage.clear();
-	  	if(result.status == 200) {
-	  		$scope.profile = result.data.profile;
-	  		localStorage.setItem('pk_userprofile', JSON.stringify($scope.profile));
-	  	}
+	  		$scope.profile = profile;
 		}, 
 		function(err) {
 	  	if(err.status == 403) {
@@ -245,14 +242,13 @@ app.controller('AuthorizationCtrl', function($scope, $http, $ionicModal, Authori
 
   // Разлогиниться
   $scope.logout = function() {
-  	localStorage.removeItem('pk_userprofile');
+  	User.logout();
   }
 
   // Проверка авторизации
   $scope.checkAuthorization = function() {
-  	var retrievedObject = localStorage.getItem('pk_userprofile');
-  	$scope.userProfile = retrievedObject;
-  	return retrievedObject ? true : false; 
+  	$scope.userProfile = User.profile();
+  	return User.is_auth(); 
   }
 
 });
