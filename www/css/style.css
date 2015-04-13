@@ -596,16 +596,19 @@ a:active {
 	background: -ms-linear-gradient(top, #6f4f75 0%,#757d9d 100%); /* IE10+ */
 	background: linear-gradient(to bottom, #6f4f75 0%,#757d9d 100%); /* W3C */
 }
-.menu__content .list {
-	margin: 0 30px;
-}
+
 .menu__content .item-content,
-.menu__content .item {
+.menu__content .item,
+.menu__content .item-content:active {
 	color: #FFF;
-	border-right: 0;
-	border-left: 0;
 	background: transparent;
 }
+.menu__content .item:active{
+	background: rgba(255, 255, 255, 0.25);
+}
+.menu__content .item-content {
+	padding: 15px 30px;
+} 
 
 
 /*all*/
@@ -643,6 +646,7 @@ a:active {
 .menu__login-name,
 .menu__logout {
 	font-size: 20px;
+	color: #FFF !important;
 	display: block;
 	text-align: center;
 }
