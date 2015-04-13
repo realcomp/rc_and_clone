@@ -192,7 +192,11 @@ app.controller('ProductCtrl', function($scope, $location, $stateParams, $ionicHi
 // Контроллер меню
 app.controller('MenuCtrl', function($scope) {
 	// Тут можно будет проставить ширину для меню на различных устройствах
-	$scope.menuWidth = 565;
+	if (window.cordova) {
+		$scope.menuWidth = parseInt(window.innerWidth * 80	 / 100);
+	} else {
+		$scope.menuWidth = 565;
+	}
 });
  
 
