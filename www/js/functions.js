@@ -109,6 +109,7 @@ app.controller('funcController', function($scope, $ionicSlideBoxDelegate, $ionic
   	return 'product__category-tabs-deactive';
   };
 
+
   // Методы для работы слайдера в отзывах
   $scope.currentIndex = 1;
   $scope.nextSlide = function() {
