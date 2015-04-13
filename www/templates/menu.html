@@ -17,18 +17,24 @@
       <h1 class="title">Навигация</h1>
     </ion-header-bar>
     <ion-content>
+    	<a href="#" ng-click="login()">
+    		<span>Авторизоваться</span>
+    	</a>
+    		<a href="#" ng-click="logout()">
+    		<span>Выйти</span>
+    	</a>
       <ion-list>
         <ion-item nav-clear menu-close href="/#/app/main/">
-          Главная
+          Рейтинг товаров
         </ion-item>
-        <ion-item nav-clear menu-close href="#/app/search">
-          Search
+        <ion-item nav-clear menu-close href="#">
+          Список покупок
         </ion-item>
-        <ion-item nav-clear menu-close href="#/app/browse">
-          Browse
+        <ion-item nav-clear menu-close href="#">
+          Журнал покупателя
         </ion-item>
-        <ion-item nav-clear menu-close href="#/app/playlists">
-          Playlists
+        <ion-item nav-clear menu-close href="#">
+          О приложении
         </ion-item>
       </ion-list>
     </ion-content>

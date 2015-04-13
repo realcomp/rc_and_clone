@@ -690,4 +690,25 @@ console.log("DEBUG tx");
     };
 
     return self;
+})
+
+// Resource service example
+.factory('Authorization', function($http) {
+    var self = this;
+
+  	self.login = function(data) {
+	  	return $http.get('/v1/auth/email?' + 'email=' + data.username + '&password=' + data.password).
+	  		success(function(data, status, headers, config) {
+	    		return data;
+	  		}).error(function(status) {
+		    return status;
+		  });
+  	};
+
+  	self.logout = function(data) {
+
+  	};
+
+    return self;
 });
+
