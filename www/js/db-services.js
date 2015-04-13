@@ -154,7 +154,7 @@ console.log('GET '+Url.url('/v1/catalog/info'));
                         return;
                     }
 
-                    if (self.meta_db && self.meta_db.version == self.meta_server.version) {
+                    if (self.meta_db && self.meta_db.version >= self.meta_server.version) {
                         console.log("version db eq with server "+self.meta_server.version);
                         self.loaded = true;
                         console.log("DEBUG loaded true meta eq");

@@ -236,7 +236,7 @@ console.log("user", User.get());
   // Обработка данных
   $scope.doLogin = function() {
 
-  	$scope.loginResult = '';
+  	$scope.loginError = '';
 		
 		User.login($scope.loginData.username, $scope.loginData.password).then(function(data) {
 			//window.localStorage.clear();

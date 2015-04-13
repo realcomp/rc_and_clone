@@ -1,7 +1,7 @@
 angular.module('user-services', [])
 
 // Resource service example
-.factory('User', function($http, $q) {
+.factory('User', function($http, $q, Url) {
     var self = this;
     var user_key = 'rk_user';
     var last_login_email_key = 'rk_last_login_email';
@@ -40,7 +40,7 @@ angular.module('user-services', [])
         }
 
         self.logout();
-	  	return $http.get('/v1/auth/email?' + 'email=' + email + '&password=' + password).
+	  	return $http.get(Url.url('/v1/auth/email?' + 'email=' + email + '&password=' + password)).
 	  		then(function(result) {
                 console.log("user", result.data);
 
@@ -81,7 +81,7 @@ angular.module('user-services', [])
             return deferred.promise;
         }
 
-        return $http.get('/v1/user/profile?' + 'api_token=' + user.api_token).
+        return $http.get(Url.url('/v1/user/profile?' + 'api_token=' + user.api_token)).
             then(function(result) {
                 console.log("profile", result.data);
 
