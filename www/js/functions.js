@@ -183,5 +183,9 @@ app.controller('funcController', function($scope, $ionicSlideBoxDelegate, $ionic
    	});
   };
 
+  // 
+  $scope.alert = function(text) {
+    alert(text);  
+	};
 
 });

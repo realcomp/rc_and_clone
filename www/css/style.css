@@ -222,6 +222,9 @@ a:active {
 	color: #B0B0B0;
 }
 
+.categories-list .item-content:active {
+	background: rgba(0, 0, 0, 0.10);
+}
 .product__category {
 
 }
@@ -409,6 +412,10 @@ a:active {
 .product__single-summary {
 	border-bottom: 1px solid #ddd;
 }
+.product__single-summary-wait {
+	border-bottom: 0;
+	padding: 10px;
+}
 
 /* plus and minus */
 .product__single-plus-and-minus {
@@ -557,6 +564,10 @@ a:active {
   border: 0;
   font-size: 15px;
 }
+.product__single-add-reviews:active,
+.product__single-add-reviews:hover {
+	background: #3E5389
+}
 
 /* properties  */
 .product__single-prop {
@@ -589,6 +600,24 @@ a:active {
 
 }
 
+/* wait */
+.product__vote-wait {
+	display: block;
+	width: 200px;
+	padding: 6px 0;
+	margin: 10px auto;
+	border: 1px solid #354777;
+  text-decoration: none !important;
+  text-align: center;
+	-web-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+}
+.product__vote-wait:hover,
+.product__vote-wait:active {
+	background: #354777;
+	color: #FFF;
+}
 
 
 /* 
