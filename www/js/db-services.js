@@ -6,7 +6,7 @@ angular.module('db-services', ['db.config', 'ngCordova'])
 
     self.url = function(url) {
         if (window.cordova) {
-//            return 'http://api.roscontrol.com' + url;
+            return 'http://api.roscontrol.com' + url;
         }
 
         return url;
@@ -59,40 +59,82 @@ angular.module('db-services', ['db.config', 'ngCordova'])
     };
 
     self.init = function() {
+        var init_deferred = $q.defer();
+        var promise = init_deferred.promise;
+
     	console.log('db init');
- 
-        if (window.cordova) {
-            console.log("use cordova sqlite");
-//            self.db = window.sqlitePlugin.openDatabase({name: DB_CONFIG.name});
-            self.db = $cordovaSQLite.openDB(DB_CONFIG.name + '.sqlite');
-//        self.db = window.openDB({name: DB_CONFIG.name + '.sqlite'});
-        } else {
-            console.log("use open database");
-            self.db = window.openDatabase(DB_CONFIG.name, '1.0', 'database', -1);
-        }
- 
+
         angular.forEach(DB_CONFIG.tables, function(table) {
-            var columns = [];
             var places = [];
             var fields = [];
             ptables[table.name] = {places: '', fields: ''};
- 
             angular.forEach(table.columns, function(column) {
-                columns.push(column.name + ' ' + column.type);
                 places.push('?');
                 fields.push(column.name);
             });
             // оптимизация, чтоб не делать в каждом цикле слайса продукта и категории
             ptables[table.name].fields = fields.join(',');
             ptables[table.name].places = places.join(',');
+        });
+
+        if (window.cordova) {
+            console.log("use cordova sqlite");
+            window.plugins.sqlDB.copy(DB_CONFIG.name + '.sqlite', function() {
+                self.db = window.sqlitePlugin.openDatabase({name: DB_CONFIG.name + '.sqlite'});
+//                self.db = $cordovaSQLite.openDB(DB_CONFIG.name + '.sqlite');
+//        self.db = window.openDB({name: DB_CONFIG.name + '.sqlite'});
+                init_deferred.resolve();
+            }, function (error) {
+                console.error("There was an error copying the database: " + error);
+                self.db = window.sqlitePlugin.openDatabase({name: DB_CONFIG.name + '.sqlite'});
+//                self.db = $cordovaSQLite.openDB(DB_CONFIG.name + '.sqlite');
+//                promise = self.create();
+                init_deferred.resolve();
+            });
+        } else {
+            console.log("use open database");
+            self.db = window.openDatabase(DB_CONFIG.name, '1.0', 'database', -1);
+            promise = self.create();
+        }
+
+        promise.then(function(){
+            self.check();
+        });
+
+        return self.deferred.promise;
+    };
+
+    self.create = function() {
+        var create_deferred = $q.defer();
+        var length = DB_CONFIG.tables.length;
+        var count = 0;
+
+        angular.forEach(DB_CONFIG.tables, function(table) {
+            var columns = [];
+ 
+            angular.forEach(table.columns, function(column) {
+                columns.push(column.name + ' ' + column.type);
+            });
  
             var query = 'CREATE TABLE IF NOT EXISTS ' + table.name + ' (' + columns.join(',') + ')';
             self.query(query).then(function(res){
-                console.log(query);
-                console.info('Table ' + table.name + ' initialized');
-            }, function(err){ console.error(err); });
+//                console.log(query);
+                console.info('Table ' + table.name + ' created');
+                count++;
+
+                if (count == length) {
+                    create_deferred.resolve({});
+                }
+            }, function(err){
+                console.error("Error create table "+table.name, err);
+                self.deferred.resolve({loaded: false});
+            });
         });
 
+        return create_deferred.promise;
+    }
+
+    self.check = function() {
         self.query('SELECT * FROM metadata ORDER BY version DESC LIMIT 1').then(function(res){
                 var r = self.fetch(res);
                 console.log("META",r);
@@ -105,6 +147,12 @@ angular.module('db-services', ['db.config', 'ngCordova'])
 console.log('GET '+Url.url('/v1/catalog/info'));
                 $http.get(Url.url('/v1/catalog/info')).then(function(resp){
                     self.meta_server = resp.data;
+
+                    if (!('version' in self.meta_server)) {
+                        self.loaded = true;
+                        console.error("not found version in meta info");
+                        return;
+                    }
 
                     if (self.meta_db && self.meta_db.version == self.meta_server.version) {
                         console.log("version db eq with server "+self.meta_server.version);
@@ -119,7 +167,7 @@ console.log('GET '+Url.url('/v1/catalog/info'));
                     });
 
                     console.log(resp.data);
-					count_slices++;
+                    count_slices++;
                     self.load(self.meta_server);
                     self.query('SELECT * FROM metadata ORDER BY version DESC LIMIT 1').then(function(result){
                             //console.log("result meta", result);
@@ -129,17 +177,16 @@ console.log('GET '+Url.url('/v1/catalog/info'));
                         });
                 },
                 function(err){
-                    self.deferred.resolve({loaded: false});
+                    self.loaded = true;
+                    self.deferred.resolve({loaded: true});
                     console.error("Error loading "+Url.url('/v1/catalog/info'), err);
                 });
             }, function(err){
                 self.deferred.resolve({loaded: false});
-                console.error("META ",err);
+                console.error("select META error",err);
             }
         );
-
-        return self.deferred.promise;
-    };
+    }
 
     /*
     ** загрузка базы из json
