@@ -20,6 +20,7 @@ angular.module('user-services', [])
 
 	    		return null;
 	  	    }, function(status) {
+                console.log("DEBUG status", status);
 		        return status;
 		    });
   	};
@@ -46,6 +47,21 @@ angular.module('user-services', [])
 
     self.is_auth = function() {
         return user ? true : false;
+    };
+
+    self.profile2 = function() {
+        if (!self.is_auth()) {
+            return null;
+        }
+
+        var uj = localStorage.getItem(user_key);
+
+        if (!uj) {
+            return null;
+        }
+
+        user = JSON.parse(uj);
+        return user.profile;
     };
 
     return self;

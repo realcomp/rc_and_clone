@@ -228,18 +228,22 @@ app.controller('AuthorizationCtrl', function($scope, $http, $ionicModal, User) {
 
   	$scope.loginResult = '';
 		
-		User.login($scope.loginData.username, $scope.loginData.password).then(function(profile) {
+		User.login($scope.loginData.username, $scope.loginData.password).then(function(data) {
 			//window.localStorage.clear();
-	  		$scope.userProfile = profile;
-	  		$scope.modal.hide();
-		}, 
-		function(err) {
-	  	if(err.status == 403) {
-	  		$scope.loginError = 'Указан неверный логин или пароль!';
-	  	}
-	  	else {
-	  		$scope.loginError = 'Ошибка авторизации, попробуйте позже!';
-	  	}
+			if ('profile' in data) {
+		  		$scope.userProfile = data.profile;
+		  		$scope.modal.hide();
+	  		} else {
+	  			if (data['data']['user_message']) {
+	  				$scope.loginError = data['data']['user_message'];
+	  			}
+			  	else if(data.status == 403) {
+			  		$scope.loginError = 'Указан неверный логин или пароль!';
+			  	}
+			  	else {
+			  		$scope.loginError = 'Ошибка авторизации, попробуйте позже!';
+			  	}
+	  		}
 		});
 
   };
