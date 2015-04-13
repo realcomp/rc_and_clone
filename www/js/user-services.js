@@ -4,6 +4,7 @@ angular.module('user-services', [])
 .factory('User', function($http, $q) {
     var self = this;
     var user_key = 'rk_user';
+    var last_login_email_key = 'rk_last_login_email';
     var user = null;
 
     var parse = function(force) {
@@ -32,12 +33,19 @@ angular.module('user-services', [])
     }
 
   	self.login = function(email, password) {
+        if (!email || !password) {
+            var deferred = $q.defer();
+            deferred.resolve({data: {user_message: 'не введен email или пароль'}});
+            return deferred.promise;
+        }
+
         self.logout();
 	  	return $http.get('/v1/auth/email?' + 'email=' + email + '&password=' + password).
 	  		then(function(result) {
                 console.log("user", result.data);
 
                 if (result.status == 200) {
+                    self.lastLoginEmail(email);
                     user = result.data;
                     save();
                     return {profile: user.profile};
@@ -68,7 +76,6 @@ angular.module('user-services', [])
         }
 
         if (!self.is_auth()) {
-console.log("DEBUG defered");
             var deferred = $q.defer();
             deferred.resolve(null);
             return deferred.promise;
@@ -99,6 +106,16 @@ console.log("DEBUG defered");
     self.is_auth = function() {
         parse();
         return user ? true : false;
+    };
+
+    self.lastLoginEmail = function(e) {
+        if (e) {
+            localStorage.setItem(last_login_email_key, e ? e : '');
+        } else {
+            e = localStorage.getItem(last_login_email_key);
+        }
+
+        return e ? e : '';
     };
 
     return self;

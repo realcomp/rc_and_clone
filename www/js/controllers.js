@@ -200,12 +200,16 @@ app.controller('MenuCtrl', function($scope) {
 app.controller('AuthorizationCtrl', function($scope, $http, $ionicModal, User) {
 console.log("user", User.get());
 
+  // Обьект с парой логин-пароль
+  $scope.loginData = {};
 	$scope.userProfile = User.profile(true);
 
 	if (User.is_auth()) {
 		User.profile().then(function(profile){
 			$scope.userProfile = profile;
 		});
+	} else if (!$scope.loginData['username']) {
+		$scope.loginData['username'] = User.lastLoginEmail();
 	}
 
 	$scope.email = '';
@@ -220,15 +224,13 @@ console.log("user", User.get());
   // Закрыть
   $scope.closeLogin = function() {
     $scope.modal.hide();
+    $scope.loginData['password'] = '';
   };
 
   // Открыть
   $scope.login = function() {
     $scope.modal.show();
   };
-
-  // Обьект с парой логин-пароль
-  $scope.loginData = {};
 
   // Обработка данных
   $scope.doLogin = function() {
@@ -239,7 +241,7 @@ console.log("user", User.get());
 			//window.localStorage.clear();
 			if ('profile' in data) {
 		  		$scope.userProfile = data.profile;
-		  		$scope.modal.hide();
+		  		$scope.closeLogin();
 	  		} else {
 	  			if (data['data']['user_message']) {
 	  				$scope.loginError = data['data']['user_message'];
