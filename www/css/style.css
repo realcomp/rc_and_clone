@@ -576,3 +576,80 @@ a:active {
 .product__single-prop-td-2 {
 
 }
+
+
+
+/* 
+*
+*** MENU ***
+*
+*/
+
+/*all*/
+.menu__avatar {
+	width: 100px;
+  height: 100px;
+  margin: 20px auto 20px;
+  border-radius: 100px;
+  display: block;
+}
+/*no login*/
+.menu__nologin-wrap {
+	margin-bottom: 30px;
+	text-decoration: none;
+}
+.menu__nologin-avatar {
+  background: #EDEDED;
+  border: 1px solid #DDDDDD;
+}
+.menu__nologin-url {
+	display: block;
+  font-size: 20px;
+  text-align: center;
+  margin: 0 0 30px 0;
+}
+
+/*login*/
+.menu__login-wrap {
+	margin-bottom: 30px;
+}
+.menu__login-wrap-link {
+	text-decoration: none;
+}
+.menu__login-name,
+.menu__logout {
+	font-size: 20px;
+	display: block;
+	text-align: center;
+}
+.menu__logout {
+	font-size: 14px;
+	margin-top: 10px;
+}
+
+
+
+/* 
+*
+*** MODAL LOGIN ***
+*
+*/
+.modal {
+	max-width: 640px;
+	height: 270px;
+	left: 50%;
+	margin-left: -320px;
+}
+.modal .button.button-block {
+	background: #C80020;
+	border: 1px solid #C80020;
+}
+
+
+
+.login__error {
+	text-align: center;
+  margin: 10px 0;
+  font-size: 16px;
+  color: #C80020
+}

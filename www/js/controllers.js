@@ -230,14 +230,16 @@ app.controller('AuthorizationCtrl', function($scope, $http, $ionicModal, Authori
 	  	if(result.status == 200) {
 	  		$scope.profile = result.data.profile;
 	  		localStorage.setItem('pk_userprofile', JSON.stringify($scope.profile));
+	  		alert('Вы успешно авторизовались!');
+	  		$scope.closeLogin();
 	  	}
 		}, 
 		function(err) {
 	  	if(err.status == 403) {
-	  		$scope.loginResult = 'Указан неверный логин или пароль!';
+	  		$scope.loginError = 'Указан неверный логин или пароль!';
 	  	}
 	  	else {
-	  		$scope.loginResult = 'Ошибка авторизации, попробуйте позже!';
+	  		$scope.loginError = 'Ошибка авторизации, попробуйте позже!';
 	  	}
 		});
 
@@ -251,8 +253,11 @@ app.controller('AuthorizationCtrl', function($scope, $http, $ionicModal, Authori
   // Проверка авторизации
   $scope.checkAuthorization = function() {
   	var retrievedObject = localStorage.getItem('pk_userprofile');
-  	$scope.userProfile = retrievedObject;
+  	$scope.userProfile = JSON.parse(retrievedObject);
   	return retrievedObject ? true : false; 
   }
 
 });
+
+
+console.log(localStorage);
