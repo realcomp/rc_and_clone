@@ -17,7 +17,7 @@
           <input type="password" ng-model="loginData.password">
         </label>
         <label class="item">
-          <button class="button button-block button-positive" type="submit">Вход</button>
+          <button class="button button-block button-positive" ng-disabled="!loginData.username || !loginData.password" type="submit">Вход</button>
         </label>
         <p class="login__error">{{ loginError }}</p>
       </div>

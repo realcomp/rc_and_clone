@@ -13,10 +13,8 @@
   </ion-side-menu-content>
 
   <ion-side-menu side="right" width="menuWidth">
-    <ion-header-bar class="bar-stable">
-      <h1 class="title">Навигация</h1>
-    </ion-header-bar>
-    <ion-content scroll="false">
+
+    <ion-content scroll="false" class="menu__content">
     	<a ng-if="!userProfile" class="menu__nologin-wrap" href="#" ng-click="login()">
     		<span class="menu__avatar menu__nologin-avatar"></span>
     		<span class="menu__nologin-url">Авторизоваться</span>
@@ -39,6 +37,9 @@
         </ion-item>
         <ion-item nav-clear menu-close href="#">
           Журнал покупателя
+        </ion-item>
+        <ion-item ng-if="userProfile" nav-clear menu-close href="#">
+          Мой профиль
         </ion-item>
         <ion-item nav-clear menu-close href="#">
           О приложении

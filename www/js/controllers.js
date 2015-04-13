@@ -192,8 +192,7 @@ app.controller('ProductCtrl', function($scope, $location, $stateParams, $ionicHi
 // Контроллер меню
 app.controller('MenuCtrl', function($scope) {
 	// Тут можно будет проставить ширину для меню на различных устройствах
-	// Через css не сделать :(
-	$scope.menuWidth = 300;
+	$scope.menuWidth = 565;
 });
  
 
