@@ -119,6 +119,9 @@ app.controller('funcController', function($scope, $ionicSlideBoxDelegate, $ionic
     $ionicSlideBoxDelegate.previous();
     $scope.currentIndex = $ionicSlideBoxDelegate.currentIndex() + 1;
   }
+  $scope.slideHasChanged = function($index) {
+  	$scope.currentIndex = $index + 1
+	};
 
   // Сортировка
    $scope.showSorting = function() {

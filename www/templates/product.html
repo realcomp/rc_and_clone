@@ -37,7 +37,7 @@
 					  	<button ng-click="nextSlide()" ng-class="currentIndex == reviews.total_count ? 'button__disabled' : '' ">&#9658;</button>
 			 			</div>
 		 			</div>
-				 	<ion-slide-box ng-if="reviews">            
+				 	<ion-slide-box ng-if="reviews" on-slide-changed="slideHasChanged($index)">            
 			      <ion-slide ng-repeat="review in reviews.items">
 				      <div class="product__single-reviews-slider-body">
 				      	<div class="product__single-reviews-slider-top">
