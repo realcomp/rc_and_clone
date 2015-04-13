@@ -199,8 +199,16 @@ app.controller('MenuCtrl', function($scope) {
 
 // Контроллер авторизации
 app.controller('AuthorizationCtrl', function($scope, $http, $ionicModal, User) {
-  	
-	$scope.userProfile = User.profile();
+console.log("user", User.get());
+
+	$scope.userProfile = User.profile(true);
+
+	if (User.is_auth()) {
+		User.profile().then(function(profile){
+			$scope.userProfile = profile;
+		});
+	}
+
 	$scope.email = '';
 
   // Шаблон
