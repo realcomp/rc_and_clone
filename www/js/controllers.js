@@ -176,7 +176,7 @@ app.controller('ProductCtrl', function($scope, $location, $stateParams, $ionicHi
 	// список названий рейтинга
 	Rating.allHash().then(function(gratings) {
 		// рейтинги продуктов
-		Product.ratings($stateParams.id).then(function(ratings){
+		Product.ratings($stateParams.id).then(function(ratings) {
 			angular.forEach(ratings, function(rating){
 				if (gratings[rating.rating_id]) {
 					$scope.ratings.push({name: gratings[rating.rating_id].name, value: rating.value});
@@ -188,13 +188,71 @@ app.controller('ProductCtrl', function($scope, $location, $stateParams, $ionicHi
 
 });
 
+
 // Контроллер меню
 app.controller('MenuCtrl', function($scope) {
 	// Тут можно будет проставить ширину для меню на различных устройствах
 	// Через css не сделать :(
 	$scope.menuWidth = 300;
 });
+ 
 
+// Контроллер авторизации
+app.controller('AuthorizationCtrl', function($scope, $http, $ionicModal, Authorization) {
+  	
+  // Шаблон
+  $ionicModal.fromTemplateUrl('templates/login.html', {
+    scope: $scope
+  }).then(function(modal) {
+    $scope.modal = modal;
+  });
 
+  // Закрыть
+  $scope.closeLogin = function() {
+    $scope.modal.hide();
+  };
 
+  // Открыть
+  $scope.login = function() {
+    $scope.modal.show();
+  };
 
+  // Обьект с парой логин-пароль
+  $scope.loginData = {};
+
+  // Обработка данных
+  $scope.doLogin = function() {
+
+  	$scope.loginResult = '';
+		
+		Authorization.login($scope.loginData).then(function(result) {
+			//window.localStorage.clear();
+	  	if(result.status == 200) {
+	  		$scope.profile = result.data.profile;
+	  		localStorage.setItem('pk_userprofile', JSON.stringify($scope.profile));
+	  	}
+		}, 
+		function(err) {
+	  	if(err.status == 403) {
+	  		$scope.loginResult = 'Указан неверный логин или пароль!';
+	  	}
+	  	else {
+	  		$scope.loginResult = 'Ошибка авторизации, попробуйте позже!';
+	  	}
+		});
+
+  };
+
+  // Разлогиниться
+  $scope.logout = function() {
+  	localStorage.removeItem('pk_userprofile');
+  }
+
+  // Проверка авторизации
+  $scope.checkAuthorization = function() {
+  	var retrievedObject = localStorage.getItem('pk_userprofile');
+  	$scope.userProfile = retrievedObject;
+  	return retrievedObject ? true : false; 
+  }
+
+});
