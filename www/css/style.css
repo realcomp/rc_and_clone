@@ -636,7 +636,6 @@ a:active {
 */
 .modal {
 	max-width: 640px;
-	height: 270px;
 	left: 50%;
 	margin-left: -320px;
 }
