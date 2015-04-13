@@ -61,7 +61,18 @@ app.config(function($stateProvider, $urlRouterProvider) {
         controller: 'ProductCtrl'
       }
     }
-  });
+  })
+
+  .state('app.shoppingList', {
+    url: "/shopping-list",
+    views: {
+      'menuContent': {
+        templateUrl: "templates/shopping-list.html",
+        controller: 'ShoppingListCtrl'
+      }
+    }
+  })
+  ;
 
   // Default Router
   $urlRouterProvider.otherwise('/app/main');

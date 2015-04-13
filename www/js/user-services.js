@@ -6,6 +6,7 @@ angular.module('user-services', [])
     var user_key = 'rk_user';
     var last_login_email_key = 'rk_last_login_email';
     var user = null;
+    var shopping_list = null;
 
     var parse = function(force) {
         if (!force && user) {
@@ -42,7 +43,7 @@ angular.module('user-services', [])
         self.logout();
 	  	return $http.get(Url.url('/v1/auth/email?' + 'email=' + email + '&password=' + password)).
 	  		then(function(result) {
-                console.log("user", result.data);
+//                console.log("user", result.data);
 
                 if (result.status == 200) {
                     self.lastLoginEmail(email);
@@ -61,6 +62,7 @@ angular.module('user-services', [])
   	self.logout = function() {
         localStorage.removeItem(user_key);
         user = null;
+        shopping_list = null;
   	};
 
     self.get = function() {
@@ -83,7 +85,7 @@ angular.module('user-services', [])
 
         return $http.get(Url.url('/v1/user/profile?' + 'api_token=' + user.api_token)).
             then(function(result) {
-                console.log("profile", result.data);
+//                console.log("profile", result.data);
 
                 if (result.status == 200) {
                     user.profile = result.data;
@@ -116,6 +118,30 @@ angular.module('user-services', [])
         }
 
         return e ? e : '';
+    };
+
+    self.shoppingList = function() {
+        console.log("GET "+Url.url('/v1/shopping_list'));
+        if (!self.is_auth()) {
+            var deferred = $q.defer();
+            deferred.resolve(null);
+            return deferred.promise;
+        }
+
+        return $http.get(Url.url('/v1/shopping_list?' + 'api_token=' + user.api_token)).
+            then(function(result) {
+                console.log("shoppin list", result.data);
+
+                if (result.status == 200) {
+                    shopping_list = result.data;
+                }
+
+                return shopping_list;
+            }, function(status) {
+                console.error("shopping list error", status);
+
+                return shopping_list;
+            });
     };
 
     return self;
