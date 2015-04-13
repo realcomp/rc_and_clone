@@ -663,17 +663,30 @@ a:active {
 *
 */
 .modal {
-	max-width: 640px;
-	left: 50%;
-	margin-left: -320px;
+	position: absolute;
+	top: 0;
+	z-index: 10;
+	overflow: hidden;
+	width: 100%;
+	background-color: #fff;
 }
+
+@media (min-width: 680px) {
+	.modal {
+		top: 20%;
+		right: 20%;
+		bottom: 20%;
+		left: 20%;
+		overflow: visible;
+		min-height: 240px;
+		width: 60%;
+	}
+}
+
 .modal .button.button-block {
 	background: #C80020;
 	border: 1px solid #C80020;
 }
-
-
-
 .login__error {
 	text-align: center;
   margin: 10px 0;
