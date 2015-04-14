@@ -368,7 +368,9 @@ app.controller('ArticlesCtrl', function($scope, $ionicHistory, Article) {
 				$scope.count_articles += limit;
 
 				if (data.items.length > 0) {
-      				$scope.articles = $scope.articles.concat(data.items);
+					angular.forEach(data.items, function(article){
+						$scope.articles.push(article);
+					});
 				}
 
 				$scope.error = null;
