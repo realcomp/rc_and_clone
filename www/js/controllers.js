@@ -338,21 +338,27 @@ app.controller('UserProfileCtrl', function($scope, User) {
 app.controller('AboutCtrl', function($scope) {
 });
 
+// список статей
 app.controller('ArticlesCtrl', function($scope, $ionicHistory, Article) {
 	$scope.articles = [];
 	$scope.total_count = 0;
 	$scope.hide_loader = false;
+	$scope.error = null;
 
 	Article.list().then(function(data){
 //		console.log(data);
 		if ('items' in data && 'total_count' in data) {
 			$scope.total_count = data.total_count;
 			$scope.articles = data.items;
-			$scope.hide_loader = true;
+		} else {
+			$scope.error = 'проблемы с подключением';
 		}
+
+		$scope.hide_loader = true;
 	});
 });
 
+// вывод статьи
 app.controller('ArticleCtrl', function($scope, $stateParams, $location, $ionicHistory, Article) {
 	var onlyNumber = !isNaN(parseFloat($stateParams.id)) && isFinite($stateParams.id) && (0 < $stateParams.id);
 	if(!onlyNumber) {
@@ -365,12 +371,16 @@ app.controller('ArticleCtrl', function($scope, $stateParams, $location, $ionicHi
 
 	$scope.article = {};
 	$scope.hide_loader = false;
+	$scope.error = null;
 
 	Article.getById($stateParams.id).then(function(data){
 		console.log(data);
 		if ('html' in data) {
 			$scope.article = data;
-			$scope.hide_loader = true;
+		} else {
+			$scope.error = 'проблемы с подключением';
 		}
+
+		$scope.hide_loader = true;
 	});
 });
