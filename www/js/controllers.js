@@ -327,10 +327,24 @@ app.controller('ShoppingListCtrl', function($scope, User) {
 
 // Профиль пользователя
 app.controller('UserProfileCtrl', function($scope, User) {
+	if (!User.is_auth()) {
+		$ionicHistory.nextViewOptions({
+   			disableBack: true
+		});
+		$location.path('/');
+		return false;
+	}
+
 	$scope.profile = User.profile(true);
+	$scope.products = {};
+
 	User.profile().then(function(profile){
 		$scope.profile = profile;
 		console.log($scope.profile);
+	});
+
+	User.productList().then(function(data){
+		$scope.products = data;
 	});
 });
 

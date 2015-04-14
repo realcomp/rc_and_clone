@@ -1,12 +1,13 @@
 angular.module('user-services', [])
 
 // Resource service example
-.factory('User', function($http, $q, Url) {
+.factory('User', function($http, $q, Url, DB) {
     var self = this;
     var user_key = 'rk_user';
     var last_login_email_key = 'rk_last_login_email';
     var user = null;
     var shopping_list = null;
+    var products_list = null;
     var time_get_profile = 0;
 
     var parse = function(force) {
@@ -144,6 +145,7 @@ angular.module('user-services', [])
         return e ? e : '';
     };
 
+    // Получение списка рекомендованных товаров
     self.shoppingList = function() {
         console.log("GET "+Url.url('/v1/shopping_list'));
         if (!self.is_auth()) {
@@ -158,7 +160,6 @@ angular.module('user-services', [])
 
                 if (result.status == 200) {
                     shopping_list = [];
-                    angular.forEach();
                     shopping_list = result.data;
                 }
 
@@ -167,6 +168,44 @@ angular.module('user-services', [])
                 console.error("shopping list error", status);
 
                 return shopping_list;
+            });
+    };
+
+    // Получение списка товаров пользователя
+    self.productList = function() {
+        console.log("GET "+Url.url('/v1/user/products'));
+        if (!self.is_auth()) {
+            var deferred = $q.defer();
+            deferred.resolve(null);
+            return deferred.promise;
+        }
+
+        return $http.get(Url.url('/v1/user/products?' + 'api_token=' + user.api_token)).
+            then(function(result) {
+                console.log("products list", result.data);
+                var res = {items: []};
+
+                if (result.status == 200 && 'items' in result.data && result.data.items.length) {
+                    var places = [];
+                    angular.forEach(result.data.items, function(){ places.push('?'); });
+                    DB.query('SELECT * FROM products WHERE id IN ('+places.join(',')+')', result.data.items)
+                    .then(function(result){
+                        products_list = DB.fetchAll(result);
+                        console.log(products_list);
+                        res.items = products_list;
+                    });
+                }
+
+                return res;
+            }, function(status) {
+                console.error("error products list", status);
+                var res = {items: []};
+
+                if (products_list) {
+                    res.items = products_list;
+                }
+
+                return res;
             });
     };
 
