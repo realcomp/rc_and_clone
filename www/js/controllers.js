@@ -100,7 +100,7 @@ app.controller('CategoryCtrl', function($scope, $location, $stateParams, $ionicH
 });
 
 // Контроллер товаров
-app.controller('ProductCtrl', function($scope, $location, $stateParams, $ionicHistory, Product, Category, Rating) {
+app.controller('ProductCtrl', function($scope, $location, $stateParams, $ionicHistory, $ionicModal, Product, Category, Rating) {
 
 	var onlyNumber = !isNaN(parseFloat($stateParams.id)) && isFinite($stateParams.id) && (0 < $stateParams.id);
 	if(!onlyNumber) {
@@ -223,6 +223,16 @@ app.controller('ProductCtrl', function($scope, $location, $stateParams, $ionicHi
 		});
 	});
 
+	// Шаблон окна с полным изображением товара
+  $ionicModal.fromTemplateUrl('templates/modal/modal-product.html', {
+    scope: $scope
+  }).then(function(modalProduct) {
+    $scope.modalProduct = modalProduct;
+  });
+  $scope.closeLogin = function() {
+    $scope.modalProduct.hide();
+  };
+
 
 });
 
@@ -240,7 +250,6 @@ app.controller('MenuCtrl', function($scope) {
 
 // Контроллер авторизации
 app.controller('AuthorizationCtrl', function($scope, $http, $ionicModal, User) {
-console.log("user", User.get());
 
   // Обьект с парой логин-пароль
   $scope.loginData = {};

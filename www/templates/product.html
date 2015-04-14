@@ -7,7 +7,7 @@
 				<div class="product__single-info">
 					<div class="product__single-info-left">
 						<span class="product__single-helper"></span>
-						<img ng-src="{{ product.images }}">
+						<img ng-click="modalProduct.show()" ng-src="{{ product.images }}">
 						<ion-spinner icon="circles" class="loader"></ion-spinner>
 					</div>
 					<div class="product__single-info-right">
@@ -27,7 +27,7 @@
 		 				<span class="product__single-reviews-rating" ng-repeat="i in arrayRating track by $index" ng-class="i ? 'rating-full' : 'rating-empty'">
 		 					<i class="fa fa-star"></i>
 		 				</span>
-		 				<span class="product__single-reviews-text">Всего оценок: {{ reviews.total_count }}</span>
+		 				<span class="product__single-reviews-text">{{ reviews.total_count }} {{ declension(reviews.total_count, ['оценка','оценки','оценок']); }}</span>
 		 		</div>
 
 		 		<div class="product__single-reviews-slider product__single-wblock">
