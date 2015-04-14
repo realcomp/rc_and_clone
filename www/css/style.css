@@ -82,6 +82,10 @@
 a {
 	color: #354777;
 }
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
 a:hover,
 a:active {
 	color: #a8001c;
@@ -240,7 +244,6 @@ a:active {
 .product__category .product__category-thumbnail img {
 	display: block;
 	width: 100%;
-	max-width: 100%;
 	position: relative;
 	z-index: 3;
 }
@@ -333,11 +336,10 @@ a:active {
 }
 .product__single-head img {
 	width: 180px;
-	max-width: 100%;
-	max-height: 100%;
 	position: relative;
 	z-index: 5;
 	vertical-align: middle;
+	cursor: pointer;
 }
 .product__single-head .product__single-name {
 	padding: 10px 15px;
@@ -543,7 +545,6 @@ a:active {
   border-radius: 100px;
 }
 .product__slider-avatar img{
-	max-width: 100%;
   border-radius: 100px;
 }
 .product__slider-avatar span {
@@ -649,6 +650,27 @@ a:active {
 .product__category-button-test:active {
 	background: #354777;
 	color: #FFF;
+}
+
+/* modal */
+.product__single-modal-head { 
+	background: #C80020;
+}
+.product__single-modal-head .title + .buttons {
+	right: 12px;
+}
+.product__single-modal-head .button.button-clear {
+	font-size: 42px;
+  color: #FFF;
+  right: 0;
+}
+.product__single-modal-head .title{ 
+	font-size: 20px;
+	color: #FFF;
+}
+.product__single-modal-content {
+	padding-bottom: 20px;
+	text-align: center;
 }
 
 
