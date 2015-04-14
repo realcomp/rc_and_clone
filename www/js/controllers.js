@@ -405,7 +405,7 @@ app.controller('ArticleCtrl', function($scope, $stateParams, $location, $ionicHi
 		return false;
 	}
 
-	$scope.article = {};
+	$scope.article = {html: '', comments: []};
 	$scope.hide_loader = false;
 	$scope.error = null;
 

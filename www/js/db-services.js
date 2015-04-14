@@ -730,20 +730,27 @@ console.log("DEBUG tx");
 
 console.log("GET articles", Url.url('/v1/articles' + (params.length ? '?' + params.join('&') : '')));
         return $http.get(Url.url('/v1/articles' + (params.length ? '?' + params.join('&') : '')))
-		.then(function(resp){
+    		.then(function(resp){
 //            console.log("DEBUG articles", resp.data);
-			return resp.data;
-		});
+    			return resp.data;
+            },
+            function(err){
+                console.error("get articles error", err);
+                return err;
+    		});
     };
 
     self.getById = function(id) {
-        return $http.get('/v1/articles/' + id)
-		.then(function(resp){
-			return resp.data;
-		},
-        function(err){
-            console.log("article ");
-        });
+        var api_token = User.api_token();
+
+        return $http.get(Url.url('/v1/articles/' + id + (api_token ? '?api_token=' + api_token : '')))
+    		.then(function(resp){
+    			return resp.data;
+    		},
+            function(err){
+                console.error("error get article id "+id, err);
+                return err;
+            });
     };
 
     return self;
