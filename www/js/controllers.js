@@ -340,22 +340,56 @@ app.controller('AboutCtrl', function($scope) {
 
 // список статей
 app.controller('ArticlesCtrl', function($scope, $ionicHistory, Article) {
+	var limit = 10;
+
+	$scope.count_articles = 0
 	$scope.articles = [];
 	$scope.total_count = 0;
 	$scope.hide_loader = false;
 	$scope.error = null;
 
-	Article.list().then(function(data){
+/*	Article.list(0, 0, 20, $scope.count_articles).then(function(data){
 //		console.log(data);
 		if ('items' in data && 'total_count' in data) {
 			$scope.total_count = data.total_count;
 			$scope.articles = data.items;
+			count_articles = $scope.articles.length;
 		} else {
 			$scope.error = 'проблемы с подключением';
 		}
 
 		$scope.hide_loader = true;
-	});
+	});*/
+
+	$scope.loadMore = function() {
+    	Article.list(0, 0, limit, $scope.count_articles).then(function(data) {
+		console.log(data);
+			if ('items' in data && 'total_count' in data) {
+				$scope.count_articles += limit;
+
+				if (data.items.length > 0) {
+      				$scope.articles = $scope.articles.concat(data.items);
+				}
+
+				$scope.error = null;
+      		} else {
+				$scope.error = 'проблемы с подключением';
+			}
+
+  			$scope.$broadcast('scroll.infiniteScrollComplete');
+    	});
+  	};
+
+  	$scope.moreCanBeLoaded = function(){
+  		if ($scope.total_count >= $scope.count_articles) {
+  		console.log("moreDataCanBeLoaded true", $scope.total_count, $scope.count_articles);
+  			return false;
+  		}
+
+  		console.log("moreDataCanBeLoaded false", $scope.total_count, $scope.count_articles);
+  		return true;
+  	};
+
 });
 
 // вывод статьи

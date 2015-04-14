@@ -9,6 +9,12 @@
 		        </ion-item>
 	      </ion-item>
 	    </ion-list>
+	    <ion-infinite-scroll
+	    	ng-if="!error && (!total_count || count_articles < total_count)"
+	    	icon="ion-loading-c"
+	    	on-infinite="loadMore()"
+	    	distance="1%">
+	    </ion-infinite-scroll>
 
 		<ion-spinner class="loader" ng-hide="hide_loader"></ion-spinner>
 		{{ error }}

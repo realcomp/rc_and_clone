@@ -124,6 +124,16 @@ angular.module('user-services', [])
         return user ? true : false;
     };
 
+    self.api_token = function() {
+        parse();
+
+        if (!self.is_auth()) {
+            return null;
+        }
+
+        return user.api_token;
+    };
+
     self.lastLoginEmail = function(e) {
         if (e) {
             localStorage.setItem(last_login_email_key, e ? e : '');

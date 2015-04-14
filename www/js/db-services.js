@@ -701,11 +701,12 @@ console.log("DEBUG tx");
 })
 
 // Resource service example
-.factory('Article', function($http, Url) {
+.factory('Article', function($http, Url, User) {
     var self = this;
 
     self.list = function(category_id, rubric, limit, offset) {
 		var params = [];
+        var api_token = User.api_token();
 
 		if (category_id) {
 			params.push('category_id=' + category_id);
@@ -723,10 +724,14 @@ console.log("DEBUG tx");
 			params.push('offset=' + offset);
 		}
 
+        if (api_token) {
+            params.push('api_token=' + api_token);
+        }
+
 console.log("GET articles", Url.url('/v1/articles' + (params.length ? '?' + params.join('&') : '')));
         return $http.get(Url.url('/v1/articles' + (params.length ? '?' + params.join('&') : '')))
 		.then(function(resp){
-            console.log("DEBUG articles", resp.data);
+//            console.log("DEBUG articles", resp.data);
 			return resp.data;
 		});
     };
@@ -735,7 +740,10 @@ console.log("GET articles", Url.url('/v1/articles' + (params.length ? '?' + para
         return $http.get('/v1/articles/' + id)
 		.then(function(resp){
 			return resp.data;
-		});
+		},
+        function(err){
+            console.log("article ");
+        });
     };
 
     return self;
