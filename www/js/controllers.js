@@ -346,7 +346,7 @@ app.controller('ArticlesCtrl', function($scope, $ionicHistory, Article) {
 	$scope.error = null;
 
 	Article.list().then(function(data){
-//		console.log(data);
+//	console.log(data);
 		if ('items' in data && 'total_count' in data) {
 			$scope.total_count = data.total_count;
 			$scope.articles = data.items;

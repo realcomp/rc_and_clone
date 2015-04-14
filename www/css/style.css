@@ -632,7 +632,8 @@ a:active {
 
 /* wait */
 .product__vote-wait,
-.product__category-button-test {
+.product__category-button-test,
+.like__googleplay {
 	display: block;
 	width: 200px;
 	padding: 6px 0;
@@ -647,7 +648,9 @@ a:active {
 .product__vote-wait:hover,
 .product__vote-wait:active,
 .product__category-button-test:hover,
-.product__category-button-test:active {
+.product__category-button-test:active,
+.like__googleplay:hover,
+.like__googleplay:active{
 	background: #354777;
 	color: #FFF;
 }
@@ -827,4 +830,38 @@ a:active {
   display: inline-block;
   padding: 1px 6px;
   margin-left: 5px;
+}
+
+/* 
+*
+*** PAGE ABOUT ***
+*
+*/
+
+.page__about {
+
+}
+.page__about h2 {
+	margin: 10px 0;
+}
+.page__about h2,
+.page__about p {
+	text-align: center;
+}
+.page__about .bar.bar-footer {
+	padding: 10px 0;
+	height: 60px;
+	border-top: 1px solid #DDDDDD;
+	background: #f7f7f7;
+}
+.page__about-foot {
+	width: 100%;
+	color: #848484;
+	background: #f7f7f7;
+	text-align: center;
+}
+.like__googleplay {
+	padding: 10px;
+	width: 300px;
+	margin: 10px auto 20px auto;
 }
