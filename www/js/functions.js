@@ -77,10 +77,10 @@ app.controller('funcController', function($scope, $ionicSlideBoxDelegate, $ionic
 		  title : "Проверянные", active : false,
 		},
     { 
-      title: "Ожидают проверки", active : false 
+      title: "Черный список", active : false 
     },
     { 
-      title: "Черный список", active : false 
+      title: "Ожидают проверки", active : false 
     }
   ];
 
@@ -186,6 +186,20 @@ app.controller('funcController', function($scope, $ionicSlideBoxDelegate, $ionic
   // 
   $scope.alert = function(text) {
     alert(text);  
+	};
+
+	// Генератор массива рейтинга для каждого отзыва
+	$scope.reviewRatingGenerator = function(val) {
+	 	$scope.arrayRating = [];
+
+    for(var i = 0; i < 5; i++) {
+    	if(i < val) {
+    		$scope.arrayRating.push(true)
+    	}
+    	else {
+    		$scope.arrayRating.push(false);
+    	}	
+    }
 	};
 
 });

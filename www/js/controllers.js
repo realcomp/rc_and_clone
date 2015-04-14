@@ -189,6 +189,19 @@ app.controller('ProductCtrl', function($scope, $location, $stateParams, $ionicHi
 	Product.reviews($stateParams.id).then(function(resp) {
 		$scope.reviews = resp;
 
+		// Массив звезд рейтинга
+	 	$scope.arrayRating = [];
+
+    for(var i = 0; i < 5; i++) {
+    	if(i < resp.avg_mark) {
+    		$scope.arrayRating.push(true)
+    	}
+    	else {
+    		$scope.arrayRating.push(false);
+    	}	
+    }
+
+
 		// Преобразованная дата для каждого элемента
 		angular.forEach(resp.items, function(item) {
 	   	var date = item.created_at;
