@@ -316,6 +316,7 @@ app.controller('AuthorizationCtrl', function($scope, $http, $ionicModal, User) {
 
 });
 
+// Список покупок
 app.controller('ShoppingListCtrl', function($scope, User) {
 	$scope.shoppingList = [];
 
@@ -324,13 +325,15 @@ app.controller('ShoppingListCtrl', function($scope, User) {
 	});
 });
 
+// Профиль пользователя
 app.controller('UserProfileCtrl', function($scope, User) {
 	$scope.profile = {};
-
 	User.profile().then(function(profile){
 		$scope.profile = profile;
+		console.log($scope.profile);
 	});
 });
 
+// О приложении
 app.controller('AboutCtrl', function($scope) {
 });
