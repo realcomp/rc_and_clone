@@ -332,23 +332,42 @@ app.controller('UserProfileCtrl', function($scope, User) {
 	});
 });
 
-app.controller('AboutCtrl', function($scope) {
+app.controller('AboutCtrl', function($scope, $ionicHistory) {
 });
 
-app.controller('ArticlesCtrl', function($scope, Article) {
+app.controller('ArticlesCtrl', function($scope, $ionicHistory, Article) {
 	$scope.articles = [];
+	$scope.total_count = 0;
+	$scope.hide_loader = false;
 
-	Article.list().then(function(articles){
-		console.log(articles);
-		$scope.articles = articles;
+	Article.list().then(function(data){
+//		console.log(data);
+		if ('items' in data && 'total_count' in data) {
+			$scope.total_count = data.total_count;
+			$scope.articles = data.items;
+			$scope.hide_loader = true;
+		}
 	});
 });
 
-app.controller('ArticleCtrl', function($scope, $stateParams, Article) {
-	$scope.article = {};
+app.controller('ArticleCtrl', function($scope, $stateParams, $location, $ionicHistory, Article) {
+	var onlyNumber = !isNaN(parseFloat($stateParams.id)) && isFinite($stateParams.id) && (0 < $stateParams.id);
+	if(!onlyNumber) {
+		$ionicHistory.nextViewOptions({
+   			disableBack: true
+		});
+		$location.path('/');
+		return false;
+	}
 
-	Article.getById($stateParams.id).then(function(article){
-		console.log(article);
-		$scope.article = article;
+	$scope.article = {};
+	$scope.hide_loader = false;
+
+	Article.getById($stateParams.id).then(function(data){
+		console.log(data);
+		if ('html' in data) {
+			$scope.article = data;
+			$scope.hide_loader = true;
+		}
 	});
 });

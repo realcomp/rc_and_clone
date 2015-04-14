@@ -723,8 +723,10 @@ console.log("DEBUG tx");
 			params.push('offset=' + offset);
 		}
 
-        return $http.get(Url.url('/v1/articles' + params.length ? '?' + params.join('&') : ''))
+console.log("GET articles", Url.url('/v1/articles' + (params.length ? '?' + params.join('&') : '')));
+        return $http.get(Url.url('/v1/articles' + (params.length ? '?' + params.join('&') : '')))
 		.then(function(resp){
+            console.log("DEBUG articles", resp.data);
 			return resp.data;
 		});
     };
