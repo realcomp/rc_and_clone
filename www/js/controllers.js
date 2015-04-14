@@ -337,3 +337,21 @@ app.controller('UserProfileCtrl', function($scope, User) {
 // О приложении
 app.controller('AboutCtrl', function($scope) {
 });
+
+app.controller('ArticlesCtrl', function($scope, Article) {
+	$scope.articles = [];
+
+	Article.list().then(function(articles){
+		console.log(articles);
+		$scope.articles = articles;
+	});
+});
+
+app.controller('ArticleCtrl', function($scope, $stateParams, Article) {
+	$scope.article = {};
+
+	Article.getById($stateParams.id).then(function(article){
+		console.log(article);
+		$scope.article = article;
+	});
+});
