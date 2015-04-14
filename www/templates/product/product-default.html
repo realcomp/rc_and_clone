@@ -26,12 +26,11 @@
 		<p><strong>Товар с нарушением</strong></p>
 		<span class="danger__level-text-s">Степерь опасности:</span>
 		<div class="danger__level-item">
-	    <div class="danger-level black"></div>
-	    <div class="danger-level black"></div>
-	    <div class="danger-level grey"></div>
-	    <div class="danger-level grey"></div>
+	    <div ng-repeat="i in arrayDangerLevel track by $index" ng-class="i ? 'black' : 'grey'" class="danger-level"></div>
     </div>
-		<span class="danger__level-text">Низкая</span>
+		<span class="danger__level-text">
+			{{ dangerLevelText }}
+		</span>
 	</div>
 	<div class="product__single-summary product__single-wblock">
 		<span ng-if="product.danger_level == 1">Суть нарушения:<br></span>

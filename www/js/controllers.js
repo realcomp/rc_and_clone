@@ -121,7 +121,32 @@ app.controller('ProductCtrl', function($scope, $location, $stateParams, $ionicHi
      	$scope.title = product.name
       $scope.product = product;
 
-      console.log(product);
+      $scope.arrayDangerLevel = [];
+      for(var i = 0; i < 4; i++) {
+      	if(i < product.danger_level) {
+      		$scope.arrayDangerLevel.push(true)
+      	}
+      	else {
+      		$scope.arrayDangerLevel.push(false);
+      	}	
+      }
+
+
+      $scope.dangerLevelText = '';	
+      switch(product.danger_level) {
+      	case 1:
+      		$scope.dangerLevelText = 'Низкая'
+      		break;
+      	case 2:
+      		$scope.dangerLevelText = 'Средняя';	
+      		break;
+      	case 3:
+      		$scope.dangerLevelText = 'Высокая';	
+      		break;
+      	case 4:
+      		$scope.dangerLevelText = 'Максимальная';	
+      		break;				
+      };
 
       if(product.test_cons)      	
       	$scope.arrayMinus = product.test_cons.split(',');
