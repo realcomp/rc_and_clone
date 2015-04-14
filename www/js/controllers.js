@@ -306,3 +306,11 @@ console.log("user", User.get());
   }
 
 });
+
+app.controller('ShoppingListCtrl', function($scope, User) {
+	$scope.shoppingList = [];
+
+	User.shoppingList().then(function(list){
+		$scope.shoppingList = list;
+	});
+});
