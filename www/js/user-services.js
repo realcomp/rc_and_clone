@@ -7,6 +7,7 @@ angular.module('user-services', [])
     var last_login_email_key = 'rk_last_login_email';
     var user = null;
     var shopping_list = null;
+    var time_get_profile = 0;
 
     var parse = function(force) {
         if (!force && user) {
@@ -83,6 +84,17 @@ angular.module('user-services', [])
             return deferred.promise;
         }
 
+        if (user.profile && time_get_profile) {
+            // лазаем в инет за профилем не чаще чем раз в минуту
+            var date = new Date();
+
+            if (user.profile && time_get_profile && time_get_profile + 60 < date.getTime()) {
+                var deferred = $q.defer();
+                deferred.resolve(user.profile);
+                return deferred.promise;
+            }
+        }
+
         return $http.get(Url.url('/v1/user/profile?' + 'api_token=' + user.api_token)).
             then(function(result) {
 //                console.log("profile", result.data);
@@ -90,6 +102,8 @@ angular.module('user-services', [])
                 if (result.status == 200) {
                     user.profile = result.data;
                     save();
+                    var date = new Date();
+                    time_get_profile = date.getTime();
                     return user.profile;
                 }
 
@@ -133,6 +147,8 @@ angular.module('user-services', [])
                 console.log("shoppin list", result.data);
 
                 if (result.status == 200) {
+                    shopping_list = [];
+                    angular.forEach();
                     shopping_list = result.data;
                 }
 
