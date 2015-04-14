@@ -363,8 +363,12 @@ a:active {
 .product__single-head .product__single-info-right a {
 	display: block;
 	margin-bottom: 10px;
-	font-size: 16px;
+	font-size: 18px;
 	text-decoration: none;
+}
+.product__single-head .product__single-info-right a .fa {
+	margin-right: 5px;
+	font-size: 22px;
 }
 
 /**/
