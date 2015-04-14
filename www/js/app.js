@@ -22,7 +22,9 @@ app.run(function($ionicPlatform, DB) {
   });
 });
 
-app.config(function($stateProvider, $urlRouterProvider) {
+app.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
+	$ionicConfigProvider.backButton.text('').icon('ion-ios-arrow-left');
+	
 	console.log('st config');
   $stateProvider
 

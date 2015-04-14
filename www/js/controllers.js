@@ -327,7 +327,7 @@ app.controller('ShoppingListCtrl', function($scope, User) {
 
 // Профиль пользователя
 app.controller('UserProfileCtrl', function($scope, User) {
-	$scope.profile = {};
+	$scope.profile = User.profile(true);
 	User.profile().then(function(profile){
 		$scope.profile = profile;
 		console.log($scope.profile);

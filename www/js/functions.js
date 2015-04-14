@@ -74,13 +74,19 @@ app.controller('funcController', function($scope, $ionicSlideBoxDelegate, $ionic
 	$scope.orderProp = ['danger_level', '-rating'];
   $scope.tabsCatProductType = [
   	{
-		  title : "Проверянные", active : false,
+		  title : "Проверянные",
+		  active : false,
+		  icon: 'fa-check-square-o'
 		},
     { 
-      title: "Черный список", active : false 
+      title: "Черный список",
+      active : false,
+      icon: 'fa-ban' 
     },
     { 
-      title: "Ожидают проверки", active : false 
+      title: "Ожидают проверки",
+      active : false,
+      icon: 'fa-pencil-square-o' 
     }
   ];
 
