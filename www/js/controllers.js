@@ -314,3 +314,14 @@ app.controller('ShoppingListCtrl', function($scope, User) {
 		$scope.shoppingList = list;
 	});
 });
+
+app.controller('UserProfileCtrl', function($scope, User) {
+	$scope.profile = {};
+
+	User.profile().then(function(profile){
+		$scope.profile = profile;
+	});
+});
+
+app.controller('AboutCtrl', function($scope) {
+});

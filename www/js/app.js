@@ -43,6 +43,16 @@ app.config(function($stateProvider, $urlRouterProvider) {
     }
   })
 
+  .state('app.about', {
+    url: "/about",
+    views: {
+      'menuContent': {
+        templateUrl: "templates/about.html",
+        controller: 'AboutCtrl'
+      }
+    }
+  })
+
   .state('app.category', {
     url: "/category/:id",
     views: {
@@ -63,12 +73,42 @@ app.config(function($stateProvider, $urlRouterProvider) {
     }
   })
 
+  .state('app.articles', {
+    url: "/article",
+    views: {
+      'menuContent': {
+        templateUrl: "templates/articles.html",
+        controller: 'ArticlesCtrl'
+      }
+    }
+  })
+
+  .state('app.article', {
+    url: "/article/:id",
+    views: {
+      'menuContent': {
+        templateUrl: "templates/article.html",
+        controller: 'ArticleCtrl'
+      }
+    }
+  })
+
   .state('app.shoppingList', {
-    url: "/shopping-list",
+    url: "/user/shopping-list",
     views: {
       'menuContent': {
         templateUrl: "templates/shopping-list.html",
         controller: 'ShoppingListCtrl'
+      }
+    }
+  })
+
+  .state('app.userProfile', {
+    url: "/user/profile",
+    views: {
+      'menuContent': {
+        templateUrl: "templates/user-profile.html",
+        controller: 'UserProfileCtrl'
       }
     }
   })
