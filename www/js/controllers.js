@@ -317,13 +317,16 @@ app.controller('AuthorizationCtrl', function($scope, $http, $ionicModal, User) {
 });
 
 // Список покупок
-app.controller('ShoppingListCtrl', function($scope, User, Product, Category) {
+app.controller('ShoppingListCtrl', function($scope, $rootScope,  User, Product, Category) {
 	$scope.shoppingList = [];
 	$scope.recommendedList = [];
+	$rootScope.listCount = '';
 
 	User.shoppingList().then(function(list){
 		var ids = [];
 		var shoppingList = {};
+
+		$rootScope.listCount = list.length;
 
 		angular.forEach(list, function(p){
 			ids.push(p.productId);
@@ -366,7 +369,7 @@ app.controller('ShoppingListCtrl', function($scope, User, Product, Category) {
 
 	User.recommendedList().then(function(list){
 		Product.getByIds(list).then(function(products){
-			console.log(products);
+			console.log('222222', products);
 			$scope.recommendedList = products;
 		});
 	});
@@ -440,7 +443,6 @@ app.controller('ArticlesCtrl', function($scope, $ionicHistory, Article) {
 					$scope.real_count_articles += data.items.length;
 					angular.forEach(data.items, function(article){
 						$scope.articles.push(article);
-						console.log($scope.articles)
 					});
 
 					if ($scope.real_count_articles > 100) {

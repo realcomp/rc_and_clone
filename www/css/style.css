@@ -755,6 +755,17 @@ a:active {
 	font-size: 22px;
   margin-right: 10px;
 } 
+.menu__content .list-count {
+  display: inline-block;
+  height: 26px;
+  width: 26px;
+  margin-left: 10px;
+  position: absolute;
+  text-align: center;
+ 	background: #8B7EA0;
+  border-radius: 100px;
+  line-height: 28px;
+}
 
 
 /*all*/
