@@ -249,7 +249,7 @@ app.controller('MenuCtrl', function($scope) {
  
 
 // Контроллер авторизации
-app.controller('AuthorizationCtrl', function($scope, $http, $ionicModal, User) {
+app.controller('AuthorizationCtrl', function($scope, $http, $ionicModal, $ionicBackdrop, $timeout,  User) {
 
   // Обьект с парой логин-пароль
   $scope.loginData = {};
@@ -326,7 +326,8 @@ app.controller('ShoppingListCtrl', function($scope, $rootScope,  User, Product, 
 		var ids = [];
 		var shoppingList = {};
 
-		$rootScope.listCount = list.length;
+		if(list)
+			$rootScope.listCount = list.length;
 
 		angular.forEach(list, function(p){
 			ids.push(p.productId);

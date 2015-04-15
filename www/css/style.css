@@ -48,14 +48,7 @@
 .bar .button.button-clear.icon-right:before {
 	font-size: 54px;
 }
-.item.active,
-.item.activated,
-.item-complex.active .item-content,
-.item-complex.activated .item-content,
-.item .item-content.active,
-.item .item-content.activated {
-    background: #FFF; 
-}
+
 .wrapping-list .item-content, .wrapping-list .item,
 .wrapping-list .item-content, .wrapping-list .item p {
   overflow: initial;
