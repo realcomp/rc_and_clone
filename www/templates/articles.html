@@ -2,9 +2,10 @@
 	<ion-nav-title>Журнал покупателя</ion-nav-title>
 
 	<ion-content>
-	    <ion-list class="main__category-wrap">
-	      	<ion-item class="main__category-item" ng-repeat="article in articles" href="#/app/article/{{article.id}}" ng-style="{'background': 'url({{ article.image }})'}">
-		      	<ion-item class="main__category-name">
+	    <ion-list class="articles__wrap">
+	      	<ion-item class="articles__category-item" ng-repeat="article in articles" href="#/app/article/{{article.id}}">
+	      		<img class="articles__category-img" ng-src="{{ article.image }}">
+		      	<ion-item class="articles__category-title">
 		        	{{ article.title }}
 		        </ion-item>
 	      </ion-item>

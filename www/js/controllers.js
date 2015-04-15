@@ -437,6 +437,7 @@ app.controller('ArticlesCtrl', function($scope, $ionicHistory, Article) {
 				if (data.items.length > 0) {
 					angular.forEach(data.items, function(article){
 						$scope.articles.push(article);
+						console.log($scope.articles)
 					});
 				}
 

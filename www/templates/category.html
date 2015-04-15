@@ -16,11 +16,9 @@
   <div ng-if="products.length > 0">
 
 		<ul class="product__category-tabs-wrap">
-	    <li class="product__category-tabs" ng-repeat="tab in tabsCatProductType" ng-click="tabsCategory($index)">
-	      <span ng-class="tabsClass(tab, productsCheck, productsWait)">
-	      	<i class="fa {{tab.icon}}"></i>
-	      	{{tab.title}}
-	      </span>
+	    <li class="product__category-tabs" ng-repeat="tab in tabsCatProductType" ng-click="tabsCategory($index)" ng-class="tabsClass(tab, productsCheck, productsWait)">
+	      <i class="fa {{tab.icon}}"></i>
+	      <span>{{tab.title}}</span>
 	    </li>
   	</ul>
 

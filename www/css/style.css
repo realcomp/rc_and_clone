@@ -1,21 +1,10 @@
+
 /* 
-*
-*** GLOBAL FRAMEWORK ***
-*
+	==========================================================================
+  	GLOBAL FRAMEWORK
+  ========================================================================== 
 */
-#mainContainer {
-	position: absolute;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	max-width: 640px;
-	margin-left: auto;
-	margin-right: auto;
-	font-family: 'Roboto', sans-serif;
-	background: transparent;
-	color: #222;
-}
+
 .pane, .view {
 	background: #transparent;
 }
@@ -75,10 +64,25 @@
 
 
 /* 
-*
-*** GLOBAL APP ***
-*
+	==========================================================================
+  	GLOBAL APP
+  ========================================================================== 
 */
+
+#mainContainer {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	max-width: 640px;
+	margin-left: auto;
+	margin-right: auto;
+	font-family: 'Roboto', sans-serif;
+	background: transparent;
+	color: #000;
+}
+
 a {
 	color: #354777;
 }
@@ -166,11 +170,10 @@ a:active {
 }
 
 
-
 /* 
-*
-*** MAIN ***
-*
+	==========================================================================
+  	MAIN
+  ========================================================================== 
 */
 
 .main__category-item {
@@ -218,10 +221,11 @@ a:active {
 
 
 /* 
-*
-*** CATEGORY ***
-*
+	==========================================================================
+  CATEGORY
+  ========================================================================== 
 */
+
 .categories-list .icon{
 	color: #B0B0B0;
 }
@@ -251,6 +255,8 @@ a:active {
 	float: left;
 	margin: 30px 0 0 15px;
 	font-size: 16px;
+	color: #000;
+	font-weight: bold;
 }
 .product__category .product__category-button-test {
 	float: right;
@@ -261,30 +267,66 @@ a:active {
 	float: right;
   margin-top: 15px;
 }
-.product__category-tabs-wrap {
-	overflow: hidden;
-	font-size: 0;
-	text-align: center;
-}
 .product__category-tabs {
 	display: inline-block;
-	width: 33.3%;
-	margin: 10px 0 12px 0px;
+	padding: 12px 20px;
+	text-align: center;
+	position: relative;
+	width: 15%;
   font-size: 15px;
-  border-right: 1px solid #FFF;
+  background: #F7F7F7;
+  border-right: 1px solid #DDDDDD;
   cursor: pointer;
+}
+.product__category-tabs:last-child {
+	border-right: 0;
+}
+.product__category-tabs.product__category-tabs-active {
+	width: 70%;
+}
+.product__category-tabs-active:after, .product__category-tabs-active:before {
+  bottom: -1px;
+  left: 50%;
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+  z-index: 3;
+}
+.product__category-tabs-active:after {
+  border-color: rgba(255, 255, 255, 0);
+  border-bottom-color: #Ffffff;
+  border-width: 9px;
+  margin-left: -9px;
+}
+.product__category-tabs-active:before {
+  border-color: rgba(249, 249, 249, 0);
+  border-bottom-color: #D7D7D7;
+  border-width: 10px;
+  margin-left: -10px;
 }
 .product__category-tabs span {
 	display:  inline-block;
-	width: 100%;
-  padding: 10px 0;
-  color: #FFF;
+	position: relative;
+  top: -3px;
+  margin-left: 5px;
+	font-weight: bold;
+	font-size: 15px;
+  color: #000;
 }
-.product__category-tabs-deactive {
-	background: #C2C0C0;
+.product__category-tabs.product__category-tabs-deactive span {
+	display: none;
 }
-.product__category-tabs-active{
-	background: #C80020;
+.product__category-tabs .fa {
+	font-size: 24px;
+}
+.product__category-tabs-deactive .fa {
+	color: #666666;
+}
+.product__category-tabs-active .fa {
+	color: #B5202D;
 }
 .product__category-filter-wrap {
 	margin: 0 0 10px 0;
@@ -315,10 +357,11 @@ a:active {
 
 
 /* 
-*
-*** PRODUCT ***
-*
+	==========================================================================
+  	PRODUCT
+  ========================================================================== 
 */
+
 .product__single-wblock {
 	padding: 15px 10px;
 }
@@ -678,10 +721,11 @@ a:active {
 
 
 /* 
-*
-*** MENU ***
-*
+	==========================================================================
+  	MENU
+  ========================================================================== 
 */
+
 .menu__content {
 	color: #FFF;
 	background: #6f4f75; /* Old browsers */
@@ -758,12 +802,12 @@ a:active {
 }
 
 
-
 /* 
-*
-*** MODAL LOGIN ***
-*
+	==========================================================================
+  	MODAL LOGIN
+  ========================================================================== 
 */
+
 .modal {
 	position: absolute;
 	top: 0;
@@ -796,11 +840,13 @@ a:active {
   color: #C80020
 }
 
+
 /* 
-*
-*** PROFILE ***
-*
+	==========================================================================
+  	PROFILE
+  ========================================================================== 
 */
+
 .user__profile-head {
 	overflow: hidden;
 	padding: 15px 0;
@@ -825,6 +871,16 @@ a:active {
 .user__profile-foot {
 
 }
+.user__profile-foot .list-out .list{
+	margin-top: 15px;
+}
+.user__profile-foot .user__profile-foot-inner-item {
+	width: 25%;
+	display: inline-block;
+}
+.user__profile-foot .user__profile-foot-inner-item .item-content { 
+	padding: 5px;
+}
 .user__profile-list-foot-count {
 	background: #E7E7E7;
   display: inline-block;
@@ -832,10 +888,11 @@ a:active {
   margin-left: 5px;
 }
 
+
 /* 
-*
-*** PAGE ABOUT ***
-*
+	==========================================================================
+  	PAGE ABOUT
+  ========================================================================== 
 */
 
 .page__about {
@@ -864,4 +921,39 @@ a:active {
 	padding: 10px;
 	width: 300px;
 	margin: 10px auto 20px auto;
+}
+
+
+/* 
+	==========================================================================
+  	ARTICLES
+  ========================================================================== 
+*/
+.articles__wrap {
+	
+}
+.articles__category-item {
+	border: 0;
+}
+.articles__category-item .item-content {
+	padding: 0;
+}
+.articles__category-title {
+	
+}
+.articles__category-img {
+	width: 100%;
+}
+.articles__category-title {
+  position: absolute;
+  bottom: 40px;
+  left: 0;
+  z-index: 3;
+ 	border: 0;
+  color: #FFF;
+  font-size: 18px;
+  font-weight: bold;
+  background: rgba(0, 0, 0, 0.28);
+  overflow: initial;
+  white-space: normal;
 }
