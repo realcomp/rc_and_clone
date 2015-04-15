@@ -14,7 +14,7 @@
 	    	ng-if="!error && (!total_count || count_articles < total_count)"
 	    	icon="ion-loading-c"
 	    	on-infinite="loadMore()"
-	    	distance="1%">
+	    	distance="{{distance_procent}}">
 	    </ion-infinite-scroll>
 
 		<ion-spinner class="loader" ng-hide="hide_loader"></ion-spinner>

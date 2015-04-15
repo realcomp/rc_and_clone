@@ -772,4 +772,27 @@ console.log("GET articles", Url.url('/v1/articles' + (params.length ? '?' + para
     };
 
     return self;
-});
+})
+
+// Поиск
+.factory('Search', function($q, DB) {
+    var self = this;
+
+    self.products = function(q) {
+        if (!q) {
+            var deferred = $q.defer();
+            deferred.resolve([]);
+            return deferred.promise;
+        }
+
+        q = '%' + q + '%';
+        return DB.query('SELECT p.*,c.name AS category_name FROM products p JOIN categories c ON (c.id=p.category_id) WHERE p.name LIKE ? OR c.name LIKE ? ORDER BY p.name', [q, q])
+        .then(function(result){
+            return DB.fetchAll(result);
+        });
+    };
+
+
+    return self;
+})
+;

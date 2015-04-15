@@ -410,10 +410,12 @@ app.controller('ArticlesCtrl', function($scope, $ionicHistory, Article) {
 	var limit = 10;
 
 	$scope.count_articles = 0
+	$scope.real_count_articles = 0
 	$scope.articles = [];
 	$scope.total_count = 0;
 	$scope.hide_loader = false;
 	$scope.error = null;
+	$scope.distance_procent = '50%';
 
 /*	Article.list(0, 0, 20, $scope.count_articles).then(function(data){
 //		console.log(data);
@@ -435,10 +437,25 @@ app.controller('ArticlesCtrl', function($scope, $ionicHistory, Article) {
 				$scope.count_articles += limit;
 
 				if (data.items.length > 0) {
+					$scope.real_count_articles += data.items.length;
 					angular.forEach(data.items, function(article){
 						$scope.articles.push(article);
 						console.log($scope.articles)
 					});
+
+					if ($scope.real_count_articles > 100) {
+						$scope.distance_procent = '1%';
+					} else if ($scope.real_count_articles > 50) {
+						$scope.distance_procent = '5%';
+					} else if ($scope.real_count_articles > 40) {
+						$scope.distance_procent = '10%';
+					} else if ($scope.real_count_articles > 30) {
+						$scope.distance_procent = '20%';
+					} else if ($scope.real_count_articles > 20) {
+						$scope.distance_procent = '30%';
+					} else if ($scope.real_count_articles > 10) {
+						$scope.distance_procent = '40%';
+					}
 				}
 
 				$scope.error = null;
