@@ -317,11 +317,58 @@ app.controller('AuthorizationCtrl', function($scope, $http, $ionicModal, User) {
 });
 
 // Список покупок
-app.controller('ShoppingListCtrl', function($scope, User) {
+app.controller('ShoppingListCtrl', function($scope, User, Product, Category) {
 	$scope.shoppingList = [];
+	$scope.recommendedList = [];
 
 	User.shoppingList().then(function(list){
-		$scope.shoppingList = list;
+		var ids = [];
+		var shoppingList = {};
+
+		angular.forEach(list, function(p){
+			ids.push(p.productId);
+			shoppingList[p.productId] = p;
+		});
+
+		Product.getByIds(ids).then(function(products){
+//			console.log(products);
+			// соберем категории
+			var cids = [];
+			var cats = {};
+
+			angular.forEach(products, function(product){
+				cids.push(product.category_id);
+			});
+
+			Category.getByIds(cids, 'name').then(function(categories){
+				angular.forEach(categories, function(category){
+					cats[category.id] = {c: category, p: []};
+				});
+
+				angular.forEach(products, function(product){
+					if (shoppingList[product.id] && cats[product.category_id]) {
+						var p = shoppingList[product.id];
+						var c = cats[product.category_id];
+						p['product'] = product;
+						c.p.push(p);
+					}
+				});
+
+				angular.forEach(cats, function(c){
+					if (c.p.length) {
+						$scope.shoppingList.push(c);
+					}
+				});
+				console.log("shoppingList", $scope.shoppingList);
+			});
+		});
+	});
+
+	User.recommendedList().then(function(list){
+		Product.getByIds(list).then(function(products){
+			console.log(products);
+			$scope.recommendedList = products;
+		});
 	});
 });
 
@@ -336,6 +383,7 @@ app.controller('UserProfileCtrl', function($scope, User) {
 	}
 
 	$scope.profile = User.profile(true);
+	$scope.dproducts = {};
 	$scope.products = {};
 
 	User.profile().then(function(profile){
@@ -343,7 +391,12 @@ app.controller('UserProfileCtrl', function($scope, User) {
 		console.log($scope.profile);
 	});
 
-	User.productList().then(function(data){
+	// походу перепутан параметр в api сайта
+	User.productList(0).then(function(data){
+		$scope.dproducts = data;
+	});
+
+	User.productList(1).then(function(data){
 		$scope.products = data;
 	});
 });

@@ -28,9 +28,9 @@
 			<ion-list class="user__profile-list-foot">
 				<ion-item>
 					<strong>Покупаю часто</strong>
-					<span class="user__profile-list-foot-count">{{products.items.length}}</span>
+					<span class="user__profile-list-foot-count">{{dproducts.items.length}}</span>
 					<ion-list>
-						<ion-item ng-repeat="product in products.items" href="#/app/product/{{product.id}}">
+						<ion-item ng-repeat="product in dproducts.items" href="#/app/product/{{product.id}}">
 							<img ng-src="{{product.thumbnail}}" />
 						</ion-item>
 					</ion-list>

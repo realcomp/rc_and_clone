@@ -7,7 +7,10 @@ angular.module('user-services', [])
     var last_login_email_key = 'rk_last_login_email';
     var user = null;
     var shopping_list = null;
+    var dproducts_list = null; // disposable 
+    var ndproducts_list = null; // no disposable
     var products_list = null;
+    var recommended_list = null;
     var time_get_profile = 0;
 
     var parse = function(force) {
@@ -65,6 +68,11 @@ angular.module('user-services', [])
         localStorage.removeItem(user_key);
         user = null;
         shopping_list = null;
+        dproducts_list = null; // disposable 
+        ndproducts_list = null; // no disposable
+        products_list = null;
+        recommended_list = null;
+        time_get_profile = 0;
   	};
 
     self.get = function() {
@@ -145,7 +153,7 @@ angular.module('user-services', [])
         return e ? e : '';
     };
 
-    // Получение списка рекомендованных товаров
+    // Получение списка покупок пользователя
     self.shoppingList = function() {
         console.log("GET "+Url.url('/v1/shopping_list'));
         if (!self.is_auth()) {
@@ -160,7 +168,7 @@ angular.module('user-services', [])
 
                 if (result.status == 200) {
                     shopping_list = [];
-                    shopping_list = result.data;
+                    shopping_list = result.data.items;
                 }
 
                 return shopping_list;
@@ -171,8 +179,34 @@ angular.module('user-services', [])
             });
     };
 
+    // Получение списка рекомендованных товаров
+    self.recommendedList = function() {
+        console.log("GET "+Url.url('/v1/shopping_list/recommended'));
+        if (!self.is_auth()) {
+            var deferred = $q.defer();
+            deferred.resolve(null);
+            return deferred.promise;
+        }
+
+        return $http.get(Url.url('/v1/shopping_list/recommended?' + 'api_token=' + user.api_token)).
+            then(function(result) {
+                console.log("recommended list", result.data);
+
+                if (result.status == 200) {
+                    recommended_list = [];
+                    recommended_list = result.data.product_ids;
+                }
+
+                return recommended_list;
+            }, function(status) {
+                console.error("recommended list error", status);
+
+                return recommended_list;
+            });
+    };
+
     // Получение списка товаров пользователя
-    self.productList = function() {
+    self.productList = function(disposable) {
         console.log("GET "+Url.url('/v1/user/products'));
         if (!self.is_auth()) {
             var deferred = $q.defer();
@@ -180,7 +214,7 @@ angular.module('user-services', [])
             return deferred.promise;
         }
 
-        return $http.get(Url.url('/v1/user/products?' + 'api_token=' + user.api_token)).
+        return $http.get(Url.url('/v1/user/products?' + 'api_token=' + user.api_token + (!isNaN(disposable) ? ('&disposable=' + (disposable ? '1' : '0') ) : ''))).
             then(function(result) {
                 console.log("products list", result.data);
                 var res = {items: []};
@@ -190,9 +224,17 @@ angular.module('user-services', [])
                     angular.forEach(result.data.items, function(){ places.push('?'); });
                     DB.query('SELECT * FROM products WHERE id IN ('+places.join(',')+')', result.data.items)
                     .then(function(result){
-                        products_list = DB.fetchAll(result);
                         console.log(products_list);
-                        res.items = products_list;
+                        if (isNaN(disposable)) {
+                            products_list = DB.fetchAll(result);
+                            res.items = products_list;
+                        } else if (disposable) {
+                            dproducts_list = DB.fetchAll(result);
+                            res.items = dproducts_list;
+                        } else {
+                            ndproducts_list = DB.fetchAll(result);
+                            res.items = ndproducts_list;
+                        }
                     });
                 }
 
@@ -201,8 +243,18 @@ angular.module('user-services', [])
                 console.error("error products list", status);
                 var res = {items: []};
 
-                if (products_list) {
-                    res.items = products_list;
+                if (isNaN(disposable)) {
+                    if (products_list) {
+                        res.items = products_list;
+                    }
+                } else if (disposable) {
+                    if (dproducts_list) {
+                        res.items = dproducts_list;
+                    }
+                } else {
+                    if (ndproducts_list) {
+                        res.items = ndproducts_list;
+                    }
                 }
 
                 return res;

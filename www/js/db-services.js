@@ -502,6 +502,15 @@ console.log("DEBUG tx");
         });
     };
 
+    self.getByIds = function(ids, order) {
+        var places = [];
+        angular.forEach(ids, function(){ places.push('?'); });
+        return DB.query('SELECT * FROM categories WHERE id IN ('+places.join(',')+')' + (order ? ' ORDER BY ' + order : ''), ids)
+        .then(function(result){
+            return DB.fetchAll(result);
+        });
+    };
+
     self.roots = function() {
         return DB.query('SELECT * FROM categories WHERE lvl = 0')
         .then(function(result){
@@ -603,6 +612,15 @@ console.log("DEBUG tx");
         return DB.query('SELECT * FROM products WHERE id = ?', [id])
         .then(function(result){
             return DB.fetch(result);
+        });
+    };
+
+    self.getByIds = function(ids, order) {
+        var places = [];
+        angular.forEach(ids, function(){ places.push('?'); });
+        return DB.query('SELECT * FROM products WHERE id IN ('+places.join(',')+')' + (order ? ' ORDER BY ' + order : ''), ids)
+        .then(function(result){
+            return DB.fetchAll(result);
         });
     };
 
