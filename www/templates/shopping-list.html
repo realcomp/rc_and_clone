@@ -1,11 +1,51 @@
 <ion-view ng-controller='funcController'>
 	<ion-nav-title>Список покупок</ion-nav-title>
-	<ion-content>
+	<ion-content class="product__shopping">
 	<!-- shopping list -->
 	  Поиск: <input ng-model="query">
+	  <button ng-click="seachData(query)">Найти</button>
+	  <button ng-click="seachData(); query = ''">Сброс</button>
+
+		
+		<div ng-if="seachActive == false">
 		<ion-list>
 
-			<ion-item class="product__category" ng-repeat="product in recommendedList | filter:query | orderBy: '-rating'"  href="#/app/product/{{ product.id }}">
+			<div ng-if="shoppingArrayTabs[0].active">
+				<ion-item class="product__category-s" ng-repeat="category in shoppingList">
+				  	{{ category.c.name }}
+				  	<span>{{ category.p.length}}</span>
+				  	<ion-item ng-repeat="item in category.p">
+				  		<img ng-src="{{ item.product.images }}" alt="{{ item.product.name }}">
+				  		<span>{{ item.product.name }}</span>
+				  		<span>1</span>	
+				  	</ion-item>
+				  	</ion-item>
+				</ion-item>
+			</div>
+
+			<div ng-if="shoppingArrayTabs[1].active">
+				Уже купил
+			</div>
+
+			<div ng-if="shoppingArrayTabs[2].active">
+				<ion-item class="product__category" ng-repeat="product in recommendedList | orderBy: '-rating'"  href="#/app/product/{{ product.id }}">
+				  	<span class="product__category-thumbnail">
+				  		<img ng-src="{{ product.thumbnail }}" alt="{{ product.name }}">
+				  		<ion-spinner icon="circles" class="loader"></ion-spinner>
+				  	</span>
+				  	<span class="product__category-name">{{ product.name }}</span>
+				  	<span class="product__category-rating product-rating" ng-class="productRatingType(product)">
+				  		{{ product.ratingv }}
+				  	</span>
+				</ion-item>
+			</div>
+
+		</ion-list>
+		</div>
+
+		<div ng-if="seachActive == true">
+			<ion-list>
+				<ion-item class="product__category" ng-repeat="product in searchList | orderBy: '-rating'"  href="#/app/product/{{ product.id }}">
 			  	<span class="product__category-thumbnail">
 			  		<img ng-src="{{ product.thumbnail }}" alt="{{ product.name }}">
 			  		<ion-spinner icon="circles" class="loader"></ion-spinner>
@@ -14,14 +54,20 @@
 			  	<span class="product__category-rating product-rating" ng-class="productRatingType(product)">
 			  		{{ product.ratingv }}
 			  	</span>
-			</ion-item>
+				</ion-item>
+			</ion-list>
+		</div>
 
-		</ion-list>
-		
 	</ion-content>
 
-	<ion-footer-bar>
-	  табы
+	<ion-footer-bar class="footer__shopping-tabs">
+	  <ion-tabs>
+	  <ul class="product__shopping-tabs-wrap">
+	    <li class="product__shopping-tabs" ng-repeat="tab in shoppingArrayTabs" ng-click="shoppingListTabs($index); seachData();">
+	      <span>{{tab.title}}</span>
+	    </li>
+  	</ul>
+	</ion-tabs>
 	</ion-footer-bar>
 
 </ion-view>

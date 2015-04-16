@@ -961,3 +961,24 @@ a:active {
   overflow: initial;
   white-space: normal;
 }
+
+/* 
+	==========================================================================
+  	PRODUCT SHOPPING
+  ========================================================================== 
+*/
+
+.product__shopping {
+	
+}
+
+.product__shopping-tabs-wrap {
+	width: 100%;
+}
+.product__shopping-tabs {
+	width: 33%;
+	display: inline-block;
+}
+.product__shopping-tabs span {
+	font-weight: bold;
+}
