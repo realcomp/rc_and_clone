@@ -321,10 +321,15 @@ app.controller('AuthorizationCtrl', function($scope, $http, $ionicModal, $ionicB
 // Список покупок
 app.controller('ShoppingListCtrl', function($scope, $rootScope,  User, Product, Category, Search) {
 
-	$scope.seachData = function (query) {
+	$scope.seachData = function (query, key) {
 		$scope.seachActive = false;
-
-		!query ? $scope.query = '' : $scope.seachActive = true;
+		$scope.thenSearch = true;
+		if(key == true) {
+			if (query.length < 3 || !$scope.thenSearch)
+				return;
+			else
+				$scope.seachActive = true;	
+		}
 
 		$scope.shoppingList = [];
 		$scope.recommendedList = [];
@@ -379,8 +384,14 @@ app.controller('ShoppingListCtrl', function($scope, $rootScope,  User, Product, 
 		});
 
 		if(query) {	
+			$scope.thenSearch = false;
+			var el = document.getElementsByClassName('product__shopping-search');
+			el[0].setAttribute('disabled', true);
 			Search.products(query).then(function(products) {
 				$scope.searchList = products;
+				$scope.thenSearch = true;
+				el[0].removeAttribute('disabled');
+				el[0].focus();
 			});
 		}	
 

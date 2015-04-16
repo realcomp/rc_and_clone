@@ -232,4 +232,11 @@ app.controller('funcController', function($scope, $ionicSlideBoxDelegate, $ionic
 
   };
 
+  $scope.shoppingTabsClass = function(item) {
+  	if(item.active) {
+  		return 'product__shopping-tab-active';
+  	}
+  	return 'product__shopping-tab-deactive';
+  };
+
 });

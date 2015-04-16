@@ -2,9 +2,10 @@
 	<ion-nav-title>Список покупок</ion-nav-title>
 	<ion-content class="product__shopping">
 	<!-- shopping list -->
-	  Поиск: <input ng-model="query">
-	  <button ng-click="seachData(query)">Найти</button>
-	  <button ng-click="seachData(); query = ''">Сброс</button>
+	  <div class="product__shopping-top-wrap">
+	  	<input class="product__shopping-search" type="text" ng-model="query" ng-keyup="seachData(query, true)" placeholder="Что еще нужно купить?">
+	  	<button class="product__shopping-reset" ng-click="seachData(); query = ''">&times;</button>
+	  </div>
 
 		
 		<div ng-if="seachActive == false">
@@ -63,7 +64,7 @@
 	<ion-footer-bar class="footer__shopping-tabs">
 	  <ion-tabs>
 	  <ul class="product__shopping-tabs-wrap">
-	    <li class="product__shopping-tabs" ng-repeat="tab in shoppingArrayTabs" ng-click="shoppingListTabs($index); seachData();">
+	    <li class="product__shopping-tab" ng-repeat="tab in shoppingArrayTabs" ng-class="shoppingTabsClass(tab)" ng-click="shoppingListTabs($index); seachData();">
 	      <span>{{tab.title}}</span>
 	    </li>
   	</ul>
