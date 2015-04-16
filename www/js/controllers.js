@@ -269,7 +269,7 @@ app.controller('MenuCtrl', function($scope) {
  
 
 // Контроллер авторизации
-app.controller('AuthorizationCtrl', function($scope, $http, $ionicModal, User) {
+app.controller('AuthorizationCtrl', function($scope, $http, $ionicModal, $ionicBackdrop, $timeout,  User) {
 
   // Обьект с парой логин-пароль
   $scope.loginData = {};
@@ -300,7 +300,9 @@ app.controller('AuthorizationCtrl', function($scope, $http, $ionicModal, User) {
 
   // Открыть
   $scope.login = function() {
-    $scope.modal.show();
+  	if(!localStorage.getItem('rk_user')) {
+    	$scope.modal.show();
+  	}
   };
 
   // Обработка данных
@@ -337,65 +339,93 @@ app.controller('AuthorizationCtrl', function($scope, $http, $ionicModal, User) {
 });
 
 // Список покупок
-app.controller('ShoppingListCtrl', function($scope, User, Product, Category) {
-	$scope.shoppingList = [];
-	$scope.recommendedList = [];
+app.controller('ShoppingListCtrl', function($scope, $rootScope,  User, Product, Category, Search) {
 
-	User.shoppingList().then(function(list){
-		var ids = [];
-		var shoppingList = {};
+	$scope.seachData = function (query, key) {
+		$scope.seachActive = false;
+		$scope.thenSearch = true;
+		if(key == true) {
+			if (query.length < 3 || !$scope.thenSearch)
+				return;
+			else
+				$scope.seachActive = true;	
+		}
 
-		angular.forEach(list, function(p){
-			ids.push(p.productId);
-			shoppingList[p.productId] = p;
-		});
+		$scope.shoppingList = [];
+		$scope.recommendedList = [];
+		$rootScope.listCount = '';
 
-		Product.getByIds(ids).then(function(products){
-//			console.log(products);
-			// соберем категории
-			var cids = [];
-			var cats = {};
+		User.shoppingList().then(function(list) {
+			var ids = [];
+			var shoppingList = {};
 
-			angular.forEach(products, function(product){
-				cids.push(product.category_id);
+			if(list)
+				$rootScope.listCount = list.length;
+
+			angular.forEach(list, function(p){
+				ids.push(p.productId);
+				shoppingList[p.productId] = p;
 			});
 
-			Category.getByIds(cids, 'name').then(function(categories){
-				angular.forEach(categories, function(category){
-					if (category.properties) {
-						Object.defineProperty(category, 'properties', {writable: true});
-//						Object.defineProperty(category, 'properties', {get: function(){ return {}; } });
-						category.properties = angular.fromJson(category.properties);
-					}
-					cats[category.id] = {c: category, p: []};
-				});
+			Product.getByIds(ids).then(function(products) {
+
+				// соберем категории
+				var cids = [];
+				var cats = {};
 
 				angular.forEach(products, function(product){
-					if (shoppingList[product.id] && cats[product.category_id]) {
-						var p = shoppingList[product.id];
-						var c = cats[product.category_id];
-						p['product'] = product;
-						c.p.push(p);
-					}
+					cids.push(product.category_id);
 				});
 
-				angular.forEach(cats, function(c){
-					if (c.p.length) {
-						$scope.shoppingList.push(c);
-					}
+				Category.getByIds(cids, 'name').then(function(categories){
+					angular.forEach(categories, function(category){
+						cats[category.id] = {c: category, p: []};
+					});
+
+					angular.forEach(products, function(product){
+						if (shoppingList[product.id] && cats[product.category_id]) {
+							var p = shoppingList[product.id];
+							var c = cats[product.category_id];
+							p['product'] = product;
+							c.p.push(p);
+						}
+					});
+
+					angular.forEach(cats, function(c){
+						if (c.p.length) {
+							$scope.shoppingList.push(c);
+							console.log('RECCCC', $scope.shoppingList);
+						}
+					});
+					console.log("shoppingList", $scope.shoppingList);
 				});
-				console.log("shoppingList", $scope.shoppingList);
+			});
+
+		});
+
+		if(query) {	
+			$scope.thenSearch = false;
+			var el = document.getElementsByClassName('product__shopping-search');
+			el[0].setAttribute('disabled', true);
+			Search.products(query).then(function(products) {
+				$scope.searchList = products;
+				$scope.thenSearch = true;
+				el[0].removeAttribute('disabled');
+				el[0].focus();
+			});
+		}	
+
+		User.recommendedList().then(function(list) {
+			Product.getByIds(list).then(function(products) {
+				$scope.recommendedList = products;
 			});
 		});
-	});
 
-	User.recommendedList().then(function(list){
-		Product.getByIds(list).then(function(products){
-//			console.log(products);
-			$scope.recommendedList = products;
-		});
-	});
+	}
+	$scope.seachData();
+
 });
+
 
 // Профиль пользователя
 app.controller('UserProfileCtrl', function($scope, User) {
@@ -529,3 +559,5 @@ app.controller('ArticleCtrl', function($scope, $stateParams, $location, $ionicHi
 		$scope.hide_loader = true;
 	});
 });
+
+

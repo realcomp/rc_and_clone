@@ -1,61 +1,35 @@
 <ion-view ng-controller='funcController'>
 	<ion-nav-title>Список покупок</ion-nav-title>
-	<ion-content>
-	<!-- categories list -->
-	<div ng-if="categories"> 
-	  <ion-list ng-if="categories" class="categories-list">
-		  <ion-item class="item-icon-right" ng-repeat="category in categories" href="#/app/category/{{ category.id }}">
-		  	{{ category.name }}
-		  	<i class="icon ion-chevron-right"></i>
-		  </ion-item>
-		</ion-list>
-	</div> 
-	<!-- END categories list -->
+	<ion-content class="product__shopping">
+	<!-- shopping list -->
+	  <div class="product__shopping-top-wrap">
+	  	<input class="product__shopping-search" type="text" ng-model="query" ng-keyup="seachData(query, true)" placeholder="Что еще нужно купить?">
+	  	<button class="product__shopping-reset" ng-click="seachData(); query = ''">&times;</button>
+	  </div>
 
-	<!-- products list -->
-  <div ng-if="products.length > 0">
-
-		<ul class="product__category-tabs-wrap">
-	    <li class="product__category-tabs" ng-repeat="tab in tabsCatProductType" ng-click="tabsCategory($index)">
-	      <span ng-class="tabsClass(tab, productsCheck, productsWait)">
-	      	{{tab.title}}
-	      </span>
-	    </li>
-  	</ul>
-
+		
+		<div ng-if="seachActive == false">
 		<ion-list>
 
-			<div ng-if="tabsCatProductType[0].active">
-				<ion-item ng-if="productsCheck.length === 0">В этой категории пока нет проверянных товаров!</ion-item>
-				<ion-item ng-repeat="product in productsCheck | filter:query | orderBy: orderProp" class="product__category" href="#/app/product/{{ product.id }}">
-				  	<span class="product__category-thumbnail">
-				  		<img ng-src="{{ product.thumbnail }}" alt="{{ product.name }}">
-				  		<ion-spinner icon="circles" class="loader"></ion-spinner>
-				  	</span>
-				  	<span class="product__category-name">{{ product.name }}</span>
-				  	<span class="product__category-rating product-rating" ng-class="productRatingType(product)">
-				  		{{ product.ratingv }}
-				  	</span>
+			<div ng-if="shoppingArrayTabs[0].active">
+				<ion-item class="product__category-s" ng-repeat="category in shoppingList">
+				  	{{ category.c.name }}
+				  	<span>{{ category.p.length}}</span>
+				  	<ion-item ng-repeat="item in category.p">
+				  		<img ng-src="{{ item.product.images }}" alt="{{ item.product.name }}">
+				  		<span>{{ item.product.name }}</span>
+				  		<span>1</span>	
+				  	</ion-item>
+				  	</ion-item>
 				</ion-item>
 			</div>
 
-			<div ng-if="tabsCatProductType[1].active">
-				<ion-item ng-if="productsWait.length === 0">Нет товаров в статусе "Ожидают проверки"!</ion-item>
-				<ion-item ng-repeat="product in productsWait | filter:query | orderBy: orderProp" class="product__category" href="#/app/product/{{ product.id }}">
-				  	<span class="product__category-thumbnail">
-				  		<img ng-src="{{ product.thumbnail }}" alt="{{ product.name }}">
-				  		<ion-spinner icon="circles" class="loader"></ion-spinner>
-				  	</span>
-				  	<span class="product__category-name">{{ product.name }}</span>
-				  	<span class="product__category-rating product-rating" ng-class="productRatingType(product)">
-				  		{{ product.ratingv }}
-				  	</span>
-				</ion-item>
+			<div ng-if="shoppingArrayTabs[1].active">
+				Уже купил
 			</div>
 
-			<div ng-if="tabsCatProductType[2].active">
-				<ion-item ng-if="productsBlack.length === 0">Ни один товар в категории не попал в черный список!</ion-item>
-				<ion-item ng-repeat="product in productsBlack | filter:query | orderBy: orderProp" class="product__category" href="#/app/product/{{ product.id }}">
+			<div ng-if="shoppingArrayTabs[2].active">
+				<ion-item class="product__category" ng-repeat="product in recommendedList | orderBy: '-rating'"  href="#/app/product/{{ product.id }}">
 				  	<span class="product__category-thumbnail">
 				  		<img ng-src="{{ product.thumbnail }}" alt="{{ product.name }}">
 				  		<ion-spinner icon="circles" class="loader"></ion-spinner>
@@ -68,21 +42,33 @@
 			</div>
 
 		</ion-list>
-	</div>
-	<!-- END products list -->
-	<div ng-if="noProducts">
-  	<span class="product__empty">Товары в эту категорию еще не были добавлены..</span>
-  </div>
-		
+		</div>
+
+		<div ng-if="seachActive == true">
+			<ion-list>
+				<ion-item class="product__category" ng-repeat="product in searchList | orderBy: '-rating'"  href="#/app/product/{{ product.id }}">
+			  	<span class="product__category-thumbnail">
+			  		<img ng-src="{{ product.thumbnail }}" alt="{{ product.name }}">
+			  		<ion-spinner icon="circles" class="loader"></ion-spinner>
+			  	</span>
+			  	<span class="product__category-name">{{ product.name }}</span>
+			  	<span class="product__category-rating product-rating" ng-class="productRatingType(product)">
+			  		{{ product.ratingv }}
+			  	</span>
+				</ion-item>
+			</ion-list>
+		</div>
+
 	</ion-content>
 
-	<ion-footer-bar ng-if="products.length > 0" class="bar-assertive footer__sorting">
-	  <div class="footer__sorting-item">
-	    <button ng-click="showSorting()" class="button">Сортировать</button>
-	  </div>
-	  <div class="footer__sorting-item">
-	    <button ng-click="showParameters()" class="button">Параметры</button>
-	  </div>
+	<ion-footer-bar class="footer__shopping-tabs">
+	  <ion-tabs>
+	  <ul class="product__shopping-tabs-wrap">
+	    <li class="product__shopping-tab" ng-repeat="tab in shoppingArrayTabs" ng-class="shoppingTabsClass(tab)" ng-click="shoppingListTabs($index); seachData();">
+	      <span>{{tab.title}}</span>
+	    </li>
+  	</ul>
+	</ion-tabs>
 	</ion-footer-bar>
 
 </ion-view>

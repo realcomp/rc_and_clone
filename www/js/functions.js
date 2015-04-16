@@ -74,7 +74,7 @@ app.controller('funcController', function($scope, $ionicSlideBoxDelegate, $ionic
 	$scope.orderProp = ['danger_level', '-rating'];
   $scope.tabsCatProductType = [
   	{
-		  title : "Проверянные",
+		  title : "Проверянные товары",
 		  active : false,
 		  icon: 'fa-check-square-o'
 		},
@@ -114,7 +114,6 @@ app.controller('funcController', function($scope, $ionicSlideBoxDelegate, $ionic
   	}
   	return 'product__category-tabs-deactive';
   };
-
 
   // Методы для работы слайдера в отзывах
   $scope.currentIndex = 1;
@@ -207,5 +206,37 @@ app.controller('funcController', function($scope, $ionicSlideBoxDelegate, $ionic
     	}	
     }
 	};
+
+
+	// Табы на странице список покупок
+  $scope.shoppingArrayTabs = [
+  	{
+		  title : "Мой список",
+		  active : true,
+		},
+    { 
+      title: "Уже купил",
+      active : false,
+    },
+    { 
+      title: "Рекомендованы",
+      active : false,
+    }
+  ];
+
+  $scope.shoppingListTabs = function(o) {
+    for (var i = 0; i <= $scope.shoppingArrayTabs.length - 1; i++) {
+      $scope.shoppingArrayTabs[i].active = false;
+    }
+    $scope.shoppingArrayTabs[o].active = true;
+
+  };
+
+  $scope.shoppingTabsClass = function(item) {
+  	if(item.active) {
+  		return 'product__shopping-tab-active';
+  	}
+  	return 'product__shopping-tab-deactive';
+  };
 
 });
