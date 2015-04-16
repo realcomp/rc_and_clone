@@ -457,7 +457,19 @@ app.controller('UserProfileCtrl', function($scope, User) {
 });
 
 // О приложении
-app.controller('AboutCtrl', function($scope) {
+app.controller('AboutCtrl', function($scope, DB, Product, Category) {
+	DB.version().then(function(res){
+		console.log(res);
+		$scope.dbv = res;
+	});
+	Product.count().then(function(res){
+		console.log(res);
+		$scope.pcount = res.count;
+	});
+	Category.count().then(function(res){
+		console.log(res);
+		$scope.ccount = res.count;
+	});
 });
 
 // список статей

@@ -79,6 +79,13 @@ angular.module('db-services', ['db.config', 'ngCordova'])
         return load_slices;
     };
 
+    self.version = function() {
+        return self.query('SELECT * FROM metadata ORDER BY version DESC LIMIT 1')
+        .then(function(result){
+            return self.fetch(result);
+        });
+    };
+
     self.init = function() {
         var init_deferred = $q.defer();
         var promise = init_deferred.promise;
