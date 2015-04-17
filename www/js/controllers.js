@@ -50,12 +50,12 @@ app.controller('MainCtrl', function($scope, $ionicLoading, $interval, Category, 
 //		intervalPercent = undefined;
 		console.log("main controler loading");
 		load_roots();
-	})
+	});
 
 	$scope.$on('dbUpdate', function(event){
 console.log("main ctrl dbUpdate");
 		load_roots();
-	})
+	});
 });
 
 // Контроллер категорий

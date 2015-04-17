@@ -16,7 +16,7 @@ angular.module('db-services', ['db.config', 'ngCordova'])
 })
 
 // DB wrapper
-.factory('DB', function($q, $http, $rootScope, $cordovaSQLite, DB_CONFIG, Url) {
+.factory('DB', function($q, $http, $rootScope, $cordovaSQLite, $timeout, DB_CONFIG, Url) {
     var self = this;
     var ptables = {};
 	var load_slices = 0; // скоко загрузили
@@ -24,6 +24,8 @@ angular.module('db-services', ['db.config', 'ngCordova'])
     var percent_load = 0; // процент загрузки
     var g_slices = null;      // слайсы которые нужно загрузить
     var pause = false;      // в каком режиме приложение (background)
+    var slice_next_marker = 0;   // Маркер для получения следующей страницы результатов. Пустая строка, если это последняя страница
+    var put_slice_without_timeout = false;
 
     self.db = null;
     self.meta_server = null;
@@ -38,7 +40,7 @@ angular.module('db-services', ['db.config', 'ngCordova'])
         pause = flag ? true : false;
 
         if (pause) {
-            self.put_slices();
+//            self.put_slices();
         }
     };
 
@@ -119,12 +121,17 @@ angular.module('db-services', ['db.config', 'ngCordova'])
 //                promise = self.create();
                 init_deferred.resolve();
             });
+
+            if (!self.db) {
+                console.error("Error: open database");
+            }
         } else {
             console.log("use open database");
             self.db = window.openDatabase(DB_CONFIG.name, '1.0', 'database', -1);
             promise = self.create();
         }
 
+        // нужно только для создания базы, если вызвали create, она вызывается только в броузере
         promise.then(function(){
             self.check();
         });
@@ -162,6 +169,9 @@ angular.module('db-services', ['db.config', 'ngCordova'])
         return create_deferred.promise;
     }
 
+    /*
+    * проверка версий локальной базы и на сервере
+    */
     self.check = function() {
         self.query('SELECT * FROM metadata ORDER BY version DESC LIMIT 1').then(function(res){
                 var r = self.fetch(res);
@@ -178,6 +188,7 @@ console.log('GET '+Url.url('/v1/catalog/info?my_version=' + (self.meta_db && sel
 
                     if (!('version' in self.meta_server)) {
                         self.loaded = true;
+                        self.deferred.resolve({loaded: false});
                         console.error("not found version in meta info");
                         return;
                     }
@@ -190,9 +201,12 @@ console.log('GET '+Url.url('/v1/catalog/info?my_version=' + (self.meta_db && sel
                         return;
                     }
 
+                    put_slice_without_timeout = true;
                     // запускаем загрузку части слайсов в бакграунде
                     self.load_slices();
+//                    self.deferred.resolve({loaded: true});
                     return;
+
                     angular.forEach(DB_CONFIG.tables, function(table) {
                         self.query('DELETE FROM ' + table.name);
                     });
@@ -208,13 +222,13 @@ console.log('GET '+Url.url('/v1/catalog/info?my_version=' + (self.meta_db && sel
                         });
                 },
                 function(err){
+                    console.error("Error loading "+Url.url('/v1/catalog/info'), err);
                     self.loaded = true;
                     self.deferred.resolve({loaded: true});
-                    console.error("Error loading "+Url.url('/v1/catalog/info'), err);
                 });
             }, function(err){
+                console.error("select META error", err);
                 self.deferred.resolve({loaded: false});
-                console.error("select META error",err);
             }
         );
     }
@@ -292,11 +306,21 @@ console.log("DEBUG tx");
     };
 
     self.load_slices = function() {
-        $http.get(Url.url('/v1/catalog/slices?version=' + self.meta_server.version + '&my_version=' + self.meta_db.version)).then(function(resp){
+        $http.get(Url.url('/v1/catalog/slices?version=' + self.meta_server.version + '&my_version=' + self.meta_db.version + (slice_next_marker ? '&marker=' + slice_next_marker : ''))).then(function(resp){
+                if (!('data' in resp) || !('slices' in resp.data)) {
+                    return;
+                }
+
                 g_slices = {};
                 load_slices = 0; // скоко загрузили
                 count_slices = 0; // количество слайсев
                 percent_load = 0; // процент загрузки
+
+                if ('next_marker' in resp.data && resp.data.next_marker > 0) {
+                    slice_next_marker = resp.data.next_marker;
+                } else {
+                    slice_next_marker = 0;
+                }
 
                 angular.forEach(resp.data.slices, function(slice){
                     if (!g_slices[slice.entity_type]) {
@@ -308,13 +332,21 @@ console.log("DEBUG tx");
                 });
 
                 $rootScope.$on('putSlice', function(event){
-                    self.put_slices();
+                    if (put_slice_without_timeout) {
+                        self.put_slices();
+                    } else {
+                        var timeout = pause ? 100 : 3000;
+                        $timeout(function() {
+                            self.put_slices();
+                        }, timeout);
+                    }
                 });
 
                 self.put_slices(true);
             },
             function(err){
                 console.error("Error load slices", err);
+                slice_next_marker = 0;
                 self.deferred.resolve({loaded: false});
             }
         );
@@ -323,10 +355,15 @@ console.log("DEBUG tx");
     self.put_slices = function(force) {
     console.log("put_slices force", force);
         if (!g_slices) {
+            if (!self.loaded) {
+                self.loaded = true;
+                self.deferred.resolve({loaded: true});
+            }
+
             return;
         }
 
-        if (!force && !pause) {
+/*        if (!force && !pause) {
             if (!self.loaded) {
                 self.loaded = true;
             }
@@ -334,7 +371,7 @@ console.log("DEBUG tx");
 console.log("put_slices not force and not pause", force, pause, self.loaded);
             self.deferred.resolve({loaded: true});
             return;
-        }
+        }*/
 
         var stop = false;
 
@@ -368,16 +405,21 @@ console.log("put_slices not force and not pause", force, pause, self.loaded);
 
         if (!stop) {
             g_slices = null;
-            self.transaction(function(tx){
-                tx.executeSql('INSERT INTO metadata VALUES (?, "", "")', [self.meta_server.version], function(tx, res){
-                    console.log("DEBUG loaded set true");
-                    self.meta_db.version
-                    self.deferred.resolve({loaded: true});
-                    $rootScope.$broadcast('dbUpdate');
-                    tx.executeSql('DELETE FROM metadata WHERE version = ?', [self.meta_db.version]);
-                    self.meta_db.version = self.meta_server.version;
+
+            if (slice_next_marker > 0) {
+                // загрузили не все, продолжаем
+                self.load_slices();
+            } else {
+                self.transaction(function(tx){
+                    tx.executeSql('INSERT INTO metadata VALUES (?, "", "")', [self.meta_server.version], function(tx, res){
+                        console.log("DEBUG loaded set true");
+                        self.deferred.resolve({loaded: true});
+                        $rootScope.$broadcast('dbUpdate');
+                        tx.executeSql('DELETE FROM metadata WHERE version = ?', [self.meta_db.version]);
+                        self.meta_db.version = self.meta_server.version;
+                    });
                 });
-            });
+            }
         }
     };
 
@@ -415,17 +457,17 @@ console.log(slice);
         var f = function(){
             count ++;
 
-console.log("slice category count "+count+" data_count "+data_count);
+//console.log("slice category count "+count+" data_count "+data_count);
             if (count == data_count) {
                 if (cb) {
-console.log("slice category call cb");
+//console.log("slice category call cb");
                     cb();
                 }
             }
         };
 
         if (rdelete) {
-console.log("slice category delete ",slice.min_id, slice.max_id);
+//console.log("slice category delete ",slice.min_id, slice.max_id);
             tx.executeSql("DELETE FROM " + tname + " WHERE id >= ? AND id <= ?", [slice.min_id, slice.max_id]);
         }
 
@@ -433,7 +475,7 @@ console.log("slice category delete ",slice.min_id, slice.max_id);
         var froot = false;
 
         angular.forEach(data, function(category) {
-console.log("slice category data category");
+//console.log("slice category data category");
             if (category.id == 0) {
                 froot = true;
                 // пропускаем эту пустую категорию, чуваки не умеют работать с нестед деревом
@@ -683,7 +725,7 @@ console.log("slice category data category");
     };
 
     self.roots = function() {
-        return DB.query('SELECT * FROM categories WHERE lvl = 0')
+        return DB.query('SELECT * FROM categories WHERE lvl = 0 ORDER BY position')
         .then(function(result){
             return DB.fetchAll(result);
         });
@@ -848,7 +890,7 @@ console.log("slice category data category");
     var self = this;
 
     self.all = function() {
-        return DB.query('SELECT * FROM companies')
+        return DB.query('SELECT * FROM companies ORDER BY name')
         .then(function(result){
             return DB.fetchAll(result);
         });
