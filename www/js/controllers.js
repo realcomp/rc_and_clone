@@ -1,11 +1,10 @@
 var app = angular.module('starter.controllers', []);
 
 // Контроллер главной
-app.controller('MainCtrl', function($scope, $ionicLoading, $interval, Category, DB) {
-
-	console.log('controller');
+app.controller('MainCtrl', function($scope, $ionicLoading, $interval, Category, DB, Product) {
+	console.log('main controller');
 	$scope.percent = DB.percentLoading();
-	var getPercent = function(){ $scope.percent = DB.percentLoading(); };
+/*	var getPercent = function(){ $scope.percent = DB.percentLoading(); };
 	var intervalPercent = $interval(function(){
 		getPercent();
 	}, 500);
@@ -15,27 +14,48 @@ app.controller('MainCtrl', function($scope, $ionicLoading, $interval, Category, 
 	    showBackdrop: false,
 	    maxWidth: 200,
 	    showDelay: 500
-	});
+	});*/
+
+	$scope.$on('loadUpdate', function(event){
+		$scope.percent = DB.percentLoading();
+	})
+
 	$scope.roots = [];
 	$scope.inf = 'ЗАГРУЖАЮ';
 	$scope.title = 'Рейтинг товаров';
-	DB.loading().then(function() {
-		$scope.percent = 100;
-		$interval.cancel( intervalPercent );
-		intervalPercent = undefined;
-		console.log("controler loading");
+
+	var load_roots = function(){
 		Category.roots().then(function(roots) {
 			angular.forEach(roots, function(root) {		
-      Category.countProductsByObj(root, true).then(function(count) {		
-        root['product_tested_count'] = count;		
-      });
-    });
-    $scope.roots = roots;
-    $scope.inf = '';
-		$ionicLoading.hide();
-  	});
+      			Category.countProductsByObj(root, true).then(function(count) {
+        			root['product_tested_count'] = count;		
+      			});
+    		});
+
+    		$scope.roots = roots;
+    		$scope.inf = '';
+			$ionicLoading.hide();
+			Category.count().then(function(res){
+				console.log("count categories", res.count);
+			});
+			Product.count().then(function(res){
+				console.log("count products", res.count);
+			});
+  		});
+	};
+
+	DB.loading().then(function() {
+		$scope.percent = 100;
+//		$interval.cancel( intervalPercent );
+//		intervalPercent = undefined;
+		console.log("main controler loading");
+		load_roots();
 	})
 
+	$scope.$on('dbUpdate', function(event){
+console.log("main ctrl dbUpdate");
+		load_roots();
+	})
 });
 
 // Контроллер категорий
@@ -434,7 +454,19 @@ app.controller('UserProfileCtrl', function($scope, User) {
 });
 
 // О приложении
-app.controller('AboutCtrl', function($scope) {
+app.controller('AboutCtrl', function($scope, DB, Product, Category) {
+	DB.version().then(function(res){
+		console.log(res);
+		$scope.dbv = res;
+	});
+	Product.count().then(function(res){
+		console.log(res);
+		$scope.pcount = res.count;
+	});
+	Category.count().then(function(res){
+		console.log(res);
+		$scope.ccount = res.count;
+	});
 });
 
 // список статей

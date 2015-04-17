@@ -18,6 +18,17 @@ app.run(function($ionicPlatform, DB) {
       StatusBar.styleDefault();
     }
     DB.init();
+
+    document.addEventListener("pause", function() {
+      DB.pause(true);
+      console.log("The application is pause");
+    }, false);
+
+    document.addEventListener("resume", function() {
+      DB.pause(false);
+      console.log("The application is resuming from the background");
+    }, false);
+
     console.log('end run');
   });
 });
