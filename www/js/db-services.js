@@ -1005,15 +1005,25 @@ console.log("GET articles", Url.url('/v1/articles' + (params.length ? '?' + para
 .factory('Search', function($q, DB) {
     var self = this;
 
-    self.products = function(q) {
+    self.products = function(q, limit, offset) {
         if (!q) {
             var deferred = $q.defer();
             deferred.resolve([]);
             return deferred.promise;
         }
 
+        var qlimit = '';
+
+        if (!angular.isUndefined(limit)) {
+            qlimit = ' LIMIT ' + limit;
+
+            if (!angular.isUndefined(offset)) {
+                qlimit += ',' + offset;
+            }
+        }
+
         q = '%' + q + '%';
-        return DB.query('SELECT p.*,c.name AS category_name FROM products p JOIN categories c ON (c.id=p.category_id) WHERE p.name LIKE ? OR c.name LIKE ? ORDER BY p.name', [q, q])
+        return DB.query('SELECT p.*,c.name AS category_name, co.name AS company_name, c.show_name, c.show_brand FROM products p JOIN categories c ON (c.id=p.category_id) LEFT JOIN company co ON (co.id=p.company_id) WHERE p.name LIKE ? OR c.name LIKE ? ORDER BY p.name' + qlimit, [q, q])
         .then(function(result){
             return DB.fetchAll(result);
         });
