@@ -91,7 +91,11 @@ app.controller('funcController', function($scope, $ionicSlideBoxDelegate, $ionic
   ];
 
   // Методы для работы и инициализации
-  $scope.tabsCategory = function(o) {
+  $scope.tabsCategory = function($event, o) {
+  	var element = $event.currentTarget;
+  	if(element.classList.contains('product__category-tabs-disabled'))
+  		return false;
+
     for (var i = 0; i <= $scope.tabsCatProductType.length - 1; i++) {
       $scope.tabsCatProductType[i].active = false;
     }
@@ -105,7 +109,7 @@ app.controller('funcController', function($scope, $ionicSlideBoxDelegate, $ionic
 	  	if(productsCheck.length > 0)
 	  		$scope.tabsCatProductType[0].active = true;
 	  	else if(productsWait.length > 0)
-	  		$scope.tabsCatProductType[1].active = true;
+	  		$scope.tabsCatProductType[2].active = true;
   	}
   	$scope.tabsInit = true;
 
@@ -114,6 +118,22 @@ app.controller('funcController', function($scope, $ionicSlideBoxDelegate, $ionic
   	}
   	return 'product__category-tabs-deactive';
   };
+
+  //
+  $scope.arrayTabAssembly = function(check, black, wait) {
+  	var disabledTabArray = [];
+  	disabledTabArray.push(check, black, wait);
+		$scope.disabledTabArray = disabledTabArray;
+	};
+
+	// Сделает табы без товаров не активными
+	$scope.tabsClassDisabled = function(index) {
+		$scope.tabsD = '';
+		if(!$scope.disabledTabArray[index].length) {
+			return $scope.tabsD = 'product__category-tabs-disabled';
+		}
+	};
+
 
   // Методы для работы слайдера в отзывах
   $scope.currentIndex = 1;

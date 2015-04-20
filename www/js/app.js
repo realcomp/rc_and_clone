@@ -130,3 +130,16 @@ app.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
   // Default Router
   $urlRouterProvider.otherwise('/app/main');
 });
+
+// В случае 404 для изображения задействуем err-src
+app.directive('errSrc', function() {
+  return {
+    link: function(scope, element, attrs) {
+      element.bind('error', function() {
+        if (attrs.src != attrs.errSrc) {
+          attrs.$set('src', attrs.errSrc);
+        }
+      });
+    }
+  }
+});

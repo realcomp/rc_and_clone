@@ -393,7 +393,6 @@ app.controller('ShoppingListCtrl', function($scope, $rootScope,  User, Product, 
 					angular.forEach(cats, function(c){
 						if (c.p.length) {
 							$scope.shoppingList.push(c);
-							console.log('RECCCC', $scope.shoppingList);
 						}
 					});
 					console.log("shoppingList", $scope.shoppingList);
