@@ -1,7 +1,6 @@
 
 // Контроллер для общих функций и динамичных элементов
-app.controller('funcController', function($scope, $ionicSlideBoxDelegate, $ionicActionSheet) {
-
+app.controller('funcController', function($scope, $ionicSlideBoxDelegate, $ionicActionSheet, $ionicScrollDelegate) {
 	// Вернет класс оформления для рейтинга
 	$scope.productRatingType = function(product) {
 		product.ratingv = product.rating;
@@ -93,6 +92,7 @@ app.controller('funcController', function($scope, $ionicSlideBoxDelegate, $ionic
   // Методы для работы и инициализации
   $scope.tabsCategory = function($event, o) {
   	var element = $event.currentTarget;
+  	  	$ionicScrollDelegate.scrollTop();
   	if(element.classList.contains('product__category-tabs-disabled'))
   		return false;
 
@@ -102,9 +102,10 @@ app.controller('funcController', function($scope, $ionicSlideBoxDelegate, $ionic
     $scope.tabsCatProductType[o].active = true;
 
   };
+
+  //
   $scope.tabsInit = false;
   $scope.tabsClass = function(item, productsCheck, productsWait) {
-
   	if(!$scope.tabsInit) {
 	  	if(productsCheck.length > 0)
 	  		$scope.tabsCatProductType[0].active = true;
@@ -152,38 +153,46 @@ app.controller('funcController', function($scope, $ionicSlideBoxDelegate, $ionic
   // Сортировка
    $scope.showSorting = function() {
 
-		$ionicActionSheet.show({
-     	buttons: [
-       		{ text: '<span>Рейтингу</span>' },
-       		{ text: '<span>Рейтингу(по возврастанию)</span>' },
-       		{ text: '<span>Цене</span>' },
-       		{ text: '<span>Цене(по возврастанию)</span>' }
-     	],
 
-  	  titleText: 'Сортировать по:',
+   	var arrButtons = [];
+   	var orderChThis;
+ 		for(var i = 0; i < $scope.productChar.length; i++) {
+ 			for(var j = 0; j < $scope.products.length; j++) {
+ 				var thisData = $scope.products[i].value_ch + j;
+ 				if(thisData !== 'undefined') {
+ 					orderChThis = '-value_ch' + (i + 1);
+ 					break;
+ 				}
+ 			};
+
+			arrButtons.push({ text: '<span>'+ $scope.productChar[i] +'</span>', order: [orderChThis, '-rating'] });
+		};
+		arrButtons.push(
+			{ text: '<span>Общий рейтинг</span>', order: ['danger_level', '-rating'] },
+			{ text: '<span>Цена</span>', order: ['-price'] },
+			{ text: '<span>Алфавит</span>', order: 'name' }
+		);
+
+		console.log(arrButtons)
+
+
+		$ionicActionSheet.show({
+
+     	buttons: arrButtons,
+
+  	  /* titleText: 'Сортировать:', */
      	cancelText: 'Закрыть',
 
      	buttonClicked: function(index) {
-     		switch(index) {
-     			case 0:
-     				$scope.orderProp = ['danger_level', '-rating'];
-     				break;
-     			case 1:
-     				$scope.orderProp = ['danger_level', 'rating'];
-     				break;
-     			case 2:
-     				$scope.orderProp = 'price';
-     				break;
-     			case 3:
-     				$scope.orderProp = '-price';
-     				break;			
-     		}
+     		$scope.orderProp = arrButtons[index].order;
+
        	return true;
      	},
 
       cancelOnStateChange: function() {
         return true;
       }
+
    	});
   };
 

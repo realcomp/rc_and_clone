@@ -4,14 +4,14 @@
 	<div class="tabs-top tabs-top-cat" ng-if="products">
     <div class="tabs">
 	    <ul class="product__category-tabs-wrap" ng-init="arrayTabAssembly(productsCheck, productsBlack, productsWait)">
-		    <li class="product__category-tabs" ng-repeat="tab in tabsCatProductType" ng-click="tabsCategory($event, $index)" ng-class="[tabsClass(tab, productsCheck, productsWait), tabsClassDisabled($index)]">
+		    <li class="product__category-tabs" ng-repeat="tab in tabsCatProductType" ng-click="tabsCategory($event, $index);" ng-class="[tabsClass(tab, productsCheck, productsWait), tabsClassDisabled($index)]">
 		      <i class="fa {{tab.icon}}"></i>
 		      <span>{{tab.title}}</span>
 		    </li>
 	  	</ul>
     </div>
   </div>
-	<ion-content class="product__category-content">
+	<ion-content delegate-handle="product__category-" ng-class="products ? 'product__category-content' : ''">
 	<!-- categories list -->
 	<div ng-if="categories"> 
 	  <ion-list ng-if="categories" class="categories-list">
@@ -81,7 +81,7 @@
 		
 	</ion-content>
 
-	<ion-footer-bar ng-shwo="products.length > 0" class="bar-assertive footer__sorting">
+	<ion-footer-bar ng-show="products.length > 0" class="bar-assertive footer__sorting">
 	  <div class="footer__sorting-item">
 	    <button ng-click="showSorting()" class="button">Сортировать</button>
 	  </div>

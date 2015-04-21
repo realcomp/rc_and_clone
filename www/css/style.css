@@ -366,6 +366,7 @@ a:active {
 .bar.footer__sorting.bar-footer .footer__sorting-item .button {
 	width: 100%;
   display: block;
+  padding-top: 7px; 
 	background: none;
   border: 0;
   color: #222;
@@ -1053,6 +1054,7 @@ a:active {
 .product__shopping-tab span {
 	font-weight: bold;
 }
+
 /* 
 	==========================================================================
   	SHOPPING LIST
@@ -1104,3 +1106,44 @@ a:active {
 	margin: 25px 0 0 5px;
 	color: #42527E
 }	
+
+/* 
+	==========================================================================
+  	ACTION SHEET
+  ========================================================================== 
+*/
+
+.action-sheet {
+	border: 1ox solid #2E2F34;
+}
+.action-sheet-group {
+
+}
+.action-sheet-title {
+
+}
+.action-sheet .button {
+	padding: 0 15px;
+	background: #363638;
+	color: #FFF;
+	font-size: 18px;
+	border: 1px solid #2E2F34;
+	text-align: left;
+}
+.action-sheet .button:hover,
+.action-sheet .button:active {
+	background: #3D3D3D;
+	border: 1px solid #2E2F34;
+	color: #FFF;
+}
+.action-sheet-cancel {
+	text-align: center;
+}
+.action-sheet-cancel .button {
+	background: #354777;
+	text-align: center;
+}
+.action-sheet-cancel .button:hover,
+.action-sheet-cancel .button:active {
+	background: #354777;
+}

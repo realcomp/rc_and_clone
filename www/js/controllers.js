@@ -59,7 +59,7 @@ console.log("main ctrl dbUpdate");
 });
 
 // Контроллер категорий
-app.controller('CategoryCtrl', function($scope, $location, $stateParams, $ionicHistory, Category, Product) {
+app.controller('CategoryCtrl', function($scope, $location, $stateParams, $ionicHistory, Category, Product, Rating) {
 
 	var onlyNumber = !isNaN(parseFloat($stateParams.id)) && isFinite($stateParams.id) && (0 < $stateParams.id);
 	if(!onlyNumber) {
@@ -92,9 +92,30 @@ app.controller('CategoryCtrl', function($scope, $location, $stateParams, $ionicH
 							$scope.productsBlack = [];
 							$scope.productsWait = [];
 
+							$scope.productChar = [];
+							var arr = [];
+
 							angular.forEach(products, function(product) {
 
-		      			$scope.products.push(product);
+
+		      			// список названий рейтинга
+								Rating.allHash().then(function(gratings) {
+									// рейтинги продуктов
+									Product.ratings(product.id).then(function(ratings) {
+										var index = 0;
+										angular.forEach(ratings, function(rating) {
+											if (gratings[rating.rating_id]) {
+												index++;
+												product['value_ch' + index] = rating.value;
+												arr.push(gratings[rating.rating_id].name);
+											}
+										});
+
+									});
+									$scope.products.push(product);
+									console.log(product.name)
+									console.log(product)
+								});
 
 		      			if(!product.tested) {
 		      				$scope.productsWait.push(product);
@@ -107,6 +128,21 @@ app.controller('CategoryCtrl', function($scope, $location, $stateParams, $ionicH
 		      			}
 
 		    			});
+
+							setTimeout(function() {
+								function iniqElems(arr) {
+								var obj = {};
+								for(var i = 0; i < arr.length; i++) {
+										obj[arr[i]] = true;
+									}
+									return Object.keys(obj);
+								}	
+
+								$scope.productChar = iniqElems(arr);
+
+								console.log($scope.productChar);
+							}, 400);
+
 						}
 						else {
 							$scope.noProducts = true;
