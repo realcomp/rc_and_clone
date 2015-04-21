@@ -16,7 +16,7 @@ angular.module('db-services', ['db.config', 'ngCordova'])
 })
 
 // DB wrapper
-.factory('DB', function($q, $http, $rootScope, $cordovaSQLite, $timeout, DB_CONFIG, Url) {
+.factory('DB', function($q, $http, $rootScope, $cordovaSQLite, $timeout, $ionicPopup, DB_CONFIG, Url) {
     var self = this;
     var ptables = {};
 	var load_slices = 0; // скоко загрузили
@@ -67,6 +67,16 @@ angular.module('db-services', ['db.config', 'ngCordova'])
 
         return percent_load;
 //        return count_slices ? parseInt(load_slices * 100 / count_slices) : 0;
+    };
+
+    self.alert = function(msg) {
+        var alertPopup = $ionicPopup.alert({
+             title: 'Ошибка!',
+             template: msg
+           });
+           alertPopup.then(function(res) {
+//             console.log('Thank you for not eating my delicious ice cream cone');
+        });
     };
 
     self.inc_load_slices = function() {
@@ -228,6 +238,7 @@ console.log('GET '+Url.url('/v1/catalog/info?my_version=' + (self.meta_db && sel
                 });
             }, function(err){
                 console.error("select META error", err);
+                self.alert("Ошибка получения версии базы!");
                 self.deferred.resolve({loaded: false});
             }
         );
@@ -1023,10 +1034,14 @@ console.log("GET articles", Url.url('/v1/articles' + (params.length ? '?' + para
         }
 
         q = '%' + q + '%';
-        return DB.query('SELECT p.*,c.name AS category_name, co.name AS company_name, c.show_name, c.show_brand FROM products p JOIN categories c ON (c.id=p.category_id) LEFT JOIN company co ON (co.id=p.company_id) WHERE p.name LIKE ? OR c.name LIKE ? ORDER BY p.name' + qlimit, [q, q])
+        return DB.query('SELECT p.*,c.name AS category_name, co.name AS company_name, c.show_name AS show_name, c.show_brand AS show_brand FROM products p JOIN categories c ON (c.id=p.category_id) LEFT JOIN companies co ON (co.id=p.company_id) WHERE p.name LIKE ? OR c.name LIKE ? ORDER BY p.name' + qlimit, [q, q])
         .then(function(result){
             return DB.fetchAll(result);
-        });
+        }, function(err){
+            console.error("Error search: q " + q + " " + err);
+            return [];
+        }
+        );
     };
 
 
