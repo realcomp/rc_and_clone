@@ -426,7 +426,11 @@ console.log("put_slices not force and not pause", force, pause, self.loaded);
                         console.log("DEBUG loaded set true");
                         self.deferred.resolve({loaded: true});
                         $rootScope.$broadcast('dbUpdate');
-                        tx.executeSql('DELETE FROM metadata WHERE version = ?', [self.meta_db.version]);
+
+                        if (self.meta_db && 'version' in self.meta_db) {
+                            tx.executeSql('DELETE FROM metadata WHERE version = ?', [self.meta_db.version]);
+                        }
+
                         self.meta_db.version = self.meta_server.version;
                     });
                 });
