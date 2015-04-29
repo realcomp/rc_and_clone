@@ -29,7 +29,7 @@ angular.module('db-services', ['db.config', 'ngCordova'])
 
     self.db = null;
     self.meta_server = null;
-    self.meta_db = null;
+    self.meta_db = {version: 0};
     self.loaded = false;
     self.deferred = $q.defer();
 
@@ -192,8 +192,8 @@ angular.module('db-services', ['db.config', 'ngCordova'])
                     //console.log("METADB", self.meta_db);
                 }
 
-console.log('GET '+Url.url('/v1/catalog/info?my_version=' + (self.meta_db && self.meta_db.version ? self.meta_db.version : 0)));
-                $http.get(Url.url('/v1/catalog/info?my_version=' + (self.meta_db && self.meta_db.version ? self.meta_db.version : 0))).then(function(resp){
+console.log('GET '+Url.url('/v1/catalog/info?my_version=' + self.meta_db.version));
+                $http.get(Url.url('/v1/catalog/info?my_version=' + self.meta_db.version)).then(function(resp){
                     self.meta_server = resp.data;
 
                     if (!('version' in self.meta_server)) {
@@ -203,7 +203,7 @@ console.log('GET '+Url.url('/v1/catalog/info?my_version=' + (self.meta_db && sel
                         return;
                     }
 
-                    if (self.meta_db && self.meta_db.version >= self.meta_server.version) {
+                    if (self.meta_db.version >= self.meta_server.version) {
                         console.log("version db eq with server "+self.meta_server.version);
                         self.loaded = true;
                         console.log("DEBUG loaded true meta eq");
@@ -317,7 +317,7 @@ console.log("DEBUG tx");
     };
 
     self.load_slices = function() {
-        $http.get(Url.url('/v1/catalog/slices?version=' + self.meta_server.version + '&my_version=' + (self.meta_db && self.meta_db.version ? self.meta_db.version : 0) + (slice_next_marker ? '&marker=' + slice_next_marker : ''))).then(function(resp){
+        $http.get(Url.url('/v1/catalog/slices?version=' + self.meta_server.version + '&my_version=' + self.meta_db.version + (slice_next_marker ? '&marker=' + slice_next_marker : ''))).then(function(resp){
                 if (!('data' in resp) || !('slices' in resp.data)) {
                     return;
                 }
@@ -426,13 +426,7 @@ console.log("put_slices not force and not pause", force, pause, self.loaded);
                         console.log("DEBUG loaded set true");
                         self.deferred.resolve({loaded: true});
                         $rootScope.$broadcast('dbUpdate');
-
-                        if (self.meta_db && 'version' in self.meta_db) {
-                            tx.executeSql('DELETE FROM metadata WHERE version = ?', [self.meta_db.version]);
-                        } else {
-                            self.meta_db = {version: 0};
-                        }
-
+                        tx.executeSql('DELETE FROM metadata WHERE version = ?', [self.meta_db.version]);
                         self.meta_db.version = self.meta_server.version;
                     });
                 });
