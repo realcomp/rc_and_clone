@@ -317,7 +317,7 @@ console.log("DEBUG tx");
     };
 
     self.load_slices = function() {
-        $http.get(Url.url('/v1/catalog/slices?version=' + self.meta_server.version + '&my_version=' + self.meta_db.version + (slice_next_marker ? '&marker=' + slice_next_marker : ''))).then(function(resp){
+        $http.get(Url.url('/v1/catalog/slices?version=' + self.meta_server.version + '&my_version=' + (self.meta_db && self.meta_db.version ? self.meta_db.version : 0) + (slice_next_marker ? '&marker=' + slice_next_marker : ''))).then(function(resp){
                 if (!('data' in resp) || !('slices' in resp.data)) {
                     return;
                 }
