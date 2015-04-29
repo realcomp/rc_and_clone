@@ -429,6 +429,8 @@ console.log("put_slices not force and not pause", force, pause, self.loaded);
 
                         if (self.meta_db && 'version' in self.meta_db) {
                             tx.executeSql('DELETE FROM metadata WHERE version = ?', [self.meta_db.version]);
+                        } else {
+                            self.meta_db = {version: 0};
                         }
 
                         self.meta_db.version = self.meta_server.version;
