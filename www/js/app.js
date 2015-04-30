@@ -6,7 +6,7 @@
 // 'starter.controllers' is found in controllers.js
 var app = angular.module('starter', ['ionic', 'db-services', 'user-services', 'starter.controllers', 'ionic.rating'])
 
-app.run(function($ionicPlatform, DB) {
+app.run(function($ionicPlatform, DB, $window, $rootScope) {
   $ionicPlatform.ready(function($) {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -31,6 +31,20 @@ app.run(function($ionicPlatform, DB) {
 
     console.log('end run');
   });
+
+  $rootScope.online = navigator.onLine;
+    $window.addEventListener("offline", function () {
+      $rootScope.$apply(function() {
+        $rootScope.online = false;
+    });
+  }, false);
+
+  $window.addEventListener("online", function () {
+    $rootScope.$apply(function() {
+      $rootScope.online = true;
+    });
+  }, false);
+
 });
 
 app.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {

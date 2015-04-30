@@ -36,13 +36,17 @@
 				  		<img ng-src="{{ product.thumbnail }}" alt="{{ product.name }}">
 				  		<ion-spinner icon="circles" class="loader"></ion-spinner>
 				  	</span>
-				  	<span class="product__category-name">{{ product.name }}</span>
 				  	<span class="product__category-rating product-rating" ng-class="productRatingType(product)">
 				  		<i ng-if="product.ratingv == 'X'" class="fa fa-ban"></i>
 				  		<i ng-if="product.ratingv != 'X'">
 				  			{{ product.ratingv }}
 				  		</i>				  	
 				  	</span>
+				  	<span class="product__category-center">
+				  		<span class="product__category-name">{{ showCatName  }} {{ product.name }}</span>
+				  		<span class="product__category-price">от {{ product.price }} Р</span>	
+				  	</span>
+				  	<span class="product__overlay-active">
 				</ion-item>
 			</div>
 
@@ -53,22 +57,30 @@
 				  		<img ng-src="{{ product.thumbnail }}" alt="{{ product.name }}">
 				  		<ion-spinner icon="circles" class="loader"></ion-spinner>
 				  	</span>
-				  	<span class="product__category-name">{{ product.name }}</span>
 				  	<span class="product__category-rating product-rating" ng-class="productRatingType(product)">
 				  		<i class="fa fa-ban"></i>
 				  	</span>
+				  	<span class="product__category-center">
+				  		<span class="product__category-name">{{ showCatName  }} {{ product.name }}</span>
+				  		<span class="product__category-price">от {{ product.price }} Р</span>	
+				  	</span>
+				  	<span class="product__overlay-active">
 				</ion-item>
 			</div>
 
 			<div ng-if="tabsCatProductType[2].active">
 				<ion-item ng-if="productsWait.length === 0">Нет товаров в статусе "Ожидают проверки"!</ion-item>
-				<ion-item ng-repeat="product in productsWait | filter:query | orderBy: orderProp" class="product__category" href="#/app/product/{{ product.id }}">
+				<ion-item ng-repeat="product in productsWait | filter:query | orderBy: orderProp" class="product__category product__category-type-notest" href="#/app/product/{{ product.id }}">
 				  	<span class="product__category-thumbnail">
 				  		<img ng-src="{{ product.thumbnail }}" alt="{{ product.name }}">
 				  		<ion-spinner icon="circles" class="loader"></ion-spinner>
 				  	</span>
-				  	<span class="product__category-name">{{ product.name }}</span>
 				  	<a class="product__category-button-test" href="#" ng-click="alert('Возможность голосовать за товары в разработке!')">На тест!</a>
+				  	<span class="product__category-center">
+				  		<span class="product__category-name">{{ showCatName  }} {{ product.name }}</span>
+				  		<span class="product__category-price">от {{ product.price }} Р</span>	
+				  	</span>
+				  	<span class="product__overlay-active">
 				</ion-item>
 			</div>
 

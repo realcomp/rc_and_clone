@@ -3,7 +3,7 @@
 	<ion-content ng-controller='funcController'>
 		<div ng-if="product" class="product__single-wrap">
 			<div class="product__single-head">
-				<h2 class="product__single-name">{{ product.name }}</h2>
+				<h2 class="product__single-name">"{{ showCatName }} {{ product.name }}</h2>
 				<div class="product__single-info">
 					<div class="product__single-info-left">
 						<span class="product__single-helper"></span>
@@ -11,8 +11,8 @@
 						<ion-spinner icon="circles" class="loader"></ion-spinner>
 					</div>
 					<div class="product__single-info-right">
-						<a href="#"><i class="fa fa-shopping-cart"></i> В список покупок</a>
-						<a href="#"><i class="fa fa-thumbs-o-up"></i> У меня есть</a>
+						<a href="#"><i class="fa fa-shopping-cart"></i>В список покупок</a>
+						<a href="#"><i class="fa fa-thumbs-o-up"></i>Покупаю часто</a>
 					</div>
 				</div>
 			</div>

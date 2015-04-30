@@ -71,7 +71,7 @@ app.controller('CategoryCtrl', function($scope, $location, $stateParams, $ionicH
 	}
 
 	Category.getById($stateParams.id).then(function(category) {
-      $scope.title = category.name
+      $scope.title = category.name;
       $scope.categories = [];
       $scope.noProducts = false;
 
@@ -95,6 +95,8 @@ app.controller('CategoryCtrl', function($scope, $location, $stateParams, $ionicH
 							$scope.productChar = [];
 							var arr = [];
 
+							$scope.showCatName = (category.show_name == 1) ? category.name_sg : '';
+
 							angular.forEach(products, function(product) {
 
 
@@ -113,8 +115,6 @@ app.controller('CategoryCtrl', function($scope, $location, $stateParams, $ionicH
 
 									});
 									$scope.products.push(product);
-									console.log(product.name)
-									console.log(product)
 								});
 
 		      			if(!product.tested) {
@@ -212,6 +212,8 @@ app.controller('ProductCtrl', function($scope, $location, $stateParams, $ionicHi
       Category.getById(product.category_id).then(function(category) {
       	$scope.category = category;
       	$scope.title = category.name;
+      	$scope.showCatName = (category.show_name == 1) ? category.name_sg : '';
+      	
       	var cproperties = []
 
       	if (category.properties) {
@@ -539,6 +541,7 @@ app.controller('ArticlesCtrl', function($scope, $ionicHistory, Article) {
 					$scope.real_count_articles += data.items.length;
 					angular.forEach(data.items, function(article){
 						$scope.articles.push(article);
+						console.log('article', article);
 					});
 
 					if ($scope.real_count_articles > 100) {

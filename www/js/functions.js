@@ -73,12 +73,12 @@ app.controller('funcController', function($scope, $ionicSlideBoxDelegate, $ionic
 	$scope.orderProp = ['danger_level', '-rating'];
   $scope.tabsCatProductType = [
   	{
-		  title : "Проверянные товары",
+		  title : "Проверенные товары",
 		  active : false,
 		  icon: 'fa-check-square-o'
 		},
     { 
-      title: "Черный список",
+      title: "Чёрный список",
       active : false,
       icon: 'fa-ban' 
     },
@@ -153,8 +153,7 @@ app.controller('funcController', function($scope, $ionicSlideBoxDelegate, $ionic
   // Сортировка
    $scope.showSorting = function() {
 
-
-   	var arrButtons = [];
+  	var arrButtons = [];
    	var orderChThis;
  		for(var i = 0; i < $scope.productChar.length; i++) {
  			for(var j = 0; j < $scope.products.length; j++) {
@@ -184,6 +183,7 @@ app.controller('funcController', function($scope, $ionicSlideBoxDelegate, $ionic
      	cancelText: 'Закрыть',
 
      	buttonClicked: function(index) {
+        $ionicScrollDelegate.scrollTop();
      		$scope.orderProp = arrButtons[index].order;
 
        	return true;
