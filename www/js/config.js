@@ -45,6 +45,7 @@ angular.module('db.config', [])
                 {name: 'tested', type: 'integer'},
                 {name: 'price', type: 'real'},
                 {name: 'name', type: 'text'},
+                {name: 'name_sg', type: 'text'},
                 {name: 'thumbnail', type: 'text'},
                 {name: 'images', type: 'text'},
                 {name: 'test_summary', type: 'text'},

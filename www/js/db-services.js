@@ -211,6 +211,22 @@ console.log('GET '+Url.url('/v1/catalog/info?my_version=' + self.meta_db.version
                         return;
                     }
 
+                    if (self.meta_server.prefer_full_dump == true) {
+                        console.info("prefer_full_dump = "+self.meta_server.prefer_full_dump);
+
+                        if (window.cordova) {
+
+                        } else {
+                            angular.forEach(DB_CONFIG.tables, function(table) {
+                                self.query('DELETE FROM ' + table.name);
+                            });
+
+                            console.log(resp.data);
+                            count_slices++;
+                            self.load_all(self.meta_server);
+                        }
+                    }
+
                     put_slice_without_timeout = true;
                     // запускаем загрузку части слайсов в бакграунде
                     self.load_slices();
@@ -248,6 +264,12 @@ console.log('GET '+Url.url('/v1/catalog/info?my_version=' + self.meta_db.version
     ** загрузка базы из json
     */ 
     self.load_all = function(meta) {
+        if (!meta || !('file' in meta) || !meta.file) {
+            console.error("Error: not set meta file");
+            self.deferred.resolve({loaded: false});
+            return;
+        }
+
         console.info("Load db "+meta.file);
         var url = meta.file;
         url = url.replace('http://api.roscontrol.com', '');
@@ -265,12 +287,21 @@ console.log("DEBUG tx");
                         self.put_slice(slice, false, tx);
                     });
 
-    				console.log("count slice", count);
-    				console.log("count cat slice", count_cat);
+//    				console.log("count slice", count);
+//    				console.log("count cat slice", count_cat);
     				console.info("slices end");
                     tx.executeSql('INSERT INTO metadata VALUES (?, "", "")', [meta.version], function(tx, res){
-                        console.log("DEBUG loaded set true");
-                        self.deferred.resolve({loaded: true});
+                        self.query('SELECT * FROM metadata ORDER BY version DESC LIMIT 1').then(function(result){
+                                //console.log("result meta", result);
+                                console.log("DEBUG loaded set true");
+                                self.deferred.resolve({loaded: true});
+                            }, function(err){
+                                self.deferred.resolve({loaded: false});
+                                console.error(err);
+                            });
+                    }, function(transaction, error){
+                        self.deferred.resolve({loaded: false});
+                        console.error("Erro: insert into metadata", error);
                     });
                 });
 
@@ -345,6 +376,7 @@ console.log("DEBUG tx");
                 $rootScope.$on('putSlice', function(event){
                     if (put_slice_without_timeout) {
                         self.put_slices();
+                        put_slice_without_timeout = false;
                     } else {
                         var timeout = pause ? 100 : 3000;
                         $timeout(function() {
@@ -562,6 +594,7 @@ console.log(slice);
                 product.tested == true ? 1 : 0,
                 product.price,
                 product.name,
+                'name_sg' in product ? product.name_sg : '',
                 product.thumbnail,
                 product.images,
                 'test' in product && 'summary' in product.test && product.test.summary ? product.test.summary : '',
