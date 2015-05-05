@@ -36,16 +36,18 @@
 				  		<img ng-src="{{ product.thumbnail }}" alt="{{ product.name }}">
 				  		<ion-spinner icon="circles" class="loader"></ion-spinner>
 				  	</span>
-				  	<span class="product__category-rating product-rating" ng-class="productRatingType(product)">
-				  		<i ng-if="product.ratingv == 'X'" class="fa fa-ban"></i>
-				  		<i ng-if="product.ratingv != 'X'">
-				  			{{ product.ratingv }}
-				  		</i>				  	
-				  	</span>
 				  	<span class="product__category-center">
 				  		<span class="product__category-name">{{ showCatName  }} {{ product.name }}</span>
-				  		<span class="product__category-price">от {{ product.price }} Р</span>	
+				  		<span ng-if="product.price" class="product__category-price">от {{ product.price }} Р</span>	
 				  	</span>
+				  	<span class="product__category-rating-wrap">
+				  		<span class="product__category-rating product-rating" ng-class="productRatingType(product)">
+					  		<i ng-if="product.ratingv == 'X'" class="fa fa-ban"></i>
+					  		<i ng-if="product.ratingv != 'X'">
+					  			{{ product.ratingv }}
+					  		</i>				  	
+					  		</span>	
+				  	</span>	
 				  	<span class="product__overlay-active">
 				</ion-item>
 			</div>
@@ -57,12 +59,14 @@
 				  		<img ng-src="{{ product.thumbnail }}" alt="{{ product.name }}">
 				  		<ion-spinner icon="circles" class="loader"></ion-spinner>
 				  	</span>
-				  	<span class="product__category-rating product-rating" ng-class="productRatingType(product)">
-				  		<i class="fa fa-ban"></i>
-				  	</span>
 				  	<span class="product__category-center">
 				  		<span class="product__category-name">{{ showCatName  }} {{ product.name }}</span>
-				  		<span class="product__category-price">от {{ product.price }} Р</span>	
+				  		<span ng-if="product.price" class="product__category-price">от {{ product.price }} Р</span>	
+				  	</span>
+				  	<span class="product__category-rating-wrap">
+					  	<span class="product__category-rating product-rating" ng-class="productRatingType(product)">
+					  		<i class="fa fa-ban"></i>
+					  	</span>
 				  	</span>
 				  	<span class="product__overlay-active">
 				</ion-item>
@@ -75,10 +79,12 @@
 				  		<img ng-src="{{ product.thumbnail }}" alt="{{ product.name }}">
 				  		<ion-spinner icon="circles" class="loader"></ion-spinner>
 				  	</span>
-				  	<a class="product__category-button-test" href="#" ng-click="alert('Возможность голосовать за товары в разработке!')">На тест!</a>
 				  	<span class="product__category-center">
 				  		<span class="product__category-name">{{ showCatName  }} {{ product.name }}</span>
-				  		<span class="product__category-price">от {{ product.price }} Р</span>	
+				  		<span ng-if="product.price" class="product__category-price">от {{ product.price }} Р</span>	
+				  	</span>
+				  	<span class="product__category-button-wrap">
+				  		<a class="product__category-button-test" href="#" ng-click="alert('Возможность голосовать за товары в разработке!')">На тест!</a>
 				  	</span>
 				  	<span class="product__overlay-active">
 				</ion-item>

@@ -301,7 +301,7 @@ app.controller('MenuCtrl', function($scope) {
 	if (window.cordova) {
 		$scope.menuWidth = parseInt(window.innerWidth * 80	 / 100);
 	} else {
-		$scope.menuWidth = 565;
+		$scope.menuWidth = 556;
 	}
 });
  
@@ -334,6 +334,7 @@ app.controller('AuthorizationCtrl', function($scope, $http, $ionicModal, $ionicB
   $scope.closeLogin = function() {
     $scope.modal.hide();
     $scope.loginData['password'] = '';
+    $scope.loginError = '';
   };
 
   // Открыть
@@ -346,8 +347,8 @@ app.controller('AuthorizationCtrl', function($scope, $http, $ionicModal, $ionicB
   // Обработка данных
   $scope.doLogin = function() {
 
-  	$scope.loginError = '';
-		
+		$scope.loginError = '';
+
 		User.login($scope.loginData.username, $scope.loginData.password).then(function(data) {
 			//window.localStorage.clear();
 			if ('profile' in data) {
@@ -594,6 +595,10 @@ app.controller('ArticleCtrl', function($scope, $stateParams, $location, $ionicHi
 		$location.path('/');
 		return false;
 	}
+
+	Article.getRubrics().then(function(r) {
+		$scope.rubrics = r;
+	});
 
 	$scope.article = {html: '', comments: []};
 	$scope.hide_loader = false;

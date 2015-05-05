@@ -1,7 +1,9 @@
 <ion-view>
 	<ion-nav-title>{{ article.title }}</ion-nav-title>
-	<ion-content>
-		<p style="padding:20px 10px;" ng-bind-html="article.html"></p>
+	<ion-content class="article__single">
+		<h2>{{ article.title }}</h2>
+		<span class="rubric">{{ rubrics[article.rubric].name }}</span>
+		<div class="html-content" ng-bind-html="article.html"></div>
 
 		<ion-spinner class="loader" ng-hide="hide_loader"></ion-spinner>
 		{{ error }}

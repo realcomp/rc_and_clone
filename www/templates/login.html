@@ -1,24 +1,20 @@
 <ion-modal-view>
-  <ion-header-bar>
+  <ion-header-bar class="modal-head">
     <h1 class="title">Авторизация</h1>
     <div class="buttons">
-      <button class="button button-clear" ng-click="closeLogin()">Закрыть</button>
+      <button class="button button-clear" ng-click="closeLogin()">&times;</button>
     </div>
   </ion-header-bar>
-  <ion-content scroll="false">
+  <ion-content scroll="false" class="modal-login">
     <form ng-submit="doLogin()">
       <div class="list">
-        <label class="item item-input">
-          <span class="input-label">E-mail</span>
-          <input type="text" ng-model="loginData.username">
+        <label ng-class="loginError ? 'login__error-l' : ''" class="item item-input border-r-top">
+          <input type="text" ng-model="loginData.username" placeholder="Электронная почта">
         </label>
-        <label class="item item-input">
-          <span class="input-label">Пароль</span>
-          <input type="password" ng-model="loginData.password">
+        <label ng-class="loginError ? 'login__error-l' : ''" class="item item-input border-r-bottom">
+          <input type="password" ng-model="loginData.password" placeholder="Пароль">
         </label>
-        <label class="item">
-          <button class="button button-block button-positive" ng-disabled="!loginData.username || !loginData.password" type="submit">Вход</button>
-        </label>
+        <button class="button button-block button-positive" ng-disabled="!loginData.username || !loginData.password" type="submit">Войти</button>
         <p class="login__error">{{ loginError }}</p>
       </div>
     </form>

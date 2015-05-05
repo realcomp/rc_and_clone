@@ -200,11 +200,9 @@ app.controller('funcController', function($scope, $ionicSlideBoxDelegate, $ionic
   $scope.showParameters = function() {
    	
 		$ionicActionSheet.show({
-     	buttons: [
-       		{ text: '<span>Ок</span>' }
-     	],
+     	buttons: [],
 
-  	  titleText: 'Когда-нибудь тут будут параметры сортировки:',
+  	  titleText: 'Появится в следующей версии приложения',
      	cancelText: 'Закрыть',
 
      	buttonClicked: function(index) {
@@ -254,6 +252,7 @@ app.controller('funcController', function($scope, $ionicSlideBoxDelegate, $ionic
   ];
 
   $scope.shoppingListTabs = function(o) {
+    $ionicScrollDelegate.scrollTop();
     for (var i = 0; i <= $scope.shoppingArrayTabs.length - 1; i++) {
       $scope.shoppingArrayTabs[i].active = false;
     }
@@ -262,6 +261,7 @@ app.controller('funcController', function($scope, $ionicSlideBoxDelegate, $ionic
   };
 
   $scope.shoppingTabsClass = function(item) {
+
   	if(item.active) {
   		return 'product__shopping-tab-active';
   	}

@@ -26,26 +26,34 @@
 				  		</div>
 				  		<span class="product__category-s-inner-name">{{ item.product.name }}</span>
 				  		<span class="product__category-s-inner-count">1</span>
-				  		<span class="clearfix"></span>	
 				  	</ion-item>
 				  	</ion-item>
 				</ion-item>
 			</div>
 
 			<div ng-if="shoppingArrayTabs[1].active">
-				Уже купил
+				В разработке...
 			</div>
 
 			<div ng-if="shoppingArrayTabs[2].active">
 				<ion-item class="product__category" ng-repeat="product in recommendedList | orderBy: '-rating'"  href="#/app/product/{{ product.id }}">
-				  	<span class="product__category-thumbnail">
-				  		<img ng-src="{{ product.thumbnail }}" alt="{{ product.name }}">
-				  		<ion-spinner icon="circles" class="loader"></ion-spinner>
-				  	</span>
-				  	<span class="product__category-name">{{ product.name }}</span>
+				  <span class="product__category-thumbnail">
+			  		<img ng-src="{{ product.thumbnail }}" alt="{{ product.name }}">
+			  		<ion-spinner icon="circles" class="loader"></ion-spinner>
+				  </span>
+				  <span class="product__category-center">
+			  		<span class="product__category-name">{{ showCatName  }} {{ product.name }}</span>
+			  		<span ng-if="product.price" class="product__category-price">от {{ product.price }} Р</span>	
+			  	</span>
+			  	<span class="product__category-rating-wrap">
 				  	<span class="product__category-rating product-rating" ng-class="productRatingType(product)">
-				  		{{ product.ratingv }}
+				  		<i ng-if="product.ratingv == 'X'" class="fa fa-ban"></i>
+				  		<i ng-if="product.ratingv != 'X'">
+				  			{{ product.ratingv }}
+				  		</i>				  	
 				  	</span>
+			  	</span>
+				  <span class="product__overlay-active">
 				</ion-item>
 			</div>
 
@@ -58,11 +66,20 @@
 			  	<span class="product__category-thumbnail">
 			  		<img ng-src="{{ product.thumbnail }}" alt="{{ product.name }}">
 			  		<ion-spinner icon="circles" class="loader"></ion-spinner>
-			  	</span>
-			  	<span class="product__category-name">{{ product.name }}</span>
-			  	<span class="product__category-rating product-rating" ng-class="productRatingType(product)">
-			  		{{ product.ratingv }}
-			  	</span>
+				  	</span>
+				  	<span class="product__category-center">
+				  		<span class="product__category-name">{{ showCatName  }} {{ product.name }}</span>
+				  		<span ng-if="product.price" class="product__category-price">от {{ product.price }} Р</span>	
+				  	</span>
+				  	<span class="product__category-rating-wrap">
+					  	<span class="product__category-rating product-rating" ng-class="productRatingType(product)">
+					  		<i ng-if="product.ratingv == 'X'" class="fa fa-ban"></i>
+					  		<i ng-if="product.ratingv != 'X'">
+					  			{{ product.ratingv }}
+					  		</i>				  	
+					  	</span>
+				  	</span>
+				  	<span class="product__overlay-active">
 				</ion-item>
 			</ion-list>
 		</div>

@@ -2,8 +2,12 @@
 	<ion-nav-title>Мой профиль</ion-nav-title>
 	<ion-content ng-controller="funcController">
 		<div class="user__profile-head">
-			<img class="user__profile-avatar" ng-src="{{ profile.avatar }}">
-			<span class="user__profile-name">{{ profile.first_name }} {{ profile.last_name }}</span>
+			<div class="td">
+				<img class="user__profile-avatar" ng-src="{{ profile.avatar }}">
+			</div>
+			<div class="td">
+				<span class="user__profile-name">{{ profile.first_name }} {{ profile.last_name }}</span>
+			</div>
 		</div>
 		<div class="user__profile-center">
 			<ion-list class="user__profile-list">
