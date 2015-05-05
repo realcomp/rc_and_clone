@@ -517,6 +517,7 @@ app.controller('ArticlesCtrl', function($scope, $ionicHistory, Article) {
 	$scope.hide_loader = false;
 	$scope.error = null;
 	$scope.distance_procent = '50%';
+	$scope.rubrics = [];
 
 /*	Article.list(0, 0, 20, $scope.count_articles).then(function(data){
 //		console.log(data);
@@ -531,9 +532,13 @@ app.controller('ArticlesCtrl', function($scope, $ionicHistory, Article) {
 		$scope.hide_loader = true;
 	});*/
 
+	Article.getRubrics().then(function(r) {
+		$scope.rubrics = r;
+	});
+
 	$scope.loadMore = function() {
-    	Article.list(0, 0, limit, $scope.count_articles).then(function(data) {
-		console.log(data);
+    Article.list(0, 0, limit, $scope.count_articles).then(function(data) {
+			
 			if ('items' in data && 'total_count' in data) {
 				$scope.count_articles += limit;
 
@@ -541,7 +546,6 @@ app.controller('ArticlesCtrl', function($scope, $ionicHistory, Article) {
 					$scope.real_count_articles += data.items.length;
 					angular.forEach(data.items, function(article){
 						$scope.articles.push(article);
-						console.log('article', article);
 					});
 
 					if ($scope.real_count_articles > 100) {

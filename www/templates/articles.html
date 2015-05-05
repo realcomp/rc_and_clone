@@ -7,6 +7,7 @@
 	      		<img class="articles__category-img" ng-src="{{ article.image }}">
 		      	<ion-item class="articles__category-title">
 		        	{{ article.title }}
+		        	<span class="rubric">{{ rubrics[article.rubric].name }}</span>
 		        </ion-item>
 	      </ion-item>
 	    </ion-list>

@@ -992,7 +992,7 @@ console.log(slice);
 // Resource service example
 .factory('Article', function($http, Url, User) {
     var self = this;
-
+    var g_rubrics = null;
     self.list = function(category_id, rubric, limit, offset) {
 		var params = [];
         var api_token = User.api_token();
@@ -1036,6 +1036,26 @@ console.log("GET articles", Url.url('/v1/articles' + (params.length ? '?' + para
     		.then(function(resp){
     			return resp.data;
     		},
+            function(err){
+                console.error("error get article id "+id, err);
+                return err;
+            });
+    };
+
+    self.getRubrics = function(id) {
+        if(g_rubrics) {
+            var deferred = $q.defer();
+            deferred.resolve(g_rubrics);
+            return deferred.promise;
+        }
+        return $http.get(Url.url('v1/articles/rubrics_and_categories'))
+            .then(function(resp) {
+                g_rubrics = {};
+                angular.forEach(resp.data.rubrics, function(elem) {
+                    g_rubrics[elem.rubric] = elem;       
+                });
+                return g_rubrics;
+            },
             function(err){
                 console.error("error get article id "+id, err);
                 return err;
