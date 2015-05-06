@@ -32,7 +32,7 @@
 			</div>
 
 			<div ng-if="shoppingArrayTabs[1].active">
-				В разработке...
+				<p class="search__no-result">В разработке...</p>
 			</div>
 
 			<div ng-if="shoppingArrayTabs[2].active">
@@ -81,6 +81,7 @@
 				  	</span>
 				  	<span class="product__overlay-active">
 				</ion-item>
+				<p class="search__no-result" ng-if="searchList.length == 0">Ваш поиск не дал результатов...</p>
 			</ion-list>
 		</div>
 

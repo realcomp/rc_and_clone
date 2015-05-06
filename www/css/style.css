@@ -74,7 +74,9 @@
   	GLOBAL APP
   ========================================================================== 
 */
-
+body {
+	background: #FAFAFA;
+}
 #mainContainer {
 	position: absolute;
 	top: 0;
@@ -87,6 +89,7 @@
 	font-family: 'Roboto', sans-serif;
 	font-size: 16px;
 	color: #000;
+	box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.09)
 }
 
 a {
@@ -300,7 +303,7 @@ a:active {
 } 
 .product__category .product__category-thumbnail {
 	width: 140px;
-	height: 140px;
+	height: 150px;
 	padding: 5px 0;
   display: table-cell;
   position: relative;	
@@ -313,7 +316,7 @@ a:active {
 }
 .product__category .product__category-center {
 	display: table-cell;
-	padding: 0 15px;
+	padding: 10px 15px;
 	vertical-align: middle;
 	font-size: 24px;
 	font-family: "BrutalMedium";
@@ -331,10 +334,6 @@ a:active {
 	color: #949494;
 }
 .product__category .product__category-button-test {
-	position: absolute;
-  right: 25px;
-  top: 50%;
-  margin-top: -20px;
   width: 110px;
   font-size: 20px;
 }
@@ -905,7 +904,7 @@ a:active {
   right: 0;
   top: 50%;
   text-align: center;
-  background: #937591;
+  background: rgba(255, 255, 255, 0.15);
   -moz-border-radius: 100px;
   -webkit-border-radius: 100px;
   border-radius: 100px;
@@ -983,6 +982,7 @@ a:active {
 	background-color: #fff;
 }
 
+/* fix */
 @media (min-width: 680px) {
 	.modal {
 		top: 20%;
@@ -1031,6 +1031,10 @@ a:active {
   padding: 9px 0;
   margin-top: 30px;
 }
+.product__single-modal-content {
+	text-align: center;
+	padding: 20px;
+}
 .login__error-l {
 	border-color: #C80020;
 }
@@ -1051,7 +1055,7 @@ a:active {
 .user__profile-head {
 	display: table;
 	width: 100%;
-	padding: 15px 0;
+	padding: 15px;
 }
 .user__profile-head .td {
 	display: table-cell;
@@ -1089,6 +1093,9 @@ a:active {
 	float: left;
 	width: 25%;
 }
+.user__profile-foot .user__profile-foot-inner-item .activated {
+	background: none !important; 
+} 
 .user__profile-foot .user__profile-foot-inner-item .item-content { 
 	padding: 5px;
 }
@@ -1170,7 +1177,7 @@ a:active {
   font-size: 22px;
   line-height: 24px;
   width: 100%;
-  background: rgba(0, 0, 0, 0.28);
+  background: rgba(0, 0, 0, 0.4);
   overflow: initial;
   white-space: normal;
 }
@@ -1230,6 +1237,7 @@ a:active {
 .product__shopping-search {
 	text-align: center;
 	padding: 0 10px !important;
+	font-size: 16px !important;
 	position: absolute;
 	left: 10px;
 	height: 44px !important;
@@ -1237,6 +1245,11 @@ a:active {
 	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;
 	border-radius: 5px;
+}
+.search__no-result {
+	text-align: center;
+  padding: 10px 0;
+  color: #C80020;
 }
 .product__shopping-reset {
 	float: right;
@@ -1320,6 +1333,8 @@ a:active {
 	width: 100%;
 	padding-top: 10px;
   padding-bottom: 10px;
+  border-right: 0;
+  border-left: 0;
 }
 .product__category-s-inner-image {
 	width: 100px;
@@ -1338,6 +1353,7 @@ a:active {
 	overflow: initial;
   white-space: normal;
   font-size: 22px;
+  line-height: 26px;
 	font-family: "BrutalMedium";
 }
 .product__category-s-inner-count {

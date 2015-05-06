@@ -298,11 +298,19 @@ app.controller('ProductCtrl', function($scope, $location, $stateParams, $ionicHi
 // Контроллер меню
 app.controller('MenuCtrl', function($scope) {
 	// Тут можно будет проставить ширину для меню на различных устройствах
+	/*
 	if (window.cordova) {
 		$scope.menuWidth = parseInt(window.innerWidth * 80	 / 100);
 	} else {
-		$scope.menuWidth = 556;
+		$scope.menuWidth = 558;
 	}
+	*/
+
+	if(window.innerWidth <= 640)
+		$scope.menuWidth = window.innerWidth - 79;
+	else 
+		$scope.menuWidth = 557;
+
 });
  
 
@@ -505,6 +513,10 @@ app.controller('AboutCtrl', function($scope, DB, Product, Category) {
 		console.log(res);
 		$scope.ccount = res.count;
 	});
+
+	$scope.iW = window.innerWidth;
+  $scope.iH = window.innerHeight;
+
 });
 
 // список статей

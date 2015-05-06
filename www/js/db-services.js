@@ -1044,9 +1044,11 @@ console.log("GET articles", Url.url('/v1/articles' + (params.length ? '?' + para
 
     self.getRubrics = function(id) {
         if(g_rubrics) {
+            /*
             var deferred = $q.defer();
             deferred.resolve(g_rubrics);
             return deferred.promise;
+            */
         }
         return $http.get(Url.url('v1/articles/rubrics_and_categories'))
             .then(function(resp) {
