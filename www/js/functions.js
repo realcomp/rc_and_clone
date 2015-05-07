@@ -70,7 +70,6 @@ app.controller('funcController', function($scope, $ionicSlideBoxDelegate, $ionic
 	};
 
 	// Массив с табами на странице категорий с товарами
-	$scope.orderProp = ['danger_level', '-rating'];
   $scope.tabsCatProductType = [
   	{
 		  title : "Проверенные товары",
@@ -150,52 +149,6 @@ app.controller('funcController', function($scope, $ionicSlideBoxDelegate, $ionic
   	$scope.currentIndex = $index + 1
 	};
 
-  // Сортировка
-   $scope.showSorting = function() {
-
-  	var arrButtons = [];
-   	var orderChThis;
- 		for(var i = 0; i < $scope.productChar.length; i++) {
- 			for(var j = 0; j < $scope.products.length; j++) {
- 				var thisData = $scope.products[i].value_ch + j;
- 				if(thisData !== 'undefined') {
- 					orderChThis = '-value_ch' + (i + 1);
- 					break;
- 				}
- 			};
-
-			arrButtons.push({ text: '<span>'+ $scope.productChar[i] +'</span>', order: [orderChThis, '-rating'] });
-		};
-		arrButtons.push(
-			{ text: '<span>Общий рейтинг</span>', order: ['danger_level', '-rating'] },
-			{ text: '<span>Цена</span>', order: ['-price'] },
-			{ text: '<span>Алфавит</span>', order: 'name' }
-		);
-
-		console.log(arrButtons)
-
-
-		$ionicActionSheet.show({
-
-     	buttons: arrButtons,
-
-  	  /* titleText: 'Сортировать:', */
-     	cancelText: 'Закрыть',
-
-     	buttonClicked: function(index) {
-        $ionicScrollDelegate.scrollTop();
-     		$scope.orderProp = arrButtons[index].order;
-
-       	return true;
-     	},
-
-      cancelOnStateChange: function() {
-        return true;
-      }
-
-   	});
-  };
-
   // Параметры
   $scope.showParameters = function() {
    	
@@ -215,7 +168,7 @@ app.controller('funcController', function($scope, $ionicSlideBoxDelegate, $ionic
    	});
   };
 
-  // 
+  // Alert
   $scope.alert = function(text) {
     alert(text);  
 	};

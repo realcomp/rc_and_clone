@@ -194,7 +194,7 @@ angular.module('db-services', ['db.config', 'ngCordova'])
                     //console.log("METADB", self.meta_db);
                 }
 
-console.log('GET '+Url.url('/v1/catalog/info?my_version=' + self.meta_db.version));
+                console.log('GET '+Url.url('/v1/catalog/info?my_version=' + self.meta_db.version));
                 $http.get(Url.url('/v1/catalog/info?my_version=' + self.meta_db.version)).then(function(resp){
                     self.meta_server = resp.data;
 

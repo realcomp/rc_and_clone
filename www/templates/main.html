@@ -2,23 +2,23 @@
 <ion-nav-title> {{ title }} </ion-nav-title>
   <ion-content>
     <div ng-hide="percent == 100">
-  	<h1 style="text-align: center;margin-bottom: 0;" >{{ inf }} {{ percent }} %</h1>
-	<progress max="100" value="{{ percent }}"> </progress>
-	</div>
+    <h1 style="text-align: center;margin-bottom: 0;" >{{ inf }} {{ percent }} %</h1>
+  <progress max="100" value="{{ percent }}"> </progress>
+  </div>
     <ion-list class="main__category-wrap">
       <ion-item class="main__category-item" ng-repeat="item in roots | orderBy:'position'" href="#/app/category/{{item.id}}">
-      		<img ng-if="online" ng-src="http://api.roscontrol.com/assets/icons/ios2x/{{ item.background }}">
-      		<img ng-if="!online" ng-src="img/category_default_bg.png">
-      		<ion-item class="main__category-icon">
-      			<img ng-if="online" ng-src="http://api.roscontrol.com/assets/icons/ios2x/{{ item.icon }}">
-      		</ion-item>
-	      	<ion-item class="main__category-name">
-	        	{{ item.name }}
-	        </ion-item>
-	      	<ion-item class="main__category-tested" ng-controller='funcController'>
-	      		{{ item.product_tested_count.count }} 
-	      		{{ declension(item.product_tested_count.count, ['товар','товара','товаров']); }}
-	      	</ion-item>
+          <img ng-if="online" ng-src="http://api.roscontrol.com/assets/icons/ios2x/{{ item.background }}">
+          <img ng-if="!online" ng-src="img/category_default_bg.png">
+          <ion-item class="main__category-icon">
+            <img ng-if="online" ng-src="http://api.roscontrol.com/assets/icons/ios2x/{{ item.icon }}">
+          </ion-item>
+          <ion-item class="main__category-name">
+            {{ item.name }}
+          </ion-item>
+          <ion-item class="main__category-tested" ng-controller='funcController'>
+            {{ item.product_tested_count.count }} 
+            {{ declension(item.product_tested_count.count, ['товар','товара','товаров']); }}
+          </ion-item>
       </ion-item>
     </ion-list>
   </ion-content>

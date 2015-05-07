@@ -242,6 +242,9 @@
     padding: 3px 15px;
     font-size: 18px;
   }
+  .action-sheet .action-sheet-cancel {
+    font-size: 18px;
+  }
 
   /* single product */
   .product__single-head .product__single-info-left {

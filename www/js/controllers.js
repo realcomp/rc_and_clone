@@ -59,7 +59,7 @@ console.log("main ctrl dbUpdate");
 });
 
 // Контроллер категорий
-app.controller('CategoryCtrl', function($scope, $location, $stateParams, $ionicHistory, Category, Product, Rating) {
+app.controller('CategoryCtrl', function($scope, $location, $stateParams, $ionicHistory, $ionicModal,  Category, Product, Rating) {
 
 	var onlyNumber = !isNaN(parseFloat($stateParams.id)) && isFinite($stateParams.id) && (0 < $stateParams.id);
 	if(!onlyNumber) {
@@ -99,49 +99,77 @@ app.controller('CategoryCtrl', function($scope, $location, $stateParams, $ionicH
 
 							angular.forEach(products, function(product) {
 
+		      		// список названий рейтинга
+							Rating.allHash().then(function(gratings) {
 
-		      			// список названий рейтинга
-								Rating.allHash().then(function(gratings) {
-									// рейтинги продуктов
-									Product.ratings(product.id).then(function(ratings) {
-										var index = 0;
-										angular.forEach(ratings, function(rating) {
-											if (gratings[rating.rating_id]) {
-												index++;
-												product['value_ch' + index] = rating.value;
-												arr.push(gratings[rating.rating_id].name);
-											}
-										});
-
+								// рейтинги продуктов
+								Product.ratings(product.id).then(function(ratings) {
+									var index = 0;
+									angular.forEach(ratings, function(rating) {
+										if (gratings[rating.rating_id]) {
+											product['value_ch_' + index] = rating.value;
+											index++;
+											arr.push(gratings[rating.rating_id].name);
+										}
 									});
-									$scope.products.push(product);
+
+									// Выбираем только уникальные характеристики для сортировки
+									var obj = {};
+									for(var i = 0; i < arr.length; i++) {
+										obj[arr[i]] = true;
+									}
+									var keys = Object.keys(obj);
+
+									var arrButtons = [];
+									arrButtons.push(
+										{ text: 'Общий рейтинг', order: ['danger_level', '-rating'], 'active': true },
+										{ text: 'Цена', order: ['-price'], 'active': false },
+										{ text: 'Алфавит', order: ['name'], 'active': false }
+									);
+
+							 		for(var i = 0; i < keys.length; i++) {
+							 			arrButtons.push({ 'text': keys[i], 'order': ['-value_ch_' + i, '-rating'], 'active': false });
+							 		}
+							 		$scope.arrButtons = arrButtons;
+
 								});
 
-		      			if(!product.tested) {
-		      				$scope.productsWait.push(product);
+							});
+
+							$scope.products.push(product);
+
+	      			if(!product.tested) {
+	      				$scope.productsWait.push(product);
+	      			}
+	      			else {
+		      			if(product.tested && product.danger_level > 1) {
+		      				$scope.productsBlack.push(product);
 		      			}
-		      			else {
-			      			if(product.tested && product.danger_level > 1) {
-			      				$scope.productsBlack.push(product);
-			      			}
-		      				$scope.productsCheck.push(product);
-		      			}
+	      				$scope.productsCheck.push(product);
+	      			}
 
 		    			});
 
-							setTimeout(function() {
-								function iniqElems(arr) {
-								var obj = {};
-								for(var i = 0; i < arr.length; i++) {
-										obj[arr[i]] = true;
-									}
-									return Object.keys(obj);
-								}	
 
-								$scope.productChar = iniqElems(arr);
+							// Шаблон окна с сортировкой товаров
+						  $ionicModal.fromTemplateUrl('templates/modal/modal-sorting.html', {
+						    scope: $scope
+						  }).then(function(modalSorting) {
+						    $scope.modalSorting = modalSorting;
+						  });
+						  $scope.close = function() {
+						    $scope.modalSorting.hide();
+						  };
 
-								console.log($scope.productChar);
-							}, 400);
+						  // Сортировка 
+						  $scope.orderProp = ['danger_level', '-rating'];
+						  $scope.sorting = function(index, order) {
+						    $scope.orderProp = order;
+					      for(var i = 0; i < $scope.arrButtons.length; i++) {
+    							$scope.arrButtons[i].active = false;
+  							}
+    						$scope.arrButtons[index].active = true;
+						  };
 
 						}
 						else {

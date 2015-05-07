@@ -68,6 +68,17 @@
 .has-footer {
 	bottom: 60px;
 }
+@media (min-width: 1px) {
+	.active .modal-backdrop-bg {
+	  opacity: 0.5;
+	}
+	.modal-backdrop-bg {
+	  -webkit-transition: opacity 300ms ease-in-out;
+	  transition: opacity 300ms ease-in-out;
+	  background-color: #000;
+	  opacity: 0;
+	}
+}
 
 /* 
 	==========================================================================
@@ -993,7 +1004,22 @@ a:active {
 		min-height: 240px;
 		width: 60%;
 	}
+	.action-sheet {
+		bottom: 0;
+		margin-top: -30px;
+		margin-left: 0;
+	}
 }
+@media (max-width: 680px) {
+	.action-sheet {
+		width: 90%;
+	  left: 5%;
+	  margin-left: 0;
+	  bottom: 0;
+	  margin-top: -30px;
+	}
+}
+
 
 .modal-head { 
 	background: #C80020;
@@ -1373,8 +1399,12 @@ a:active {
 */
 
 .action-sheet {
-	border: 1ox solid #2E2F34;
+	background: transparent;
 }
+.action-sheet .scroll-content {
+	top: auto;
+	bottom: 30px;
+} 
 .action-sheet-group {
 
 }
@@ -1383,26 +1413,36 @@ a:active {
 }
 .action-sheet .button {
 	padding: 5px 15px;
+	margin-top: -1px;
 	background: #363638;
 	color: #FFF;
 	font-size: 20px;
 	border: 1px solid #2E2F34;
 	text-align: left;
 }
+.action-sheet .button:first-child {
+	-moz-border-radius: 7px 7px 0 0;
+  -webkit-border-radius: 7px 7px 0 0;
+  border-radius: 7px 7px 0 0;
+}
 .action-sheet .button:hover,
-.action-sheet .button:active {
-	background: #3D3D3D;
+.action-sheet .button:active,
+.action-sheet .button.active {
+	background: #3E3E3F;
 	border: 1px solid #2E2F34;
 	color: #FFF;
 }
-.action-sheet-cancel {
-	text-align: center;
-}
-.action-sheet-cancel .button {
+.action-sheet .action-sheet-cancel {
+	color: #FFF;
+	font-size: 20px;
+	border: 0;
 	background: #354777;
 	text-align: center;
+  -moz-border-radius: 0 0 7px 7px;
+  -webkit-border-radius: 0 0 7px 7px;
+  border-radius: 0 0 7px 7px;
 }
-.action-sheet-cancel .button:hover,
-.action-sheet-cancel .button:active {
+.action-sheet .action-sheet-cancel:hover,
+.action-sheet .action-sheet-cancel:active {
 	background: #354777;
 }
