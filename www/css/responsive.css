@@ -111,7 +111,8 @@
   .menu_avatar_user {
     border-width: 4px;
   }
-  .menu__login-name {
+  .menu__login-name,
+  .menu__nologin-url {
     font-size: 24px;
   }
   .menu__content .item-content {
@@ -238,11 +239,11 @@
   .bar.footer__sorting.bar-footer .footer__sorting-item .button {
     padding-top: 11px;
   }
-  .action-sheet .button {
+  .action-sheet-c .button {
     padding: 3px 15px;
     font-size: 18px;
   }
-  .action-sheet .action-sheet-cancel {
+  .action-sheet-c .action-sheet-cancel-c {
     font-size: 18px;
   }
 
@@ -285,7 +286,8 @@
     width: 120px;
     height: 120px;
   }
-  .menu__login-name {
+  .menu__login-name,
+  .menu__nologin-url {
     font-size: 22px;
   }
   .menu__content .menu__item-inner {
@@ -305,8 +307,7 @@
     height: 70px;
   }
   .modal-head .title {
-    font-size: 22px;
-    top: 14px;
+    top: 13px;
   }
   .modal-head .button.button-clear {
     font-size: 48px;
@@ -379,7 +380,7 @@
   	480
   ========================================================================== 
 */
-@media only screen and (max-width: 479px) {
+@media only screen and (max-width: 480px) {
   
   /* header */
   .bar.bar-stable .title {
@@ -390,6 +391,9 @@
   }
 
   /* main */
+  #mainContainer {
+    font-size: 15px;
+  }
   .main__category-icon img {
     width: 95px;
     height: 65px;
@@ -403,6 +407,9 @@
 
 
   /* cat product */
+  .categories-list .item-content {
+    padding: 15px;
+  }
   .product__category .product__category-center {
     font-size: 18px;
   }
@@ -410,6 +417,10 @@
     width: 50px;
     padding: 13px 0px;
     font-size: 24px;
+  }
+  .product__category .product__category-thumbnail {
+    width: 80px;
+    height: 90px;
   }
   .main__category-tested,
   .product__vote-wait, 
@@ -419,8 +430,30 @@
   }
 
   /* single product */
+  .product__single-head .product__single-name {
+    font-size: 22px;
+  }
+  .product__single-head .product__single-info-left {
+    width: 160px;
+    height: 160px;
+  }
+  .product__category .product__category-rating, .product__single-result .product-rating {
+    width: 50px;
+    padding: 12px 0px;
+    font-size: 26px;
+  }
+  .product__single-result .product__single-result-txt, .product__single-reviews-rating-title {
+    font-size: 18px;
+  }
+  .product__single-rating-right {
+    margin-right: 5px; 
+    font-size: 24px;
+  }
 
   /* menu */
+  .menu__content .menu__item-inner {
+    padding: 13px 0 21px;
+  }
 
   /* modal */
 
@@ -437,6 +470,15 @@
   }
 
   /* about */
+
+  /* sheet */
+  .action-sheet-c .button {
+    padding: 1px 15px;
+    font-size: 16px;
+  }
+  .action-sheet-c .action-sheet-cancel-c {
+    font-size: 16px;
+  }
 
 }
 

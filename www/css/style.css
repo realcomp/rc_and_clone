@@ -1004,14 +1004,14 @@ a:active {
 		min-height: 240px;
 		width: 60%;
 	}
-	.action-sheet {
+	.action-sheet-c {
 		bottom: 0;
 		margin-top: -30px;
 		margin-left: 0;
 	}
 }
 @media (max-width: 680px) {
-	.action-sheet {
+	.action-sheet-c {
 		width: 90%;
 	  left: 5%;
 	  margin-left: 0;
@@ -1036,7 +1036,6 @@ a:active {
 }
 .modal-head .title{ 
   font-size: 24px;
-  font-family: "BrutalMedium";
   color: #FFF;
   top: 17px;
 }
@@ -1398,10 +1397,10 @@ a:active {
   ========================================================================== 
 */
 
-.action-sheet {
+.action-sheet-c {
 	background: transparent;
 }
-.action-sheet .scroll-content {
+.action-sheet-c .scroll-content {
 	top: auto;
 	bottom: 30px;
 } 
@@ -1411,8 +1410,9 @@ a:active {
 .action-sheet-title {
 
 }
-.action-sheet .button {
+.action-sheet-c .button {
 	padding: 5px 15px;
+	width: 100%;
 	margin-top: -1px;
 	background: #363638;
 	color: #FFF;
@@ -1420,29 +1420,29 @@ a:active {
 	border: 1px solid #2E2F34;
 	text-align: left;
 }
-.action-sheet .button:first-child {
+.action-sheet-c .button:first-child {
 	-moz-border-radius: 7px 7px 0 0;
   -webkit-border-radius: 7px 7px 0 0;
   border-radius: 7px 7px 0 0;
 }
-.action-sheet .button:hover,
-.action-sheet .button:active,
-.action-sheet .button.active {
+.action-sheet-c .button:hover,
+.action-sheet-c .button:active,
+.action-sheet-c .button.active {
 	background: #3E3E3F;
 	border: 1px solid #2E2F34;
 	color: #FFF;
 }
-.action-sheet .action-sheet-cancel {
+.action-sheet-c .action-sheet-cancel-c {
 	color: #FFF;
 	font-size: 20px;
 	border: 0;
-	background: #354777;
+	background: #354777 !important;
 	text-align: center;
   -moz-border-radius: 0 0 7px 7px;
   -webkit-border-radius: 0 0 7px 7px;
   border-radius: 0 0 7px 7px;
 }
-.action-sheet .action-sheet-cancel:hover,
-.action-sheet .action-sheet-cancel:active {
+.action-sheet-c .action-sheet-cancel-c:hover,
+.action-sheet-c .action-sheet-cancel-c:active {
 	background: #354777;
 }
