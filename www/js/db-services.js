@@ -119,6 +119,7 @@ angular.module('db-services', ['db.config', 'ngCordova'])
 
         if (window.cordova) {
             console.log("use cordova sqlite");
+            window.plugins.sqlDB.remove(DB_CONFIG.name + '.sqlite', function(){
             window.plugins.sqlDB.copy(DB_CONFIG.name + '.sqlite', function() {
                 self.db = window.sqlitePlugin.openDatabase({name: DB_CONFIG.name + '.sqlite'});
 //                self.db = $cordovaSQLite.openDB(DB_CONFIG.name + '.sqlite');
@@ -131,6 +132,7 @@ angular.module('db-services', ['db.config', 'ngCordova'])
 //                promise = self.create();
                 init_deferred.resolve();
             });
+            }, function(){});
 
             if (!self.db) {
                 console.error("Error: open database");
