@@ -1,0 +1,10 @@
+<ion-modal-view class="action-sheet">
+  <ion-content scroll="false">
+		<ion-item ng-repeat="button in arrButtons" ng-click="sorting($index, button.order); close();" class="button" ng-class="button.active ? 'active' : '' ">
+		  {{ button.text }}
+		</ion-item>
+		<ion-item class="action-sheet-cancel" ng-click="close(); ">
+			Закрыть
+		</ion-item>
+  </ion-content>
+</ion-modal-view>
