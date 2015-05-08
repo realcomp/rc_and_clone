@@ -59,7 +59,7 @@ console.log("main ctrl dbUpdate");
 });
 
 // Контроллер категорий
-app.controller('CategoryCtrl', function($scope, $location, $stateParams, $ionicHistory, $ionicModal,  Category, Product, Rating) {
+app.controller('CategoryCtrl', function($scope, $location, $stateParams, $ionicHistory, $ionicModal,  $ionicScrollDelegate, Category, Product, Rating) {
 
 	var onlyNumber = !isNaN(parseFloat($stateParams.id)) && isFinite($stateParams.id) && (0 < $stateParams.id);
 	if(!onlyNumber) {
@@ -136,7 +136,9 @@ app.controller('CategoryCtrl', function($scope, $location, $stateParams, $ionicH
 
 							});
 
+							//
 							$scope.products.push(product);
+
 
 	      			if(!product.tested) {
 	      				$scope.productsWait.push(product);
@@ -164,6 +166,7 @@ app.controller('CategoryCtrl', function($scope, $location, $stateParams, $ionicH
 						  // Сортировка 
 						  $scope.orderProp = ['danger_level', '-rating'];
 						  $scope.sorting = function(index, order) {
+						  	$ionicScrollDelegate.scrollTop();
 						    $scope.orderProp = order;
 					      for(var i = 0; i < $scope.arrButtons.length; i++) {
     							$scope.arrButtons[i].active = false;
@@ -204,6 +207,9 @@ app.controller('ProductCtrl', function($scope, $location, $stateParams, $ionicHi
 	Product.getById($stateParams.id).then(function(product) {
      	$scope.title = product.name
       $scope.product = product;
+			var images = product.images;
+			images = images.split(',');
+			product['images_array'] = images;
 
       $scope.arrayDangerLevel = [];
       for(var i = 0; i < 4; i++) {

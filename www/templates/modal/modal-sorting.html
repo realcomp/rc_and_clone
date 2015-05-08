@@ -1,7 +1,7 @@
 <ion-modal-view class="action-sheet-c">
   <ion-content scroll="false">
 		<ion-item ng-repeat="button in arrButtons" ng-click="sorting($index, button.order); close();" class="button" ng-class="button.active ? 'active' : '' ">
-		  {{ button.text }}
+		  {{ button.text }} <i class="fa fa-chevron-down"></i>
 		</ion-item>
 		<ion-item class="action-sheet-cancel-c" ng-click="close(); ">
 			Закрыть

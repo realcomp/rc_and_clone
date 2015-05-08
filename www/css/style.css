@@ -871,7 +871,7 @@ a:active {
 
 .menu__content {
 	color: #FFF;
-	background: url('../img/bg-sidebar.png') repeat-y;
+	background: url('../img/bg-sidebar.png') top repeat-y;
 }
 
 .menu__content .item-content,
@@ -952,7 +952,7 @@ a:active {
 	color: #FFF;
   font-size: 26px;
   text-align: center;
-  margin: 0 0 30px 0;
+  margin: 0 0 50px 0;
 }
 
 /*login*/
@@ -1059,6 +1059,9 @@ a:active {
 .product__single-modal-content {
 	text-align: center;
 	padding: 20px;
+}
+.product__single-modal-content .slider{
+	height: 100%;
 }
 .login__error-l {
 	border-color: #C80020;
@@ -1420,6 +1423,13 @@ a:active {
 	border: 1px solid #2E2F34;
 	text-align: left;
 }
+.action-sheet-c .button .fa {
+	display: none;
+	position: absolute;
+  right: 20px;
+  top: 15px;
+  font-size: 20px;
+}
 .action-sheet-c .button:first-child {
 	-moz-border-radius: 7px 7px 0 0;
   -webkit-border-radius: 7px 7px 0 0;
@@ -1432,15 +1442,18 @@ a:active {
 	border: 1px solid #2E2F34;
 	color: #FFF;
 }
+.action-sheet-c .button.active .fa {
+	display: block;
+}
 .action-sheet-c .action-sheet-cancel-c {
 	color: #FFF;
 	font-size: 20px;
 	border: 0;
 	background: #354777 !important;
 	text-align: center;
-  -moz-border-radius: 0 0 7px 7px;
-  -webkit-border-radius: 0 0 7px 7px;
-  border-radius: 0 0 7px 7px;
+  -moz-border-radius: 0 0 10px 10px;
+  -webkit-border-radius: 0 0 10px 10px;
+  border-radius: 0 0 10px 10px;
 }
 .action-sheet-c .action-sheet-cancel-c:hover,
 .action-sheet-c .action-sheet-cancel-c:active {
