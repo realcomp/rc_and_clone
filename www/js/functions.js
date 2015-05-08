@@ -103,15 +103,16 @@ app.controller('funcController', function($scope, $ionicSlideBoxDelegate, $ionic
   };
 
   //
-  $scope.tabsInit = false;
+  var tabsInit = false;
   $scope.tabsClass = function(item, productsCheck, productsWait) {
-  	if(!$scope.tabsInit) {
+    
+  	if(!tabsInit) {
 	  	if(productsCheck.length > 0)
 	  		$scope.tabsCatProductType[0].active = true;
 	  	else if(productsWait.length > 0)
 	  		$scope.tabsCatProductType[2].active = true;
   	}
-  	$scope.tabsInit = true;
+  	var tabsInit = true;
 
   	if(item.active) {
   		return 'product__category-tabs-active';
@@ -128,9 +129,8 @@ app.controller('funcController', function($scope, $ionicSlideBoxDelegate, $ionic
 
 	// Сделает табы без товаров не активными
 	$scope.tabsClassDisabled = function(index) {
-		$scope.tabsD = '';
 		if(!$scope.disabledTabArray[index].length) {
-			return $scope.tabsD = 'product__category-tabs-disabled';
+			return 'product__category-tabs-disabled';
 		}
 	};
 
@@ -148,25 +148,6 @@ app.controller('funcController', function($scope, $ionicSlideBoxDelegate, $ionic
   $scope.slideHasChanged = function($index) {
   	$scope.currentIndex = $index + 1
 	};
-
-  // Параметры
-  $scope.showParameters = function() {
-   	
-		$ionicActionSheet.show({
-     	buttons: [],
-
-  	  titleText: 'Появится в следующей версии приложения',
-     	cancelText: 'Закрыть',
-
-     	buttonClicked: function(index) {
-       	return true;
-     	},
-
-      cancelOnStateChange: function() {
-        return true;
-      }
-   	});
-  };
 
   // Alert
   $scope.alert = function(text) {
