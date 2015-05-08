@@ -3,49 +3,64 @@ var app = angular.module('starter.controllers', []);
 // Контроллер главной
 app.controller('MainCtrl', function($scope, $ionicLoading, $interval, Category, DB, Product) {
 	console.log('main controller');
-	$scope.percent = DB.percentLoading();
+
+	if (window.cordova) {
+		$scope.percent = 100;
+	} else {
+		$scope.percent = DB.percentLoading();
+	}
+
 /*	var getPercent = function(){ $scope.percent = DB.percentLoading(); };
 	var intervalPercent = $interval(function(){
 		getPercent();
-	}, 500);
+	}, 500);*/
 	$scope.loadingIndicator = $ionicLoading.show({
-	    content: 'Loading Data',
+	    content: 'Идет загрузка',
 	    animation: 'fade-in',
 	    showBackdrop: false,
 	    maxWidth: 200,
 	    showDelay: 500
-	});*/
+	});
 
-	$scope.$on('loadUpdate', function(event){
-		$scope.percent = DB.percentLoading();
-	})
+	if (!window.cordova) {
+		$scope.$on('loadUpdate', function(event){
+			$scope.percent = DB.percentLoading();
+		})
+
+		$scope.inf = 'ЗАГРУЖАЮ';
+	}
 
 	$scope.roots = [];
-	$scope.inf = 'ЗАГРУЖАЮ';
 	$scope.title = 'Рейтинг товаров';
 
 	var load_roots = function(){
 		Category.roots().then(function(roots) {
-			angular.forEach(roots, function(root) {		
+			angular.forEach(roots, function(root) {
       			Category.countProductsByObj(root, true).then(function(count) {
         			root['product_tested_count'] = count;		
       			});
     		});
 
+			if (!window.cordova) {
+    			$scope.inf = '';
+			}
+
     		$scope.roots = roots;
-    		$scope.inf = '';
 			$ionicLoading.hide();
-			Category.count().then(function(res){
+/*			Category.count().then(function(res){
 				console.log("count categories", res.count);
 			});
 			Product.count().then(function(res){
 				console.log("count products", res.count);
-			});
+			});*/
   		});
 	};
 
 	DB.loading().then(function() {
-		$scope.percent = 100;
+		if (!window.cordova) {
+			$scope.percent = 100;
+		}
+
 //		$interval.cancel( intervalPercent );
 //		intervalPercent = undefined;
 		console.log("main controler loading");
