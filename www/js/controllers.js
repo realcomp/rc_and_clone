@@ -135,7 +135,8 @@ app.controller('CategoryCtrl', function($scope, $location, $stateParams, $ionicH
 								});
 
 							});
-							
+
+							//
 							$scope.products.push(product);
 
 
@@ -206,6 +207,9 @@ app.controller('ProductCtrl', function($scope, $location, $stateParams, $ionicHi
 	Product.getById($stateParams.id).then(function(product) {
      	$scope.title = product.name
       $scope.product = product;
+			var images = product.images;
+			images = images.split(',');
+			product['images_array'] = images;
 
       $scope.arrayDangerLevel = [];
       for(var i = 0; i < 4; i++) {

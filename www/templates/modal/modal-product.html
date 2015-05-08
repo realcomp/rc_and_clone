@@ -6,6 +6,10 @@
     </div>
   </ion-header-bar>
   <ion-content class="product__single-modal-content" scroll="false">
-    <img ng-src="{{ product.images }}">
+    <ion-slide-box show-pager="true">
+	    <ion-slide ng-repeat="image in product.images_array" style="max-width: 100%;">
+	      <img ng-src="{{ image }}">
+	    </ion-slide>
+  	</ion-slide-box>
   </ion-content>
 </ion-modal-view>

@@ -1060,6 +1060,9 @@ a:active {
 	text-align: center;
 	padding: 20px;
 }
+.product__single-modal-content .slider{
+	height: 100%;
+}
 .login__error-l {
 	border-color: #C80020;
 }
