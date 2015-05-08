@@ -119,7 +119,6 @@ angular.module('db-services', ['db.config', 'ngCordova'])
 
         if (window.cordova) {
             console.log("use cordova sqlite");
-//            window.plugins.sqlDB.remove(DB_CONFIG.name + '.sqlite', function(){
             window.plugins.sqlDB.copy(DB_CONFIG.name + '.sqlite', function() {
                 self.db = window.sqlitePlugin.openDatabase({name: DB_CONFIG.name + '.sqlite'});
 //                self.db = $cordovaSQLite.openDB(DB_CONFIG.name + '.sqlite');
@@ -132,7 +131,6 @@ angular.module('db-services', ['db.config', 'ngCordova'])
 //                promise = self.create();
                 init_deferred.resolve();
             });
-//            }, function(){});
 
             if (!self.db) {
                 console.error("Error: open database");
@@ -217,7 +215,11 @@ angular.module('db-services', ['db.config', 'ngCordova'])
                         console.info("prefer_full_dump = "+self.meta_server.prefer_full_dump);
 
                         if (window.cordova) {
-
+                            put_slice_without_timeout = false;
+                            // запускаем загрузку части слайсов в бакграунде
+                            self.load_slices();
+                            self.loaded = true;
+                            self.deferred.resolve({loaded: true});
                         } else {
                             angular.forEach(DB_CONFIG.tables, function(table) {
                                 self.query('DELETE FROM ' + table.name);
@@ -227,12 +229,19 @@ angular.module('db-services', ['db.config', 'ngCordova'])
                             count_slices++;
                             self.load_all(self.meta_server);
                         }
+                    } else {
+                        if (window.cordova) {
+                            put_slice_without_timeout = false;
+                            self.loaded = true;
+                            self.deferred.resolve({loaded: true});
+                        } else {
+                            put_slice_without_timeout = true;
+                        }
+
+                        // запускаем загрузку части слайсов в бакграунде
+                        self.load_slices();
                     }
 
-                    put_slice_without_timeout = true;
-                    // запускаем загрузку части слайсов в бакграунде
-                    self.load_slices();
-//                    self.deferred.resolve({loaded: true});
                     return;
 
                     angular.forEach(DB_CONFIG.tables, function(table) {
@@ -378,7 +387,7 @@ console.log("DEBUG tx");
                 $rootScope.$on('putSlice', function(event){
                     if (put_slice_without_timeout) {
                         self.put_slices();
-                        put_slice_without_timeout = false;
+//                        put_slice_without_timeout = false;
                     } else {
                         var timeout = pause ? 100 : 3000;
                         $timeout(function() {
@@ -392,7 +401,9 @@ console.log("DEBUG tx");
             function(err){
                 console.error("Error load slices", err);
                 slice_next_marker = 0;
-                self.deferred.resolve({loaded: false});
+                if (!self.loaded) {
+                    self.deferred.resolve({loaded: false});
+                }
             }
         );
     };
@@ -458,7 +469,10 @@ console.log("put_slices not force and not pause", force, pause, self.loaded);
                 self.transaction(function(tx){
                     tx.executeSql('INSERT INTO metadata VALUES (?, "", "")', [self.meta_server.version], function(tx, res){
                         console.log("DEBUG loaded set true");
-                        self.deferred.resolve({loaded: true});
+                        if (!self.loaded) {
+                            self.loaded = true;
+                            self.deferred.resolve({loaded: true});
+                        }
                         $rootScope.$broadcast('dbUpdate');
                         tx.executeSql('DELETE FROM metadata WHERE version = ?', [self.meta_db.version]);
                         self.meta_db.version = self.meta_server.version;
@@ -533,7 +547,6 @@ console.log(slice);
                 category.lft,
                 category.rgt,
                 category.lvl,
-                category.parent_id,
                 category.disposable == true ? 1 : 0,
                 category.position,
                 'stats' in category && 'product_count' in category['stats'] ? category['stats']['product_count'] : 0,
@@ -553,7 +566,7 @@ console.log(slice);
             tx.executeSql(query, values, function(transaction, result) {
                 f();
             }, function(transaction, error) {
-                console.error("Error: executeSql", error);
+                console.error("Error: executeSql "+query, error.message);
                 f();
             });
         });
@@ -607,7 +620,7 @@ console.log(slice);
             tx.executeSql(query, values, function(transaction, result) {
                 f();
             }, function(transaction, error) {
-                console.error("Error: executeSql", error);
+                console.error("Error: executeSql "+query, error);
                 f();
             });
 
@@ -655,7 +668,7 @@ console.log(slice);
             tx.executeSql(query, values, function(transaction, result) {
                 f();
             }, function(transaction, error) {
-                console.error("Error: executeSql", error);
+                console.error("Error: executeSql "+query, error);
                 f();
             });
         });
@@ -689,7 +702,7 @@ console.log(slice);
             tx.executeSql(query, values, function(transaction, result) {
                 f();
             }, function(transaction, error) {
-                console.error("Error: executeSql", error);
+                console.error("Error: executeSql "+sql, error);
                 f();
             });
         });

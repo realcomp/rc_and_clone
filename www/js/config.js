@@ -18,7 +18,6 @@ angular.module('db.config', [])
                 {name: 'lft', type: 'integer'},
                 {name: 'rgt', type: 'integer'},
                 {name: 'lvl', type: 'integer'},
-                {name: 'parent_id', type: 'integer'},
                 {name: 'disposable', type: 'integer'},
                 {name: 'position', type: 'integer'},
                 {name: 'product_count', type: 'integer'},
