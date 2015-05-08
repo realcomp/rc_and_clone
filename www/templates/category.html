@@ -1,7 +1,7 @@
 <ion-view ng-controller='funcController'>
 	<ion-nav-title> {{ title }} </ion-nav-title>
 
-	<div class="tabs-top tabs-top-cat" ng-if="products">
+	<div class="tabs-top tabs-top-cat" ng-if="showProducts">
     <div class="tabs">
 	    <ul class="product__category-tabs-wrap" ng-init="arrayTabAssembly(productsCheck, productsBlack, productsWait)">
 		    <li class="product__category-tabs" ng-repeat="tab in tabsCatProductType" ng-click="tabsCategory($event, $index);" ng-class="[tabsClass(tab, productsCheck, productsWait), tabsClassDisabled($index)]">
@@ -10,11 +10,12 @@
 		    </li>
 	  	</ul>
     </div>
-  </div>
-	<ion-content delegate-handle="product__category-" ng-class="products ? 'product__category-content' : ''">
+  	</div>
+
+	<ion-content delegate-handle="product__category-" ng-class="showProducts ? 'product__category-content' : ''">
 	<!-- categories list -->
-	<div ng-if="categories"> 
-	  <ion-list ng-if="categories" class="categories-list">
+	<div ng-if="!showProducts"> 
+	  <ion-list ng-if="!showProducts" class="categories-list">
 		  <ion-item class="item-icon-right" ng-repeat="category in categories" href="#/app/category/{{ category.id }}">
 		  	{{ category.name }}
 		  	<i class="icon ion-chevron-right"></i>
@@ -24,11 +25,8 @@
 	<!-- END categories list -->
 
 	<!-- products list -->
-  <div ng-if="products.length > 0">
-
-
+  <div ng-if="showProducts">
 		<ion-list>
-
 			<div ng-if="tabsCatProductType[0].active">
 				<ion-item ng-if="productsCheck.length === 0">В этой категории пока нет проверянных товаров!</ion-item>
 				<ion-item ng-repeat="product in productsCheck | filter:query | orderBy: orderProp" class="product__category" href="#/app/product/{{ product.id }}">
@@ -92,14 +90,15 @@
 
 		</ion-list>
 	</div>
+
 	<!-- END products list -->
-	<div ng-if="noProducts">
-  	<span class="product__empty">Товары в эту категорию еще не были добавлены..</span>
-  </div>
+	<div ng-if="showProducts && !hasProducts">
+  		<span class="product__empty">Товары в эту категорию еще не были добавлены..</span>
+  	</div>
 		
 	</ion-content>
 
-	<ion-footer-bar ng-show="products.length > 0" class="bar-assertive footer__sorting">
+	<ion-footer-bar ng-show="hasProducts" class="bar-assertive footer__sorting">
 	  <div class="footer__sorting-item">
 	    <button ng-click="modalSorting.show()" class="button">Сортировать</button>
 	  </div>

@@ -85,28 +85,28 @@ app.controller('CategoryCtrl', function($scope, $location, $stateParams, $ionicH
 		return false;
 	}
 
+	$scope.hasProducts = false; // есть продукты в категории
+	$scope.showProducts = false; // показываем в категории продукты
+  	$scope.title = '';
+
 	Category.getById($stateParams.id).then(function(category) {
-      $scope.title = category.name;
-      $scope.categories = [];
-      $scope.noProducts = false;
+      	$scope.title = category.name;
 
 			Category.childsByObj(category, category.lvl+1).then(function(categories) {
-
 				if(categories.length > 0) {
+					$scope.categories = [];
+
 					angular.forEach(categories, function(cat) {
-	      		$scope.categories.push(cat);
-	    		});
+	      				$scope.categories.push(cat);
+	    			});
 				}
 				else {
 					Product.getByCategoryId($stateParams.id).then(function(products) {
 						if(products.length > 0) {
-
-							$scope.products = [];
-
-							$scope.productsCheck = [];
-							$scope.productsBlack = [];
-							$scope.productsWait = [];
-
+					$scope.productsCheck = [];
+					$scope.productsBlack = [];
+					$scope.productsWait = [];
+					$scope.hasProducts = true;
 							$scope.productChar = [];
 							var arr = [];
 
@@ -151,9 +151,6 @@ app.controller('CategoryCtrl', function($scope, $location, $stateParams, $ionicH
 
 							});
 
-							//
-							$scope.products.push(product);
-
 
 	      			if(!product.tested) {
 	      				$scope.productsWait.push(product);
@@ -190,9 +187,8 @@ app.controller('CategoryCtrl', function($scope, $location, $stateParams, $ionicH
 						  };
 
 						}
-						else {
-							$scope.noProducts = true;
-						}
+
+						$scope.showProducts = true;
 					});
 				}
 
