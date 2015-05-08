@@ -39,6 +39,7 @@
 	left: 5px;
 }
 .bar.bar-stable .title {
+	font-family: "BrutalMedium";
 	top: 17px;
 }
 .bar .button.button-icon .icon:before,
@@ -314,9 +315,10 @@ a:active {
 } 
 .product__category .product__category-thumbnail {
 	width: 140px;
-	height: 150px;
+	height: 100%;
 	padding: 5px 0;
   display: table-cell;
+  vertical-align: middle;
   position: relative;	
 }
 .product__category .product__category-thumbnail img {
@@ -1034,10 +1036,11 @@ a:active {
   top: 12px;
   right: 0;
 }
-.modal-head .title{ 
+.modal-head .title { 
   font-size: 24px;
+  font-family: "BrutalMedium";
   color: #FFF;
-  top: 17px;
+  top: 18px;
 }
 .modal-content {
 	padding: 20px 0;

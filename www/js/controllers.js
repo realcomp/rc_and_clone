@@ -340,10 +340,15 @@ app.controller('MenuCtrl', function($scope) {
 	}
 	*/
 
-	if(window.innerWidth <= 640)
-		$scope.menuWidth = window.innerWidth - 79;
-	else 
+	if(window.innerWidth <= 640) {
+		if(window.innerWidth <= 420)
+			$scope.menuWidth = window.innerWidth - 67;
+		else
+			$scope.menuWidth = window.innerWidth - 79;
+	}
+	else {
 		$scope.menuWidth = 557;
+	} 
 
 });
  
