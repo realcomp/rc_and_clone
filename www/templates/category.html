@@ -12,7 +12,7 @@
     </div>
   	</div>
 
-	<ion-content delegate-handle="product__category-" ng-class="showProducts ? 'product__category-content' : ''">
+	<ion-content ng-class="showProducts ? 'product__category-content' : ''">
 	<!-- categories list -->
 	<div ng-if="!showProducts"> 
 	  <ion-list ng-if="!showProducts" class="categories-list">
@@ -31,12 +31,12 @@
 				<ion-item ng-if="productsCheck.length === 0">В этой категории пока нет проверянных товаров!</ion-item>
 				<ion-item ng-repeat="product in productsCheck | filter:query | orderBy: orderProp" class="product__category" href="#/app/product/{{ product.id }}">
 				  	<span class="product__category-thumbnail">
-				  		<img ng-src="{{ product.thumbnail }}" />
+				  		<img ng-src="{{ product.thumbnail }}" alt="{{ product.name }}">
 				  		<ion-spinner icon="circles" class="loader"></ion-spinner>
 				  	</span>
 				  	<span class="product__category-center">
 				  		<span class="product__category-name">{{ showCatName  }} {{ product.name }}</span>
-				  		<span ng-if="product.price > 0" class="product__category-price">от {{ product.price }} Р</span>	
+				  		<span ng-if="product.price" class="product__category-price">от {{ product.price }} Р</span>	
 				  	</span>
 				  	<span class="product__category-rating-wrap">
 				  		<span class="product__category-rating product-rating" ng-class="productRatingType(product)">
@@ -54,12 +54,12 @@
 				<ion-item ng-if="productsBlack.length === 0">Ни один товар в категории не попал в черный список!</ion-item>
 				<ion-item ng-repeat="product in productsBlack | filter:query | orderBy: orderProp" class="product__category" href="#/app/product/{{ product.id }}">
 				  	<span class="product__category-thumbnail">
-				  		<img ng-src="{{ product.thumbnail }}" />
+				  		<img ng-src="{{ product.thumbnail }}" alt="{{ product.name }}">
 				  		<ion-spinner icon="circles" class="loader"></ion-spinner>
 				  	</span>
 				  	<span class="product__category-center">
 				  		<span class="product__category-name">{{ showCatName  }} {{ product.name }}</span>
-				  		<span ng-if="product.price > 0" class="product__category-price">от {{ product.price }} Р</span>	
+				  		<span ng-if="product.price" class="product__category-price">от {{ product.price }} Р</span>	
 				  	</span>
 				  	<span class="product__category-rating-wrap">
 					  	<span class="product__category-rating product-rating" ng-class="productRatingType(product)">
@@ -74,12 +74,12 @@
 				<ion-item ng-if="productsWait.length === 0">Нет товаров в статусе "Ожидают проверки"!</ion-item>
 				<ion-item ng-repeat="product in productsWait | filter:query | orderBy: orderProp" class="product__category product__category-type-notest" href="#/app/product/{{ product.id }}">
 				  	<span class="product__category-thumbnail">
-				  		<img ng-src="{{ product.thumbnail }}" />
+				  		<img ng-src="{{ product.thumbnail }}" alt="{{ product.name }}">
 				  		<ion-spinner icon="circles" class="loader"></ion-spinner>
 				  	</span>
 				  	<span class="product__category-center">
 				  		<span class="product__category-name">{{ showCatName  }} {{ product.name }}</span>
-				  		<span ng-if="product.price > 0" class="product__category-price">от {{ product.price }} Р</span>	
+				  		<span ng-if="product.price" class="product__category-price">от {{ product.price }} Р</span>	
 				  	</span>
 				  	<span class="product__category-button-wrap">
 				  		<a class="product__category-button-test" href="#" ng-click="alert('Возможность голосовать за товары в разработке!')">На тест!</a>
