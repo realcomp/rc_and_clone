@@ -82,6 +82,7 @@ app.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
 
   .state('app.category', {
     url: "/category/:id",
+    cache: false,
     views: {
       'menuContent': {
         templateUrl: "templates/category.html",
@@ -92,6 +93,7 @@ app.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
 
   .state('app.product', {
     url: "/product/:id",
+    cache: false,
     views: {
       'menuContent': {
         templateUrl: "templates/product.html",

@@ -20,9 +20,9 @@
     </div>
   	</div>
 
-	<ion-content ng-class="showProducts ? 'product__category-content' : ''">
+	<ion-content overflow-scroll="true" class="has-header" ng-class="showProducts ? 'product__category-content' : ''">
 	<!-- categories list -->
-	<div ng-if="!showProducts"> 
+	<div ng-if="!showProducts">
 	  <ion-list ng-if="!showProducts" class="categories-list">
 		  <ion-item class="item-icon-right" ng-repeat="category in categories" href="#/app/category/{{ category.id }}">
 		  	{{ category.name }}

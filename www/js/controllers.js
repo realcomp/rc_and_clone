@@ -90,6 +90,7 @@ app.controller('CategoryCtrl', function($scope, $location, $stateParams, $ionicH
   	$scope.title = '';
 
 	Category.getById($stateParams.id).then(function(category) {
+
       	$scope.title = category.name;
 
 			Category.childsByObj(category, category.lvl+1).then(function(categories) {
@@ -103,10 +104,10 @@ app.controller('CategoryCtrl', function($scope, $location, $stateParams, $ionicH
 				else {
 					Product.getByCategoryId($stateParams.id).then(function(products) {
 						if(products.length > 0) {
-					$scope.productsCheck = [];
-					$scope.productsBlack = [];
-					$scope.productsWait = [];
-					$scope.hasProducts = true;
+							$scope.productsCheck = [];
+							$scope.productsBlack = [];
+							$scope.productsWait = [];
+							$scope.hasProducts = true;
 							$scope.productChar = [];
 							var arr = [];
 
@@ -194,7 +195,6 @@ app.controller('CategoryCtrl', function($scope, $location, $stateParams, $ionicH
 						} else {
 							$scope.classTabWait = 'product__category-tabs-disabled';
 						}
-console.log("DEBUG $scope.classTabCheck", $scope.classTabCheck);
 
 							// Шаблон окна с сортировкой товаров
 						  $ionicModal.fromTemplateUrl('templates/modal/modal-sorting.html', {

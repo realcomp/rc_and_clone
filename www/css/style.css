@@ -385,6 +385,7 @@ a:active {
 }
 
 .product__category-tabs-wrap {
+	font-size: 0;
 	width: 100%;
 }
 .product__category-tabs {
@@ -436,7 +437,8 @@ a:active {
 	font-size: 20px;
   color: #292a2f;
 }
-.product__category-tabs.product__category-tabs-deactive span {
+.product__category-tabs.product__category-tabs-deactive span,
+.product__category-tabs.product__category-tabs-disabled span{
 	display: none;
 }
 .product__category-tabs .fa {
