@@ -3,6 +3,8 @@
 app.controller('funcController', function($scope, $ionicSlideBoxDelegate, $ionicActionSheet, $ionicScrollDelegate) {
 	// Вернет класс оформления для рейтинга
 	$scope.productRatingType = function(product) {
+    if(!product)
+      return;
 		product.ratingv = product.rating;
 
   	if(product.tested == 0) {
