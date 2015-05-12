@@ -90,16 +90,45 @@ app.controller('funcController', function($scope, $ionicSlideBoxDelegate, $ionic
 
   // Методы для работы и инициализации
   $scope.tabsCategory = function($event, o) {
-  	var element = $event.currentTarget;
-  	  	$ionicScrollDelegate.scrollTop();
-  	if(element.classList.contains('product__category-tabs-disabled'))
-  		return false;
+    var c;
 
-    for (var i = 0; i <= $scope.tabsCatProductType.length - 1; i++) {
-      $scope.tabsCatProductType[i].active = false;
+    if (o == 1) {
+      c = $scope.classTabCheck;
     }
-    $scope.tabsCatProductType[o].active = true;
+    else if (o == 2) {
+      c = $scope.classTabBlack;
+    }
+    else if (o == 3) {
+      c = $scope.classTabWait;
+    }
 
+    if (c == 'product__category-tabs-active' || c == 'product__category-tabs-disabled') {
+      return false;
+    }
+
+    if ($scope.classTabCheck == 'product__category-tabs-active') {
+      $scope.classTabCheck = 'product__category-tabs-deactive';
+    }
+    else if ($scope.classTabBlack == 'product__category-tabs-active') {
+      $scope.classTabBlack = 'product__category-tabs-deactive';
+    }
+    else if ($scope.classTabWait == 'product__category-tabs-active') {
+      $scope.classTabWait = 'product__category-tabs-deactive';
+    }
+
+    if (o == 1) {
+      $scope.classTabCheck = 'product__category-tabs-active';
+    }
+    else if (o == 2) {
+      $scope.classTabBlack = 'product__category-tabs-active';
+    }
+    else if (o == 3) {
+      $scope.classTabWait = 'product__category-tabs-active';
+    }
+
+    $scope.tabActive = o;
+    $ionicScrollDelegate.scrollTop();
+    return true;
   };
 
   //

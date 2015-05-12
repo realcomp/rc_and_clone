@@ -3,10 +3,18 @@
 
 	<div class="tabs-top tabs-top-cat" ng-if="showProducts">
     <div class="tabs">
-	    <ul class="product__category-tabs-wrap" ng-init="arrayTabAssembly(productsCheck, productsBlack, productsWait)">
-		    <li class="product__category-tabs" ng-repeat="tab in tabsCatProductType" ng-click="tabsCategory($event, $index);" ng-class="[tabsClass(tab, productsCheck, productsWait), tabsClassDisabled($index)]">
-		      <i class="fa {{tab.icon}}"></i>
-		      <span>{{tab.title}}</span>
+	    <ul class="product__category-tabs-wrap">
+		    <li class="product__category-tabs" ng-click="tabsCategory($event, 1);" ng-class="classTabCheck">
+		      <i class="fa fa-check-square-o"></i>
+		      <span>Проверенные товары</span>
+		    </li>
+		    <li class="product__category-tabs" ng-click="tabsCategory($event, 2);" ng-class="classTabBlack">
+		      <i class="fa fa-ban"></i>
+		      <span>Черный список</span>
+		    </li>
+		    <li class="product__category-tabs" ng-click="tabsCategory($event, 3);" ng-class="classTabWait">
+		      <i class="fa fa-pencil-square-o"></i>
+		      <span>Ожидают проверки</span>
 		    </li>
 	  	</ul>
     </div>
@@ -27,7 +35,7 @@
 	<!-- products list -->
   <div ng-if="showProducts">
 		<ion-list>
-			<div ng-if="tabsCatProductType[0].active">
+			<div ng-if="tabActive == 1">
 				<ion-item ng-if="productsCheck.length === 0">В этой категории пока нет проверянных товаров!</ion-item>
 				<ion-item ng-repeat="product in productsCheck | filter:query | orderBy: orderProp" class="product__category" href="#/app/product/{{ product.id }}">
 				  	<span class="product__category-thumbnail">
@@ -50,7 +58,7 @@
 				</ion-item>
 			</div>
 
-			<div ng-if="tabsCatProductType[1].active">
+			<div ng-if="tabActive == 2">
 				<ion-item ng-if="productsBlack.length === 0">Ни один товар в категории не попал в черный список!</ion-item>
 				<ion-item ng-repeat="product in productsBlack | filter:query | orderBy: orderProp" class="product__category" href="#/app/product/{{ product.id }}">
 				  	<span class="product__category-thumbnail">
@@ -70,7 +78,7 @@
 				</ion-item>
 			</div>
 
-			<div ng-if="tabsCatProductType[2].active">
+			<div ng-if="tabActive == 3">
 				<ion-item ng-if="productsWait.length === 0">Нет товаров в статусе "Ожидают проверки"!</ion-item>
 				<ion-item ng-repeat="product in productsWait | filter:query | orderBy: orderProp" class="product__category product__category-type-notest" href="#/app/product/{{ product.id }}">
 				  	<span class="product__category-thumbnail">

@@ -164,6 +164,37 @@ app.controller('CategoryCtrl', function($scope, $location, $stateParams, $ionicH
 
 		    			});
 
+						$scope.tabActive = 0;
+
+						if ($scope.productsCheck.length) {
+							$scope.classTabCheck = 'product__category-tabs-active';
+							$scope.tabActive = 1;
+						} else {
+							$scope.classTabCheck = 'product__category-tabs-disabled';
+						}
+
+						if ($scope.productsBlack.length) {
+							if (!$scope.tabActive) {
+								$scope.classTabBlack = 'product__category-tabs-active';
+								$scope.tabActive = 2;
+							} else {
+								$scope.classTabBlack = 'product__category-tabs-deactive';
+							}
+						} else {
+							$scope.classTabBlack = 'product__category-tabs-disabled';
+						}
+
+						if ($scope.productsWait.length) {
+							if (!$scope.tabActive) {
+								$scope.classTabWait = 'product__category-tabs-active';
+								$scope.tabActive = 3;
+							} else {
+								$scope.classTabWait = 'product__category-tabs-deactive';
+							}
+						} else {
+							$scope.classTabWait = 'product__category-tabs-disabled';
+						}
+console.log("DEBUG $scope.classTabCheck", $scope.classTabCheck);
 
 							// Шаблон окна с сортировкой товаров
 						  $ionicModal.fromTemplateUrl('templates/modal/modal-sorting.html', {
