@@ -77,22 +77,15 @@
 		 </div>
 		 <div class="product__single-prop">
 		 	<div class="product__single-prop-main">
-		 		<h4 class="product__single-prop-ititle">Характеристики продукта</h4>
-		 		<table class="product__single-prop-table">
-		 			<tr ng-repeat="m_prop in main_properties">
-		 				<td class="product__single-prop-td-1">{{ m_prop.name }}</td>
-		 				<td class="product__single-prop-td-2">{{ m_prop.value }}</td>
-		 			</tr>
-		 		</table>
-		 	</div>
-		 	<div class="product__single-prop-add">
-		 		<h4 class="product__single-prop-ititle">Информация о производстве</h4>
-		 		<table class="product__single-prop-table">
-		 			<tr ng-repeat="prop in properties">
-		 				<td class="product__single-prop-td-1">{{ prop.name }}</td>
-		 				<td class="product__single-prop-td-2">{{ prop.value }}</td>
-		 			</tr>
-		 		</table>
+		 		<div ng-repeat="m_prop in properties">
+		 			<h4 class="product__single-prop-ititle">{{ m_prop.name }}</h4>
+			 		<table class="product__single-prop-table">
+			 			<tr ng-repeat="prop in m_prop.properties">
+			 				<td class="product__single-prop-td-1">{{ prop.name }}</td>
+			 				<td class="product__single-prop-td-2">{{ prop.value }}</td>
+			 			</tr>
+			 		</table>
+		 		</div>
 		 	</div>
 		 </div>
 	  </div>

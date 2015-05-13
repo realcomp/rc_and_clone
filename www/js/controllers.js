@@ -302,6 +302,7 @@ app.controller('ProductCtrl', function($scope, $location, $stateParams, $ionicHi
       	if (category.properties) {
       		cproperties = JSON.parse(category.properties);
       	}
+      	//console.log(cproperties);
 
       	// характеристики товара
       	Product.properties(product.id).then(function(properties) {
@@ -310,19 +311,14 @@ app.controller('ProductCtrl', function($scope, $location, $stateParams, $ionicHi
       			pproperties[property.property_id] = property;
       		});
 
+      		$scope.properties = [];
       		angular.forEach(cproperties, function(cp, index) {
       			angular.forEach(cp.properties, function(prop) {	
-								if (index == 0) {
-		      				$scope.main_properties.push({
-		      					name: prop.name, value: pproperties[prop.id].value
-		      				});
-		      			} 
-		      			else {
-		      				$scope.properties.push({
-		      					name: prop.name, value: pproperties[prop.id].value
-		      				});		      					
-		      			}
+      				if (pproperties[prop.id]) {
+								prop['value'] = pproperties[prop.id].value;		
+		      		}
       			});
+      			$scope.properties.push(cp);
       		});
       	});
       });
@@ -391,7 +387,9 @@ app.controller('MenuCtrl', function($scope) {
 	*/
 
 	if(window.innerWidth <= 640) {
-		if(window.innerWidth <= 420)
+		if(window.innerWidth <= 360)
+			$scope.menuWidth = window.innerWidth - 64;
+		else if(window.innerWidth <= 420)
 			$scope.menuWidth = window.innerWidth - 67;
 		else
 			$scope.menuWidth = window.innerWidth - 79;

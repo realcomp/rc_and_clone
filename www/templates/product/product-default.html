@@ -38,10 +38,10 @@
 	</div>
 	<div ng-if="arrayPlus.length > 0 || arrayMinus.length > 0" class="product__single-plus-and-minus product__single-wblock">
 		<ul class="product__single-plus">
-			<li ng-repeat="plus in arrayPlus"> <span class="product__single-plus-icon"> + </span> {{ plus }} </li>
+			<li ng-repeat="plus in arrayPlus"> <span class="product__single-plus-icon"> + </span> <span class="product__single-plus-and-minus-text">{{ plus }} </span></li>
 		</ul>
 		<ul class="product__single-minus">
-			<li ng-repeat="minus in arrayMinus"> <span class="product__single-minus-icon"> - </span> {{ minus }} </li>
+			<li ng-repeat="minus in arrayMinus"> <span class="product__single-minus-icon"> - </span> <span class="product__single-plus-and-minus-text">{{ minus }} </span></li>
 		</ul>
 	</div>
 </div>
