@@ -76,9 +76,8 @@
 				<button ng-click="alert('К сожалению, пока нет возможности добавлять новые отзывы через приложение!')" class="product__single-add-reviews">Написать отзыв</button>
 		 </div>
 		 <div class="product__single-prop">
-		 	<h4 class="product__single-prop-title">Характеристики</h4>
 		 	<div class="product__single-prop-main">
-		 		<h4 class="product__single-prop-ititle">Основные характеристики</h4>
+		 		<h4 class="product__single-prop-ititle">Характеристики продукта</h4>
 		 		<table class="product__single-prop-table">
 		 			<tr ng-repeat="m_prop in main_properties">
 		 				<td class="product__single-prop-td-1">{{ m_prop.name }}</td>
@@ -87,7 +86,7 @@
 		 		</table>
 		 	</div>
 		 	<div class="product__single-prop-add">
-		 		<h4 class="product__single-prop-ititle">Дополнительные характеристики</h4>
+		 		<h4 class="product__single-prop-ititle">Информация о производстве</h4>
 		 		<table class="product__single-prop-table">
 		 			<tr ng-repeat="prop in properties">
 		 				<td class="product__single-prop-td-1">{{ prop.name }}</td>

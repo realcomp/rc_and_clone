@@ -2,7 +2,7 @@ var app = angular.module('starter.controllers', []);
 
 // Контроллер главной
 app.controller('MainCtrl', function($scope, $ionicLoading, $interval, Category, DB, Product) {
-	console.log('main controller');
+	//console.log('main controller');
 
 	if (window.cordova) {
 		$scope.percent = 100;
@@ -63,12 +63,12 @@ app.controller('MainCtrl', function($scope, $ionicLoading, $interval, Category, 
 
 //		$interval.cancel( intervalPercent );
 //		intervalPercent = undefined;
-		console.log("main controler loading");
+		//console.log("main controler loading");
 		load_roots();
 	});
 
 	$scope.$on('dbUpdate', function(event){
-console.log("main ctrl dbUpdate");
+//console.log("main ctrl dbUpdate");
 		load_roots();
 	});
 });
@@ -113,55 +113,63 @@ app.controller('CategoryCtrl', function($scope, $location, $stateParams, $ionicH
 
 							$scope.showCatName = (category.show_name == 1) ? category.name_sg : '';
 
-							angular.forEach(products, function(product) {
+							angular.forEach(products, function(productFull) {
 
-		      		// список названий рейтинга
-							Rating.allHash().then(function(gratings) {
+								var product = {
+									'id': productFull.id,
+	      					'name': productFull.name,
+	      					'thumbnail': productFull.thumbnail,
+	      					'price': +productFull.price.toFixed(0),
+	      					'rating': productFull.rating,
+	      					'tested': productFull.tested,
+	      					'danger_level': productFull.danger_level
+								}	
 
-								// рейтинги продуктов
-								Product.ratings(product.id).then(function(ratings) {
-									var index = 0;
-									angular.forEach(ratings, function(rating) {
-										if (gratings[rating.rating_id]) {
-											product['value_ch_' + index] = rating.value;
-											index++;
-											arr.push(gratings[rating.rating_id].name);
+			      		// список названий рейтинга
+								Rating.allHash().then(function(gratings) {
+
+									// рейтинги продуктов
+									Product.ratings(product.id).then(function(ratings) {
+										angular.forEach(ratings, function(rating, index) {
+											if (gratings[rating.rating_id]) {
+												product['value_ch_' + index] = rating.value;
+												arr.push(gratings[rating.rating_id].name);
+											}
+										});
+
+										// Выбираем только уникальные характеристики для сортировки
+										var obj = {};
+										for(var i = 0; i < arr.length; i++) {
+											obj[arr[i]] = true;
 										}
+										var keys = Object.keys(obj);
+
+										var arrButtons = [];
+										arrButtons.push(
+											{ text: 'Общий рейтинг', order: ['danger_level', '-rating'], 'active': true },
+											{ text: 'Цена', order: ['-price'], 'active': false },
+											{ text: 'Алфавит', order: ['name'], 'active': false }
+										);
+
+								 		for(var i = 0; i < keys.length; i++) {
+								 			arrButtons.push({ 'text': keys[i], 'order': ['-value_ch_' + i, '-rating'], 'active': false });
+								 		}
+								 		$scope.arrButtons = arrButtons;
+
 									});
-
-									// Выбираем только уникальные характеристики для сортировки
-									var obj = {};
-									for(var i = 0; i < arr.length; i++) {
-										obj[arr[i]] = true;
-									}
-									var keys = Object.keys(obj);
-
-									var arrButtons = [];
-									arrButtons.push(
-										{ text: 'Общий рейтинг', order: ['danger_level', '-rating'], 'active': true },
-										{ text: 'Цена', order: ['-price'], 'active': false },
-										{ text: 'Алфавит', order: ['name'], 'active': false }
-									);
-
-							 		for(var i = 0; i < keys.length; i++) {
-							 			arrButtons.push({ 'text': keys[i], 'order': ['-value_ch_' + i, '-rating'], 'active': false });
-							 		}
-							 		$scope.arrButtons = arrButtons;
 
 								});
 
-							});
-
-
-	      			if(!product.tested) {
-	      				$scope.productsWait.push(product);
-	      			}
-	      			else {
-		      			if(product.tested && product.danger_level > 1) {
-		      				$scope.productsBlack.push(product);
+								
+		      			if(!product.tested) {
+		      				$scope.productsWait.push(product);
 		      			}
-	      				$scope.productsCheck.push(product);
-	      			}
+		      			else {
+			      			if(product.tested && product.danger_level > 1) {
+			      				$scope.productsBlack.push(product);
+			      			}
+		      				$scope.productsCheck.push(product);
+		      			}
 
 		    			});
 
@@ -291,30 +299,31 @@ app.controller('ProductCtrl', function($scope, $location, $stateParams, $ionicHi
       	$scope.showCatName = (category.show_name == 1) ? category.name_sg : '';
       	
       	var cproperties = []
-
       	if (category.properties) {
       		cproperties = JSON.parse(category.properties);
       	}
 
       	// характеристики товара
-      	Product.properties($stateParams.id).then(function(properties) {
+      	Product.properties(product.id).then(function(properties) {
       		var pproperties = {};
       		angular.forEach(properties, function(property){
       			pproperties[property.property_id] = property;
       		});
 
-      		angular.forEach(cproperties, function(cp){
-      			angular.forEach(cp.properties, function(prop){
-      				if (pproperties[prop.id]) {
-						if (prop.is_main == true) {
-      						$scope.main_properties.push({name: prop.name, value: pproperties[prop.id].value});
-      					} else {
-      						$scope.properties.push({name: prop.name, value: pproperties[prop.id].value});
-      					}
-      				}
+      		angular.forEach(cproperties, function(cp, index) {
+      			angular.forEach(cp.properties, function(prop) {	
+								if (index == 0) {
+		      				$scope.main_properties.push({
+		      					name: prop.name, value: pproperties[prop.id].value
+		      				});
+		      			} 
+		      			else {
+		      				$scope.properties.push({
+		      					name: prop.name, value: pproperties[prop.id].value
+		      				});		      					
+		      			}
       			});
       		});
-      		console.log($scope.properties);
       	});
       });
 	});
@@ -342,7 +351,6 @@ app.controller('ProductCtrl', function($scope, $location, $stateParams, $ionicHi
 	   	item.created_date = new Date(item.created_at);
 	  });
 
-	 	console.log('ОБЬЕКТ С КОММЕНТАРИЯМИ', $scope.reviews);
 	});
 
 	// список названий рейтинга
@@ -523,7 +531,6 @@ app.controller('ShoppingListCtrl', function($scope, $rootScope,  User, Product, 
 							$scope.shoppingList.push(c);
 						}
 					});
-					console.log("shoppingList", $scope.shoppingList);
 				});
 			});
 
@@ -567,7 +574,6 @@ app.controller('UserProfileCtrl', function($scope, User) {
 
 	User.profile().then(function(profile){
 		$scope.profile = profile;
-		console.log($scope.profile);
 	});
 
 	// походу перепутан параметр в api сайта
@@ -583,15 +589,12 @@ app.controller('UserProfileCtrl', function($scope, User) {
 // О приложении
 app.controller('AboutCtrl', function($scope, DB, Product, Category) {
 	DB.version().then(function(res){
-		console.log(res);
 		$scope.dbv = res;
 	});
 	Product.count().then(function(res){
-		console.log(res);
 		$scope.pcount = res.count;
 	});
 	Category.count().then(function(res){
-		console.log(res);
 		$scope.ccount = res.count;
 	});
 
@@ -668,11 +671,11 @@ app.controller('ArticlesCtrl', function($scope, $ionicHistory, Article) {
 
   	$scope.moreCanBeLoaded = function(){
   		if ($scope.total_count >= $scope.count_articles) {
-  		console.log("moreDataCanBeLoaded true", $scope.total_count, $scope.count_articles);
+  		//console.log("moreDataCanBeLoaded true", $scope.total_count, $scope.count_articles);
   			return false;
   		}
 
-  		console.log("moreDataCanBeLoaded false", $scope.total_count, $scope.count_articles);
+  		//console.log("moreDataCanBeLoaded false", $scope.total_count, $scope.count_articles);
   		return true;
   	};
 
@@ -698,7 +701,6 @@ app.controller('ArticleCtrl', function($scope, $stateParams, $location, $ionicHi
 	$scope.error = null;
 
 	Article.getById($stateParams.id).then(function(data){
-		console.log(data);
 		if ('html' in data) {
 			$scope.article = data;
 		} else {

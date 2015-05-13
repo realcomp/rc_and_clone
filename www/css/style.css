@@ -808,35 +808,34 @@ a:active {
 
 /* properties  */
 .product__single-prop {
-
+	margin-top: 15px;
 }
-.product__single-prop-title,
 .product__single-prop-ititle {
  	color: #292a2f;
   font-family: "BrutalMedium";
 }
-.product__single-prop-title {
-	font-size: 20px;
-	padding-left: 10px;
-}
 .product__single-prop-main,
 .product__single-prop-add {
 	color: #292a2f;
-	padding: 10px 10px 15px 10px;
-	border-top: 1px solid #e0e0e0;
+	padding: 10px 0 15px 0;
 }
 .product__single-prop-ititle {
-  
+  color: #292a2f;
+  font-family: "BrutalMedium";
+  background: #F9F9F9;
+  padding: 12px 10px 10px 10px;
 }
 .product__single-prop-table {
 	width: 100%;
 }
 .product__single-prop-table td{
-	width: 50%;
-	padding: 2px 0;
+  padding: 10px;
+  width: 50%;
+  border-bottom: 1px solid #EDEDED;
+  vertical-align: middle;
 }
 .product__single-prop-td-1 {
-	color: #A9A9A9 !important
+	color: #354777 !important
 }
 .product__single-prop-td-2 {
 
