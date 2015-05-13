@@ -1,6 +1,6 @@
 <ion-view>
 	<ion-nav-title>{{ article.title }}</ion-nav-title>
-	<ion-content class="article__single">
+	<ion-content overflow-scroll="true" class="article__single">
 		<h2>{{ article.title }}</h2>
 		<span class="rubric">{{ rubrics[article.rubric].name }}</span>
 		<div class="html-content" ng-bind-html="article.html"></div>

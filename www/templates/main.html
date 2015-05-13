@@ -1,6 +1,6 @@
 <ion-view>
 <ion-nav-title> {{ title }} </ion-nav-title>
-  <ion-content>
+  <ion-content overflow-scroll="true">
     <div ng-hide="percent == 100">
     <h1 style="text-align: center;margin-bottom: 0;" >{{ inf }} {{ percent }} %</h1>
   <progress max="100" value="{{ percent }}"> </progress>
