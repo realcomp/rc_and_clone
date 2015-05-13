@@ -170,11 +170,9 @@ app.controller('funcController', function($scope, $ionicSlideBoxDelegate, $ionic
   $scope.currentIndex = 1;
   $scope.nextSlide = function() {
     $ionicSlideBoxDelegate.next();
-    $scope.currentIndex = $ionicSlideBoxDelegate.currentIndex() + 1;
   }
   $scope.prevSlide = function() {
     $ionicSlideBoxDelegate.previous();
-    $scope.currentIndex = $ionicSlideBoxDelegate.currentIndex() + 1;
   }
   $scope.slideHasChanged = function($index) {
   	$scope.currentIndex = $index + 1
@@ -182,7 +180,7 @@ app.controller('funcController', function($scope, $ionicSlideBoxDelegate, $ionic
 
   // Alert
   $scope.alert = function(text) {
-    alert(text);  
+    alert(text);
 	};
 
 	// Генератор массива рейтинга для каждого отзыва

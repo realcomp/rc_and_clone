@@ -36,7 +36,7 @@
 			</div>
 
 			<div ng-if="shoppingArrayTabs[2].active">
-				<ion-item class="product__category" ng-repeat="product in recommendedList | orderBy: '-rating'"  href="#/app/product/{{ product.id }}">
+				<ion-item class="product__category" ng-repeat="product in recommendedList | orderBy: '-rating'"  ng-href="#/app/product/{{ product.id }}">
 				  <span class="product__category-thumbnail">
 			  		<img ng-src="{{ product.thumbnail }}" alt="{{ product.name }}">
 			  		<ion-spinner icon="circles" class="loader"></ion-spinner>
@@ -62,7 +62,7 @@
 
 		<div ng-if="seachActive == true">
 			<ion-list>
-				<ion-item class="product__category" ng-repeat="product in searchList | orderBy: '-rating'"  href="#/app/product/{{ product.id }}">
+				<ion-item class="product__category" ng-repeat="product in searchList | orderBy: '-rating'"  ng-href="#/app/product/{{ product.id }}">
 			  	<span class="product__category-thumbnail">
 			  		<img ng-src="{{ product.thumbnail }}" alt="{{ product.name }}">
 			  		<ion-spinner icon="circles" class="loader"></ion-spinner>

@@ -11,8 +11,8 @@
 						<ion-spinner icon="circles" class="loader"></ion-spinner>
 					</div>
 					<div class="product__single-info-right">
-						<a href="#"><i class="fa fa-shopping-cart"></i>В список покупок</a>
-						<a href="#"><i class="fa fa-thumbs-o-up"></i>Покупаю часто</a>
+						<a ng-href="#" ng-click="alert('В разработке!')"><i class="fa fa-shopping-cart"></i>В список покупок</a>
+						<a ng-href="#" ng-click="alert('В разработке!')"><i class="fa fa-thumbs-o-up"></i>Покупаю часто</a>
 					</div>
 				</div>
 			</div>
@@ -40,7 +40,7 @@
 					  	<button ng-click="nextSlide()" ng-class="currentIndex == reviews.total_count ? 'button__disabled' : '' "><i class="fa fa-chevron-right"></i></button>
 			 			</div>
 		 			</div>
-				 	<ion-slide-box ng-if="reviews" on-slide-changed="slideHasChanged($index)">            
+				 	<ion-slide-box show-pager="false" ng-if="reviews" on-slide-changed="slideHasChanged($index)">            
 			      <ion-slide ng-repeat="review in reviews.items">
 				      <div class="product__single-reviews-slider-body">
 				      	<div class="product__single-reviews-slider-top">
@@ -72,7 +72,6 @@
 				      	</div>
 							</div> 
 			      </ion-slide>
-			   	</ion-slide-box>
 		 		</div>
 				<button ng-click="alert('К сожалению, пока нет возможности добавлять новые отзывы через приложение!')" class="product__single-add-reviews">Написать отзыв</button>
 		 </div>

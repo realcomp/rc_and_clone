@@ -1151,7 +1151,7 @@ window.ionic.version = '1.0.0-rc.5';
      * also used for cloning when dest is an empty object
      * @param   {Object}    dest
      * @param   {Object}    src
-     * @param	{Boolean}	merge		do a merge
+     * @param {Boolean} merge   do a merge
      * @returns {Object}    dest
      */
     extend: function extend(dest, src, merge) {
@@ -8038,14 +8038,14 @@ ionic.views.Slider = ionic.views.View.inherit({
     }
 
     function next(slideSpeed) {
-
+      slides =  slides || element.children;
       if (options.continuous) slide(index + 1, slideSpeed);
       else if (index < slides.length - 1) slide(index + 1, slideSpeed);
 
     }
 
     function circle(index) {
-
+      slides =  slides || element.children;
       // a simple positive modulo using slides.length
       return (slides.length + (index % slides.length)) % slides.length;
 
@@ -23667,7 +23667,7 @@ function adjustMatchers(matchers) {
  *
  * - your app is hosted at url `http://myapp.example.com/`
  * - but some of your templates are hosted on other domains you control such as
- *   `http://srv01.assets.example.com/`,  `http://srv02.assets.example.com/`, etc.
+ *   `http://srv01.assets.example.com/`,  `http://srv02.assets.example.com/`, etc.
  * - and you have an open redirect at `http://myapp.example.com/clickThru?...`.
  *
  * Here is what a secure configuration for this scenario might look like:

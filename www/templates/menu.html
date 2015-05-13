@@ -15,46 +15,46 @@
   <ion-side-menu side="right" width="menuWidth">
 
     <ion-content overflow-scroll="true" class="menu__content">
-    	<a ng-if="!userProfile" class="menu__nologin-wrap" href="#" ng-click="login()">
+    	<a ng-if="!userProfile" class="menu__nologin-wrap" ng-href="#" ng-click="login()">
     		<span class="menu__avatar menu__nologin-avatar"></span>
     		<span class="menu__nologin-url">Авторизоваться</span>
     	</a>
     	<div ng-if="userProfile" class="menu__login-wrap">
-    		<a href="#" class="menu__login-wrap-link">
+    		<a ng-href="#" class="menu__login-wrap-link">
 	    		<img ng-class="userProfile ? 'menu_avatar_user' : ''" class="menu__avatar menu__login-avatar" ng-src="{{ userProfile.avatar }}">
 					<span class="menu__login-name">{{ userProfile.first_name }} {{ userProfile.last_name }}</span>
 				</a>
-    		<a href="#" class="menu__logout" ng-click="logout()">
+    		<a ng-href="#" class="menu__logout" ng-click="logout()">
     			<span>Выйти</span>
     		</a>	
     	</div>
       <ion-list>
-        <ion-item nav-clear menu-close href="#/app/main/">
+        <ion-item nav-clear menu-close ng-href="#/app/main/">
           <span class="menu__item-inner">
           	<i class="fa fa-trophy"></i>
             Рейтинг товаров
           </span>
         </ion-item>
-        <ion-item nav-clear menu-close href="#/app/user/shopping-list" ng-click="login()">
+        <ion-item nav-clear menu-close ng-href="#/app/user/shopping-list" ng-click="login()">
         	<span class="menu__item-inner">
            <i class="fa fa-shopping-cart"></i>
             Список покупок 
             <span ng-if="listCount" class="list-count">{{ listCount }}</span> 
           </span>
         </ion-item>
-        <ion-item nav-clear menu-close href="#/app/article">
+        <ion-item nav-clear menu-close ng-href="#/app/article">
           <span class="menu__item-inner">
           	<i class="fa fa-book"></i>
             Журнал покупателя
           </span>
         </ion-item>
-        <ion-item ng-if="userProfile" nav-clear menu-close href="#/app/user/profile">
+        <ion-item ng-if="userProfile" nav-clear menu-close ng-href="#/app/user/profile">
           <span class="menu__item-inner">
        		 <i class="fa fa-user"></i>
             Мой профиль
           </span>
         </ion-item>
-        <ion-item nav-clear menu-close href="#/app/about">
+        <ion-item nav-clear menu-close ng-href="#/app/about">
           <span class="menu__item-inner">
           <i class="fa fa-info-circle"></i>
             О приложении
