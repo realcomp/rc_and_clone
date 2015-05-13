@@ -404,7 +404,7 @@ app.controller('MenuCtrl', function($scope) {
  
 
 // Контроллер авторизации
-app.controller('AuthorizationCtrl', function($scope, $http, $ionicModal, $ionicBackdrop, $timeout,  User) {
+app.controller('AuthorizationCtrl', function($scope, $http, $ionicModal, $ionicBackdrop, $location, User) {
 
   // Обьект с парой логин-пароль
   $scope.loginData = {};
@@ -419,6 +419,7 @@ app.controller('AuthorizationCtrl', function($scope, $http, $ionicModal, $ionicB
 	}
 
 	$scope.email = '';
+	var where = '';
 
   // Шаблон
   $ionicModal.fromTemplateUrl('templates/login.html', {
@@ -432,10 +433,13 @@ app.controller('AuthorizationCtrl', function($scope, $http, $ionicModal, $ionicB
     $scope.modal.hide();
     $scope.loginData['password'] = '';
     $scope.loginError = '';
+		if(where == 'recommended' && !User.is_auth())
+    	$location.path('/');
   };
 
   // Открыть
-  $scope.login = function() {
+  $scope.login = function(w) {
+  	where = w || '';
   	if(!localStorage.getItem('rk_user')) {
     	$scope.modal.show();
   	}
@@ -476,7 +480,6 @@ app.controller('AuthorizationCtrl', function($scope, $http, $ionicModal, $ionicB
 
 // Список покупок
 app.controller('ShoppingListCtrl', function($scope, $rootScope,  User, Product, Category, Search) {
-
 	$scope.seachData = function (query, key) {
 		$scope.seachActive = false;
 		if(key == true) {
