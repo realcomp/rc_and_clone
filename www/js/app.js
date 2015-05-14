@@ -49,8 +49,8 @@ app.run(function($ionicPlatform, DB, $window, $rootScope) {
 
 app.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
 	$ionicConfigProvider.backButton.text('').icon('ion-ios-arrow-left');
-	
-	console.log('st config');
+  $ionicConfigProvider.views.transition('none');
+  
   $stateProvider
 
   .state('app', {
