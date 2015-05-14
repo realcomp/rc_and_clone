@@ -231,4 +231,12 @@ app.controller('funcController', function($scope, $ionicSlideBoxDelegate, $ionic
   	return 'product__shopping-tab-deactive';
   };
 
+  $scope.onSwipeRight = function(index) {
+    document.getElementById('swipe_' + index).style.left = '0';
+  }
+
+  $scope.onSwipeLeft = function(index) {
+    document.getElementById('swipe_' + index).style.left = '-100%';
+  }
+
 });

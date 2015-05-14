@@ -76,11 +76,13 @@
     margin-left: 10px;
     margin-right: 10px;
   }
-  .product__single-head .product__single-info-right a {
+  .product__single-head .product__single-info-right a,
+  .product__overlay-swipe a {
     margin-bottom: 25px;
     font-size: 20px;  
   }
-  .product__single-head .product__single-info-right a .fa {
+  .product__single-head .product__single-info-right a .fa,
+  .product__overlay-swipe a .fa {
     font-size: 28px;
   }
   .product__single-head .product__single-info-right {
@@ -254,11 +256,13 @@
     font-size: 24px;
     line-height: 28px;
   }
-  .product__single-head .product__single-info-right a {
+  .product__single-head .product__single-info-right a,
+  .product__overlay-swipe a {
     margin-bottom: 20px;
     font-size: 18px;
   }
-  .product__single-head .product__single-info-right a .fa {
+  .product__single-head .product__single-info-right a .fa,
+  .product__overlay-swipe a .fa {
     font-size: 26px;
   }
   .product__single-head .product__single-info-right {
@@ -441,7 +445,6 @@
     right: 15px;
     font-size: 18px;
   }
-
   /* single product */
   .product__single-head .product__single-name {
     font-size: 22px;
@@ -631,6 +634,7 @@
     margin-bottom: 15px;
   }
   .product__single-head .product__single-info-right a,
+  .product__overlay-swipe a,
   .product__single-result .product__single-result-txt,
   .product__single-reviews-rating-title,
   .product__single-prop-ititle,
@@ -638,7 +642,8 @@
   .product__single-wblock p strong {
     font-size: 16px;
   }
-  .product__single-head .product__single-info-right a .fa {
+  .product__single-head .product__single-info-right a .fa,
+  .product__overlay-swipe a .fa {
     font-size: 24px;
   }
   .product__single-reviews-rating .fa {
@@ -817,7 +822,7 @@
     font-size: 22px;
   }
   .action-sheet-c .button {
-    min-height: 40px;
+    min-height: 44px;
     line-height: 36px;
   }
   .action-sheet-c .action-sheet-cancel-c {
@@ -847,6 +852,7 @@
     width: 165px;
   }
   .product__single-head .product__single-info-right a,
+  .product__overlay-swipe a,
   .product__single-result .product__single-result-txt,
   .product__single-reviews-rating-title,
   .product__single-prop-ititle,
@@ -854,7 +860,8 @@
   .product__single-wblock p strong {
     font-size: 15px;
   }
-  .product__single-head .product__single-info-right a .fa {
+  .product__single-head .product__single-info-right a .fa,
+  .product__overlay-swipe a .fa {
     font-size: 20px;
   }
   .product__single-rating-row {
