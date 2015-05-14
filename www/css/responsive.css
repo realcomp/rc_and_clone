@@ -981,8 +981,29 @@
   /* shopping list */
 
   /* profile */ 
+  .user__profile-avatar {
+    width: 90px;
+    height: 90px;
+  }
+  .user__profile-list .item, .user__profile-list-foot .item {
+    font-size: 16px;
+    padding: 12px;
+  }
 
   /* article */
+  .articles__category-title {
+    font-size: 15px;
+    line-height: 16px;
+  }
+  .articles__category-title .rubric {
+    font-size: 14px;
+  }
+  .user__profile-head .td:first-child {
+    width: 100px;
+  }
+  .user__profile-name {
+    font-size: 18px;
+  }
 
   /* about */
   .page__about .logo {

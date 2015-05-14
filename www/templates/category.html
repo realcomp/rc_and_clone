@@ -37,7 +37,7 @@
 		<ion-list>
 			<div ng-if="tabActive == 1">
 				<ion-item ng-if="productsCheck.length === 0">В этой категории пока нет проверянных товаров!</ion-item>
-				<ion-item on-swipe-right="onSwipeRight($index)" on-swipe-left="onSwipeLeft($index)" ng-repeat="product in productsCheck | filter:query | orderBy: orderProp" class="product__category" ng-href="#/app/product/{{ product.id }}">
+				<ion-item on-swipe-right="onSwipeRight($index)" on-swipe-left="onSwipeLeft($index)" ng-repeat="product in ::productsCheck | filter:query | orderBy: orderProp" class="product__category" ng-href="#/app/product/{{ product.id }}">
 			  	<span class="product__category-thumbnail">
 			  		<img ng-src="{{ product.thumbnail }}" alt="{{ product.name }}">
 			  		<ion-spinner icon="circles" class="loader"></ion-spinner>
@@ -66,7 +66,7 @@
 
 			<div ng-if="tabActive == 2">
 				<ion-item ng-if="productsBlack.length === 0">Ни один товар в категории не попал в черный список!</ion-item>
-				<ion-item on-swipe-right="onSwipeRight($index)" on-swipe-left="onSwipeLeft($index)" ng-repeat="product in productsBlack | filter:query | orderBy: orderProp" class="product__category" ng-href="#/app/product/{{ product.id }}">
+				<ion-item on-swipe-right="onSwipeRight($index)" on-swipe-left="onSwipeLeft($index)" ng-repeat="product in ::productsBlack | filter:query | orderBy: orderProp" class="product__category" ng-href="#/app/product/{{ product.id }}">
 				  	<span class="product__category-thumbnail">
 				  		<img ng-src="{{ product.thumbnail }}" alt="{{ product.name }}">
 				  		<ion-spinner icon="circles" class="loader"></ion-spinner>
@@ -92,7 +92,7 @@
 
 			<div ng-if="tabActive == 3">
 				<ion-item ng-if="productsWait.length === 0">Нет товаров в статусе "Ожидают проверки"!</ion-item>
-				<ion-item on-swipe-right="onSwipeRight($index)" on-swipe-left="onSwipeLeft($index)" ng-repeat="product in productsWait | filter:query | orderBy: orderProp" class="product__category product__category-type-notest" ng-href="#/app/product/{{ product.id }}">
+				<ion-item on-swipe-right="onSwipeRight($index)" on-swipe-left="onSwipeLeft($index)" ng-repeat="product in ::productsWait | filter:query | orderBy: orderProp" class="product__category product__category-type-notest" ng-href="#/app/product/{{ product.id }}">
 				  	<span class="product__category-thumbnail">
 				  		<img ng-src="{{ product.thumbnail }}" alt="{{ product.name }}">
 				  		<ion-spinner icon="circles" class="loader"></ion-spinner>
