@@ -23,11 +23,11 @@ app.controller('MainCtrl', function($scope, $ionicLoading, $interval, Category, 
 	});
 
 	if (!window.cordova) {
-		$scope.$on('loadUpdate', function(event){
+		$scope.$on('loadUpdate', function(event) {
 			$scope.percent = DB.percentLoading();
 		})
 
-		$scope.inf = 'ЗАГРУЖАЮ';
+		$scope.inf = 'Загрузка...';
 	}
 
 	$scope.roots = [];
@@ -237,7 +237,7 @@ app.controller('CategoryCtrl', function($scope, $location, $stateParams, $ionicH
 });
 
 // Контроллер товаров
-app.controller('ProductCtrl', function($scope, $location, $stateParams, $ionicHistory, $ionicModal, Product, Category, Rating) {
+app.controller('ProductCtrl', function($scope, $location, $stateParams, $ionicHistory, $ionicModal, $http,  Product, Category, Rating) {
 
 	var onlyNumber = !isNaN(parseFloat($stateParams.id)) && isFinite($stateParams.id) && (0 < $stateParams.id);
 	if(!onlyNumber) {
@@ -260,6 +260,21 @@ app.controller('ProductCtrl', function($scope, $location, $stateParams, $ionicHi
 			var images = product.images;
 			images = images.split(',');
 			product['images_array'] = images;
+
+			// Временная проверка массива изображений на 404, последний элемент часто битый..
+			for(var i = 0; i < product['images_array'].length; i++) {
+				var count = 0;
+				$http.get(product['images_array'][i]).
+					success(function() {
+						count++;
+				}).
+				error(function(data, status) {
+					count++;
+					if (status == 404) {
+						product['images_array'].splice( (count - 1) , 1);
+					}	
+				});
+			};
 
       $scope.arrayDangerLevel = [];
       for(var i = 0; i < 4; i++) {

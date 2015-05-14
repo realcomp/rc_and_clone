@@ -816,6 +816,13 @@
     padding: 10px 0px;
     font-size: 22px;
   }
+  .action-sheet-c .button {
+    min-height: 40px;
+    line-height: 36px;
+  }
+  .action-sheet-c .action-sheet-cancel-c {
+    padding: 10px;
+  }
   .action-sheet-c .button,
   .action-sheet-c .action-sheet-cancel-c {
     font-size: 15px;
@@ -891,10 +898,17 @@
   .product__single-slider-count {
     width: 100px;
   }
+  .product__slider-rate {
+    margin-top: 12px;
+  }
+  .product__slider-rate {
+    width: 100px;
+  }
   .product__slider-rating .fa {
     font-size: 16px;
   }
   .product__slider-in {
+    width: 125px;
     margin-top: 12px;
   }
   .product__single-prop {
@@ -951,6 +965,10 @@
   /* article */
 
   /* about */
+  .page__about .logo {
+    width: 140px;
+    margin-top: 40px;
+  }
 
 
 }
