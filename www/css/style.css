@@ -308,6 +308,7 @@ a:active {
 	padding: 0;
 	display: table;
 	width: 100%;
+	min-height: 150px;
 }
 .product__category .item-content.activated {
 	background: none;
