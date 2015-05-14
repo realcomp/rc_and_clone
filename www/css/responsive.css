@@ -964,6 +964,19 @@
     font-size: 20px;
     top: 5px;
   }
+  .modal-login {
+    padding: 30px 20px 20px 20px;
+  }
+  .modal-login input {
+    padding: 20px 0;
+    font-size: 15px;
+  }
+  .modal .button.button-block {
+    padding: 3px 0;
+  }
+  .login__error {
+    font-size: 15px;
+  }
 
   /* shopping list */
 

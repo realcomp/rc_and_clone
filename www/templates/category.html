@@ -1,7 +1,7 @@
 <ion-view ng-controller='funcController'>
 	<ion-nav-title> {{ title }} </ion-nav-title>
 
-	<div class="tabs-top tabs-top-cat" ng-if="showProducts">
+	<div class="tabs-top tabs-top-cat" ng-if="showProducts && (productsCheck || productsBlack || productsWait)">
     <div class="tabs">
 	    <ul class="product__category-tabs-wrap">
 		    <li class="product__category-tabs" ng-click="tabsCategory($event, 1);" ng-class="classTabCheck">
