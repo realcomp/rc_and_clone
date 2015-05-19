@@ -280,8 +280,8 @@ angular.module('user-services', [])
             data: 'product_ids=' + idsJson
         }).then(function(result) {
             return true;
-        }, function(status) {
-            return false;
+        }, function(data) {
+            return data.status;
         });
     };
 

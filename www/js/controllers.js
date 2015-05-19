@@ -112,8 +112,13 @@ app.controller('CategoryCtrl', function($scope, $location, $stateParams, $ionicH
 							var arr = [];
 
 							$scope.addProductList = function(id) {
-								User.addProductList(id).then(function(result) {
-									result ? alert('Товар успешно добавлен в ваш профиль!') : alert('Что-то пошло не так..');
+								User.addProductList(id).then(function(status) {
+									if(status === true)
+										alert('Товар успешно добавлен в ваш профиль!');
+									else if(status === 500)
+										alert('Проверьте ваше интернет-соединение!');
+									else 
+										alert('Произошла ошибка! Возможно вы не авторизованы!');								
 								});
 							}
 
@@ -262,8 +267,13 @@ app.controller('ProductCtrl', function($scope, $location, $stateParams, $ionicHi
 
 	//
 	$scope.addProductList = function(id) {
-		User.addProductList(id).then(function(result) {
-			result ? alert('Товар успешно добавлен в ваш профиль!') : alert('Что-то пошло не так..');
+		User.addProductList(id).then(function(status) {
+			if(status === true)
+				alert('Товар успешно добавлен в ваш профиль!');
+			else if(status === 500)
+				alert('Проверьте ваше интернет-соединение!');
+			else 
+				alert('Произошла ошибка! Возможно вы не авторизованы!');
 		});
 	}
 
@@ -523,8 +533,13 @@ app.controller('ShoppingListCtrl', function($scope, $rootScope,  User, Product, 
 
 		//
 		$scope.addProductList = function(id) {
-			User.addProductList(id).then(function(result) {
-				result ? alert('Товар успешно добавлен в ваш профиль!') : alert('Что-то пошло не так..');
+			User.addProductList(id).then(function(status) {
+				if(status === true)
+				alert('Товар успешно добавлен в ваш профиль!');
+			else if(status === 500)
+				alert('Проверьте ваше интернет-соединение!');
+			else 
+				alert('Произошла ошибка! Возможно вы не авторизованы!');
 			});
 		}
 

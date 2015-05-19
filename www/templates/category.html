@@ -39,7 +39,7 @@
 				<ion-item ng-if="productsCheck.length === 0">В этой категории пока нет проверянных товаров!</ion-item>
 				<ion-item ng-repeat="product in productsCheck | filter:query | orderBy: orderProp" class="product__category" on-swipe-right="product.class='swipe-active'" ng-class="product.class" on-swipe-left="product.class = ''" ng-href="#/app/product/{{ product.id }}">
 			  	<span class="product__category-thumbnail">
-			  		<img ng-src="{{ product.thumbnail }}" alt="{{ product.name }}">
+			  		<img ng-src="{{ product.thumbnail }}">
 			  		<ion-spinner icon="circles" class="loader"></ion-spinner>
 			  	</span>
 			  	<span class="product__category-center">
@@ -68,7 +68,7 @@
 				<ion-item ng-if="productsBlack.length === 0">Ни один товар в категории не попал в черный список!</ion-item>
 				<ion-item ng-repeat="product in productsBlack | filter:query | orderBy: orderProp" on-swipe-right="product.class='swipe-active'" ng-class="product.class" on-swipe-left="product.class = ''" class="product__category" ng-href="#/app/product/{{ product.id }}">
 				  	<span class="product__category-thumbnail">
-				  		<img ng-src="{{ product.thumbnail }}" alt="{{ product.name }}">
+				  		<img ng-src="{{ product.thumbnail }}">
 				  		<ion-spinner icon="circles" class="loader"></ion-spinner>
 				  	</span>
 				  	<span class="product__category-center">
@@ -94,7 +94,7 @@
 				<ion-item ng-if="productsWait.length === 0">Нет товаров в статусе "Ожидают проверки"!</ion-item>
 				<ion-item ng-repeat="product in productsWait | filter:query | orderBy: orderProp" on-swipe-right="product.class='swipe-active'" ng-class="product.class" on-swipe-left="product.class = ''" class="product__category product__category-type-notest" ng-href="#/app/product/{{ product.id }}">
 				  	<span class="product__category-thumbnail">
-				  		<img ng-src="{{ product.thumbnail }}" alt="{{ product.name }}">
+				  		<img ng-src="{{ product.thumbnail }}">
 				  		<ion-spinner icon="circles" class="loader"></ion-spinner>
 				  	</span>
 				  	<span class="product__category-center">

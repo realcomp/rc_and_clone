@@ -22,7 +22,7 @@
 				  	<ion-item class="product__category-s-inner" ng-repeat="item in category.p">
 				  		<div class="product__category-s-inner-image">
 				  			<ion-spinner icon="circles" class="loader"></ion-spinner>
-				  			<img ng-src="{{ item.product.images }}" err-src="img/rk.png" alt="{{ item.product.name }}">
+				  			<img ng-src="{{ item.product.images }}" err-src="img/rk.png">
 				  		</div>
 				  		<span class="product__category-s-inner-name">{{ item.product.name }}</span>
 				  		<span class="product__category-s-inner-count">1</span>
@@ -38,7 +38,7 @@
 			<div ng-if="shoppingArrayTabs[2].active">
 				<ion-item class="product__category" ng-repeat="product in recommendedList | orderBy: '-rating'" on-swipe-right="product.class='swipe-active'" ng-class="product.class" on-swipe-left="product.class = ''"  ng-href="#/app/product/{{ product.id }}">
 				  <span class="product__category-thumbnail">
-			  		<img ng-src="{{ product.thumbnail }}" alt="{{ product.name }}">
+			  		<img ng-src="{{ product.thumbnail }}">
 			  		<ion-spinner icon="circles" class="loader"></ion-spinner>
 				  </span>
 				  <span class="product__category-center">
@@ -70,7 +70,7 @@
 			<ion-list>
 				<ion-item class="product__category" ng-repeat="product in searchList | orderBy: '-rating'" on-swipe-right="product.class='swipe-active'" ng-class="product.class" on-swipe-left="product.class = ''"  ng-href="#/app/product/{{ product.id }}">
 			  	<span class="product__category-thumbnail">
-			  		<img ng-src="{{ product.thumbnail }}" alt="{{ product.name }}">
+			  		<img ng-src="{{ product.thumbnail }}">
 			  		<ion-spinner icon="circles" class="loader"></ion-spinner>
 				  	</span>
 				  	<span class="product__category-center">
