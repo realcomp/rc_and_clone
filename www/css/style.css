@@ -576,6 +576,11 @@ a:active {
   left: -100%;
   transition: 0.2s linear;
   z-index: 4;
+  -webkit-transform: translateZ(0);
+ 	-moz-transform: translateZ(0);
+ 	-ms-transform: translateZ(0);
+ 	-o-transform: translateZ(0);
+ 	transform: translateZ(0);
 }
 .swipe__link-wrap {
 	display: table;

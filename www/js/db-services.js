@@ -30,7 +30,7 @@ angular.module('db-services', ['db.config', 'ngCordova'])
     self.db = null;
     self.meta_server = null;
     self.meta_db = {version: 0};
-    self.loaded = false;
+    self.loaded = true;
     self.deferred = $q.defer();
 
     /*

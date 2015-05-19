@@ -8038,14 +8038,14 @@ ionic.views.Slider = ionic.views.View.inherit({
     }
 
     function next(slideSpeed) {
-
+      slides = slides || element.children;
       if (options.continuous) slide(index + 1, slideSpeed);
       else if (index < slides.length - 1) slide(index + 1, slideSpeed);
 
     }
 
     function circle(index) {
-
+      slides = slides || element.children;
       // a simple positive modulo using slides.length
       return (slides.length + (index % slides.length)) % slides.length;
 

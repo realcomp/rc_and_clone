@@ -261,5 +261,27 @@ angular.module('user-services', [])
             });
     };
 
+    // Добавление товаров в список товаров пользователя (это в профиле!)
+    self.addProductList = function(ids) {
+        if (!self.is_auth()) {
+            var deferred = $q.defer();
+            deferred.resolve(null);
+            return deferred.promise;
+        }
+
+        var idsJson = JSON.stringify([ids]);
+        
+        return $http({
+            method: 'POST',
+            url: '/v1/user/products?' + 'api_token=' + user.api_token,
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            data: 'product_ids=' + idsJson
+        }).then(function(result) {
+            return true;
+        }, function(status) {
+            return false;
+        });
+    };
+
     return self;
 });

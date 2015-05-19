@@ -74,7 +74,7 @@ app.controller('MainCtrl', function($scope, $ionicLoading, $interval, Category, 
 });
 
 // Контроллер категорий
-app.controller('CategoryCtrl', function($scope, $location, $stateParams, $ionicHistory, $ionicModal,  $ionicScrollDelegate, Category, Product, Rating) {
+app.controller('CategoryCtrl', function($scope, $location, $stateParams, $ionicHistory, $ionicModal,  $ionicScrollDelegate, Category, Product, Rating, User) {
 
 	var onlyNumber = !isNaN(parseFloat($stateParams.id)) && isFinite($stateParams.id) && (0 < $stateParams.id);
 	if(!onlyNumber) {
@@ -110,6 +110,12 @@ app.controller('CategoryCtrl', function($scope, $location, $stateParams, $ionicH
 							$scope.hasProducts = true;
 							$scope.productChar = [];
 							var arr = [];
+
+							$scope.addProductList = function(id) {
+								User.addProductList(id).then(function(result) {
+									result ? alert('Товар успешно добавлен в ваш профиль!') : alert('Что-то пошло не так..');
+								});
+							}
 
 							$scope.showCatName = (category.show_name == 1) ? category.name_sg : '';
 
@@ -237,7 +243,7 @@ app.controller('CategoryCtrl', function($scope, $location, $stateParams, $ionicH
 });
 
 // Контроллер товаров
-app.controller('ProductCtrl', function($scope, $location, $stateParams, $ionicHistory, $ionicModal, $http,  Product, Category, Rating) {
+app.controller('ProductCtrl', function($scope, $location, $stateParams, $ionicHistory, $ionicModal, $http,  Product, Category, Rating, User) {
 
 	var onlyNumber = !isNaN(parseFloat($stateParams.id)) && isFinite($stateParams.id) && (0 < $stateParams.id);
 	if(!onlyNumber) {
@@ -252,6 +258,13 @@ app.controller('ProductCtrl', function($scope, $location, $stateParams, $ionicHi
 	$scope.ratings = [];
 	$scope.main_properties = [];
 	$scope.properties = [];
+
+	//
+	$scope.addProductList = function(id) {
+		User.addProductList(id).then(function(result) {
+			result ? alert('Товар успешно добавлен в ваш профиль!') : alert('Что-то пошло не так..');
+		});
+	}
 
 	// Общая информация
 	Product.getById($stateParams.id).then(function(product) {
@@ -505,6 +518,14 @@ app.controller('ShoppingListCtrl', function($scope, $rootScope,  User, Product, 
 		$scope.shoppingList = [];
 		$scope.recommendedList = [];
 		$rootScope.listCount = '';
+
+		//
+		$scope.addProductList = function(id) {
+			User.addProductList(id).then(function(result) {
+				result ? alert('Товар успешно добавлен в ваш профиль!') : alert('Что-то пошло не так..');
+			});
+		}
+
 
 		User.shoppingList().then(function(list) {
 			var ids = [];
