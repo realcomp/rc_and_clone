@@ -897,13 +897,13 @@ console.log(slice);
     self.getByIds = function(ids, order, category) {
         var places = [];
         angular.forEach(ids, function(){ places.push('?'); });
-        var q = ' ';
-        var disposable = '';
+        var q = '';
+        var disposable = '*';
         if(category) {
-            q = ' JOIN categories ON (products.category_id=categories.id) ';
-            disposable = ' ,categories.disposable'
+            q = ' JOIN categories ON (products.category_id=categories.id)';
+            disposable = 'products.*,categories.disposable'
         }
-        return DB.query('SELECT *' + disposable + ' FROM products' + q + 'WHERE id IN ('+places.join(',')+')' + (order ? ' ORDER BY ' + order : ''), ids)
+        return DB.query('SELECT ' + disposable + ' FROM products ' + q + 'WHERE id IN ('+places.join(',')+')' + (order ? ' ORDER BY ' + order : ''), ids)
         .then(function(result){
             return DB.fetchAll(result);
         });
