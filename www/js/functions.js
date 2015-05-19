@@ -231,6 +231,9 @@ app.controller('funcController', function($scope, $ionicSlideBoxDelegate, $ionic
   	return 'product__shopping-tab-deactive';
   };
 
+
+  /*
+  При таком варианте dom не обновляется 
   $scope.onSwipeRight = function(index) {
     document.getElementById('swipe_' + index).style.left = '0';
   }
@@ -238,5 +241,6 @@ app.controller('funcController', function($scope, $ionicSlideBoxDelegate, $ionic
   $scope.onSwipeLeft = function(index) {
     document.getElementById('swipe_' + index).style.left = '-100%';
   }
+  */
 
 });

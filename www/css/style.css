@@ -565,7 +565,6 @@ a:active {
 	font-size: 36px;
 }
 
-
 /* product__overlay-swipe */
 .product__overlay-swipe {
 	background: #FFF;
@@ -581,6 +580,9 @@ a:active {
  	-ms-transform: translateZ(0);
  	-o-transform: translateZ(0);
  	transform: translateZ(0);
+}
+.swipe-active .product__overlay-swipe{
+	left: 0;
 }
 .swipe__link-wrap {
 	display: table;

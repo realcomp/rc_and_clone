@@ -36,7 +36,7 @@
 			</div>
 
 			<div ng-if="shoppingArrayTabs[2].active">
-				<ion-item class="product__category" ng-repeat="product in recommendedList | orderBy: '-rating'"  ng-href="#/app/product/{{ product.id }}">
+				<ion-item class="product__category" ng-repeat="product in recommendedList | orderBy: '-rating'" on-swipe-right="product.class='swipe-active'" ng-class="product.class" on-swipe-left="product.class = ''"  ng-href="#/app/product/{{ product.id }}">
 				  <span class="product__category-thumbnail">
 			  		<img ng-src="{{ product.thumbnail }}" alt="{{ product.name }}">
 			  		<ion-spinner icon="circles" class="loader"></ion-spinner>
@@ -53,13 +53,13 @@
 				  		</i>				  	
 				  	</span>
 			  	</span>
-		  		<span class="product__overlay-swipe" id="swipe_{{ $index }}">
+		  		<span class="product__overlay-swipe">
 					<span class="swipe__link-wrap">
 						<a ng-href="#" ng-click="alert('В разработке!')" href="#" class=""><i class="fa fa-shopping-cart"></i>В список покупок</a>
 						<a ng-href="#" ng-click="addProductList(product.id)" href="#"><i class="fa fa-thumbs-o-up"></i>{{ product.slug }}</a>
 					</span>
 				</span>	
-	  		<span class="product__overlay-active" id="overlay_{{ $index }}"></span>
+	  		<span class="product__overlay-active"></span>
 				</ion-item>
 			</div>
 
@@ -68,7 +68,7 @@
 
 		<div ng-if="seachActive == true">
 			<ion-list>
-				<ion-item class="product__category" ng-repeat="product in searchList | orderBy: '-rating'"  ng-href="#/app/product/{{ product.id }}">
+				<ion-item class="product__category" ng-repeat="product in searchList | orderBy: '-rating'" on-swipe-right="product.class='swipe-active'" ng-class="product.class" on-swipe-left="product.class = ''"  ng-href="#/app/product/{{ product.id }}">
 			  	<span class="product__category-thumbnail">
 			  		<img ng-src="{{ product.thumbnail }}" alt="{{ product.name }}">
 			  		<ion-spinner icon="circles" class="loader"></ion-spinner>
@@ -85,7 +85,13 @@
 					  		</i>				  	
 					  	</span>
 				  	</span>
-				  	<span class="product__overlay-active">
+				  	<span class="product__overlay-swipe">
+							<span class="swipe__link-wrap">
+								<a ng-href="#" ng-click="alert('В разработке!')" href="#" class=""><i class="fa fa-shopping-cart"></i>В список покупок</a>
+								<a ng-href="#" ng-click="addProductList(product.id)" href="#"><i class="fa fa-thumbs-o-up"></i>Покупаю постоянно</a>
+							</span>
+						</span>	
+	  		<span class="product__overlay-active"></span>
 				</ion-item>
 				<p class="search__no-result" ng-if="searchList.length == 0">Ваш поиск не дал результатов...</p>
 			</ion-list>
