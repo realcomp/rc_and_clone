@@ -264,6 +264,8 @@ angular.module('user-services', [])
     // Добавление товаров в список товаров пользователя (это в профиле!)
     self.addProductList = function(ids) {
         if (!self.is_auth()) {
+            // TODO
+            // Если юзер не авторизован показывать окно входа
             var deferred = $q.defer();
             deferred.resolve(null);
             return deferred.promise;

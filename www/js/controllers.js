@@ -98,8 +98,8 @@ app.controller('CategoryCtrl', function($scope, $location, $stateParams, $ionicH
 					$scope.categories = [];
 
 					angular.forEach(categories, function(cat) {
-	      				$scope.categories.push(cat);
-	    			});
+	      		$scope.categories.push(cat);
+	    		});
 				}
 				else {
 					Product.getByCategoryId($stateParams.id).then(function(products) {
@@ -117,6 +117,7 @@ app.controller('CategoryCtrl', function($scope, $location, $stateParams, $ionicH
 								});
 							}
 
+							$scope.linkSlug = category.disposable ? 'У меня есть' : 'Покупаю постоянно';
 							$scope.showCatName = (category.show_name == 1) ? category.name_sg : '';
 
 							angular.forEach(products, function(productFull) {
@@ -324,7 +325,8 @@ app.controller('ProductCtrl', function($scope, $location, $stateParams, $ionicHi
       Category.getById(product.category_id).then(function(category) {
       	$scope.category = category;
       	$scope.title = category.name;
-      	$scope.showCatName = (category.show_name == 1) ? category.name_sg : '';
+      	$scope.showCatName = category.show_name == 1 ? category.name_sg : '';
+      	$scope.linkSlug = category.disposable ? 'У меня есть' : 'Покупаю постоянно';
       	
       	var cproperties = []
       	if (category.properties) {
@@ -584,8 +586,9 @@ app.controller('ShoppingListCtrl', function($scope, $rootScope,  User, Product, 
 		}	
 
 		User.recommendedList().then(function(list) {
-			Product.getByIds(list).then(function(products) {
+			Product.getByIds(list, false, true).then(function(products) {
 				$scope.recommendedList = products;
+				console.log('что пришло', products);
 			});
 		});
 

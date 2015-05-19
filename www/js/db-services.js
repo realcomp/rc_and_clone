@@ -894,10 +894,16 @@ console.log(slice);
         });
     };
 
-    self.getByIds = function(ids, order) {
+    self.getByIds = function(ids, order, category) {
         var places = [];
         angular.forEach(ids, function(){ places.push('?'); });
-        return DB.query('SELECT * FROM products WHERE id IN ('+places.join(',')+')' + (order ? ' ORDER BY ' + order : ''), ids)
+        var q = ' ';
+        var disposable = '';
+        if(category) {
+            q = ' JOIN categories ON (products.category_id=categories.id) ';
+            disposable = ' ,categories.disposable'
+        }
+        return DB.query('SELECT *' + disposable + ' FROM products' + q + 'WHERE id IN ('+places.join(',')+')' + (order ? ' ORDER BY ' + order : ''), ids)
         .then(function(result){
             return DB.fetchAll(result);
         });
