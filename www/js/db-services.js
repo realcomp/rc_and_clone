@@ -900,10 +900,11 @@ console.log(slice);
         var q = '';
         var disposable = '*';
         if(category) {
-            q = ' JOIN categories ON (products.category_id=categories.id)';
+            q = 'JOIN categories ON (products.category_id=categories.id) ';
             disposable = 'products.*,categories.disposable'
         }
-        return DB.query('SELECT ' + disposable + ' FROM products ' + q + 'WHERE id IN ('+places.join(',')+')' + (order ? ' ORDER BY ' + order : ''), ids)
+        var q2 = 'SELECT ' + disposable + ' FROM products ' + q + 'WHERE products.id IN ('+places.join(',')+')' + (order ? ' ORDER BY ' + order : '');
+        return DB.query(q2, ids)
         .then(function(result){
             return DB.fetchAll(result);
         });

@@ -587,8 +587,11 @@ app.controller('ShoppingListCtrl', function($scope, $rootScope,  User, Product, 
 
 		User.recommendedList().then(function(list) {
 			Product.getByIds(list, false, true).then(function(products) {
+				var len = products.length;
+				for (var i = 0; i < len; i++) {
+					products[i]['slug'] = products.disposable ? 'У меня есть' : 'Покупаю постоянно';	
+				}
 				$scope.recommendedList = products;
-				console.log('что пришло', products);
 			});
 		});
 

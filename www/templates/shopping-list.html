@@ -56,7 +56,7 @@
 		  		<span class="product__overlay-swipe" id="swipe_{{ $index }}">
 					<span class="swipe__link-wrap">
 						<a ng-href="#" ng-click="alert('В разработке!')" href="#" class=""><i class="fa fa-shopping-cart"></i>В список покупок</a>
-						<a ng-href="#" ng-click="addProductList(product.id)" href="#"><i class="fa fa-thumbs-o-up"></i>Покупаю часто</a>
+						<a ng-href="#" ng-click="addProductList(product.id)" href="#"><i class="fa fa-thumbs-o-up"></i>{{ product.slug }}</a>
 					</span>
 				</span>	
 	  		<span class="product__overlay-active" id="overlay_{{ $index }}"></span>
