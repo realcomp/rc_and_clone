@@ -91,7 +91,7 @@ app.controller('CategoryCtrl', function($scope, $location, $stateParams, $ionicH
 
 	Category.getById($stateParams.id).then(function(category) {
 
-      	$scope.title = category.name;
+      $scope.title = category.name;
 
 			Category.childsByObj(category, category.lvl+1).then(function(categories) {
 				if(categories.length > 0) {
@@ -112,15 +112,17 @@ app.controller('CategoryCtrl', function($scope, $location, $stateParams, $ionicH
 							var arr = [];
 
 							$scope.addProductList = function(id) {
-								User.addProductList(id).then(function(status) {
-									if(status === true)
-										alert('Товар успешно добавлен в ваш профиль!');
-									else if(status === 500)
-										alert('Проверьте ваше интернет-соединение!');
-									else 
-										alert('Произошла ошибка! Возможно вы не авторизованы!');								
+								User.addProductList(id).then(function(response) {
+									alert(User.addProductResponse(response, 'товаров'));				
 								});
 							}
+
+							$scope.addShoppingList = function(id) {
+								User.addShoppingList(id).then(function(response) {
+									alert(User.addProductResponse(response, 'покупок'));							
+								});
+							}
+
 
 							$scope.linkSlug = category.disposable ? 'У меня есть' : 'Покупаю постоянно';
 							$scope.showCatName = (category.show_name == 1) ? category.name_sg : '';
@@ -426,6 +428,10 @@ app.controller('MenuCtrl', function($scope) {
 	}
 	*/
 
+	$scope.shoppingListCountUpdate = function() {
+		$scope.shoppingListCount = localStorage.getItem('shoppingListCount');
+	};
+
 	if(window.innerWidth <= 640) {
 		if(window.innerWidth <= 360)
 			$scope.menuWidth = window.innerWidth - 64;
@@ -529,7 +535,6 @@ app.controller('ShoppingListCtrl', function($scope, $rootScope,  User, Product, 
 
 		$scope.shoppingList = [];
 		$scope.recommendedList = [];
-		$rootScope.listCount = '';
 
 		//
 		$scope.addProductList = function(id) {
@@ -547,9 +552,6 @@ app.controller('ShoppingListCtrl', function($scope, $rootScope,  User, Product, 
 		User.shoppingList().then(function(list) {
 			var ids = [];
 			var shoppingList = {};
-
-			if(list)
-				$rootScope.listCount = list.length;
 
 			angular.forEach(list, function(p){
 				ids.push(p.productId);

@@ -39,11 +39,11 @@
 						</ion-item>
 					</ion-list>
 				</ion-item>
-				<ion-item>
+				<ion-item style="border: 0;">
 					<strong>Пользуюсь</strong>
 					<span class="user__profile-list-foot-count">{{products.items.length}}</span>
-					<ion-list>
-						<ion-item ng-repeat="product in products.items" ng-href="#/app/product/{{product.id}}">
+					<ion-list class="list-out">
+						<ion-item class="user__profile-foot-inner-item" ng-repeat="product in products.items" ng-href="#/app/product/{{product.id}}">
 							<img ng-src="{{product.thumbnail}}" />
 						</ion-item>
 					</ion-list>

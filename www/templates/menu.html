@@ -5,8 +5,7 @@
       </ion-nav-back-button>
 
       <ion-nav-buttons side="right">
-        <button class="button button-icon button-clear ion-navicon" menu-toggle="right">
-        </button>
+        <button class="button button-icon button-clear ion-navicon" menu-toggle="right" ng-click="shoppingListCountUpdate()"></button>
       </ion-nav-buttons>
     </ion-nav-bar>
     <ion-nav-view name="menuContent"></ion-nav-view>
@@ -39,7 +38,7 @@
         	<span class="menu__item-inner">
            <i class="fa fa-shopping-cart"></i>
             Список покупок 
-            <span ng-if="listCount" class="list-count">{{ listCount }}</span> 
+            <span ng-if="shoppingListCount" class="list-count">{{ shoppingListCount }}</span> 
           </span>
         </ion-item>
         <ion-item nav-clear menu-close ng-href="#/app/article">

@@ -1,12 +1,13 @@
 angular.module('user-services', [])
 
 // Resource service example
-.factory('User', function($http, $q, Url, DB) {
+.factory('User', function($http, $q, $rootScope, Url, DB) {
     var self = this;
     var user_key = 'rk_user';
     var last_login_email_key = 'rk_last_login_email';
     var user = null;
     var shopping_list = null;
+    var time_shopping_list = 0;
     var dproducts_list = null; // disposable 
     var ndproducts_list = null; // no disposable
     var products_list = null;
@@ -162,11 +163,19 @@ angular.module('user-services', [])
             return deferred.promise;
         }
 
+        var date = new Date();
+        if (!shopping_list && time_shopping_list && time_shopping_list + 60 < date.getTime()) {
+            var deferred = $q.defer();
+            deferred.resolve(shopping_list);
+            return deferred.promise;
+        }
+
         return $http.get(Url.url('/v1/shopping_list?' + 'api_token=' + user.api_token)).
             then(function(result) {
                 console.log("shoppin list", result.data);
 
                 if (result.status == 200) {
+                    time_shopping_list = date.getTime()
                     shopping_list = [];
                     shopping_list = result.data.items;
                 }
@@ -177,6 +186,49 @@ angular.module('user-services', [])
 
                 return shopping_list;
             });
+    };
+
+
+    // Добавление в список покупок пользователя
+    self.addShoppingList = function(id) {
+        if (!self.is_auth()) {
+            var deferred = $q.defer();
+            deferred.resolve(null);
+            return deferred.promise;
+        }
+
+        return self.shoppingList().then(function(array) {
+            if(!array && !$rootScope.online)
+                return;
+
+            var ids = [];
+            for(var i = 0; i < array.length; i++) {
+                ids.push({'product_id': array[i].productId});
+            }
+            ids.push({'product_id': id});
+
+            var idsJson = JSON.stringify(ids);
+
+            return $http({
+                method: 'PUT',
+                url: '/v1/shopping_list?' + 'api_token=' + user.api_token,
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                data: 'items=' + idsJson
+            }).then(function(result) {
+                if (result.status == 200) {
+                    var date = new Date();
+                    time_shopping_list = date.getTime()
+                    shopping_list = [];
+                    shopping_list = result.data.items;
+                    localStorage.setItem('shoppingListCount', ids.length);
+                }
+                return shopping_list;
+
+            }, function(result) {
+                console.log(result);
+                return result.status;
+            });
+        }); 
     };
 
     // Получение списка рекомендованных товаров
@@ -214,7 +266,7 @@ angular.module('user-services', [])
             return deferred.promise;
         }
 
-        return $http.get(Url.url('/v1/user/products?' + 'api_token=' + user.api_token + (!isNaN(disposable) ? ('&disposable=' + (disposable ? '1' : '0') ) : ''))).
+        return $http.get(Url.url('/v1/user/products?limit=50&' + 'api_token=' + user.api_token + (!isNaN(disposable) ? ('&disposable=' + (disposable ? '1' : '0') ) : ''))).
             then(function(result) {
                 console.log("products list", result.data);
                 var res = {items: []};
@@ -279,11 +331,29 @@ angular.module('user-services', [])
             headers: {'Content-Type': 'application/x-www-form-urlencoded'},
             data: 'product_ids=' + idsJson
         }).then(function(result) {
-            return true;
+            console.log('RRR', result);
+            return result;
         }, function(data) {
             return data.status;
         });
     };
+
+
+    // Ответ от сервера при добавлении товаров в списки
+    self.addProductResponse = function(data, slug) {
+        if (!$rootScope.online) {
+            return 'Проверьте ваше интернет-соединение!';
+        }
+        else if (!self.is_auth()){
+            return 'Для добавления в список ' + slug + ' необходимо авторизоваться!';
+        }
+        else if (typeof(data) === 'object') {
+            return 'Товар добавлен в список ' + slug + '!';
+        }
+        else {
+            return 'Ошибка добавления товара!';
+        }
+    }
 
     return self;
 });

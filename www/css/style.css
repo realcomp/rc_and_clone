@@ -1410,6 +1410,8 @@ a:active {
 .product__category-s-inner-image img {
 	position: relative;
 	z-index: 2;
+	max-width: 95%;
+	max-height: 95%;
 }
 .product__category-s-inner-name {
 	display: table-cell;
