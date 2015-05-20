@@ -38,7 +38,7 @@
         	<span class="menu__item-inner">
            <i class="fa fa-shopping-cart"></i>
             Список покупок 
-            <span ng-if="shoppingListCount" class="list-count">{{ shoppingListCount }}</span> 
+            <span ng-if="shoppingListCount && userProfile" class="list-count">{{ shoppingListCount }}</span> 
           </span>
         </ion-item>
         <ion-item nav-clear menu-close ng-href="#/app/article">

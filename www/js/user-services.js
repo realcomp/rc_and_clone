@@ -156,7 +156,7 @@ angular.module('user-services', [])
 
     // Получение списка покупок пользователя
     self.shoppingList = function() {
-        console.log("GET "+Url.url('/v1/shopping_list'));
+        //console.log("GET "+Url.url('/v1/shopping_list'));
         if (!self.is_auth()) {
             var deferred = $q.defer();
             deferred.resolve(null);
@@ -172,7 +172,7 @@ angular.module('user-services', [])
 
         return $http.get(Url.url('/v1/shopping_list?' + 'api_token=' + user.api_token)).
             then(function(result) {
-                console.log("shoppin list", result.data);
+                //console.log("shoppin list", result.data);
 
                 if (result.status == 200) {
                     time_shopping_list = date.getTime()
@@ -233,7 +233,7 @@ angular.module('user-services', [])
 
     // Получение списка рекомендованных товаров
     self.recommendedList = function() {
-        console.log("GET "+Url.url('/v1/shopping_list/recommended'));
+        //console.log("GET "+Url.url('/v1/shopping_list/recommended'));
         if (!self.is_auth()) {
             var deferred = $q.defer();
             deferred.resolve(null);
@@ -242,7 +242,7 @@ angular.module('user-services', [])
 
         return $http.get(Url.url('/v1/shopping_list/recommended?' + 'api_token=' + user.api_token)).
             then(function(result) {
-                console.log("recommended list", result.data);
+                //console.log("recommended list", result.data);
 
                 if (result.status == 200) {
                     recommended_list = [];
@@ -259,24 +259,25 @@ angular.module('user-services', [])
 
     // Получение списка товаров пользователя
     self.productList = function(disposable) {
-        console.log("GET "+Url.url('/v1/user/products'));
+        //console.log("GET "+Url.url('/v1/user/products'));
         if (!self.is_auth()) {
             var deferred = $q.defer();
             deferred.resolve(null);
             return deferred.promise;
         }
 
-        return $http.get(Url.url('/v1/user/products?limit=50&' + 'api_token=' + user.api_token + (!isNaN(disposable) ? ('&disposable=' + (disposable ? '1' : '0') ) : ''))).
+        return $http.get(Url.url('/v1/user/products?limit=1000&' + 'api_token=' + user.api_token + (!isNaN(disposable) ? ('&disposable=' + (disposable ? '1' : '0') ) : ''))).
             then(function(result) {
-                console.log("products list", result.data);
-                var res = {items: []};
+                //console.log("products list2", result.data);
+                var res = {items: [], ids: {}};
 
                 if (result.status == 200 && 'items' in result.data && result.data.items.length) {
                     var places = [];
-                    angular.forEach(result.data.items, function(){ places.push('?'); });
+                    res.ids = [];
+                    angular.forEach(result.data.items, function(id){ places.push('?'); res.ids.push(id); });
                     DB.query('SELECT * FROM products WHERE id IN ('+places.join(',')+')', result.data.items)
                     .then(function(result){
-                        console.log(products_list);
+                        //console.log(products_list);
                         if (isNaN(disposable)) {
                             products_list = DB.fetchAll(result);
                             res.items = products_list;
@@ -292,7 +293,7 @@ angular.module('user-services', [])
 
                 return res;
             }, function(status) {
-                console.error("error products list", status);
+                //console.error("error products list", status);
                 var res = {items: []};
 
                 if (isNaN(disposable)) {
@@ -314,7 +315,7 @@ angular.module('user-services', [])
     };
 
     // Добавление товаров в список товаров пользователя (это в профиле!)
-    self.addProductList = function(ids) {
+    self.updateProductList = function(ids) {
         if (!self.is_auth()) {
             // TODO
             // Если юзер не авторизован показывать окно входа
@@ -323,24 +324,42 @@ angular.module('user-services', [])
             return deferred.promise;
         }
 
-        var idsJson = JSON.stringify([ids]);
+        return self.productList().then(function(object) {
+            var length = object.ids.length;
+            var del = false;
+            for(var i = 0; i < length; i++) {
+                if(object.ids[i] === ids) {
+                    del = true;
+                    break;
+                }
+            }
+    
+            var query = '/v1/user/products';
+            if(del) {
+                query = '/v1/user/products/remove';
+            }
+
+            var idsJson = JSON.stringify([ids]);
         
-        return $http({
-            method: 'POST',
-            url: '/v1/user/products?' + 'api_token=' + user.api_token,
-            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-            data: 'product_ids=' + idsJson
-        }).then(function(result) {
-            console.log('RRR', result);
-            return result;
-        }, function(data) {
-            return data.status;
+            return $http({
+                method: 'POST',
+                url: query + '?' + 'api_token=' + user.api_token,
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                data: 'product_ids=' + idsJson
+            }).then(function(result) {
+                var resultFull = [];
+                resultFull.push(result, del)
+                return resultFull;
+            }, function(data) {
+                return data.status;
+            });
+
         });
     };
 
 
     // Ответ от сервера при добавлении товаров в списки
-    self.addProductResponse = function(data, slug) {
+    self.ProductResponse = function(data, slug) {
         if (!$rootScope.online) {
             return 'Проверьте ваше интернет-соединение!';
         }
@@ -348,6 +367,8 @@ angular.module('user-services', [])
             return 'Для добавления в список ' + slug + ' необходимо авторизоваться!';
         }
         else if (typeof(data) === 'object') {
+            if(data[1] === true)
+                return 'Товар удален из списка ' + slug + '!';
             return 'Товар добавлен в список ' + slug + '!';
         }
         else {

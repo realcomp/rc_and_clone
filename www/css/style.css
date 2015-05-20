@@ -593,6 +593,9 @@ a:active {
 	display: table-cell;
 	vertical-align: middle;
 }
+.product__overlay-swipe .active {
+	color: blue;
+}
 
 /**/
 .product__single-block {

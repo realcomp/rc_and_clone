@@ -74,7 +74,7 @@ app.controller('MainCtrl', function($scope, $ionicLoading, $interval, Category, 
 });
 
 // Контроллер категорий
-app.controller('CategoryCtrl', function($scope, $location, $stateParams, $ionicHistory, $ionicModal,  $ionicScrollDelegate, Category, Product, Rating, User) {
+app.controller('CategoryCtrl', function($scope, $location, $stateParams, $ionicHistory, $ionicModal,  $ionicScrollDelegate, Category, Product, Rating, User, DB) {
 
 	var onlyNumber = !isNaN(parseFloat($stateParams.id)) && isFinite($stateParams.id) && (0 < $stateParams.id);
 	if(!onlyNumber) {
@@ -111,15 +111,15 @@ app.controller('CategoryCtrl', function($scope, $location, $stateParams, $ionicH
 							$scope.productChar = [];
 							var arr = [];
 
-							$scope.addProductList = function(id) {
-								User.addProductList(id).then(function(response) {
-									alert(User.addProductResponse(response, 'товаров'));				
+							$scope.updateProductList = function(id) {
+								User.updateProductList(id).then(function(response) {
+									DB.alert(User.ProductResponse(response, 'товаров'), 'Выполнено!');			
 								});
 							}
 
 							$scope.addShoppingList = function(id) {
 								User.addShoppingList(id).then(function(response) {
-									alert(User.addProductResponse(response, 'покупок'));							
+									DB.alert(User.ProductResponse(response, 'покупок'), 'Выполнено!');						
 								});
 							}
 
@@ -251,7 +251,7 @@ app.controller('CategoryCtrl', function($scope, $location, $stateParams, $ionicH
 });
 
 // Контроллер товаров
-app.controller('ProductCtrl', function($scope, $location, $stateParams, $ionicHistory, $ionicModal, $http,  Product, Category, Rating, User) {
+app.controller('ProductCtrl', function($scope, $location, $stateParams, $ionicHistory, $ionicModal, $http,  Product, Category, Rating, User, DB) {
 
 	var onlyNumber = !isNaN(parseFloat($stateParams.id)) && isFinite($stateParams.id) && (0 < $stateParams.id);
 	if(!onlyNumber) {
@@ -268,14 +268,17 @@ app.controller('ProductCtrl', function($scope, $location, $stateParams, $ionicHi
 	$scope.properties = [];
 
 	//
-	$scope.addProductList = function(id) {
-		User.addProductList(id).then(function(status) {
-			if(status === true)
-				alert('Товар успешно добавлен в ваш профиль!');
-			else if(status === 500)
-				alert('Проверьте ваше интернет-соединение!');
-			else 
-				alert('Произошла ошибка! Возможно вы не авторизованы!');
+	$scope.updateProductList = function(id) {
+		User.updateProductList(id).then(function(response) {
+			DB.alert(User.ProductResponse(response, 'товаров'), 'Выполнено!');
+			$scope.buttonClass = response[1] ? 'active' : ''; 	
+		});
+	}
+
+	$scope.addShoppingList = function(id) {
+		User.addShoppingList(id).then(function(response) {
+			DB.alert(User.ProductResponse(response, 'покупок'), 'Выполнено!');
+			$scope.buttonClass = response[1] ? 'active' : ''; 								
 		});
 	}
 
@@ -523,7 +526,7 @@ app.controller('AuthorizationCtrl', function($scope, $http, $ionicModal, $ionicB
 });
 
 // Список покупок
-app.controller('ShoppingListCtrl', function($scope, $rootScope,  User, Product, Category, Search) {
+app.controller('ShoppingListCtrl', function($scope, $rootScope,  User, Product, Category, Search, DB) {
 	$scope.seachData = function (query, key) {
 		$scope.seachActive = false;
 		if(key == true) {
@@ -537,14 +540,15 @@ app.controller('ShoppingListCtrl', function($scope, $rootScope,  User, Product, 
 		$scope.recommendedList = [];
 
 		//
-		$scope.addProductList = function(id) {
-			User.addProductList(id).then(function(status) {
-				if(status === true)
-				alert('Товар успешно добавлен в ваш профиль!');
-			else if(status === 500)
-				alert('Проверьте ваше интернет-соединение!');
-			else 
-				alert('Произошла ошибка! Возможно вы не авторизованы!');
+		$scope.updateProductList = function(id) {
+			User.updateProductList(id).then(function(response) {
+				DB.alert(User.ProductResponse(response, 'товаров'), 'Выполнено!');				
+			});
+		}
+
+		$scope.addShoppingList = function(id) {
+			User.addShoppingList(id).then(function(response) {
+				DB.alert(User.ProductResponse(response, 'покупок'), 'Выполнено!');							
 			});
 		}
 

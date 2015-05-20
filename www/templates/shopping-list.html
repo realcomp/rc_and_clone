@@ -55,14 +55,13 @@
 			  	</span>
 		  		<span class="product__overlay-swipe">
 					<span class="swipe__link-wrap">
-						<a ng-href="#" ng-click="alert('В разработке!')" href="#" class=""><i class="fa fa-shopping-cart"></i>В список покупок</a>
-						<a ng-href="#" ng-click="addProductList(product.id)" href="#"><i class="fa fa-thumbs-o-up"></i>{{ product.slug }}</a>
+						<a ng-href="#" ng-click="addShoppingList(product.id)" href="#" class=""><i class="fa fa-shopping-cart"></i>В список покупок</a>
+						<a ng-href="#" ng-click="updateProductList(product.id)" href="#"><i class="fa fa-thumbs-o-up"></i>{{ product.slug }}</a>
 					</span>
 				</span>	
 	  		<span class="product__overlay-active"></span>
 				</ion-item>
 			</div>
-
 		</ion-list>
 		</div>
 
@@ -87,8 +86,8 @@
 				  	</span>
 				  	<span class="product__overlay-swipe">
 							<span class="swipe__link-wrap">
-								<a ng-href="#" ng-click="alert('В разработке!')" href="#" class=""><i class="fa fa-shopping-cart"></i>В список покупок</a>
-								<a ng-href="#" ng-click="addProductList(product.id)" href="#"><i class="fa fa-thumbs-o-up"></i>Покупаю постоянно</a>
+								<a ng-href="#" ng-click="addShoppingList(product.id)" href="#" class=""><i class="fa fa-shopping-cart"></i>В список покупок</a>
+								<a ng-href="#" ng-click="updateProductList(product.id)" href="#"><i class="fa fa-thumbs-o-up"></i>В список товаров</a>
 							</span>
 						</span>	
 	  		<span class="product__overlay-active"></span>
