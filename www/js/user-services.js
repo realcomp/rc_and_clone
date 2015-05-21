@@ -65,6 +65,7 @@ angular.module('user-services', [])
 		    });
   	};
 
+
   	self.logout = function() {
         localStorage.removeItem(user_key);
         user = null;
@@ -314,7 +315,7 @@ angular.module('user-services', [])
             });
     };
 
-    // Добавление товаров в список товаров пользователя (это в профиле!)
+    // Обновление в список товаров пользователя (это в профиле!)
     self.updateProductList = function(ids) {
         if (!self.is_auth()) {
             // TODO
@@ -357,22 +358,36 @@ angular.module('user-services', [])
         });
     };
 
+    // Отслеживаем состояние продуктов пользователя
+    self.getProductListArray = function() {
+        if(products_list) {
+            var ids = [];
+            for(var i = 0, length = products_list.length; i < length; i++) {
+                ids.push(products_list[i].id);
+            }
+            return ids;      
+        }
+        else {
+            return [];
+        }
+    }
+
 
     // Ответ от сервера при добавлении товаров в списки
     self.ProductResponse = function(data, slug) {
         if (!$rootScope.online) {
-            return 'Проверьте ваше интернет-соединение!';
+            return {'str': 'Проверьте ваше интернет-соединение!', status: false};
         }
         else if (!self.is_auth()){
-            return 'Для добавления в список ' + slug + ' необходимо авторизоваться!';
+            return {'str': 'Для добавления в список ' + slug + ' необходимо авторизоваться!', status: false};
         }
         else if (typeof(data) === 'object') {
             if(data[1] === true)
-                return 'Товар удален из списка ' + slug + '!';
-            return 'Товар добавлен в список ' + slug + '!';
+                return {'str': 'Товар удален из списка ' + slug + '!', status: 'remove'};
+            return {'str': 'Товар добавлен в список ' + slug + '!', status: 'add'};
         }
         else {
-            return 'Ошибка добавления товара!';
+            return {'str': 'Ошибка добавления товара!', status: false};
         }
     }
 

@@ -1,7 +1,7 @@
 var app = angular.module('starter.controllers', []);
 
 // Контроллер главной
-app.controller('MainCtrl', function($scope, $ionicLoading, $interval, Category, DB, Product) {
+app.controller('MainCtrl', function($scope, $ionicLoading, $interval, Category, DB, Product, User) {
 	//console.log('main controller');
 
 	if (window.cordova) {
@@ -32,6 +32,8 @@ app.controller('MainCtrl', function($scope, $ionicLoading, $interval, Category, 
 
 	$scope.roots = [];
 	$scope.title = 'Рейтинг товаров';
+
+	User.productList();
 
 	var load_roots = function(){
 		Category.roots().then(function(roots) {
@@ -111,15 +113,25 @@ app.controller('CategoryCtrl', function($scope, $location, $stateParams, $ionicH
 							$scope.productChar = [];
 							var arr = [];
 
-							$scope.updateProductList = function(id) {
-								User.updateProductList(id).then(function(response) {
-									DB.alert(User.ProductResponse(response, 'товаров'), 'Выполнено!');			
+							var userProductList = User.getProductListArray();
+
+							$scope.updateProductList = function(product) {
+								User.updateProductList(product.id).then(function(response) {
+									var result = User.ProductResponse(response, 'товаров');
+									DB.alert(result.str, 'Выполнено!');
+									if(result.status == 'add') {
+										product.product_list = true;
+									}
+									else if(result.status == 'remove') {
+										product.product_list = false;
+									}
+									console.log('product', product);
 								});
 							}
 
 							$scope.addShoppingList = function(id) {
 								User.addShoppingList(id).then(function(response) {
-									DB.alert(User.ProductResponse(response, 'покупок'), 'Выполнено!');						
+									DB.alert(User.ProductResponse(response.str, 'покупок'), 'Выполнено!');						
 								});
 							}
 
@@ -136,8 +148,17 @@ app.controller('CategoryCtrl', function($scope, $location, $stateParams, $ionicH
 	      					'price': +productFull.price.toFixed(0),
 	      					'rating': productFull.rating,
 	      					'tested': productFull.tested,
-	      					'danger_level': productFull.danger_level
+	      					'danger_level': productFull.danger_level,
+	      					'product_list': false,
+	      					'shopping_list': false
 								}	
+
+								for(var i = 0, length = userProductList.length; i < length; i++) {
+									if(userProductList[i] == product.id) {
+										product.product_list = true;
+										continue;
+									}
+								}
 
 			      		// список названий рейтинга
 								Rating.allHash().then(function(gratings) {

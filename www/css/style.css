@@ -594,7 +594,7 @@ a:active {
 	vertical-align: middle;
 }
 .product__overlay-swipe .active {
-	color: blue;
+	color: #009933 !important;
 }
 
 /**/
