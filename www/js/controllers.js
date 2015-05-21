@@ -114,6 +114,8 @@ app.controller('CategoryCtrl', function($scope, $location, $stateParams, $ionicH
 							var arr = [];
 
 							var userProductList = User.getProductListArray();
+							//$scope.userProductList = User.getProductListArray;
+							//console.log($scope.userProductList());
 
 							$scope.updateProductList = function(product) {
 								User.updateProductList(product.id).then(function(response) {
@@ -121,11 +123,10 @@ app.controller('CategoryCtrl', function($scope, $location, $stateParams, $ionicH
 									DB.alert(result.str, 'Выполнено!');
 									if(result.status == 'add') {
 										product.product_list = true;
-									}
+									} 
 									else if(result.status == 'remove') {
 										product.product_list = false;
 									}
-									console.log('product', product);
 								});
 							}
 
@@ -149,16 +150,9 @@ app.controller('CategoryCtrl', function($scope, $location, $stateParams, $ionicH
 	      					'rating': productFull.rating,
 	      					'tested': productFull.tested,
 	      					'danger_level': productFull.danger_level,
-	      					'product_list': false,
+	      					'product_list': userProductList[productFull.id] ? true : false,
 	      					'shopping_list': false
 								}	
-
-								for(var i = 0, length = userProductList.length; i < length; i++) {
-									if(userProductList[i] == product.id) {
-										product.product_list = true;
-										continue;
-									}
-								}
 
 			      		// список названий рейтинга
 								Rating.allHash().then(function(gratings) {
@@ -288,28 +282,40 @@ app.controller('ProductCtrl', function($scope, $location, $stateParams, $ionicHi
 	$scope.main_properties = [];
 	$scope.properties = [];
 
-	//
-	$scope.updateProductList = function(id) {
-		User.updateProductList(id).then(function(response) {
-			DB.alert(User.ProductResponse(response, 'товаров'), 'Выполнено!');
-			$scope.buttonClass = response[1] ? 'active' : ''; 	
-		});
-	}
-
-	$scope.addShoppingList = function(id) {
-		User.addShoppingList(id).then(function(response) {
-			DB.alert(User.ProductResponse(response, 'покупок'), 'Выполнено!');
-			$scope.buttonClass = response[1] ? 'active' : ''; 								
-		});
-	}
 
 	// Общая информация
 	Product.getById($stateParams.id).then(function(product) {
      	$scope.title = product.name
       $scope.product = product;
+
+     var userProductList = User.getProductListArray();
+
 			var images = product.images;
 			images = images.split(',');
 			product['images_array'] = images;
+			product['product_list'] = userProductList[product.id] ? true : false;
+			product['shopping_list'] = false;
+
+			$scope.updateProductList = function(product) {
+				User.updateProductList(product.id).then(function(response) {
+					var result = User.ProductResponse(response, 'товаров');
+					DB.alert(result.str, 'Выполнено!');
+					if(result.status == 'add') {
+						product.product_list = true;
+					}
+					else if(result.status == 'remove') {
+						product.product_list = false;
+					}
+				});
+			}
+
+			$scope.addShoppingList = function(id) {
+				User.addShoppingList(id).then(function(response) {
+					DB.alert(User.ProductResponse(response, 'покупок'), 'Выполнено!');
+					$scope.buttonClass = response[1] ? 'active' : ''; 								
+				});
+			}
+
 
 			// Временная проверка массива изображений на 404, последний элемент часто битый..
 			for(var i = 0; i < product['images_array'].length; i++) {
@@ -561,18 +567,6 @@ app.controller('ShoppingListCtrl', function($scope, $rootScope,  User, Product, 
 		$scope.recommendedList = [];
 
 		//
-		$scope.updateProductList = function(id) {
-			User.updateProductList(id).then(function(response) {
-				DB.alert(User.ProductResponse(response, 'товаров'), 'Выполнено!');				
-			});
-		}
-
-		$scope.addShoppingList = function(id) {
-			User.addShoppingList(id).then(function(response) {
-				DB.alert(User.ProductResponse(response, 'покупок'), 'Выполнено!');							
-			});
-		}
-
 
 		User.shoppingList().then(function(list) {
 			var ids = [];
@@ -629,11 +623,38 @@ app.controller('ShoppingListCtrl', function($scope, $rootScope,  User, Product, 
 
 		User.recommendedList().then(function(list) {
 			Product.getByIds(list, false, true).then(function(products) {
-				var len = products.length;
-				for (var i = 0; i < len; i++) {
-					products[i]['slug'] = products.disposable ? 'У меня есть' : 'Покупаю постоянно';	
-				}
-				$scope.recommendedList = products;
+
+
+			$scope.updateProductList = function(product) {
+				User.updateProductList(product.id).then(function(response) {
+					var result = User.ProductResponse(response, 'товаров');
+					DB.alert(result.str, 'Выполнено!');
+					if(result.status == 'add') {
+						product.product_list = true;
+					}
+					else if(result.status == 'remove') {
+						product.product_list = false;
+					}
+				});
+			}
+
+			$scope.addShoppingList = function(id) {
+				User.addShoppingList(id).then(function(response) {
+					DB.alert(User.ProductResponse(response, 'покупок'), 'Выполнено!');
+					$scope.buttonClass = response[1] ? 'active' : ''; 								
+				});
+			}
+
+
+			var len = products.length;
+			var userProductList = User.getProductListArray();
+			for (var i = 0; i < len; i++) {
+				products[i]['slug'] = products.disposable ? 'У меня есть' : 'Покупаю постоянно';
+				products[i]['product_list'] = userProductList[products[i].id] ? true : false;
+				products[i]['shopping_list'] = false;	
+			}
+			$scope.recommendedList = products;
+
 			});
 		});
 

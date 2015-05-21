@@ -593,7 +593,8 @@ a:active {
 	display: table-cell;
 	vertical-align: middle;
 }
-.product__overlay-swipe .active {
+.product__overlay-swipe .active,
+.product__single-head .product__single-info-right .active {
 	color: #009933 !important;
 }
 

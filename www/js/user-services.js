@@ -275,11 +275,12 @@ angular.module('user-services', [])
                 if (result.status == 200 && 'items' in result.data && result.data.items.length) {
                     var places = [];
                     res.ids = [];
-                    angular.forEach(result.data.items, function(id){ places.push('?'); res.ids.push(id); });
+                    angular.forEach(result.data.items, function(id){ places.push('?'); res.ids[id] = id; });
                     DB.query('SELECT * FROM products WHERE id IN ('+places.join(',')+')', result.data.items)
                     .then(function(result){
                         //console.log(products_list);
                         if (isNaN(disposable)) {
+//                            angular.forEach(DB.fetchAll(result), function(p){products_list[p.id] = p;});
                             products_list = DB.fetchAll(result);
                             res.items = products_list;
                         } else if (disposable) {
@@ -334,7 +335,7 @@ angular.module('user-services', [])
                     break;
                 }
             }
-    
+
             var query = '/v1/user/products';
             if(del) {
                 query = '/v1/user/products/remove';
@@ -350,6 +351,19 @@ angular.module('user-services', [])
             }).then(function(result) {
                 var resultFull = [];
                 resultFull.push(result, del)
+
+                if (del) {
+                for(var i = 0, length = products_list.length; i < length; i++) {
+                    if (products_list[i].id == ids) {
+                         products_list.splice(i, 1);
+                        break;
+                    }
+                }
+                } else {
+                    products_list.push({id: ids});
+                }
+
+                self.productList();
                 return resultFull;
             }, function(data) {
                 return data.status;
@@ -361,14 +375,14 @@ angular.module('user-services', [])
     // Отслеживаем состояние продуктов пользователя
     self.getProductListArray = function() {
         if(products_list) {
-            var ids = [];
+            var ids = {};
             for(var i = 0, length = products_list.length; i < length; i++) {
-                ids.push(products_list[i].id);
+                ids[products_list[i].id] = products_list[i].id;
             }
             return ids;      
         }
         else {
-            return [];
+            return {};
         }
     }
 

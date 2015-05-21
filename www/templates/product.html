@@ -12,7 +12,7 @@
 					</div>
 					<div class="product__single-info-right">
 						<a ng-href="#" ng-click="addShoppingList(product.id)"><i class="fa fa-shopping-cart"></i>В список покупок</a>
-						<a ng-href="#" ng-click="updateProductList(product.id)"><i class="fa fa-thumbs-o-up"></i>{{ linkSlug }}</a>
+						<a ng-href="#" ng-class="(product.product_list==true) ? 'active' : ''" ng-click="updateProductList(product)"><i class="fa fa-thumbs-o-up"></i>{{ linkSlug }}</a>
 					</div>
 				</div>
 			</div>
