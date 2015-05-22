@@ -191,6 +191,9 @@ angular.module('db-services', ['db.config', 'ngCordova'])
                 if (r && r['version']) {
                     self.meta_db = r;
                     //console.log("METADB", self.meta_db);
+                    // данные есть в базе
+                    self.loaded = true;
+                    self.deferred.resolve({loaded: true});
                 }
 
                 console.log('GET '+Url.url('/v1/catalog/info?my_version=' + self.meta_db.version));
@@ -485,7 +488,7 @@ console.log("put_slices not force and not pause", force, pause, self.loaded);
 
     self.put_slice = function(slice, rdelete, tx, cb) {
 console.log("put_slice", slice.entity_type);
-        if (!slice || !('data' in slice) || !slice.data.length) {
+        if (!slice || !('data' in slice)) {
             self.inc_load_slices();
             return;
         }
@@ -529,6 +532,14 @@ console.log(slice);
         if (rdelete) {
 //console.log("slice category delete ",slice.min_id, slice.max_id);
             tx.executeSql("DELETE FROM " + tname + " WHERE id >= ? AND id <= ?", [slice.min_id, slice.max_id]);
+        }
+
+        if (!data.length) {
+            if (cb) {
+                cb();
+            }
+
+            return;
         }
 
         var query = 'INSERT INTO ' + tname + ' ('+ptables[tname].fields+') VALUES ('+ptables[tname].places+')';
@@ -599,6 +610,14 @@ console.log(slice);
             tx.executeSql("DELETE FROM product_ratings WHERE product_id >= ? AND product_id <= ?", [slice.min_id, slice.max_id]);
         }
 
+        if (!data.length) {
+            if (cb) {
+                cb();
+            }
+
+            return;
+        }
+
         var query = 'INSERT INTO ' + tname + ' ('+ptables[tname].fields+') VALUES ('+ptables[tname].places+')';
 
         angular.forEach(data, function(product) {
@@ -660,6 +679,14 @@ console.log(slice);
             tx.executeSql("DELETE FROM companies WHERE id >= ? AND id <= ?", [slice.min_id, slice.max_id]);
         }
 
+        if (!data.length) {
+            if (cb) {
+                cb();
+            }
+
+            return;
+        }
+
         var query = 'INSERT INTO companies (id,name) VALUES (?,?)';
         angular.forEach(data, function(company) {
             var values = [
@@ -692,6 +719,14 @@ console.log(slice);
 
         if (rdelete) {
             tx.executeSql("DELETE FROM ratings WHERE id >= ? AND id <= ?", [slice.min_id, slice.max_id]);
+        }
+
+        if (!data.length) {
+            if (cb) {
+                cb();
+            }
+
+            return;
         }
 
         var query = 'INSERT INTO ratings (id,name) VALUES (?,?)';
