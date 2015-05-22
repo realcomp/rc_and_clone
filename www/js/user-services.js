@@ -190,8 +190,8 @@ angular.module('user-services', [])
     };
 
 
-    // Добавление в список покупок пользователя
-    self.addShoppingList = function(id) {
+    // Обновление списка покупок пользователя
+    self.updateShoppingList = function(id) {
         if (!self.is_auth()) {
             var deferred = $q.defer();
             deferred.resolve(null);
@@ -203,10 +203,22 @@ angular.module('user-services', [])
                 return;
 
             var ids = [];
+            var del = false;
+
+            for(var i = 0; i < array.length; i++) {
+                if(array[i].productId == id) {
+                    array.splice(i, 1);
+                    del = true;
+                }
+            }
+
             for(var i = 0; i < array.length; i++) {
                 ids.push({'product_id': array[i].productId});
             }
-            ids.push({'product_id': id});
+
+            if(!del) {
+                ids.push({'product_id': id});
+            }
 
             var idsJson = JSON.stringify(ids);
 
@@ -222,6 +234,9 @@ angular.module('user-services', [])
                     shopping_list = [];
                     shopping_list = result.data.items;
                     localStorage.setItem('shoppingListCount', ids.length);
+                    var resultFull = [];
+                    resultFull.push(result, del)
+                    return resultFull;
                 }
                 return shopping_list;
 
@@ -378,6 +393,28 @@ angular.module('user-services', [])
             var ids = {};
             for(var i = 0, length = products_list.length; i < length; i++) {
                 ids[products_list[i].id] = products_list[i].id;
+            }
+            return ids;      
+        }
+        else {
+            return {};
+        }
+    }
+
+
+    // Отслеживаем состояние продуктов пользователя
+    self.getShoppingListArray = function() {
+
+        var count = 0;
+        if(shopping_list && shopping_list !== null) {
+            count = shopping_list.length;
+        }
+        localStorage.setItem('shoppingListCount', count);
+
+        if(shopping_list) {
+            var ids = {};
+            for(var i = 0, length = shopping_list.length; i < length; i++) {
+                ids[shopping_list[i].id] = shopping_list[i].id;
             }
             return ids;      
         }

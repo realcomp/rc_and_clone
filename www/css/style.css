@@ -1317,6 +1317,7 @@ a:active {
 }
 .search__no-result {
 	text-align: center;
+	display: block;
   padding: 10px 0;
   color: #C80020;
 }

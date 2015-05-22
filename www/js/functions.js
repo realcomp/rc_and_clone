@@ -1,6 +1,5 @@
-
 // Контроллер для общих функций и динамичных элементов
-app.controller('funcController', function($scope, $ionicSlideBoxDelegate, $ionicActionSheet, $ionicScrollDelegate) {
+app.controller('funcController', function($scope, $ionicSlideBoxDelegate, $ionicActionSheet, $ionicPopup, $ionicScrollDelegate) {
 	// Вернет класс оформления для рейтинга
 	$scope.productRatingType = function(product) {
     if(!product)
@@ -180,7 +179,7 @@ app.controller('funcController', function($scope, $ionicSlideBoxDelegate, $ionic
 
   // Alert
   $scope.alert = function(text) {
-    alert(text);
+    $ionicPopup.alert({title:'Информация', template: text})
 	};
 
 	// Генератор массива рейтинга для каждого отзыва

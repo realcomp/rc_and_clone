@@ -114,8 +114,8 @@ app.controller('CategoryCtrl', function($scope, $location, $stateParams, $ionicH
 							var arr = [];
 
 							var userProductList = User.getProductListArray();
-							//$scope.userProductList = User.getProductListArray;
-							//console.log($scope.userProductList());
+							var userShoppingList = User.getShoppingListArray();
+							console.log('USER', userShoppingList);
 
 							$scope.updateProductList = function(product) {
 								User.updateProductList(product.id).then(function(response) {
@@ -130,9 +130,16 @@ app.controller('CategoryCtrl', function($scope, $location, $stateParams, $ionicH
 								});
 							}
 
-							$scope.addShoppingList = function(id) {
-								User.addShoppingList(id).then(function(response) {
-									DB.alert(User.ProductResponse(response.str, 'покупок'), 'Выполнено!');						
+							$scope.addShoppingList = function(product) {
+								User.updateShoppingList(product.id).then(function(response) {
+									var result = User.ProductResponse(response, 'покупок');
+									DB.alert(result.str, 'Выполнено!');
+									if(result.status == 'add') {
+										product.shopping_list = true;
+									} 
+									else if(result.status == 'remove') {
+										product.shopping_list = false;
+									}					
 								});
 							}
 
@@ -151,7 +158,7 @@ app.controller('CategoryCtrl', function($scope, $location, $stateParams, $ionicH
 	      					'tested': productFull.tested,
 	      					'danger_level': productFull.danger_level,
 	      					'product_list': userProductList[productFull.id] ? true : false,
-	      					'shopping_list': false
+	      					'shopping_list': userShoppingList[productFull.id] ? true : false,
 								}	
 
 			      		// список названий рейтинга
@@ -310,7 +317,7 @@ app.controller('ProductCtrl', function($scope, $location, $stateParams, $ionicHi
 			}
 
 			$scope.addShoppingList = function(id) {
-				User.addShoppingList(id).then(function(response) {
+				User.updateShoppingList(id).then(function(response) {
 					DB.alert(User.ProductResponse(response, 'покупок'), 'Выполнено!');
 					$scope.buttonClass = response[1] ? 'active' : ''; 								
 				});
