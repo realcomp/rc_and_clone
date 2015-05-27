@@ -12,6 +12,7 @@ angular.module('user-services', [])
     var ndproducts_list = null; // no disposable
     var products_list = null;
     var recommended_list = null;
+    var votes_list = [];
     var time_get_profile = 0;
 
     var parse = function(force) {
@@ -294,6 +295,7 @@ angular.module('user-services', [])
             });
     };
 
+
     // Получение списка товаров пользователя
     self.productList = function(disposable) {
         //console.log("GET "+Url.url('/v1/user/products'));
@@ -352,11 +354,10 @@ angular.module('user-services', [])
             });
     };
 
+
     // Обновление в список товаров пользователя (это в профиле!)
     self.updateProductList = function(ids) {
         if (!self.is_auth()) {
-            // TODO
-            // Если юзер не авторизован показывать окно входа
             var deferred = $q.defer();
             deferred.resolve(null);
             return deferred.promise;
@@ -409,6 +410,7 @@ angular.module('user-services', [])
         });
     };
 
+
     // Отслеживаем состояние товаров пользователя
     self.getProductListArray = function() {
         if(products_list) {
@@ -421,7 +423,7 @@ angular.module('user-services', [])
         else {
             return {};
         }
-    }
+    };
 
 
     // Ответ от сервера при добавлении товаров в списки
@@ -440,7 +442,64 @@ angular.module('user-services', [])
         else {
             return {'str': 'Ошибка добавления товара!', status: false, 'title': 'Ошибка!'};
         }
-    }
+    };
+
+
+    // Добавление голосов
+    self.addProductVotes = function(product) {
+        if (!self.is_auth()) {
+            var deferred = $q.defer();
+            deferred.resolve(null);
+            DB.alert('Для участия в голосовании за товары необходимо авторизоваться!', 'Внимание!');
+            return deferred.promise;
+        }
+
+        var idsJson = JSON.stringify([[product.id, 1]]);
+
+        // 
+        return $http({
+            method: 'POST',
+            url: '/v1/votes/products?' + 'api_token=' + user.api_token,
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            data: 'votes=' + idsJson
+        }).then(function(result) {
+            return result
+        }, function(data) {
+            return data.status;
+        });
+
+    };
+
+
+    // Получение голосов 
+    self.productVotes = function() {
+         if (!self.is_auth()) {
+            var deferred = $q.defer();
+            deferred.resolve(null);
+            return deferred.promise;
+        }
+
+        return $http.get(Url.url('v1/votes/products?limit=1000&' + 'api_token=' + user.api_token)).
+        then(function(result) {
+            if (result.status == 200) {
+                for(var i = 0, length = result.data.product_ids.length; i < length; i++) {
+                    votes_list[result.data.product_ids[i]] = result.data.product_ids[i];
+                }
+            }
+            return result.status;
+        }, function(status) {
+            return status;
+        });
+
+    };
+
+    // Получение голосов в нужном контроллере
+    self.getProductVotes = function() {
+        if(votes_list && votes_list !== null)
+            return votes_list;
+        return [];
+    };
+
 
     return self;
 });

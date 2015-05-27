@@ -10,5 +10,5 @@
 		<div class="product__single-summary product__single-summary-wait product__single-wblock">
 		Данный продукт еще не прошел тестирование в нашей лаборатории. Отдайте голос за проведение подробного тестирования данного продукта.
 	</div>
-	<a ng-href="#" class="product__vote-wait" ng-click="alert('Возможность голосовать за товары в разработке!')">Проголосовать за тест</a>
+	<a class="product__vote-wait" ng-class="(product.vote_boolean==true) ? 'button-test-active' : ''" ng-href="#" ng-click="addProductVotes(product);">{{ product.vote_text }}</a>
 </div>

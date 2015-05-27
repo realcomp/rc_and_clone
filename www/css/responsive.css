@@ -139,6 +139,9 @@
   .product__shopping-tab {
     font-size: 18px;
   }
+  .product__shopping-search {
+    width: 85%;
+  }
 
   /* about */
   .page__about .logo {
@@ -287,6 +290,11 @@
   }
   .product__vote-wait, .product__category-button-test, .like__googleplay {
     padding: 12px 0;
+  }
+  .product__vote-wait,
+  .like__googleplay,
+  .product__category-button-test {
+    min-height: 38px;
   }
 
 
@@ -449,6 +457,11 @@
   .like__googleplay {
     padding: 9px 0;
   }
+  .product__vote-wait,
+  .like__googleplay,
+  .product__category-button-test {
+    min-height: 38px;
+  }
   .action-sheet-c .button .fa {
     top: 13px;
     right: 15px;
@@ -581,6 +594,11 @@
   }
   .main__category-tested, .product__vote-wait, .product__category-button-test, .like__googleplay {
     padding: 7px 0;
+  }
+  .product__vote-wait,
+  .like__googleplay,
+  .product__category-button-test {
+    min-height: 32px;
   }
   .main__category-tested {
     width: 110px;
@@ -860,7 +878,7 @@
   }
   .product__category .product__category-button-test {
     width: 70px;
-    padding: 4px 0;
+    padding: 5px 0;
     font-size: 14px;
   }
 
@@ -1051,8 +1069,8 @@
   }
   .product__overlay-swipe.two .fa {
     right: 25px;
-    font-size: 36px;
-    margin-top: -18px;
+    font-size: 34px;
+    margin-top: -16px;
   }
 
 
@@ -1099,8 +1117,8 @@
   }
   .product__overlay-swipe.two .fa {
     right: 20px;
-    font-size: 32px;
-    margin-top: -16px;
+    font-size: 28px;
+    margin-top: -14px;
   }
 }
 
@@ -1113,5 +1131,8 @@
 @media only screen and (max-width: 320px) {
   #mainContainer {
     width: 320px;
+  }
+  .product__shopping-search {
+    width: 76%;
   }
 }

@@ -193,9 +193,35 @@ a:active {
   -moz-border-radius: 0 3px;
   border-radius: 0 3px;
 }
+.popup-title {
+	font-size: 17px;
+}
 .clearfix {
 	clear: both;
 	display: block;
+}
+
+.overlay__load {
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, 0.5);
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 5;
+}
+.overlay__load .spinner {
+	position: absolute;
+	margin-top: -25px;
+	margin-left: -25px;
+	top: 50%;
+	left: 50%;
+}
+.overlay__load .spinner svg {
+  width: 50px;
+  height: 50px;
+  stroke: #c80020;
+  fill: #c80020;
 }
 
 @font-face {
@@ -883,6 +909,7 @@ a:active {
 .like__googleplay {
 	display: block;
 	width: 300px;
+	min-height: 40px;
 	padding: 15px 0;
 	margin: 10px auto;
 	border: 1px solid #354777;
@@ -897,7 +924,8 @@ a:active {
 .product__category-button-test:hover,
 .product__category-button-test:active,
 .like__googleplay:hover,
-.like__googleplay:active{
+.like__googleplay:active,
+.button-test-active {
 	background: #354777;
 	color: #FFF;
 }
@@ -1041,7 +1069,7 @@ a:active {
 		bottom: 20%;
 		left: 20%;
 		overflow: visible;
-		min-height: 240px;
+		min-height: 420px;
 		width: 60%;
 	}
 	.action-sheet-c {

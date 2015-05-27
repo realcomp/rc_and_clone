@@ -35,6 +35,7 @@ app.controller('MainCtrl', function($scope, $ionicLoading, $interval, Category, 
 
 	User.productList();
 	User.shoppingList();
+	User.productVotes();
 
 	var load_roots = function(){
 		Category.roots().then(function(roots) {
@@ -96,6 +97,7 @@ app.controller('CategoryCtrl', function($scope, $location, $stateParams, $ionicH
 	Category.getById($stateParams.id).then(function(category) {
 
       $scope.title = category.name;
+      User.productVotes();
 
 			Category.childsByObj(category, category.lvl+1).then(function(categories) {
 				if(categories.length > 0) {
@@ -115,9 +117,11 @@ app.controller('CategoryCtrl', function($scope, $location, $stateParams, $ionicH
 							$scope.productChar = [];
 							var arr = [];
 
-							var userProductList = User.getProductListArray();
-							var userShoppingList = User.getShoppingListArray();
+								var userShoppingList = User.getShoppingListArray(),
+										userProductList = User.getProductListArray();
+										productVotes = User.getProductVotes();
 
+							//
 							$scope.updateProductList = function(product) {
 								User.updateProductList(product.id).then(function(response) {
 									var result = User.ProductResponse(response, 'товаров');
@@ -131,6 +135,7 @@ app.controller('CategoryCtrl', function($scope, $location, $stateParams, $ionicH
 								});
 							}
 
+							//
 							$scope.addShoppingList = function(product) {
 								User.updateShoppingList(product.id).then(function(response) {
 									var result = User.ProductResponse(response, 'покупок');
@@ -143,6 +148,14 @@ app.controller('CategoryCtrl', function($scope, $location, $stateParams, $ionicH
 										product.shopping_list = false;
 										product.slug = 'В список покупок';
 									}					
+								});
+							}
+
+							//
+							$scope.addProductVotes = function(product) {
+								User.addProductVotes(product).then(function(response) {
+									product['vote_boolean'] = true;
+		      				product['vote_text'] = 'Я За!';
 								});
 							}
 
@@ -162,7 +175,7 @@ app.controller('CategoryCtrl', function($scope, $location, $stateParams, $ionicH
 	      					'danger_level': productFull.danger_level,
 	      					'product_list': userProductList[productFull.id] ? true : false,
 	      					'shopping_list': userShoppingList[productFull.id] ? true : false,
-	      					'slug': userShoppingList[productFull.id] ? 'В списке покупок' : 'В список покупок',
+	      					'slug': userShoppingList[productFull.id] ? 'В списке покупок' : 'В список покупок'
 								}	
 
 			      		// список названий рейтинга
@@ -199,9 +212,10 @@ app.controller('CategoryCtrl', function($scope, $location, $stateParams, $ionicH
 									});
 
 								});
-
 								
 		      			if(!product.tested) {
+		      				product['vote_boolean'] = productVotes[productFull.id] ? true : false;
+		      				product['vote_text'] = productVotes[productFull.id] ? 'Я Зa!' : 'На тест!'
 		      				$scope.productsWait.push(product);
 		      			}
 		      			else {
@@ -278,7 +292,7 @@ app.controller('CategoryCtrl', function($scope, $location, $stateParams, $ionicH
 
 // Контроллер товаров
 app.controller('ProductCtrl', function($scope, $location, $stateParams, $ionicHistory, $ionicModal, $http,  Product, Category, Rating, User, DB) {
-
+	$scope.overlayload = true;
 	var onlyNumber = !isNaN(parseFloat($stateParams.id)) && isFinite($stateParams.id) && (0 < $stateParams.id);
 	if(!onlyNumber) {
 		$ionicHistory.nextViewOptions({
@@ -299,123 +313,136 @@ app.controller('ProductCtrl', function($scope, $location, $stateParams, $ionicHi
      	$scope.title = product.name
       $scope.product = product;
 
-			var userProductList = User.getProductListArray();
-			var userShoppingList = User.getShoppingListArray();
+     	User.productVotes().then(function() {
+     		productVotes = User.getProductVotes();
 
-			var images = product.images;
-			images = images.split(',');
-			product['images_array'] = images;
-			product['product_list'] = userProductList[product.id] ? true : false;
-			product['shopping_list'] = userShoppingList[product.id] ? true : false,
-			product['slug'] = userShoppingList[product.id] ? 'В списке покупок' : 'В список покупок',
+				var userProductList = User.getProductListArray(),
+						userShoppingList = User.getShoppingListArray();
 
-			$scope.updateProductList = function(product) {
-				User.updateProductList(product.id).then(function(response) {
-					var result = User.ProductResponse(response, 'товаров');
-					DB.alert(result.str, result.title);
-					if(result.status == 'add') {
-						product.product_list = true;
-					} 
-					else if(result.status == 'remove') {
-						product.product_list = false;
-					}
-				});
-			}
+				var images = product.images;
+				images = images.split(',');
+				product['images_array'] = images;
+				product['product_list'] = userProductList[product.id] ? true : false;
+				product['shopping_list'] = userShoppingList[product.id] ? true : false;
+				product['slug'] = userShoppingList[product.id] ? 'В списке покупок' : 'В список покупок';
+				product['vote_boolean'] = productVotes[product.id] ? true : false;
+			  product['vote_text'] = productVotes[product.id] ? 'Вы проголосовали!' : 'Проголосовать за тест';
 
-			$scope.addShoppingList = function(product) {
-				User.updateShoppingList(product.id).then(function(response) {
-					var result = User.ProductResponse(response, 'покупок');
-					DB.alert(result.str, result.title);
-					if(result.status == 'add') {
-						product.shopping_list = true;
-						product.slug = 'В списке покупок';
-					} 
-					else if(result.status == 'remove') {
-						product.shopping_list = false;
-						product.slug = 'В список покупок'
-					}					
-				});
-			}
 
-			// Временная проверка массива изображений на 404, последний элемент часто битый..
-			for(var i = 0; i < product['images_array'].length; i++) {
-				var count = 0;
-				$http.get(product['images_array'][i]).
-					success(function() {
+				$scope.updateProductList = function(product) {
+					User.updateProductList(product.id).then(function(response) {
+						var result = User.ProductResponse(response, 'товаров');
+						DB.alert(result.str, result.title);
+						if(result.status == 'add') {
+							product.product_list = true;
+						} 
+						else if(result.status == 'remove') {
+							product.product_list = false;
+						}
+					});
+				}
+
+				$scope.addShoppingList = function(product) {
+					User.updateShoppingList(product.id).then(function(response) {
+						var result = User.ProductResponse(response, 'покупок');
+						DB.alert(result.str, result.title);
+						if(result.status == 'add') {
+							product.shopping_list = true;
+							product.slug = 'В списке покупок';
+						} 
+						else if(result.status == 'remove') {
+							product.shopping_list = false;
+							product.slug = 'В список покупок'
+						}					
+					});
+				}
+
+				$scope.addProductVotes = function(product) {
+					User.addProductVotes(product).then(function(response) {
+						product['vote_boolean'] = true;
+	  				product['vote_text'] = 'Вы проголосовали!';
+					});
+				}
+
+				// Временная проверка массива изображений на 404, последний элемент часто битый..
+				for(var i = 0; i < product['images_array'].length; i++) {
+					var count = 0;
+					$http.get(product['images_array'][i]).
+						success(function() {
+							count++;
+					}).
+					error(function(data, status) {
 						count++;
-				}).
-				error(function(data, status) {
-					count++;
-					if (status == 404) {
-						product['images_array'].splice( (count - 1) , 1);
-					}	
-				});
-			};
+						if (status == 404) {
+							product['images_array'].splice( (count - 1) , 1);
+						}	
+					});
+				};
 
-      $scope.arrayDangerLevel = [];
-      for(var i = 0; i < 4; i++) {
-      	if(i < product.danger_level) {
-      		$scope.arrayDangerLevel.push(true)
-      	}
-      	else {
-      		$scope.arrayDangerLevel.push(false);
-      	}	
-      }
+	      $scope.arrayDangerLevel = [];
+	      for(var i = 0; i < 4; i++) {
+	      	if(i < product.danger_level) {
+	      		$scope.arrayDangerLevel.push(true)
+	      	}
+	      	else {
+	      		$scope.arrayDangerLevel.push(false);
+	      	}	
+	      }
 
 
-      $scope.dangerLevelText = '';	
-      switch(product.danger_level) {
-      	case 1:
-      		$scope.dangerLevelText = 'Низкая'
-      		break;
-      	case 2:
-      		$scope.dangerLevelText = 'Средняя';	
-      		break;
-      	case 3:
-      		$scope.dangerLevelText = 'Высокая';	
-      		break;
-      	case 4:
-      		$scope.dangerLevelText = 'Максимальная';	
-      		break;				
-      };
+	      $scope.dangerLevelText = '';	
+	      switch(product.danger_level) {
+	      	case 1:
+	      		$scope.dangerLevelText = 'Низкая'
+	      		break;
+	      	case 2:
+	      		$scope.dangerLevelText = 'Средняя';	
+	      		break;
+	      	case 3:
+	      		$scope.dangerLevelText = 'Высокая';	
+	      		break;
+	      	case 4:
+	      		$scope.dangerLevelText = 'Максимальная';	
+	      		break;				
+	      };
 
-      if(product.test_cons)      	
-      	$scope.arrayMinus = product.test_cons.split(',');
-      if(product.test_pros)  
-      	$scope.arrayPlus = product.test_pros.split(',');
+	      if(product.test_cons)      	
+	      	$scope.arrayMinus = product.test_cons.split(',');
+	      if(product.test_pros)  
+	      	$scope.arrayPlus = product.test_pros.split(',');
 
-      console.log($scope.arrayPlus);
+	      Category.getById(product.category_id).then(function(category) {
+	      	$scope.category = category;
+	      	$scope.title = category.name;
+	      	$scope.showCatName = category.show_name == 1 ? category.name_sg : '';
+	      	$scope.linkSlug = category.disposable ? 'У меня есть' : 'Покупаю постоянно';
+	      	
+	      	var cproperties = []
+	      	if (category.properties) {
+	      		cproperties = JSON.parse(category.properties);
+	      	}
+	      	//console.log(cproperties);
 
-      Category.getById(product.category_id).then(function(category) {
-      	$scope.category = category;
-      	$scope.title = category.name;
-      	$scope.showCatName = category.show_name == 1 ? category.name_sg : '';
-      	$scope.linkSlug = category.disposable ? 'У меня есть' : 'Покупаю постоянно';
-      	
-      	var cproperties = []
-      	if (category.properties) {
-      		cproperties = JSON.parse(category.properties);
-      	}
-      	//console.log(cproperties);
+	      	// характеристики товара
+	      	Product.properties(product.id).then(function(properties) {
+	      		var pproperties = {};
+	      		angular.forEach(properties, function(property){
+	      			pproperties[property.property_id] = property;
+	      		});
 
-      	// характеристики товара
-      	Product.properties(product.id).then(function(properties) {
-      		var pproperties = {};
-      		angular.forEach(properties, function(property){
-      			pproperties[property.property_id] = property;
-      		});
-
-      		$scope.properties = [];
-      		angular.forEach(cproperties, function(cp, index) {
-      			angular.forEach(cp.properties, function(prop) {	
-      				if (pproperties[prop.id]) {
-								prop['value'] = pproperties[prop.id].value;		
-		      		}
-      			});
-      			$scope.properties.push(cp);
-      		});
-      	});
-      });
+	      		$scope.properties = [];
+	      		angular.forEach(cproperties, function(cp, index) {
+	      			angular.forEach(cp.properties, function(prop) {	
+	      				if (pproperties[prop.id]) {
+									prop['value'] = pproperties[prop.id].value;		
+			      		}
+	      			});
+	      			$scope.properties.push(cp);
+	      			$scope.overlayload = false;
+	      		});
+	      	});
+	      });
+     	});
 	});
 
 	// Отзывы
