@@ -179,6 +179,7 @@ angular.module('user-services', [])
                     time_shopping_list = date.getTime()
                     shopping_list = [];
                     shopping_list = result.data.items;
+                    localStorage.setItem('ShoppingListCount', shopping_list.length);
                 }
 
                 return shopping_list;
@@ -229,23 +230,43 @@ angular.module('user-services', [])
                 data: 'items=' + idsJson
             }).then(function(result) {
                 if (result.status == 200) {
+                    // console.log('IF');
                     var date = new Date();
                     time_shopping_list = date.getTime()
                     shopping_list = [];
                     shopping_list = result.data.items;
-                    localStorage.setItem('shoppingListCount', ids.length);
+                    localStorage.setItem('ShoppingListCount', ids.length);
                     var resultFull = [];
                     resultFull.push(result, del)
+                    self.shoppingList();
                     return resultFull;
                 }
-                return shopping_list;
+                return shopping_list;    
 
             }, function(result) {
-                console.log(result);
                 return result.status;
             });
         }); 
     };
+
+
+    // Отслеживаем состояние списка покупок пользователя
+    self.getShoppingListArray = function() {
+        if(shopping_list && shopping_list !== null) {
+            localStorage.setItem('ShoppingListCount', shopping_list.length);
+        }
+        if(shopping_list) {
+            var ids = {};
+            for(var i = 0, length = shopping_list.length; i < length; i++) {
+                ids[shopping_list[i].productId] = shopping_list[i].productId;
+            }
+            return ids;       
+        }
+        else {
+            return {};
+        }
+    }
+
 
     // Получение списка рекомендованных товаров
     self.recommendedList = function() {
@@ -374,7 +395,8 @@ angular.module('user-services', [])
                         break;
                     }
                 }
-                } else {
+                } 
+                else {
                     products_list.push({id: ids});
                 }
 
@@ -387,7 +409,7 @@ angular.module('user-services', [])
         });
     };
 
-    // Отслеживаем состояние продуктов пользователя
+    // Отслеживаем состояние товаров пользователя
     self.getProductListArray = function() {
         if(products_list) {
             var ids = {};
@@ -402,43 +424,21 @@ angular.module('user-services', [])
     }
 
 
-    // Отслеживаем состояние продуктов пользователя
-    self.getShoppingListArray = function() {
-
-        var count = 0;
-        if(shopping_list && shopping_list !== null) {
-            count = shopping_list.length;
-        }
-        localStorage.setItem('shoppingListCount', count);
-
-        if(shopping_list) {
-            var ids = {};
-            for(var i = 0, length = shopping_list.length; i < length; i++) {
-                ids[shopping_list[i].id] = shopping_list[i].id;
-            }
-            return ids;      
-        }
-        else {
-            return {};
-        }
-    }
-
-
     // Ответ от сервера при добавлении товаров в списки
     self.ProductResponse = function(data, slug) {
         if (!$rootScope.online) {
-            return {'str': 'Проверьте ваше интернет-соединение!', status: false};
+            return {'str': 'Проверьте ваше интернет-соединение!', status: false,  'title': 'Ошибка!'};
         }
         else if (!self.is_auth()){
-            return {'str': 'Для добавления в список ' + slug + ' необходимо авторизоваться!', status: false};
+            return {'str': 'Для добавления в список ' + slug + ' необходимо авторизоваться!', status: false, 'title': 'Внимание!'};
         }
         else if (typeof(data) === 'object') {
             if(data[1] === true)
-                return {'str': 'Товар удален из списка ' + slug + '!', status: 'remove'};
-            return {'str': 'Товар добавлен в список ' + slug + '!', status: 'add'};
+                return {'str': 'Товар удален из списка ' + slug + '!', status: 'remove', 'title': 'Выполнено!'};
+            return {'str': 'Товар добавлен в список ' + slug + '!', status: 'add', 'title': 'Выполнено!'};
         }
         else {
-            return {'str': 'Ошибка добавления товара!', status: false};
+            return {'str': 'Ошибка добавления товара!', status: false, 'title': 'Ошибка!'};
         }
     }
 

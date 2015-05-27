@@ -125,6 +125,7 @@ app.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
 
   .state('app.shoppingList', {
     url: "/user/shopping-list",
+    cache: false,
     views: {
       'menuContent': {
         templateUrl: "templates/shopping-list.html",

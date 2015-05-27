@@ -11,7 +11,7 @@
 						<ion-spinner icon="circles" class="loader"></ion-spinner>
 					</div>
 					<div class="product__single-info-right">
-						<a ng-href="#" ng-click="addShoppingList(product.id)"><i class="fa fa-shopping-cart"></i>В список покупок</a>
+						<a ng-href="#" ng-class="(product.shopping_list==true) ? 'active' : ''" ng-click="addShoppingList(product)" href="#"><i class="fa fa-shopping-cart"></i>{{ product.slug }}</a>
 						<a ng-href="#" ng-class="(product.product_list==true) ? 'active' : ''" ng-click="updateProductList(product)"><i class="fa fa-thumbs-o-up"></i>{{ linkSlug }}</a>
 					</div>
 				</div>

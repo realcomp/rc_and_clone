@@ -730,6 +730,10 @@
   .product__shopping-tab span {
     top: -3px;
   }
+  .product__overlay-swipe.two .fa {
+    font-size: 44px;
+    margin-top: -22px;
+  }
 
   /* profile */ 
   .user__profile-name {
@@ -981,7 +985,7 @@
     margin-bottom: 20px;
   }
   .menu__content .list-count {
-    line-height: 25px;
+    line-height: 24px;
     height: 24px;
     width: 24px;
     margin-top: -12px;
@@ -1033,6 +1037,17 @@
     font-size: 14px !important;
     width: 78%;
   }
+  .clear_already-list {
+    font-size: 20px;
+  }
+  .clear_already-list span {
+    font-size: 16px;
+  }
+  .product__overlay-swipe.two .fa {
+    right: 25px;
+    font-size: 36px;
+    margin-top: -18px;
+  }
 
 
   /* profile */ 
@@ -1075,6 +1090,11 @@
   }
   .product__overlay-swipe a {
     font-size: 13px;
+  }
+  .product__overlay-swipe.two .fa {
+    right: 20px;
+    font-size: 32px;
+    margin-top: -16px;
   }
 }
 

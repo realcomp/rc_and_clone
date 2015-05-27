@@ -14,26 +14,59 @@
 		<div ng-if="seachActive == false">
 		<ion-list>
 
-			<div ng-if="shoppingArrayTabs[0].active">
-				<ion-item class="product__category-s" ng-repeat="category in shoppingList">
+			<div ng-if="shoppingArrayTabs[0].active && shoppingListShow">
+				<ion-item ng-if="shoppingList.length >= 1" ng-show="category.p.length" class="product__category-s" ng-repeat="category in shoppingList">
 				  	<span class="product__category-s-name">{{ category.c.name }}</span>
 				  	<span class="product__category-s-count">{{ category.p.length}}</span>
 				  	<span class="clearfix"></span>
-				  	<ion-item class="product__category-s-inner" ng-repeat="item in category.p">
-				  		<div class="product__category-s-inner-image">
-				  			<ion-spinner icon="circles" class="loader"></ion-spinner>
-				  			<img ng-src="{{ item.product.images }}" err-src="img/rk.png">
-				  		</div>
-				  		<span class="product__category-s-inner-name">{{ item.product.name }}</span>
-				  		<span class="product__category-s-inner-count">1</span>
-				  	</ion-item>
-				  	</ion-item>
-				</ion-item>
-					<span ng-show="shoppingList.length < 1" class="search__no-result">Вы пока не добавили не одного товара!</span>
+				  <ion-item ng-if="!item.hide" class="product__category-s-inner" ng-repeat="item in category.p" on-swipe-right="item.class='swipe-active';addShoppingList(item, true); hide(item, category, shoppingList);" ng-class="item.class">
+			  		<div class="product__category-s-inner-image">
+			  			<ion-spinner icon="circles" class="loader"></ion-spinner>
+			  			<img ng-src="{{ item.product.images }}" err-src="img/rk.png">
+			  		</div>
+			  		<span class="product__category-s-inner-name">{{ item.product.name }}</span>
+			  		<span class="product__category-s-inner-count">1</span>
+			  		<span class="product__overlay-swipe two">
+							<span class="swipe__link-wrap">
+								<i class="fa fa-share"></i>
+							</span>
+						</span>
+				  </ion-item>
+				 </ion-item>
+				<span ng-if="shoppingList.length < 1 || shopping_list_count < 1" class="search__no-result">Вы пока не добавили ни одного товара!</span>
 			</div>
 
 			<div ng-if="shoppingArrayTabs[1].active">
-				<p class="search__no-result">В разработке...</p>
+				<ion-item class="product__category" ng-repeat="product in alreadyBuyList" on-swipe-right="product.class='swipe-active'" ng-class="product.class" on-swipe-left="product.class = ''"  ng-href="#/app/product/{{ product.id }}">
+				  <span class="product__category-thumbnail">
+			  		<img ng-src="{{ product.thumbnail }}">
+			  		<ion-spinner icon="circles" class="loader"></ion-spinner>
+				  </span>
+				  <span class="product__category-center">
+			  		<span class="product__category-name">{{ showCatName  }} {{ product.name }}</span>
+			  		<span ng-if="product.price" class="product__category-price">от {{ product.price }} Р</span>	
+			  	</span>
+			  	<span class="product__category-rating-wrap">
+				  	<span class="product__category-rating product-rating" ng-class="productRatingType(product)">
+				  		<i ng-if="product.ratingv == 'X'" class="fa fa-ban"></i>
+				  		<i ng-if="product.ratingv != 'X'">
+				  			{{ product.ratingv }}
+				  		</i>				  	
+				  	</span>
+			  	</span>
+		  		<span class="product__overlay-swipe">
+					<span class="swipe__link-wrap">
+						<a ng-href="#" ng-class="(product.shopping_list==true) ? 'active' : ''" ng-click="addShoppingList(product)" href="#"><i class="fa fa-shopping-cart"></i>{{ product.slug }}</a>
+						<a ng-href="#" ng-class="(product.product_list==true) ? 'active' : ''" ng-click="updateProductList(product)" href="#"><i class="fa fa-thumbs-o-up"></i>Покупаю постоянно</a>
+					</span>
+				</span>	
+	  		<span class="product__overlay-active"></span>
+				</ion-item>
+				<span ng-if="!alreadyBuyList" class="search__no-result">Список купленных товаров пуст!</span>
+				<a ng-if="alreadyBuyList" href="#" ng-click="alreadyBuyClear()" class="clear_already-list">
+					<i class="fa fa-remove"></i>
+					<span>Очистить список</span>
+				</a>
 			</div>
 
 			<div ng-if="shoppingArrayTabs[2].active">
@@ -56,8 +89,8 @@
 			  	</span>
 		  		<span class="product__overlay-swipe">
 					<span class="swipe__link-wrap">
-						<a ng-href="#" ng-click="addShoppingList(product.id)" href="#" class=""><i class="fa fa-shopping-cart"></i>В список покупок</a>
-						<a ng-href="#" ng-class="(product.product_list==true) ? 'active' : ''" ng-click="updateProductList(product)" href="#"><i class="fa fa-thumbs-o-up"></i>{{ product.slug }}</a>
+						<a ng-href="#" ng-class="(product.shopping_list==true) ? 'active' : ''" ng-click="addShoppingList(product)" href="#"><i class="fa fa-shopping-cart"></i>{{ product.slug }}</a>
+						<a ng-href="#" ng-class="(product.product_list==true) ? 'active' : ''" ng-click="updateProductList(product)" href="#"><i class="fa fa-thumbs-o-up"></i>Покупаю постоянно</a>
 					</span>
 				</span>	
 	  		<span class="product__overlay-active"></span>
@@ -87,8 +120,8 @@
 				  	</span>
 				  	<span class="product__overlay-swipe">
 							<span class="swipe__link-wrap">
-								<a ng-href="#" ng-click="addShoppingList(product.id)" href="#" class=""><i class="fa fa-shopping-cart"></i>В список покупок</a>
-								<a ng-href="#" ng-class="(product.product_list==true) ? 'active' : ''" ng-click="updateProductList(product)" href="#"><i class="fa fa-thumbs-o-up"></i>В список товаров</a>
+								<a ng-href="#" ng-class="(product.shopping_list==true) ? 'active' : ''" ng-click="addShoppingList(product)" href="#"><i class="fa fa-shopping-cart"></i>{{ product.slug }}</a>
+								<a ng-href="#" ng-class="(product.product_list==true) ? 'active' : ''" ng-click="updateProductList(product)" href="#"><i class="fa fa-thumbs-o-up"></i>Покупаю постоянно</a>
 							</span>
 						</span>	
 	  		<span class="product__overlay-active"></span>
