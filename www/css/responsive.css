@@ -957,6 +957,12 @@
     width: 150px;
     margin-top: -0;
   }
+  .product__single-plus-and-minus .fa-plus-square-o,
+  .product__single-plus-and-minus .fa-minus-square-o {
+    position: relative;
+    top: 1px;
+    font-size: 18px;
+  }
 
   /* menu */
   .menu__avatar {

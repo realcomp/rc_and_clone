@@ -693,19 +693,18 @@ a:active {
 	float: left;
 	width: 45%;
 }
-.product__single-plus-icon,
-.product__single-minus-icon {
-	padding-right: 5px;
-	color: #199B50;
-  font-size: 22px;
-  font-weight: bold;
+.product__single-plus-and-minus .fa-plus-square-o,
+.product__single-plus-and-minus .fa-minus-square-o {
+	 padding-right: 8px;
+  color: #199B50;
+  font-size: 20px;
   vertical-align: top;
 }
 .product__single-minus {
 	float: right;
 	width: 45%;
 }
-.product__single-minus-icon {
+.product__single-plus-and-minus .fa-minus-square-o {
 	color: #C74441;
 }
 

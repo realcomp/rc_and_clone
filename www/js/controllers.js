@@ -384,6 +384,8 @@ app.controller('ProductCtrl', function($scope, $location, $stateParams, $ionicHi
       if(product.test_pros)  
       	$scope.arrayPlus = product.test_pros.split(',');
 
+      console.log($scope.arrayPlus);
+
       Category.getById(product.category_id).then(function(category) {
       	$scope.category = category;
       	$scope.title = category.name;
