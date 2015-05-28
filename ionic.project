@@ -10,5 +10,15 @@
       "path": "/files",
       "proxyUrl": "http://api.roscontrol.com/files"
     }
-  ]
+  ],
+  "browsers": [
+    {
+      "platform": "android",
+      "browser": "crosswalk",
+      "version": "13.41.318.0"
+    }
+  ],
+  "serve": {
+    "defaultBrowser": "chrome"
+  }
 }

@@ -41,6 +41,7 @@
 .bar.bar-stable .title {
 	font-family: "BrutalMedium";
 	top: 17px;
+	text-align: center;
 }
 .bar .button.button-icon .icon:before,
 .bar .button.button-icon:before,
@@ -1390,8 +1391,8 @@ a:active {
 	height: 62px;
 	padding: 0;
 }
-.footer__shopping-tabs > .tabs-bottom > .tabs {
-	top: 0;
+.footer__shopping-tabs .tabs {
+	top: 0 !important;
 	border-color: #EAEAEA;
 }
 .product__shopping-tabs-wrap {

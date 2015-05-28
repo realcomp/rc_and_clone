@@ -154,6 +154,9 @@ app.controller('CategoryCtrl', function($scope, $location, $stateParams, $ionicH
 							//
 							$scope.addProductVotes = function(product) {
 								User.addProductVotes(product).then(function(response) {
+									if(response === null)
+										return false;
+
 									product['vote_boolean'] = true;
 		      				product['vote_text'] = 'Я За!';
 								});
@@ -318,10 +321,8 @@ app.controller('ProductCtrl', function($scope, $location, $stateParams, $ionicHi
 
 				var userProductList = User.getProductListArray(),
 						userShoppingList = User.getShoppingListArray();
-
-				var images = product.images;
-				images = images.split(',');
-				product['images_array'] = JSON.parse(images);
+				console.log(product);			
+				product['images_array'] = JSON.parse(product.images);
 				product['product_list'] = userProductList[product.id] ? true : false;
 				product['shopping_list'] = userShoppingList[product.id] ? true : false;
 				product['slug'] = userShoppingList[product.id] ? 'В списке покупок' : 'В список покупок';
@@ -359,6 +360,9 @@ app.controller('ProductCtrl', function($scope, $location, $stateParams, $ionicHi
 
 				$scope.addProductVotes = function(product) {
 					User.addProductVotes(product).then(function(response) {
+						if(response === null)
+										return false;
+
 						product['vote_boolean'] = true;
 	  				product['vote_text'] = 'Вы проголосовали!';
 					});
@@ -500,7 +504,7 @@ app.controller('ProductCtrl', function($scope, $location, $stateParams, $ionicHi
 
 
 // Контроллер меню
-app.controller('MenuCtrl', function($scope) {
+app.controller('MenuCtrl', function($scope, $ionicSideMenuDelegate, User) {
 	// Тут можно будет проставить ширину для меню на различных устройствах
 	/*
 	if (window.cordova) {
@@ -509,6 +513,12 @@ app.controller('MenuCtrl', function($scope) {
 		$scope.menuWidth = 558;
 	}
 	*/
+
+	$scope.closeMenu = function() {
+		if (User.is_auth()) {
+			$ionicSideMenuDelegate.toggleRight();
+		}
+	}
 
 	$scope.shoppingListCountUpdate = function() {
 		$scope.shoppingListCount = localStorage.getItem('ShoppingListCount');
@@ -530,7 +540,7 @@ app.controller('MenuCtrl', function($scope) {
  
 
 // Контроллер авторизации
-app.controller('AuthorizationCtrl', function($scope, $http, $ionicModal, $ionicBackdrop, $location, User) {
+app.controller('AuthorizationCtrl', function($scope, $http, $ionicModal, $ionicSideMenuDelegate,  $ionicBackdrop, $location, User) {
 
   // Обьект с парой логин-пароль
   $scope.loginData = {};
@@ -559,8 +569,15 @@ app.controller('AuthorizationCtrl', function($scope, $http, $ionicModal, $ionicB
     $scope.modal.hide();
     $scope.loginData['password'] = '';
     $scope.loginError = '';
-		if(where == 'recommended' && !User.is_auth())
-    	$location.path('/');
+		if(where == 'recommended') {
+			if(!User.is_auth()) {
+    		$location.path('/');
+			}
+    	else {
+    		$ionicSideMenuDelegate.toggleRight();
+    		$location.path('/app/user/shopping-list');
+    	} 
+		}
   };
 
   // Открыть
@@ -832,7 +849,6 @@ app.controller('AboutCtrl', function($scope, DB, Product, Category) {
   $scope.iH = window.innerHeight;
 
   $scope.windowOpen = function(href) {
-  	alert('Открою!');
   	window.open(href, '_blank', 'location=yes');
   }
 
