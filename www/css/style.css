@@ -921,6 +921,7 @@ a:active {
 }
 .product__vote-wait {
 	padding: 0;
+	line-height: 38px;
 }
 .product__vote-wait:hover,
 .product__vote-wait:active,

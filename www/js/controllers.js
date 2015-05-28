@@ -321,7 +321,7 @@ app.controller('ProductCtrl', function($scope, $location, $stateParams, $ionicHi
 
 				var images = product.images;
 				images = images.split(',');
-				product['images_array'] = images;
+				product['images_array'] = JSON.parse(images);
 				product['product_list'] = userProductList[product.id] ? true : false;
 				product['shopping_list'] = userShoppingList[product.id] ? true : false;
 				product['slug'] = userShoppingList[product.id] ? 'В списке покупок' : 'В список покупок';
@@ -406,10 +406,13 @@ app.controller('ProductCtrl', function($scope, $location, $stateParams, $ionicHi
 	      		break;				
 	      };
 
-	      if(product.test_cons)      	
-	      	$scope.arrayMinus = product.test_cons.split(',');
-	      if(product.test_pros)  
-	      	$scope.arrayPlus = product.test_pros.split(',');
+
+	      if(product.test_cons)
+	      	$scope.arrayMinus  = JSON.parse(product.test_cons);
+
+	      if(product.test_pros) 
+	      	$scope.arrayPlus  = JSON.parse(product.test_pros);
+
 
 	      Category.getById(product.category_id).then(function(category) {
 	      	$scope.category = category;
@@ -827,6 +830,11 @@ app.controller('AboutCtrl', function($scope, DB, Product, Category) {
 
 	$scope.iW = window.innerWidth;
   $scope.iH = window.innerHeight;
+
+  $scope.windowOpen = function(href) {
+  	alert('Открою!');
+  	window.open(href, '_blank', 'location=yes');
+  }
 
 });
 

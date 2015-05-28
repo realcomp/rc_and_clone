@@ -288,7 +288,7 @@
     width: 23%;
     height: 12px;
   }
-  .product__vote-wait, .product__category-button-test, .like__googleplay {
+ .product__category-button-test, .like__googleplay {
     padding: 12px 0;
   }
   .product__vote-wait,
@@ -451,8 +451,7 @@
   .product__category .product__category-thumbnail {
     width: 80px;
   }
-  .main__category-tested,
-  .product__vote-wait, 
+  .main__category-tested, 
   .product__category-button-test,
   .like__googleplay {
     padding: 9px 0;
@@ -592,13 +591,17 @@
     top: 40%;
     font-size: 24px;
   }
-  .main__category-tested, .product__vote-wait, .product__category-button-test, .like__googleplay {
+  .main__category-tested, .product__category-button-test, .like__googleplay {
     padding: 7px 0;
   }
   .product__vote-wait,
   .like__googleplay,
   .product__category-button-test {
     min-height: 32px;
+  }
+  .product__vote-wait {
+    width: 250px;
+    line-height: 32px;
   }
   .main__category-tested {
     width: 110px;
@@ -684,6 +687,12 @@
   }
   .product__single-rating-right {
     font-size: 22px;
+  }
+  .product__slider-rate {
+    width: 100%;
+    float: left;
+    margin-top: 25px;
+    text-align: left;
   }
 
   /* menu */
@@ -822,6 +831,7 @@
   .main__category-tested {
     width: 100px;
     top: 57%;
+    padding: 5px 0;
     font-size: 14px;
   }
 
@@ -953,10 +963,7 @@
     width: 100px;
   }
   .product__slider-rate {
-    margin-top: 12px;
-  }
-  .product__slider-rate {
-    width: 100px;
+    margin-top: 20px;
   }
   .product__slider-rating .fa {
     font-size: 16px;

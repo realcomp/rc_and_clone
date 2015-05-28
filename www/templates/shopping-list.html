@@ -22,7 +22,7 @@
 				  <ion-item ng-if="!item.hide" class="product__category-s-inner" ng-repeat="item in category.p" on-swipe-right="item.class='swipe-active';addShoppingList(item, true); hide(item, category, shoppingList);" ng-class="item.class">
 			  		<div class="product__category-s-inner-image">
 			  			<ion-spinner icon="circles" class="loader"></ion-spinner>
-			  			<img ng-src="{{ item.product.images }}" err-src="img/rk.png">
+			  			<img src="{{ item.product.thumbnail }}" err-src="img/rk.png">
 			  		</div>
 			  		<span class="product__category-s-inner-name">{{ item.product.name }}</span>
 			  		<span class="product__category-s-inner-count">1</span>
@@ -51,7 +51,7 @@
 				  		<i ng-if="product.ratingv == 'X'" class="fa fa-ban"></i>
 				  		<i ng-if="product.ratingv != 'X'">
 				  			{{ product.ratingv }}
-				  		</i>				  	
+				  		</i>				  	 
 				  	</span>
 			  	</span>
 		  		<span class="product__overlay-swipe">
@@ -129,9 +129,7 @@
 				<p class="search__no-result" ng-if="searchList.length == 0">Ваш поиск не дал результатов...</p>
 			</ion-list>
 		</div>
-
 	</ion-content>
-
 	<ion-footer-bar class="footer__shopping-tabs">
 	  <ion-tabs>
 	  <ul class="product__shopping-tabs-wrap">

@@ -6,7 +6,7 @@ angular.module('db-services', ['db.config', 'ngCordova'])
 
     self.url = function(url) {
         if (window.cordova) {
-            return 'http://api.roscontrol.com' + url;
+            //return 'http://api.roscontrol.com' + url;
         }
 
         return url;
@@ -631,10 +631,10 @@ console.log(slice);
                 product.price,
                 product.name,
                 product.thumbnail,
-                product.images,
+                JSON.stringify(product.images),
                 'test' in product && 'summary' in product.test && product.test.summary ? product.test.summary : '',
-                'test' in product && 'pros' in product.test && product.test.pros ? product.test.pros : '',
-                'test' in product && 'cons' in product.test && product.test.cons ? product.test.cons : ''
+                JSON.stringify('test' in product && 'pros' in product.test && product.test.pros ? product.test.pros : []),
+                JSON.stringify('test' in product && 'cons' in product.test && product.test.cons ? product.test.cons : [])
             ];
 
             tx.executeSql(query, values, function(transaction, result) {

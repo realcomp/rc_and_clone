@@ -440,7 +440,7 @@ angular.module('user-services', [])
             return {'str': 'Товар добавлен в список ' + slug + '!', status: 'add', 'title': 'Выполнено!'};
         }
         else {
-            return {'str': 'Ошибка добавления товара!', status: false, 'title': 'Ошибка!'};
+            return {'str': 'Ошибка добавления товара! --- ' + data, status: false, 'title': 'Ошибка!'};
         }
     };
 
