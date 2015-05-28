@@ -504,7 +504,7 @@ app.controller('ProductCtrl', function($scope, $location, $stateParams, $ionicHi
 
 
 // Контроллер меню
-app.controller('MenuCtrl', function($scope, $ionicSideMenuDelegate, User) {
+app.controller('MenuCtrl', function($scope, $ionicSideMenuDelegate, $rootScope,  User) {
 	// Тут можно будет проставить ширину для меню на различных устройствах
 	/*
 	if (window.cordova) {
@@ -514,7 +514,9 @@ app.controller('MenuCtrl', function($scope, $ionicSideMenuDelegate, User) {
 	}
 	*/
 
-	$scope.closeMenu = function() {
+	$scope.closeMenu = function(w) {
+		$rootScope.where = w;
+		console.log('WWWWWW', w);
 		if (User.is_auth()) {
 			$ionicSideMenuDelegate.toggleRight();
 		}
@@ -540,7 +542,8 @@ app.controller('MenuCtrl', function($scope, $ionicSideMenuDelegate, User) {
  
 
 // Контроллер авторизации
-app.controller('AuthorizationCtrl', function($scope, $http, $ionicModal, $ionicSideMenuDelegate,  $ionicBackdrop, $location, User) {
+app.controller('AuthorizationCtrl', function($scope, $http, $ionicModal, $ionicSideMenuDelegate, $rootScope, $ionicBackdrop, $location, User) {
+
 
   // Обьект с парой логин-пароль
   $scope.loginData = {};
@@ -555,7 +558,6 @@ app.controller('AuthorizationCtrl', function($scope, $http, $ionicModal, $ionicS
 	}
 
 	$scope.email = '';
-	var where = '';
 
   // Шаблон
   $ionicModal.fromTemplateUrl('templates/login.html', {
@@ -569,7 +571,8 @@ app.controller('AuthorizationCtrl', function($scope, $http, $ionicModal, $ionicS
     $scope.modal.hide();
     $scope.loginData['password'] = '';
     $scope.loginError = '';
-		if(where == 'recommended') {
+    console.log('ROOT', $rootScope.where);
+		if($rootScope.where == 'recommended') {
 			if(!User.is_auth()) {
     		$location.path('/');
 			}
@@ -578,11 +581,11 @@ app.controller('AuthorizationCtrl', function($scope, $http, $ionicModal, $ionicS
     		$location.path('/app/user/shopping-list');
     	} 
 		}
+		//$rootScope.where = '';
   };
 
   // Открыть
   $scope.login = function(w) {
-  	where = w || '';
   	if(!localStorage.getItem('rk_user')) {
     	$scope.modal.show();
   	}

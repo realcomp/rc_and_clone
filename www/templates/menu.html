@@ -34,7 +34,7 @@
             Рейтинг товаров
           </span>
         </ion-item>
-        <ion-item nav-clear ng-href='{{ userProfile ? "#/app/user/shopping-list" : "#" }}' ng-click="login('recommended'); closeMenu();">
+        <ion-item nav-clear ng-href='{{ userProfile ? "#/app/user/shopping-list" : "#" }}' ng-click="closeMenu('recommended'); login();">
         	<span class="menu__item-inner">
            <i class="fa fa-shopping-cart"></i>
             Список покупок 
