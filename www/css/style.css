@@ -919,6 +919,9 @@ a:active {
 	-moz-border-radius: 3px;
 	border-radius: 3px;
 }
+.product__vote-wait {
+	padding: 0;
+}
 .product__vote-wait:hover,
 .product__vote-wait:active,
 .product__category-button-test:hover,
