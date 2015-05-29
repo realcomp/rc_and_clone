@@ -13,3 +13,5 @@
  `ionic plugin add https://github.com/driftyco/ionic-plugins-keyboard.git`
 - sqlite
  `cordova plugin add https://github.com/brodysoft/Cordova-SQLitePlugin`
+- Copy SQLite Database from assets(Android) or Resources(iOS) to App Directory
+ `cordova plugin add https://github.com/an-rahulpandey/cordova-plugin-dbcopy.git`
