@@ -5,15 +5,15 @@
     <div class="tabs">
 	    <ul class="product__category-tabs-wrap">
 		    <li class="product__category-tabs" ng-click="tabsCategory($event, 1);" ng-class="classTabCheck">
-		      <i class="fa fa-check-square-o"></i>
+		      <i class="icon ion-checkmark-circled"></i>
 		      <span>Проверенные товары</span>
 		    </li>
 		    <li class="product__category-tabs" ng-click="tabsCategory($event, 2);" ng-class="classTabBlack">
-		      <i class="fa fa-ban"></i>
+		      <i class="icon ion-close-circled"></i>
 		      <span>Черный список</span>
 		    </li>
 		    <li class="product__category-tabs" ng-click="tabsCategory($event, 3);" ng-class="classTabWait">
-		      <i class="fa fa-pencil-square-o"></i>
+		      <i class="icon ion-help-circled"></i>
 		      <span>Ожидают проверки</span>
 		    </li>
 	  	</ul>
@@ -48,7 +48,7 @@
 			  	</span>
 			  	<span class="product__category-rating-wrap">
 			  		<span class="product__category-rating product-rating" ng-class="productRatingType(product)">
-				  		<i ng-if="product.ratingv == 'X'" class="fa fa-ban"></i>
+				  		<i ng-if="product.ratingv == 'X'" class="icon ion-close-round"></i>
 				  		<i ng-if="product.ratingv != 'X'">
 				  			{{ product.ratingv }}
 				  		</i>				  	
@@ -56,8 +56,8 @@
 			  	</span>
 			  	<span class="product__overlay-swipe">
 						<span class="swipe__link-wrap">
-							<a ng-href="#" ng-class="(product.shopping_list==true) ? 'active' : ''" ng-click="addShoppingList(product)" href="#"><i class="fa fa-shopping-cart"></i>{{ product.slug }}</a>
-							<a ng-href="#" ng-class="(product.product_list==true) ? 'active' : ''" ng-click="updateProductList(product)" href="#"><i class="fa fa-thumbs-o-up"></i>{{ linkSlug }}</a>
+							<a ng-href="#" ng-class="(product.shopping_list==true) ? 'active' : ''" ng-click="addShoppingList(product)" href="#"><i class="icon ion-bag"></i>{{ product.slug }}</a>
+							<a ng-href="#" ng-class="(product.product_list==true) ? 'active' : ''" ng-click="updateProductList(product)" href="#"><i class="icon ion-android-favorite-outline"></i>{{ linkSlug }}</a>
 						</span>
 					</span>	
 			  	<span class="product__overlay-active"></span>
@@ -77,13 +77,13 @@
 				  	</span>
 				  	<span class="product__category-rating-wrap">
 					  	<span class="product__category-rating product-rating" ng-class="productRatingType(product)">
-					  		<i class="fa fa-ban"></i>
+					  		<i class="icon ion-close-round"></i>
 					  	</span>
 				  	</span>
 				  	<span class="product__overlay-swipe">
 							<span class="swipe__link-wrap">
-								<a ng-href="#" ng-class="(product.shopping_list==true) ? 'active' : ''" ng-click="addShoppingList(product)" href="#"><i class="fa fa-shopping-cart"></i>{{ product.slug }}</a>
-								<a ng-href="#" ng-class="(product.product_list==true) ? 'active' : ''" ng-click="updateProductList(product)" href="#"><i class="fa fa-thumbs-o-up"></i>{{ linkSlug }}</a>
+								<a ng-href="#" ng-class="(product.shopping_list==true) ? 'active' : ''" ng-click="addShoppingList(product)" href="#"><i class="icon ion-bag"></i>{{ product.slug }}</a>
+								<a ng-href="#" ng-class="(product.product_list==true) ? 'active' : ''" ng-click="updateProductList(product)" href="#"><i class="icon ion-android-favorite-outline"></i>{{ linkSlug }}</a>
 							</span>
 						</span>	
 			  		<span class="product__overlay-active"></span>
@@ -106,8 +106,8 @@
 				  	</span>
 				  	<span class="product__overlay-swipe">
 							<span class="swipe__link-wrap">
-								<a ng-href="#" ng-class="(product.shopping_list==true) ? 'active' : ''" ng-click="addShoppingList(product)" href="#"><i class="fa fa-shopping-cart"></i>{{ product.slug }}</a>
-								<a ng-href="#" ng-class="(product.product_list==true) ? 'active' : ''" ng-click="updateProductList(product)" href="#"><i class="fa fa-thumbs-o-up"></i>{{ linkSlug }}</a>
+								<a ng-href="#" ng-class="(product.shopping_list==true) ? 'active' : ''" ng-click="addShoppingList(product)" href="#"><i class="icon ion-bag"></i>{{ product.slug }}</a>
+								<a ng-href="#" ng-class="(product.product_list==true) ? 'active' : ''" ng-click="updateProductList(product)" href="#"><i class="icon ion-android-favorite-outline"></i>{{ linkSlug }}</a>
 							</span>
 						</span>	
 			  		<span class="product__overlay-active"></span>

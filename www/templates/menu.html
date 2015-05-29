@@ -30,33 +30,33 @@
       <ion-list>
         <ion-item nav-clear menu-close ng-href="#/app/main/">
           <span class="menu__item-inner">
-          	<i class="fa fa-trophy"></i>
-            Рейтинг товаров
+          	<i class="icon ion-ios-star-half"></i>
+            <span class="menu__item-inner-text">Рейтинг товаров</span>
           </span>
         </ion-item>
         <ion-item nav-clear ng-href='{{ userProfile ? "#/app/user/shopping-list" : "#" }}' ng-click="closeMenu('recommended'); login();">
         	<span class="menu__item-inner">
-           <i class="fa fa-shopping-cart"></i>
-            Список покупок 
+           <i class="icon ion-bag"></i>
+            <span class="menu__item-inner-text">Список покупок </span>
             <span ng-if="shoppingListCount > 0 && userProfile" class="list-count">{{ shoppingListCount }}</span> 
           </span>
         </ion-item>
         <ion-item nav-clear menu-close ng-href="#/app/article">
           <span class="menu__item-inner">
-          	<i class="fa fa-book"></i>
-            Журнал покупателя
+          	<i class="icon ion-ios-book"></i>
+            <span class="menu__item-inner-text">Журнал покупателя</span>
           </span>
         </ion-item>
         <ion-item ng-if="userProfile" nav-clear menu-close ng-href="#/app/user/profile">
           <span class="menu__item-inner">
-       		 <i class="fa fa-user"></i>
-            Мой профиль
+       		 <i class="icon ion-person"></i>
+            <span class="menu__item-inner-text">Мой профиль</span>
           </span>
         </ion-item>
         <ion-item nav-clear menu-close ng-href="#/app/about">
           <span class="menu__item-inner">
-          <i class="fa fa-info-circle"></i>
-            О приложении
+          <i class="icon ion-information-circled"></i>
+            <span class="menu__item-inner-text">О приложении</span>
           </span>  
         </ion-item>
       </ion-list>

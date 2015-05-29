@@ -464,7 +464,7 @@ a:active {
 	display:  inline-block;
 	position: relative;
   top: -5px;
-  margin-left: 5px;
+  margin-left: 10px;
   font-family: "BrutalMedium";
 	font-size: 20px;
   color: #292a2f;
@@ -473,19 +473,19 @@ a:active {
 .product__category-tabs.product__category-tabs-disabled span{
 	display: none;
 }
-.product__category-tabs .fa {
+.product__category-tabs .icon {
 	font-size: 32px
 }
-.product__category-tabs-deactive .fa {
+.product__category-tabs-deactive .icon {
 	color: #666666;
 }
-.product__category-tabs-active .fa {
+.product__category-tabs-active .icon {
 	color: #B5202D;
 }
 .product__category-tabs-disabled {
 	cursor: default;
 }
-.product__category-tabs-disabled .fa {
+.product__category-tabs-disabled .icon {
 	color: #C2C2C2;
 }
 .product__category-filter-wrap {
@@ -586,10 +586,15 @@ a:active {
 .product__single-head .product__single-info-right a:last-child {
 	margin-left: 3px;
 } 
-.product__single-head .product__single-info-right a .fa,
-.product__overlay-swipe a .fa {
+.product__single-head .product__single-info-right a .icon,
+.product__overlay-swipe a .icon {
 	margin-right: 10px;
 	font-size: 36px;
+}
+.product__overlay-swipe a .ion-android-favorite-outline,
+.product__single-head .product__single-info-right a .ion-android-favorite-outline {
+	position: relative;
+  top: 3px;
 }
 
 /* product__overlay-swipe */
@@ -712,27 +717,35 @@ a:active {
 	display: table;
 	margin-bottom: 7px;
 }
-.product__single-plus-and-minus span{
+.product__single-plus-and-minus span {
 	display: table-cell;
+	padding-left: 8px;
 }
-.product__single-plus {
+.product__single-plus,
+.product__single-minus {
 	float: left;
 	width: 45%;
 }
-.product__single-plus-and-minus .fa-plus-square-o,
-.product__single-plus-and-minus .fa-minus-square-o {
-	 padding-right: 8px;
+.product__single-minus {
+	float: right;
+}
+.product__single-plus-and-minus .ion-plus-circled,
+.product__single-plus-and-minus .ion-minus-circled {
+	float: none !important;
+	width: auto;
+	display: table-cell;
   color: #199B50;
   font-size: 20px;
   vertical-align: top;
 }
-.product__single-minus {
+.ion-plus-circled {
 	float: right;
 	width: 45%;
 }
-.product__single-plus-and-minus .fa-minus-square-o {
+.product__single-plus-and-minus .ion-minus-circled {
 	color: #C74441;
 }
+
 
 /* Wrap */
 .product__single-reviews-wrap {
@@ -754,13 +767,13 @@ a:active {
 	margin-right: 3px;
 	border: 0;
 }
-.product__single-reviews-rating .fa {
+.product__single-reviews-rating .icon {
 	font-size: 36px;
 }
-.product__single-reviews-rating.rating-empty .fa {
+.product__single-reviews-rating.rating-empty .icon {
 	color: #E0E0E0;
 }
-.product__single-reviews-rating.rating-full .fa {
+.product__single-reviews-rating.rating-full .icon {
 	color: #354777;
 }
 .product__single-reviews-text {
@@ -832,13 +845,13 @@ a:active {
   float: right;
   text-align: right;
 }
-.product__slider-rating .fa {
+.product__slider-rating .icon {
 	font-size: 20px;
 }
-.product__slider-rating.rating-empty .fa {
+.product__slider-rating.rating-empty .icon {
 	color: #E0E0E0;
 }
-.product__slider-rating .fa {
+.product__slider-rating .icon {
 	color: #354777;
 }
 
@@ -978,6 +991,10 @@ a:active {
 .menu__content .item:last-child .menu__item-inner:after {
 	display: none;
 }
+.menu__content .menu__item-inner-text {
+	position: relative;
+	top: 2px;	
+}
 .menu__content .list-count {
   display: inline-block;
   height: 42px;
@@ -993,7 +1010,7 @@ a:active {
   border-radius: 100px;
   line-height: 42px;
 }
-.menu__content .fa {
+.menu__content .icon {
   margin-right: 20px;
   position: relative;
   top: 5px;
@@ -1351,7 +1368,7 @@ a:active {
   text-align: right;
   color: #FFF;
 }
-.product__overlay-swipe.two .fa {
+.product__overlay-swipe.two .icon {
 	position: absolute;
   top: 50%;
   right: 30px;
@@ -1506,7 +1523,7 @@ a:active {
 	text-decoration: none;
 	text-align: center;
 	color: #222;
-	font-size: 26px;
+	font-size: 34px;
 	font-family: "BrutalMedium";	
 }
 .clear_already-list span {
@@ -1546,11 +1563,11 @@ a:active {
 	border: 1px solid #2E2F34;
 	text-align: left;
 }
-.action-sheet-c .button .fa {
+.action-sheet-c .button .icon {
 	display: none;
 	position: absolute;
   right: 20px;
-  top: 15px;
+  top: 8px;
   font-size: 20px;
 }
 .action-sheet-c .button:first-child {
@@ -1565,7 +1582,7 @@ a:active {
 	border: 1px solid #2E2F34;
 	color: #FFF;
 }
-.action-sheet-c .button.active .fa {
+.action-sheet-c .button.active .icon {
 	display: block;
 }
 .action-sheet-c .action-sheet-cancel-c {

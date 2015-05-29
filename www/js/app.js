@@ -19,6 +19,11 @@ app.run(function($ionicPlatform, DB, $window, $rootScope) {
     }
     DB.init();
 
+    document.addEventListener("deviceready", onDeviceReady, false);
+    function onDeviceReady() {
+        console.log(device.cordova);
+    }
+
     document.addEventListener("pause", function() {
       DB.pause(true);
       console.log("The application is pause");

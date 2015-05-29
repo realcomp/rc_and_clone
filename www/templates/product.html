@@ -11,8 +11,8 @@
 						<ion-spinner icon="circles" class="loader"></ion-spinner>
 					</div>
 					<div class="product__single-info-right">
-						<a ng-href="#" ng-class="(product.shopping_list==true) ? 'active' : ''" ng-click="addShoppingList(product)" href="#"><i class="fa fa-shopping-cart"></i>{{ product.slug }}</a>
-						<a ng-href="#" ng-class="(product.product_list==true) ? 'active' : ''" ng-click="updateProductList(product)"><i class="fa fa-thumbs-o-up"></i>{{ linkSlug }}</a>
+						<a ng-href="#" ng-class="(product.shopping_list==true) ? 'active' : ''" ng-click="addShoppingList(product)" href="#"><i class="icon ion-bag"></i>{{ product.slug }}</a>
+						<a ng-href="#" ng-class="(product.product_list==true) ? 'active' : ''" ng-click="updateProductList(product)"><i class="icon ion-android-favorite-outline"></i>{{ linkSlug }}</a>
 					</div>
 				</div>
 			</div>
@@ -25,7 +25,7 @@
 		 		<div class="product__single-reviews-rating product__single-wblock">
 		 			<p class="product__single-reviews-rating-title">Оценки покупателей</p>
 		 				<span class="product__single-reviews-rating" ng-repeat="i in arrayRating track by $index" ng-class="i ? 'rating-full' : 'rating-empty'">
-		 					<i class="fa fa-star"></i>
+		 					<i class="icon ion-android-star"></i>
 		 				</span>
 		 				<span class="product__single-reviews-text">{{ reviews.total_count }} {{ declension(reviews.total_count, ['оценка','оценки','оценок']); }}</span>
 		 		</div>
@@ -36,8 +36,8 @@
 			 				Отзыв {{ currentIndex }} из {{ reviews.total_count }}
 				 		</div>
 			 			<div class="product__single-slider-nav">
-			 				<button ng-click="prevSlide()" ng-class="currentIndex == 1 ? 'button__disabled' : '' "><i class="fa fa-chevron-left"></i></button>
-					  	<button ng-click="nextSlide()" ng-class="currentIndex == reviews.total_count ? 'button__disabled' : '' "><i class="fa fa-chevron-right"></i></button>
+			 				<button ng-click="prevSlide()" ng-class="currentIndex == 1 ? 'button__disabled' : '' "><i class="icon ion-chevron-left"></i></button>
+					  	<button ng-click="nextSlide()" ng-class="currentIndex == reviews.total_count ? 'button__disabled' : '' "><i class="icon ion-chevron-right"></i></button>
 			 			</div>
 		 			</div>
 				 	<ion-slide-box show-pager="false" ng-if="reviews" on-slide-changed="slideHasChanged($index)">            

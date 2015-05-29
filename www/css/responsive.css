@@ -84,8 +84,8 @@
     margin-bottom: 25px;
     font-size: 20px;  
   }
-  .product__single-head .product__single-info-right a .fa,
-  .product__overlay-swipe a .fa {
+  .product__single-head .product__single-info-right a .icon,
+  .product__overlay-swipe a .icon {
     font-size: 28px;
   }
   .product__single-head .product__single-info-right {
@@ -96,7 +96,7 @@
   .product__single-reviews-rating-title {
     font-size: 20px;
   }
-  .product__single-reviews-rating .fa {
+  .product__single-reviews-rating .icon {
     font-size: 34px;
   }
   .danger__level-item {
@@ -122,7 +122,7 @@
   .menu__content .item-content {
     font-size: 20px;
   }
-  .menu__content .fa {
+  .menu__content .icon {
     margin-right: 15px;
     font-size: 30px;
   }
@@ -233,7 +233,7 @@
   .product__category-tabs span {
     font-size: 16px;
   }
-  .product__category-tabs .fa {
+  .product__category-tabs .icon {
     font-size: 28px; 
   }
   .product__category .product__category-button-test {
@@ -270,15 +270,15 @@
     margin-bottom: 20px;
     font-size: 18px;
   }
-  .product__single-head .product__single-info-right a .fa,
-  .product__overlay-swipe a .fa {
+  .product__single-head .product__single-info-right a .icon,
+  .product__overlay-swipe a .icon {
     font-size: 26px;
   }
   .product__single-head .product__single-info-right {
     padding-top: 55px;
     width: 215px;
   }
-  .product__single-reviews-rating .fa {
+  .product__single-reviews-rating .icon {
     font-size: 32px;
   }
   .danger__level-item {
@@ -295,6 +295,9 @@
   .like__googleplay,
   .product__category-button-test {
     min-height: 38px;
+  }
+  .action-sheet-c .button .icon {
+    top: 5px;
   }
 
 
@@ -313,7 +316,7 @@
   .menu__content .item-content {
     font-size: 18px;
   }
-  .menu__content .fa {
+  .menu__content .icon {
     font-size: 28px;
     top: 4px;
     margin-right: 10px;
@@ -461,11 +464,14 @@
   .product__category-button-test {
     min-height: 38px;
   }
-  .action-sheet-c .button .fa {
-    top: 13px;
+  .action-sheet-c .button .icon {
+    top: 3px;
     right: 15px;
     font-size: 18px;
   }
+  .action-sheet-c .button .icon:before {
+    font-size: 20px;
+  } 
   /* single product */
   .product__single-head .product__single-name {
     font-size: 22px;
@@ -623,7 +629,7 @@
   .tabs-top.tabs-top-cat > .tabs {
     top: 51px;
   }
-  .product__category-tabs .fa {
+  .product__category-tabs .icon {
     font-size: 22px;
   }
   .product__category-tabs span {
@@ -672,11 +678,11 @@
   .product__single-wblock p strong {
     font-size: 16px;
   }
-  .product__single-head .product__single-info-right a .fa,
-  .product__overlay-swipe a .fa {
+  .product__single-head .product__single-info-right a .icon,
+  .product__overlay-swipe a .icon {
     font-size: 24px;
   }
-  .product__single-reviews-rating .fa {
+  .product__single-reviews-rating .icon {
     font-size: 28px;
   }
   .danger__level-item {
@@ -707,7 +713,7 @@
   .menu__content .item-content {
     font-size: 16px;
   }
-  .menu__content .fa {
+  .menu__content .icon {
     font-size: 24px;
   }
   .menu__content .list-count {
@@ -757,7 +763,7 @@
   .product__shopping-tab span {
     top: -3px;
   }
-  .product__overlay-swipe.two .fa {
+  .product__overlay-swipe.two .icon {
     font-size: 44px;
     margin-top: -22px;
   }
@@ -877,7 +883,7 @@
   }
   .action-sheet-c .button {
     min-height: 44px;
-    line-height: 36px;
+    line-height: 40px;
   }
   .action-sheet-c .action-sheet-cancel-c {
     padding: 10px;
@@ -890,6 +896,9 @@
     width: 70px;
     padding: 5px 0;
     font-size: 14px;
+  }
+  .action-sheet-c .button .icon {
+    top: 2px;
   }
 
   /* single product */
@@ -917,9 +926,10 @@
   .product__overlay-swipe a {
     font-size: 14px;
   }
-  .product__single-head .product__single-info-right a .fa,
-  .product__overlay-swipe a .fa {
+  .product__single-head .product__single-info-right a .icon,
+  .product__overlay-swipe a .icon {
     font-size: 20px;
+    margin-right: 5px;
   }
   .product__single-rating-row {
     margin-bottom: 15px;
@@ -942,7 +952,7 @@
   .product__single-rating-right {
     font-size: 20px;
   }
-  .product__single-reviews-rating .fa {
+  .product__single-reviews-rating .icon {
     font-size: 22px;
   }
   .product__single-reviews-text {
@@ -965,7 +975,7 @@
   .product__slider-rate {
     margin-top: 20px;
   }
-  .product__slider-rating .fa {
+  .product__slider-rating .icon {
     font-size: 16px;
   }
   .product__slider-in {
@@ -982,11 +992,14 @@
     width: 150px;
     margin-top: -0;
   }
-  .product__single-plus-and-minus .fa-plus-square-o,
-  .product__single-plus-and-minus .fa-minus-square-o {
+  .product__single-plus-and-minus .icon-plus-square-o,
+  .product__single-plus-and-minus .icon-minus-square-o {
     position: relative;
     top: 1px;
     font-size: 18px;
+  }
+  .product__single-head .product__single-info-right a .ion-android-favorite-outline {
+    top: 2px;
   }
 
   /* menu */
@@ -1006,7 +1019,7 @@
   .menu__content .menu__item-inner {
     padding: 9px 0 12px;
   }
-  .menu__content .fa {
+  .menu__content .icon {
     font-size: 22px;
   }
   .menu__logout {
@@ -1078,12 +1091,12 @@
     width: 78%;
   }
   .clear_already-list {
-    font-size: 20px;
+    font-size: 26px;
   }
   .clear_already-list span {
     font-size: 16px;
   }
-  .product__overlay-swipe.two .fa {
+  .product__overlay-swipe.two .icon {
     right: 25px;
     font-size: 34px;
     margin-top: -16px;
@@ -1131,7 +1144,7 @@
   .product__overlay-swipe a {
     font-size: 13px;
   }
-  .product__overlay-swipe.two .fa {
+  .product__overlay-swipe.two .icon {
     right: 20px;
     font-size: 28px;
     margin-top: -14px;
