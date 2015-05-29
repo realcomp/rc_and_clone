@@ -11,3 +11,5 @@
  `ionic plugin add https://github.com/apache/cordova-plugin-whitelist.git`
 - Клавиатура
  `ionic plugin add https://github.com/driftyco/ionic-plugins-keyboard.git`
+- sqlite
+ `cordova plugin add https://github.com/brodysoft/Cordova-SQLitePlugin`
