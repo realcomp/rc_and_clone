@@ -78,6 +78,23 @@ angular.module('user-services', [])
         time_get_profile = 0;
   	};
 
+
+    self.registration = function(firstname, lastname, email) {
+
+        return $http({
+            method: 'POST',
+            url: Url.url('/v1/user/register'),
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+             data: 'first_name=' + firstname + '&' +  'last_name=' + lastname + '&' + 'email=' + email
+        }).then(function(result) {
+            return result
+        }, function(data) {
+            return data;
+        });
+
+    };
+
+
     self.get = function() {
         parse();
         return user;

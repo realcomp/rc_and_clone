@@ -791,7 +791,7 @@
 
 /* 
   ==========================================================================
-    360
+    380
   ========================================================================== 
 */
 @media only screen and (max-width: 380px) {
@@ -1042,6 +1042,15 @@
   }
   .login__error {
     font-size: 15px;
+  }
+  .reg__link {
+    margin: 5px 0;
+  }
+  .agreement-ok {
+    margin: 17px 0;
+  }
+  .button-reg {
+    margin-top: 0 !important;
   }
 
   /* shopping list */

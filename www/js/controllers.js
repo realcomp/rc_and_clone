@@ -516,7 +516,6 @@ app.controller('MenuCtrl', function($scope, $ionicSideMenuDelegate, $rootScope, 
 
 	$scope.closeMenu = function(w) {
 		$rootScope.where = w;
-		console.log('WWWWWW', w);
 		if (User.is_auth()) {
 			$ionicSideMenuDelegate.toggleRight();
 		}
@@ -571,7 +570,6 @@ app.controller('AuthorizationCtrl', function($scope, $http, $ionicModal, $ionicS
     $scope.modal.hide();
     $scope.loginData['password'] = '';
     $scope.loginError = '';
-    console.log('ROOT', $rootScope.where);
 		if($rootScope.where == 'recommended') {
 			if(!User.is_auth()) {
     		$location.path('/');
@@ -581,7 +579,6 @@ app.controller('AuthorizationCtrl', function($scope, $http, $ionicModal, $ionicS
     		$location.path('/app/user/shopping-list');
     	} 
 		}
-		//$rootScope.where = '';
   };
 
   // Открыть
@@ -619,14 +616,71 @@ app.controller('AuthorizationCtrl', function($scope, $http, $ionicModal, $ionicS
   // Разлогиниться
   $scope.logout = function() {
   	User.logout();
+  	$rootScope.where = null;
   	$scope.userProfile = null;
   }
 
+});
+
+// Регистрация
+app.controller('RegistrationCtrl', function($scope, $ionicModal, $rootScope, $location, User, DB) {
+
+	$scope.regData = {};
+	$scope.regErr = '';
+
+	// Шаблон
+  $ionicModal.fromTemplateUrl('templates/modal/registration.html', {
+    scope: $scope,
+  }).then(function(modal) {
+    $scope.modal = modal;
+  });
+
+  // Открыть
+  $scope.showReg = function() {
+  	if(!localStorage.getItem('rk_user')) {
+    	$scope.modal.show();
+  	}
+  };
+
+  // Закрыть
+  $scope.closeReg = function() {
+    $scope.modal.hide();
+  };
+
+
+  // Попытка регистрации
+  $scope.doReg = function() {
+  	User.registration($scope.regData.firstName, $scope.regData.lastName, $scope.regData.userEmail).then(function(response) {
+
+			if(response.status === 200) {
+				$scope.closeReg();
+				DB.alert('Успешная регистрация! Для активации аккаунта перейдите по ссылке, которую мы отправили Вам на электронную почту - ' + $scope.regData.userEmail , 'Поздравляем!');
+				$scope.regErr = '';
+				$scope.regData = {};
+			}
+			else {
+				if(response.status === 400) {
+					$scope.regErr = 'Ошибка регистрации! ' + response.data.user_message;
+				}
+				else {
+					$scope.regErr = 'Ошибка регистрации! Статус: ' + response.status + ' Попробуйте позже!'
+				}
+			}
+
+		});
+  }	
+
+  $scope.windowOpen = function(href) {
+  	window.open(href, '_system', 'location=yes');
+  }
 
 });
 
+
+
 // Список покупок
 app.controller('ShoppingListCtrl', function($scope, $rootScope,  User, Product, Category, Search, DB) {
+
 	$scope.seachData = function (query, key) {
 		$scope.seachActive = false;
 		if(key == true) {
@@ -734,8 +788,6 @@ app.controller('ShoppingListCtrl', function($scope, $rootScope,  User, Product, 
 				}					
 			});
 		}
-
-		$scope.shopping_list_count = localStorage.getItem('ShoppingListCount');
 
 		// Массив id-шников купленных товаров
 		var alreadyBuy = [];

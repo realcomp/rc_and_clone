@@ -18,6 +18,6 @@
         <p class="login__error">{{ loginError }}</p>
       </div>
     </form>
-    <a class="reg__link" href="#">Регистрация</a>
+    <a ng-controller="RegistrationCtrl" class="reg__link" ng-click="closeLogin(); showReg();" href="#">Регистрация</a>
   </ion-content>
 </ion-modal-view>
