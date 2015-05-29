@@ -9,3 +9,5 @@
  `ionic browser add crosswalk@10.39.235.15`
 - Устраняет проблемы с сетью в Cordova 5:  
  `ionic plugin add https://github.com/apache/cordova-plugin-whitelist.git`
+- Клавиатура
+ `ionic plugin add https://github.com/driftyco/ionic-plugins-keyboard.git`
