@@ -18,6 +18,10 @@
     {
       "id": "cordova-plugin-crosswalk-webview",
       "locator": "./engine/cordova-crosswalk-engine-c0.7.1"
+    },
+    {
+      "locator": "https://github.com/driftyco/ionic-plugins-keyboard.git",
+      "id": "com.ionic.keyboard"
     }
   ],
   "cordovaPlatforms": [

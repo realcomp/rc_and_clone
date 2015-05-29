@@ -9,3 +9,9 @@
  `ionic browser add crosswalk@10.39.235.15`
 - Устраняет проблемы с сетью в Cordova 5:  
  `ionic plugin add https://github.com/apache/cordova-plugin-whitelist.git`
+- Клавиатура
+ `ionic plugin add https://github.com/driftyco/ionic-plugins-keyboard.git`
+- sqlite
+ `cordova plugin add https://github.com/brodysoft/Cordova-SQLitePlugin`
+- Copy SQLite Database from assets(Android) or Resources(iOS) to App Directory
+ `cordova plugin add https://github.com/an-rahulpandey/cordova-plugin-dbcopy.git`
