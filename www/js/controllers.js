@@ -499,6 +499,14 @@ app.controller('ProductCtrl', function($scope, $location, $stateParams, $ionicHi
     $scope.modalProduct.hide();
   };
 
+  // Добавление отзывов от товаре
+  $scope.addReviews = function(product) {
+  	if (!User.is_auth()) {
+			DB.alert('Добавлять отзывы о товаре могут только авторизованные пользователи!', 'Внимание!');
+			return false;
+		}
+  };	
+
 
 });
 
