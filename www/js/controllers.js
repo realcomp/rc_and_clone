@@ -622,6 +622,7 @@ app.controller('AuthorizationCtrl', function($scope, $http, $ionicModal, $ionicS
   	$scope.userProfile = null;
   }
 
+
 });
 
 // Список покупок
@@ -852,7 +853,7 @@ app.controller('AboutCtrl', function($scope, DB, Product, Category) {
   $scope.iH = window.innerHeight;
 
   $scope.windowOpen = function(href) {
-  	window.open(href, '_blank', 'location=yes');
+  	window.open(href, '_system', 'location=yes');
   }
 
 });
