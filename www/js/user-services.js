@@ -226,7 +226,7 @@ angular.module('user-services', [])
 
             return $http({
                 method: 'PUT',
-                url: '/v1/shopping_list?' + 'api_token=' + user.api_token,
+                url: Url.url('/v1/shopping_list?' + 'api_token=' + user.api_token),
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'},
                 data: 'items=' + idsJson
             }).then(function(result) {
@@ -382,7 +382,7 @@ angular.module('user-services', [])
         
             return $http({
                 method: 'POST',
-                url: query + '?' + 'api_token=' + user.api_token,
+                url: Url.url(query + '?' + 'api_token=' + user.api_token),
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'},
                 data: 'product_ids=' + idsJson
             }).then(function(result) {
@@ -459,7 +459,7 @@ angular.module('user-services', [])
         // 
         return $http({
             method: 'POST',
-            url: '/v1/votes/products?' + 'api_token=' + user.api_token,
+            url: Url.url('/v1/votes/products?' + 'api_token=' + user.api_token),
             headers: {'Content-Type': 'application/x-www-form-urlencoded'},
             data: 'votes=' + idsJson
         }).then(function(result) {

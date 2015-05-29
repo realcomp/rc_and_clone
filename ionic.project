@@ -15,7 +15,7 @@
     {
       "platform": "android",
       "browser": "crosswalk",
-      "version": "13.41.318.0"
+      "version": "10.39.235.15"
     }
   ],
   "serve": {
