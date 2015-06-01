@@ -1470,10 +1470,16 @@ a:active {
 	border-radius: 5px;
 }
 .search__no-result {
-	text-align: center;
-	display: block;
+  text-align: center;
+  display: block;
   padding: 10px 0;
-  color: #C80020;
+  background-color: #C80020;
+  color: #FFF;
+  width: 90%;
+  margin: 15px auto;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
 }
 .product__shopping-reset {
 	float: right;

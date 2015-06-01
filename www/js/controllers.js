@@ -806,7 +806,6 @@ app.controller('ShoppingListCtrl', function($scope, $rootScope,  User, Product, 
 				}
 			});
 		}
-
 		$scope.addShoppingList = function(product, shoplist) {
 			if(shoplist)
 				product.id = product.productId;
@@ -816,6 +815,7 @@ app.controller('ShoppingListCtrl', function($scope, $rootScope,  User, Product, 
 					DB.alert(result.str, result.title);
 				if(result.status == 'add') {
 					product.shopping_list = true;
+					$scope.shopping_list_count = localStorage.getItem('ShoppingListCount');
 					product.slug = 'В списке покупок';
 				} 
 				else if(result.status == 'remove') {

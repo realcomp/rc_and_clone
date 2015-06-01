@@ -33,7 +33,7 @@
 						</span>
 				  </ion-item>
 				 </ion-item>
-				<span ng-if="shoppingList.length < 1 || shopping_list_count < 1" class="search__no-result">Вы пока не добавили ни одного товара!</span>
+				<span ng-if="shoppingList.length < 1 || shopping_list_count < 1" class="search__no-result">В вашем списке покупок пока нет ни одного товара!</span>
 			</div>
 
 			<div ng-if="shoppingArrayTabs[1].active">
@@ -126,7 +126,7 @@
 						</span>	
 	  		<span class="product__overlay-active"></span>
 				</ion-item>
-				<p class="search__no-result" ng-if="searchList.length == 0">Ваш поиск не дал результатов...</p>
+				<p class="search__no-result" ng-if="searchList.length == 0">Ваш поиск не дал результатов:(<br> Уточните запрос и попробуйте снова!</p>
 			</ion-list>
 		</div>
 	</ion-content>
