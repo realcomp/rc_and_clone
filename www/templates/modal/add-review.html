@@ -1,0 +1,46 @@
+<ion-modal-view class="modal-review">
+  <ion-header-bar class="modal-head">
+    <h1 class="title">Оценка товара</h1>
+    <div class="buttons">
+      <button class="button button-clear" ng-click="closeReview(); ">&times;</button>
+    </div>
+  </ion-header-bar>
+  <ion-content scroll="false" class="add-review">
+    <div class="add-review-head">
+      У вас есть своё мнение о товаре?
+    </div>
+    <div class="add-review-star">
+      <rating ng-model="revData.rating" max="revData.max" ></rating>
+    </div>
+    <form ng-submit="addReview(product)">
+      <div class="list review-list">
+        <label class="item item-r-text">
+          <div class="tb-cell">
+            <i class="icon ion-checkmark-circled"></i>
+          </div>
+          <div class="tb-cell">
+            <textarea ng-model="revData.text" placeholder="Текст отзыва"></textarea>
+          </div>
+        </label>
+        <label class="item item-r-positive">
+          <div class="tb-cell">
+            <i class="icon ion-plus-circled"></i>
+          </div>
+          <div class="tb-cell">
+            <textarea ng-model="revData.positive" placeholder="Достоинства"></textarea>
+          </div>
+        </label>
+        <label class="item item-r-negative">
+          <div class="tb-cell">
+            <i class="icon ion-minus-circled"></i>
+          </div>
+          <div class="tb-cell">
+            <textarea ng-model="revData.negative" placeholder="Недостатки"></textarea>
+          </div>
+        </label>
+          <button class="button button-rev button-block button-positive" ng-disabled="!revData.text || !revData.positive || !revData.negative" type="submit">Добавить</button>
+          <p class="login__error">{{ revErr }}</p>
+      </div>
+    </form>
+  </ion-content>
+</ion-modal-view>

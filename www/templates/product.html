@@ -19,7 +19,7 @@
 			<div ng-init="productType(product)">  	
 		  		<div ng-include="productTemplate.url"></div>
 		 </div>
-		 <ion-spinner icon="circles" ng-if="!reviews"></ion-spinner>
+		 <ion-spinner class="product__single-reviews-spinner" icon="circles" ng-if="!reviews"></ion-spinner>
 		 <div class="product__single-reviews-wrap" ng-if="reviews">
 
 		 		<div class="product__single-reviews-rating product__single-wblock">

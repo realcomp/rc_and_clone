@@ -513,7 +513,7 @@ app.controller('ProductCtrl', function($scope, $location, $stateParams, $ionicHi
     max: 5
   }
   
-	$scope.$watch('data.rating', function() {
+	$scope.$watch('revData.rating', function() {
 	  console.log('New value: '+$scope.revData.rating);
 	}); 
 
@@ -532,8 +532,26 @@ app.controller('ProductCtrl', function($scope, $location, $stateParams, $ionicHi
   };
 
   // Попытка добавить отзыв
-  $scope.addReview = function() {
-		console.log('ок');
+  $scope.addReview = function(product) {
+  	User.productReviews(product.id, $scope.revData).then(function(response) {
+  		if(response.status === 200) {
+				$scope.closeReview();
+				DB.alert('Ваш отзыв успешно добавлен!' , 'Спасибо за отзыв!');
+				$scope.reмErr = '';
+				  $scope.revData = {
+    				rating : 1,
+    				max: 5
+  				}
+			}
+			else {
+				if(response.status === 400) {
+					$scope.revErr = 'Ошибка добавления! ' + response.data.user_message;
+				}
+				else {
+					$scope.revErr = 'Ошибка добавления! Статус: ' + response.status + ' Попробуйте позже!'
+				}
+			}
+  	});
   };
 
 });
@@ -713,10 +731,8 @@ app.controller('RegistrationCtrl', function($scope, $ionicModal, $rootScope, $lo
 });
 
 
-
 // Список покупок
 app.controller('ShoppingListCtrl', function($scope, $rootScope,  User, Product, Category, Search, DB) {
-
 	$scope.seachData = function (query, key) {
 		$scope.seachActive = false;
 		if(key == true) {
@@ -729,9 +745,10 @@ app.controller('ShoppingListCtrl', function($scope, $rootScope,  User, Product, 
 		$scope.shoppingListShow = false;
 		$scope.shoppingList = [];
 		$scope.recommendedList = [];
+		var userProductList = User.getProductListArray();
+		var userShoppingList = User.getShoppingListArray();
 
 		//
-
 		User.shoppingList().then(function(list) {
 			var ids = [];
 			var shoppingList = {};
@@ -790,9 +807,6 @@ app.controller('ShoppingListCtrl', function($scope, $rootScope,  User, Product, 
 				el[0].focus();
 			});
 		}
-
-		var userProductList = User.getProductListArray();
-		var userShoppingList = User.getShoppingListArray();
 
 		$scope.updateProductList = function(product) {
 			User.updateProductList(product.id).then(function(response) {

@@ -56,6 +56,9 @@ angular.module('user-services', [])
                     self.lastLoginEmail(email);
                     user = result.data;
                     save();
+                    self.productList();
+                    self.shoppingList();
+                    self.productVotes();
                     return {profile: user.profile};
                 }
 
@@ -515,6 +518,26 @@ angular.module('user-services', [])
         if(votes_list && votes_list !== null)
             return votes_list;
         return [];
+    };
+
+    //
+    self.productReviews = function(id, data) {
+        if (!self.is_auth()) {
+            var deferred = $q.defer();
+            deferred.resolve(null);
+            return deferred.promise;
+        }
+        return $http({
+            method: 'POST',
+            url: Url.url('/v1/catalog/reviews'),
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            data: 'api_token=' + user.api_token + '&' +  'mark=' + data.rating + '&' + 'text=' + data.text + '&' + 'advantages=' + data.positive + '&' + 'disadvantages=' + data.negative + '&' + 'product_id=' + id
+        }).then(function(result) {
+            return result
+        }, function(data) {
+            return data;
+        });
+
     };
 
 

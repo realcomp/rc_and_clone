@@ -751,6 +751,10 @@ a:active {
 .product__single-reviews-wrap {
 	
 }
+.product__single-reviews-spinner svg{
+	margin: 25px auto 0;
+  display: block;
+}
 
 /* Rating */
 .product__single-reviews-rating {
