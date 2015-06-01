@@ -1053,7 +1053,9 @@
   .modal .button.button-block {
     padding: 3px 0;
   }
-  .login__error {
+  .login__error,
+  .add-review-head,
+  .review-list textarea {
     font-size: 15px;
   }
   .reg__link {
@@ -1064,6 +1066,12 @@
   }
   .button-reg {
     margin-top: 0 !important;
+  }
+  .review-list .icon {
+    font-size: 24px;
+  }
+  .review-list textarea {
+    top: -4px;
   }
 
   /* shopping list */

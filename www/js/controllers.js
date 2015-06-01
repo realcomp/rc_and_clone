@@ -1,4 +1,4 @@
-var app = angular.module('starter.controllers', []);
+var app = angular.module('starter.controllers', ['ionic.rating']);
 
 // Контроллер главной
 app.controller('MainCtrl', function($scope, $ionicLoading, $interval, Category, DB, Product, User) {
@@ -500,13 +500,41 @@ app.controller('ProductCtrl', function($scope, $location, $stateParams, $ionicHi
   };
 
   // Добавление отзывов от товаре
-  $scope.addReviews = function(product) {
+  $ionicModal.fromTemplateUrl('templates/modal/add-review.html', {
+    scope: $scope,
+  }).then(function(modal) {
+    $scope.modal = modal;
+  });
+
+  
+  $scope.rating = 1;
+  $scope.revData = {
+    rating : 1,
+    max: 5
+  }
+  
+	$scope.$watch('data.rating', function() {
+	  console.log('New value: '+$scope.revData.rating);
+	}); 
+
+  // Открыть
+  $scope.showReview = function() {
   	if (!User.is_auth()) {
 			DB.alert('Добавлять отзывы о товаре могут только авторизованные пользователи!', 'Внимание!');
 			return false;
 		}
-  };	
+  	$scope.modal.show();
+  };
 
+  // Закрыть
+  $scope.closeReview = function() {
+    $scope.modal.hide();
+  };
+
+  // Попытка добавить отзыв
+  $scope.addReview = function() {
+		console.log('ок');
+  };
 
 });
 
