@@ -584,7 +584,7 @@ a:active {
 	text-decoration: none;
 }
 .product__single-head .product__single-info-right a:last-child {
-	margin-left: 3px;
+	margin-left: 1px;
 } 
 .product__single-head .product__single-info-right a .icon,
 .product__overlay-swipe a .icon {
@@ -656,7 +656,7 @@ a:active {
 
 /**/
 .product__single-rating {
-  margin: 20px 0 0 0;
+  margin: 5px 0 0 0;
   padding-bottom: 0;
 }
 .product__single-rating-row {
@@ -690,6 +690,9 @@ a:active {
 	display: inline-block;
 	height: 100%;
 	vertical-align: top;
+}
+.product__single-dl-1 {
+	margin-top: 5px;
 }
 
 /* summary */
@@ -1180,7 +1183,7 @@ a:active {
 .reg__link,
 .agreement-ok {
   display: block;
-  margin: 15px 0;
+  margin: 10px 0;
  	font-size: 16px;
   text-align: center;
 }
@@ -1625,11 +1628,14 @@ a:active {
   	ACTION SHEET
   ========================================================================== 
 */
-
 .action-sheet-c {
+	width: 100%;
+   left: 0;
 	background: transparent;
 }
 .action-sheet-c .scroll-content {
+	width: 90%;
+	left: 5%;
 	top: auto;
 	bottom: 30px;
 } 

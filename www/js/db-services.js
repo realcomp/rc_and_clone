@@ -916,8 +916,12 @@ console.log(slice);
         });
     };
 
-    self.getByCategoryId = function(id) {
-        return DB.query('SELECT * FROM products WHERE category_id = ?', [id])
+    self.getByCategoryId = function(id, companyIds) {
+        var q = '';
+        if(companyIds) {
+            q = ' AND (company_id IN (' + companyIds.join(',') + '))';
+        }
+        return DB.query('SELECT * FROM products WHERE (category_id IN ' +'('+id + '))' + q)
         .then(function(result){
             return DB.fetchAll(result);
         });

@@ -78,7 +78,7 @@ app.controller('MainCtrl', function($scope, $ionicLoading, $interval, Category, 
 });
 
 // Контроллер категорий
-app.controller('CategoryCtrl', function($scope, $location, $stateParams, $ionicHistory, $ionicModal,  $ionicScrollDelegate, Category, Product, Rating, User, DB) {
+app.controller('CategoryCtrl', function($scope, $location, $stateParams, $ionicHistory, $ionicModal,  $ionicScrollDelegate, Category, Product, Company, Rating, User, DB) {
 
 
 	var onlyNumber = !isNaN(parseFloat($stateParams.id)) && isFinite($stateParams.id) && (0 < $stateParams.id);
@@ -92,7 +92,7 @@ app.controller('CategoryCtrl', function($scope, $location, $stateParams, $ionicH
 
 	$scope.hasProducts = false; // есть продукты в категории
 	$scope.showProducts = false; // показываем в категории продукты
-  	$scope.title = '';
+  $scope.title = '';
 
 	Category.getById($stateParams.id).then(function(category) {
 
@@ -108,7 +108,8 @@ app.controller('CategoryCtrl', function($scope, $location, $stateParams, $ionicH
 	    		});
 				}
 				else {
-					Product.getByCategoryId($stateParams.id).then(function(products) {
+					var productGetCatProduct = function(companyIds) {
+						Product.getByCategoryId($stateParams.id, companyIds).then(function(products) {
 						if(products.length > 0) {
 							$scope.productsCheck = [];
 							$scope.productsBlack = [];
@@ -165,9 +166,9 @@ app.controller('CategoryCtrl', function($scope, $location, $stateParams, $ionicH
 
 							$scope.linkSlug = category.disposable ? 'У меня есть' : 'Покупаю постоянно';
 							$scope.showCatName = (category.show_name == 1) ? category.name_sg : '';
+							var companyIds = {};
 
 							angular.forEach(products, function(productFull) {
-
 								var product = {
 									'id': productFull.id,
 	      					'name': productFull.name,
@@ -179,7 +180,9 @@ app.controller('CategoryCtrl', function($scope, $location, $stateParams, $ionicH
 	      					'product_list': userProductList[productFull.id] ? true : false,
 	      					'shopping_list': userShoppingList[productFull.id] ? true : false,
 	      					'slug': userShoppingList[productFull.id] ? 'В списке покупок' : 'В список покупок'
-								}	
+								};
+
+								companyIds[productFull.company_id] = true;
 
 			      		// список названий рейтинга
 								Rating.allHash().then(function(gratings) {
@@ -230,36 +233,37 @@ app.controller('CategoryCtrl', function($scope, $location, $stateParams, $ionicH
 
 		    			});
 
-						$scope.tabActive = 0;
+							$scope.tabActive = 0;
 
-						if ($scope.productsCheck.length) {
-							$scope.classTabCheck = 'product__category-tabs-active';
-							$scope.tabActive = 1;
-						} else {
-							$scope.classTabCheck = 'product__category-tabs-disabled';
-						}
-
-						if ($scope.productsBlack.length) {
-							if (!$scope.tabActive) {
-								$scope.classTabBlack = 'product__category-tabs-active';
-								$scope.tabActive = 2;
+							// Табы
+							if ($scope.productsCheck.length) {
+								$scope.classTabCheck = 'product__category-tabs-active';
+								$scope.tabActive = 1;
 							} else {
-								$scope.classTabBlack = 'product__category-tabs-deactive';
+								$scope.classTabCheck = 'product__category-tabs-disabled';
 							}
-						} else {
-							$scope.classTabBlack = 'product__category-tabs-disabled';
-						}
 
-						if ($scope.productsWait.length) {
-							if (!$scope.tabActive) {
-								$scope.classTabWait = 'product__category-tabs-active';
-								$scope.tabActive = 3;
+							if ($scope.productsBlack.length) {
+								if (!$scope.tabActive) {
+									$scope.classTabBlack = 'product__category-tabs-active';
+									$scope.tabActive = 2;
+								} else {
+									$scope.classTabBlack = 'product__category-tabs-deactive';
+								}
 							} else {
-								$scope.classTabWait = 'product__category-tabs-deactive';
+								$scope.classTabBlack = 'product__category-tabs-disabled';
 							}
-						} else {
-							$scope.classTabWait = 'product__category-tabs-disabled';
-						}
+
+							if ($scope.productsWait.length) {
+								if (!$scope.tabActive) {
+									$scope.classTabWait = 'product__category-tabs-active';
+									$scope.tabActive = 3;
+								} else {
+									$scope.classTabWait = 'product__category-tabs-deactive';
+								}
+							} else {
+								$scope.classTabWait = 'product__category-tabs-disabled';
+							}
 
 							// Шаблон окна с сортировкой товаров
 						  $ionicModal.fromTemplateUrl('templates/modal/modal-sorting.html', {
@@ -282,11 +286,47 @@ app.controller('CategoryCtrl', function($scope, $location, $stateParams, $ionicH
     						$scope.arrButtons[index].active = true;
 						  };
 
+						  // Соберем массив производителей текущей категории
+						  if(!$scope.companies) {
+							  $scope.companies = {};	
+							  for(var id in companyIds) {
+							  	Company.getById(id).then(function(company) {
+							  		if(company['checked'] === undefined) {
+							  			company['checked'] = true;			
+							  		}
+							  		$scope.companies[company.id] = company;	
+							  	});
+							  }
+							}
+
+						  // Шаблон окна фильтрации
+						  $ionicModal.fromTemplateUrl('templates/modal/modal-filter.html', {
+						    scope: $scope
+						  }).then(function(modalFilter) {
+						    $scope.modalFilter = modalFilter;
+						  });
+						  $scope.closeF = function() {
+						    $scope.modalFilter.hide();
+						  };
+
 						}
 
 						$scope.showProducts = true;
-					});
-				}
+						});
+					}
+					productGetCatProduct();
+
+					$scope.getFilterParams = function() {
+						var ids = [];
+						for(var company in $scope.companies) {
+							if($scope.companies[company].checked) {
+								ids.push($scope.companies[company].id);
+							}
+						}
+						productGetCatProduct(ids);
+					};
+
+					}
 
 			});
 	});

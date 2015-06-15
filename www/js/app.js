@@ -97,6 +97,7 @@ app.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
     }
   })
 
+
   .state('app.product', {
     url: "/product/:id",
     cache: false,
