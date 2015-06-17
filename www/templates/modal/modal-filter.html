@@ -1,0 +1,21 @@
+<ion-modal-view class="action-sheet-c">
+  <ion-content scroll="false">
+		<form action="" method="get" class="filter__form">
+		<div class="filter__type-manuf">
+			<h2 class="filter__title">Производитель: </h2>
+			<div class="filter__type-manu-inner">
+				<ion-checkbox class="button" value="{{ company.id }}" ng-repeat="company in companies"  ng-model="company.checked" 
+                      ng-checked="company.checked">{{ company.name}}</ion-checkbox>
+			</div>
+		</div>
+		<div class="action-sheet-cance-wrapper">
+			<ion-item class="action-sheet-cancel-c first" ng-click="getFilterParams(); closeF();" >
+			Применить
+		</ion-item>
+		<ion-item class="action-sheet-cancel-c" ng-click="closeF(); ">
+			Закрыть
+		</ion-item>
+		</div>
+		<form>
+  </ion-content>
+</ion-modal-view>

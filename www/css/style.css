@@ -70,6 +70,13 @@
 .has-footer {
 	bottom: 60px;
 }
+.checkbox input:checked:before,
+.checkbox input:checked + .checkbox-icon:before {
+	background: #354777;
+  border-color: #354777;
+}
+
+
 @media (min-width: 1px) {
 	.active .modal-backdrop-bg {
 	  opacity: 0.5;
@@ -1147,11 +1154,15 @@ a:active {
 .modal-login {
 	padding: 50px 20px 20px 20px;
 }
+.popup-head {
+	padding: 15px 10px 0;
+}
 .modal-login input {
 	padding: 25px 0;
   font-size: 16px;
 }
-.modal .button.button-block {
+.modal .button.button-block,
+.profile__edit .button.button-block {
 	background: #354777;
   border: 1px solid #354777;
   padding: 9px 0;
@@ -1270,6 +1281,18 @@ a:active {
   ========================================================================== 
 */
 
+.profile__edit-link {
+	display: inline-block;
+	padding: 5px 15px;
+  margin: 0 0 15px 0;
+	text-decoration: none;
+  font-size: 16px;
+  font-weight: bold;
+}
+.profile__edit-link .ion-edit {
+	margin-left: 10px;
+	 font-size: 18px
+}
 .user__profile-head {
 	display: table;
 	width: 100%;
@@ -1326,8 +1349,29 @@ a:active {
   -moz-border-radius: 3px;
   border-radius: 3px;
 }
+.profile__edit {
 
-
+}
+.profile__edit .list {
+	padding: 20px;
+}
+.profile__edit .item-input {
+	padding: 10px 0 10px 16px;
+}
+.profile__edit .item-input.disabled {
+	 background: #FAFAFA;
+}
+.profile__edit .item-input input {
+	font-size: 16px;
+}
+.profile__edit .user__profile-avatar {
+	width: 100px;
+	height: 100px;
+	margin: 0 0 15px 0;
+}
+.profile__edit .button.button-block {
+	padding: 6px 0;
+}
 /* 
 	==========================================================================
   	PAGE ABOUT
@@ -1648,7 +1692,7 @@ a:active {
 .action-sheet-c .button {
 	padding: 5px 15px;
 	width: 100%;
-	margin-top: -1px;
+	margin-top: -2px;
 	background: #363638;
 	color: #FFF;
 	font-size: 20px;
@@ -1690,4 +1734,52 @@ a:active {
 .action-sheet-c .action-sheet-cancel-c:hover,
 .action-sheet-c .action-sheet-cancel-c:active {
 	background: #354777;
+}
+
+
+/* FILTER */
+.filter__form {
+	background: #363638;
+  color: #FFF;
+  -moz-border-radius: 7px;
+  -webkit-border-radius: 7px;
+  border-radius: 7px;
+}
+.filter__title {
+	margin: 0;
+	padding: 15px;
+	color: #FFF;
+	font-size: 20px;
+	text-align: center;
+	border-bottom: 1px solid #2E2F34;
+}
+.action-sheet-cance-wrapper {
+	overflow: hidden;
+	background: #354777;
+	-moz-border-radius: 0 0 7px 7px;
+	-webkit-border-radius: 0 0 7px 7px;
+	border-radius: 0 0 7px 7px;
+}
+.filter__form .action-sheet-cancel-c {
+	float: right;
+	width: 50%;
+	border-radius: 0;
+}
+.filter__form .action-sheet-cancel-c.first {
+	float: left;
+	border-right: 1px solid #273761;
+}
+
+.filter__type-manu-inner {
+	max-height: 259px;
+	overflow-y: auto;
+	overflow-x: hidden;
+}
+
+.filter__type-manuf .button,
+.filter__type-manuf .button:first-child {
+	border-radius: 0;
+}
+.filter__type-manuf .ng-binding {
+	padding-left: 40px;
 }

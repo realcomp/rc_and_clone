@@ -149,6 +149,15 @@ app.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
       }
     }
   })
+  .state('app.userProfileEdit', {
+    url: "/user/profile/edit",
+    views: {
+      'menuContent': {
+        templateUrl: "templates/user-profile-edit.html",
+        controller: 'UserProfileEditCtrl'
+      }
+    }
+  })
   ;
 
   // Default Router

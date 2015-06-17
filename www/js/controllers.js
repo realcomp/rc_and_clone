@@ -714,6 +714,13 @@ app.controller('AuthorizationCtrl', function($scope, $http, $ionicModal, $ionicS
   	$scope.userProfile = null;
   }
 
+  // VK
+  $scope.doVK = function() {
+  	User.vk().then(function(data) {
+			console.log(data);
+		});
+  };
+
 });
 
 // Регистрация
@@ -977,6 +984,41 @@ app.controller('UserProfileCtrl', function($scope, User) {
 	User.productList(1).then(function(data){
 		$scope.products = data;
 	});
+});
+
+
+// Редактирования профиля пользователя
+app.controller('UserProfileEditCtrl', function($scope, User, DB) {
+	if (!User.is_auth()) {
+		$ionicHistory.nextViewOptions({
+   			disableBack: true
+		});
+		$location.path('/');
+		return false;
+	}
+
+	$scope.profile = User.profile(true);
+	$scope.profileEditData = $scope.profile;
+	var profileEditClick = false;
+
+	$scope.doProfileEdit = function() {
+		if(!profileEditClick) {
+			profileEditClick = true;
+	  	User.profileEdit($scope.profileEditData).then(function(response) {
+				if(response.status === 200) {
+					console.log('true');
+					$scope.profile = $scope.profileEditData;
+					DB.alert('Ваш профиль успешно изменен!', 'Выполнено!');
+				}
+				else {
+					DB.alert('Ошибка сохранения профиля: <br>' + response.data.user_message, 'Ошибка!');
+				}
+				profileEditClick = false;
+
+			});
+  	}
+  }	
+
 });
 
 // О приложении

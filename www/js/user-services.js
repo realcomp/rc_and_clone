@@ -82,6 +82,20 @@ angular.module('user-services', [])
   	};
 
 
+    self.vk = function() {
+
+        return $http({
+            method: 'GET',
+            url: Url.url('/v1/auth/vk?access_token=4535100')
+        }).then(function(result) {
+            return result
+        }, function(data) {
+            return data;
+        });
+
+    };
+
+
     self.registration = function(firstname, lastname, email) {
 
         return $http({
@@ -149,6 +163,30 @@ angular.module('user-services', [])
 
                 return null;
             });
+    };
+
+    self.profileEdit = function(data) {
+        parse()
+
+        if (!self.is_auth()) {
+            var deferred = $q.defer();
+            deferred.resolve(null);
+            return deferred.promise;
+        }
+
+        // 
+        return $http({
+            method: 'POST',
+            url: Url.url('/v1/user/profile'),
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            data: 'api_token=' + user.api_token + '&' +  'first_name=' + data.first_name + '&'
+            + 'last_name=' + data.last_name + '&' + 'phone=' + data.phone + '&' + 'avatar=' + data.avatar
+        }).then(function(result) {
+            return result
+        }, function(data) {
+            return data;
+        });
+
     };
 
     self.is_auth = function() {
