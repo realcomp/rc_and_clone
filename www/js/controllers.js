@@ -1,7 +1,7 @@
 var app = angular.module('starter.controllers', ['ionic.rating']);
 
 // Контроллер главной
-app.controller('MainCtrl', function($scope, $ionicLoading, $interval, Category, DB, Product, User) {
+app.controller('MainCtrl', function($scope, $ionicLoading, $interval, $http, Category, DB, Product, User) {
 	//console.log('main controller');
 
 	if (window.cordova) {
@@ -31,13 +31,21 @@ app.controller('MainCtrl', function($scope, $ionicLoading, $interval, Category, 
 	}
 
 	$scope.roots = [];
+	$scope.network = false;
 	$scope.title = 'Рейтинг товаров';
 
 	User.productList();
 	User.shoppingList();
 	User.productVotes();
 
-	var load_roots = function(){
+	var load_roots = function() {
+		$http.get('/v1/catalog/info?my_version=0').
+		  success(function(data, status, headers, config) {
+		  	$scope.network = true;
+		  }).
+		  error(function(data, status, headers, config) {
+		  	$scope.network = false;
+		  });
 		Category.roots().then(function(roots) {
 			angular.forEach(roots, function(root) {
       			Category.countProductsByObj(root, true).then(function(count) {
@@ -108,8 +116,8 @@ app.controller('CategoryCtrl', function($scope, $location, $stateParams, $ionicH
 	    		});
 				}
 				else {
-					var productGetCatProduct = function(companyIds) {
-						Product.getByCategoryId($stateParams.id, companyIds).then(function(products) {
+					var productGetCatProduct = function(companyIds, price) {
+						Product.getByCategoryId($stateParams.id, companyIds, price).then(function(products) {
 						if(products.length > 0) {
 							$scope.productsCheck = [];
 							$scope.productsBlack = [];
@@ -168,7 +176,15 @@ app.controller('CategoryCtrl', function($scope, $location, $stateParams, $ionicH
 							$scope.showCatName = (category.show_name == 1) ? category.name_sg : '';
 							var companyIds = {};
 
-							angular.forEach(products, function(productFull) {
+							$scope.price = {
+								min: 0,
+								max: 0,
+								value: 0
+							};
+
+							var priceMinMake = false;
+
+							angular.forEach(products, function(productFull, index) {
 								var product = {
 									'id': productFull.id,
 	      					'name': productFull.name,
@@ -181,6 +197,23 @@ app.controller('CategoryCtrl', function($scope, $location, $stateParams, $ionicH
 	      					'shopping_list': userShoppingList[productFull.id] ? true : false,
 	      					'slug': userShoppingList[productFull.id] ? 'В списке покупок' : 'В список покупок'
 								};
+
+								if(product.price >= 1 && !priceMinMake) {
+									priceMinMake = true;
+									$scope.price.min = product.price;
+								}
+
+								if(product.price < $scope.price.min && product.price >= 1) {
+									$scope.price.min = product.price;
+									$scope.price.value = product.price
+								}
+								if(products.length-1 == index && $scope.price.value == 0) {
+									$scope.price.value = $scope.price.min;
+								}
+
+								if(product.price > $scope.price.max) {
+									$scope.price.max = product.price;
+								}
 
 								companyIds[productFull.company_id] = true;
 
@@ -234,6 +267,9 @@ app.controller('CategoryCtrl', function($scope, $location, $stateParams, $ionicH
 		    			});
 
 							$scope.tabActive = 0;
+							if($scope.price.value == 0) {
+								$scope.price.value == $scope.price.min;
+							}
 
 							// Табы
 							if ($scope.productsCheck.length) {
@@ -323,7 +359,7 @@ app.controller('CategoryCtrl', function($scope, $location, $stateParams, $ionicH
 								ids.push($scope.companies[company].id);
 							}
 						}
-						productGetCatProduct(ids);
+						productGetCatProduct(ids, $scope.price.value);
 					};
 
 					}
@@ -361,7 +397,6 @@ app.controller('ProductCtrl', function($scope, $location, $stateParams, $ionicHi
 
 				var userProductList = User.getProductListArray(),
 						userShoppingList = User.getShoppingListArray();
-				console.log(product);			
 				product['images_array'] = JSON.parse(product.images);
 				product['product_list'] = userProductList[product.id] ? true : false;
 				product['shopping_list'] = userShoppingList[product.id] ? true : false;
@@ -1043,8 +1078,8 @@ app.controller('AboutCtrl', function($scope, DB, Product, Category) {
 });
 
 // список статей
-app.controller('ArticlesCtrl', function($scope, $ionicHistory, Article) {
-	var limit = 10;
+app.controller('ArticlesCtrl', function($scope, $ionicHistory, $ionicModal, $location, $window, Article, Category) {
+	var limit = 10
 
 	$scope.count_articles = 0
 	$scope.real_count_articles = 0
@@ -1054,6 +1089,10 @@ app.controller('ArticlesCtrl', function($scope, $ionicHistory, Article) {
 	$scope.error = null;
 	$scope.distance_procent = '50%';
 	$scope.rubrics = [];
+	$scope.cat = null,
+	$scope.rubric = null;
+	$scope.paramR = false;
+	$scope.paramC = false;
 
 /*	Article.list(0, 0, 20, $scope.count_articles).then(function(data){
 //		console.log(data);
@@ -1068,22 +1107,81 @@ app.controller('ArticlesCtrl', function($scope, $ionicHistory, Article) {
 		$scope.hide_loader = true;
 	});*/
 
-	Article.getRubrics().then(function(r) {
+	// Фильтр по рубрике
+  $ionicModal.fromTemplateUrl('templates/modal/modal-sorting-rubric.html', {
+    scope: $scope
+  }).then(function(modalSortingRubric) {
+    $scope.modalSortingRubric = modalSortingRubric;
+  });
+
+  $scope.close = function() {
+    $scope.modalSortingRubric.hide();
+  };
+
+
+  // Фильтр по категории
+  $ionicModal.fromTemplateUrl('templates/modal/modal-sorting-category.html', {
+    scope: $scope
+  }).then(function(modalSortingCategory) {
+    $scope.modalSortingCategory = modalSortingCategory;
+  });
+
+  $scope.closeC = function() {
+    $scope.modalSortingCategory.hide();
+  };
+
+
+  $scope.addParams = function(category, rubric) {
+  	$location.search({
+  		'category': category,
+  		'rubric' : rubric
+  	});
+  	$window.location.reload();	
+  };
+
+  var getParams = $location.search();
+  $scope.cat = getParams.category;
+  $scope.rubric = getParams.rubric;
+
+
+	Category.roots().then(function(r) {
+		for(var key in r) {
+			if(r[key].id == $scope.cat) {
+				r[key].active = true;
+				$scope.paramC = true;	
+			}
+			else {
+				r[key].active = false;
+			}
+		}
+		$scope.category = r;
+	});
+
+
+  Article.getRubrics().then(function(r) {
+		for(var key in r) {
+			if(r[key].rubric === $scope.rubric) {
+				r[key].active = true;
+				$scope.paramR = true;	
+			}
+			else {
+				r[key].active = false;
+			}
+		}
 		$scope.rubrics = r;
 	});
 
+
 	$scope.loadMore = function() {
-    Article.list(0, 0, limit, $scope.count_articles).then(function(data) {
-			
+    Article.list($scope.cat, $scope.rubric, limit, $scope.count_articles).then(function(data) {
+    	$scope.total_count = data.total_count;
 			if ('items' in data && 'total_count' in data) {
 				$scope.count_articles += limit;
-
 				if (data.items.length > 0) {
 					$scope.real_count_articles += data.items.length;
 					angular.forEach(data.items, function(article){
 						$scope.articles.push(article);
 					});
-
 					if ($scope.real_count_articles > 100) {
 						$scope.distance_procent = '1%';
 					} else if ($scope.real_count_articles > 50) {
@@ -1100,15 +1198,18 @@ app.controller('ArticlesCtrl', function($scope, $ionicHistory, Article) {
 				}
 
 				$scope.error = null;
-      		} else {
-				$scope.error = 'проблемы с подключением';
+				$scope.hide_loader = true;
+
+      	} 
+      	else {
+					$scope.error = 'проблемы с подключением';
 			}
 
   			$scope.$broadcast('scroll.infiniteScrollComplete');
     	});
   	};
 
-  	$scope.moreCanBeLoaded = function(){
+  	$scope.moreCanBeLoaded = function() {
   		if ($scope.total_count >= $scope.count_articles) {
   		//console.log("moreDataCanBeLoaded true", $scope.total_count, $scope.count_articles);
   			return false;

@@ -1418,6 +1418,9 @@ a:active {
 .articles__wrap {
 	
 }
+.page__articles ion-infinite-scroll {
+	height: 0 !important;
+}
 .articles__category-item {
 	border: 0;
 }
@@ -1439,14 +1442,21 @@ a:active {
   font-size: 22px;
   line-height: 24px;
   width: 100%;
-  background: rgba(0, 0, 0, 0.4);
   overflow: initial;
   white-space: normal;
+  background: -moz-linear-gradient(top, rgba(0,0,0,0) 0%, rgba(0,0,0,0.65) 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0)), color-stop(100%,rgba(0,0,0,0.65))); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top, rgba(0,0,0,0) 0%,rgba(0,0,0,0.65) 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top, rgba(0,0,0,0) 0%,rgba(0,0,0,0.65) 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top, rgba(0,0,0,0) 0%,rgba(0,0,0,0.65) 100%); /* IE10+ */
+	background: linear-gradient(to bottom, rgba(0,0,0,0) 0%,rgba(0,0,0,0.65) 100%); /* W3C */
 }
 .articles__category-title .rubric {
 	display: block;
+	margin-top: 5px;
+	font-family: Arial;
   font-size: 16px;
-  margin-top: 5px;
+  color: #CACACA;
 }
 
 
@@ -1523,7 +1533,7 @@ a:active {
 .search__no-result {
   text-align: center;
   display: block;
-  padding: 10px 0;
+  padding: 10px 5px;
   background-color: #C80020;
   color: #FFF;
   width: 90%;
@@ -1745,13 +1755,21 @@ a:active {
   -webkit-border-radius: 7px;
   border-radius: 7px;
 }
-.filter__title {
+.filter__block-title,
+.filter__form-title {
 	margin: 0;
-	padding: 15px;
+	padding: 10px;
 	color: #FFF;
-	font-size: 20px;
+	font-size: 18px;
 	text-align: center;
-	border-bottom: 1px solid #2E2F34;
+  border-bottom: 1px solid #2A2B2D;
+  border-top: 1px solid #2A2B2D;
+  background: #2E2F34;
+}
+.filter__form-title {
+	border: 0;
+	padding: 12px;
+	background: none;
 }
 .action-sheet-cance-wrapper {
 	overflow: hidden;

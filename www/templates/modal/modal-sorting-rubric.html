@@ -1,0 +1,13 @@
+<ion-modal-view class="action-sheet-c">
+  <ion-content scroll="false">
+  	<ion-item ng-class="paramR ? '' : 'active'; " class="button" ng-click="close(); addParams(cat, null);" class="button" ng-class="button.active ? 'active' : '' ">
+		  Все <i class="icon ion-chevron-down"></i>
+		</ion-item>
+		<ion-item ng-repeat="button in rubrics" ng-click="close(); addParams(cat, button.rubric);" class="button" ng-class="button.active ? 'active' : '' ">
+		  {{ button.name }} <i class="icon ion-chevron-down"></i>
+		</ion-item>
+		<ion-item class="action-sheet-cancel-c" ng-click="close(); ">
+			Закрыть
+		</ion-item>
+  </ion-content>
+</ion-modal-view>

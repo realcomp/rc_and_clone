@@ -1,7 +1,7 @@
 <ion-view>
 	<ion-nav-title>Журнал покупателя</ion-nav-title>
 
-	<ion-content overflow-scroll="true">
+	<ion-content class="page__articles" overflow-scroll="true">
 	    <ion-list class="articles__wrap">
 	      	<ion-item class="articles__category-item" ng-repeat="article in articles" ng-href="#/app/article/{{article.id}}">
 	      		<img class="articles__category-img" ng-src="{{ article.image }}">
@@ -21,4 +21,14 @@
 		<ion-spinner class="loader" ng-hide="hide_loader"></ion-spinner>
 		{{ error }}
   	</ion-content>
+
+  	<ion-footer-bar class="bar-assertive footer__sorting">
+			<div class="footer__sorting-item">
+		    <button ng-click="modalSortingCategory.show();" class="button">Категория</button>
+		  </div>
+		  <div class="footer__sorting-item">
+		    <button ng-click="modalSortingRubric.show();" class="button">Рубрика</button>
+		  </div>
+		</ion-footer-bar>
+
 </ion-view>
