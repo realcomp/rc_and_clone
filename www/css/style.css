@@ -1789,7 +1789,7 @@ a:active {
 }
 
 .filter__type-manu-inner {
-	max-height: 259px;
+	max-height: 207px;
 	overflow-y: auto;
 	overflow-x: hidden;
 }
@@ -1800,4 +1800,7 @@ a:active {
 }
 .filter__type-manuf .ng-binding {
 	padding-left: 40px;
+}
+.range input {
+	height: 35px;
 }

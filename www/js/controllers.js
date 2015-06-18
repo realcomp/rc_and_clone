@@ -116,9 +116,21 @@ app.controller('CategoryCtrl', function($scope, $location, $stateParams, $ionicH
 	    		});
 				}
 				else {
-					var productGetCatProduct = function(companyIds, price) {
-						Product.getByCategoryId($stateParams.id, companyIds, price).then(function(products) {
+
+					$scope.price = {
+						empty: true,
+						min: 0,
+						max: 0,
+						value: 0
+					};
+					$scope.rating = {
+						value: 0
+					}
+
+					var productGetCatProduct = function(companyIds, price, rating) {
+						Product.getByCategoryId($stateParams.id, companyIds, price, rating).then(function(products) {
 						if(products.length > 0) {
+
 							$scope.productsCheck = [];
 							$scope.productsBlack = [];
 							$scope.productsWait = [];
@@ -126,9 +138,9 @@ app.controller('CategoryCtrl', function($scope, $location, $stateParams, $ionicH
 							$scope.productChar = [];
 							var arr = [];
 
-								var userShoppingList = User.getShoppingListArray(),
-										userProductList = User.getProductListArray();
-										productVotes = User.getProductVotes();
+							var userShoppingList = User.getShoppingListArray(),
+									userProductList = User.getProductListArray();
+									productVotes = User.getProductVotes();
 
 							//
 							$scope.updateProductList = function(product) {
@@ -176,12 +188,6 @@ app.controller('CategoryCtrl', function($scope, $location, $stateParams, $ionicH
 							$scope.showCatName = (category.show_name == 1) ? category.name_sg : '';
 							var companyIds = {};
 
-							$scope.price = {
-								min: 0,
-								max: 0,
-								value: 0
-							};
-
 							var priceMinMake = false;
 
 							angular.forEach(products, function(productFull, index) {
@@ -198,21 +204,25 @@ app.controller('CategoryCtrl', function($scope, $location, $stateParams, $ionicH
 	      					'slug': userShoppingList[productFull.id] ? 'В списке покупок' : 'В список покупок'
 								};
 
-								if(product.price >= 1 && !priceMinMake) {
-									priceMinMake = true;
-									$scope.price.min = product.price;
-								}
+								if($scope.price.empty) {
+									if(product.price >= 1 && !priceMinMake) {
+										priceMinMake = true;
+										$scope.price.min = product.price;
+									}
 
-								if(product.price < $scope.price.min && product.price >= 1) {
-									$scope.price.min = product.price;
-									$scope.price.value = product.price
-								}
-								if(products.length-1 == index && $scope.price.value == 0) {
-									$scope.price.value = $scope.price.min;
-								}
+									if(product.price < $scope.price.min && product.price >= 1) {
+										$scope.price.min = product.price;
+										$scope.price.value = product.price
+									}
+									if(products.length - 1 == index) {
+										if($scope.price.value == 0)
+											$scope.price.value = $scope.price.min;
+										$scope.price.empty = false
+									}
 
-								if(product.price > $scope.price.max) {
-									$scope.price.max = product.price;
+									if(product.price > $scope.price.max) {
+										$scope.price.max = product.price;
+									}
 								}
 
 								companyIds[productFull.company_id] = true;
@@ -359,7 +369,7 @@ app.controller('CategoryCtrl', function($scope, $location, $stateParams, $ionicH
 								ids.push($scope.companies[company].id);
 							}
 						}
-						productGetCatProduct(ids, $scope.price.value);
+						productGetCatProduct(ids, $scope.price.value, $scope.rating.value);
 					};
 
 					}

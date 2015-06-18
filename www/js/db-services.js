@@ -916,13 +916,19 @@ console.log(slice);
         });
     };
 
-    self.getByCategoryId = function(id, companyIds, price) {
+    self.getByCategoryId = function(id, companyIds, price, rating) {
         var q = '';
+
         if(companyIds) {
             q += ' AND (company_id IN (' + companyIds.join(',') + '))';
         }
+
         if(price) {
-            q += ' AND price >= ' + +price;
+            q += ' AND price >= ' + price;
+        }
+
+        if(rating) { 
+            q += ' AND rating >= ' + rating;
         }
         return DB.query('SELECT * FROM products WHERE (category_id IN ' +'('+id + '))' + q)
         .then(function(result){

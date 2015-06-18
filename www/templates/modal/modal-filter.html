@@ -2,6 +2,13 @@
   <ion-content scroll="false">
 		<form action="" method="get" class="filter__form">
 		<h2 class="filter__form-title">Параметры</h2>
+		<div class="filter__type-rating">
+			<h2 class="filter__block-title">Рейтинг: </h2>
+			<div class="range">
+        <input type="range" min="0" max="100" value="{{ rating.value }}" step="1" ng-model="rating.value" class="ng-valid ng-dirty">
+       	от {{ rating.value }} до 100 Бал
+    	</div>	
+		</div>
 		<div class="filter__type-price">
 			<h2 class="filter__block-title">Цена: </h2>
 			<div class="range">
@@ -18,7 +25,7 @@
 		</div>
 		<div class="action-sheet-cance-wrapper">
 		<ion-item class="action-sheet-cancel-c first" ng-click="closeF(); ">
-			Закрыть
+			Отмена
 		</ion-item>
 		<ion-item class="action-sheet-cancel-c" ng-click="getFilterParams(); closeF();" >
 			Применить
