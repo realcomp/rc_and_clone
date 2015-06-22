@@ -19,7 +19,7 @@
     		<span class="menu__nologin-url">Авторизоваться</span>
     	</a>
     	<div ng-if="userProfile" class="menu__login-wrap">
-    		<a ng-href="#" class="menu__login-wrap-link">
+    		<a ng-href="#/app/user/profile" nav-clear menu-close class="menu__login-wrap-link">
 	    		<img ng-class="userProfile ? 'menu_avatar_user' : ''" class="menu__avatar menu__login-avatar" ng-src="{{ userProfile.avatar }}">
 					<span class="menu__login-name">{{ userProfile.first_name }} {{ userProfile.last_name }}</span>
 				</a>
@@ -36,7 +36,7 @@
         </ion-item>
         <ion-item nav-clear ng-href='{{ userProfile ? "#/app/user/shopping-list" : "#" }}' ng-click="closeMenu('recommended'); login();">
         	<span class="menu__item-inner">
-           <i class="icon ion-bag"></i>
+            <i class="icon ion-bag"></i>
             <span class="menu__item-inner-text">Список покупок </span>
             <span ng-if="shoppingListCount > 0 && userProfile" class="list-count">{{ shoppingListCount }}</span> 
           </span>

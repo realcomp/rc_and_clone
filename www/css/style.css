@@ -70,6 +70,13 @@
 .has-footer {
 	bottom: 60px;
 }
+.checkbox input:checked:before,
+.checkbox input:checked + .checkbox-icon:before {
+	background: #354777;
+  border-color: #354777;
+}
+
+
 @media (min-width: 1px) {
 	.active .modal-backdrop-bg {
 	  opacity: 0.5;
@@ -584,7 +591,7 @@ a:active {
 	text-decoration: none;
 }
 .product__single-head .product__single-info-right a:last-child {
-	margin-left: 3px;
+	margin-left: 1px;
 } 
 .product__single-head .product__single-info-right a .icon,
 .product__overlay-swipe a .icon {
@@ -656,7 +663,7 @@ a:active {
 
 /**/
 .product__single-rating {
-  margin: 20px 0 0 0;
+  margin: 5px 0 0 0;
   padding-bottom: 0;
 }
 .product__single-rating-row {
@@ -690,6 +697,9 @@ a:active {
 	display: inline-block;
 	height: 100%;
 	vertical-align: top;
+}
+.product__single-dl-1 {
+	margin-top: 5px;
 }
 
 /* summary */
@@ -1144,11 +1154,15 @@ a:active {
 .modal-login {
 	padding: 50px 20px 20px 20px;
 }
+.popup-head {
+	padding: 15px 10px 0;
+}
 .modal-login input {
 	padding: 25px 0;
   font-size: 16px;
 }
-.modal .button.button-block {
+.modal .button.button-block,
+.profile__edit .button.button-block {
 	background: #354777;
   border: 1px solid #354777;
   padding: 9px 0;
@@ -1180,7 +1194,7 @@ a:active {
 .reg__link,
 .agreement-ok {
   display: block;
-  margin: 15px 0;
+  margin: 10px 0;
  	font-size: 16px;
   text-align: center;
 }
@@ -1267,6 +1281,18 @@ a:active {
   ========================================================================== 
 */
 
+.profile__edit-link {
+	display: inline-block;
+	padding: 5px 15px;
+  margin: 0 0 15px 0;
+	text-decoration: none;
+  font-size: 16px;
+  font-weight: bold;
+}
+.profile__edit-link .ion-edit {
+	margin-left: 10px;
+	 font-size: 18px
+}
 .user__profile-head {
 	display: table;
 	width: 100%;
@@ -1323,8 +1349,29 @@ a:active {
   -moz-border-radius: 3px;
   border-radius: 3px;
 }
+.profile__edit {
 
-
+}
+.profile__edit .list {
+	padding: 20px;
+}
+.profile__edit .item-input {
+	padding: 10px 0 10px 16px;
+}
+.profile__edit .item-input.disabled {
+	 background: #FAFAFA;
+}
+.profile__edit .item-input input {
+	font-size: 16px;
+}
+.profile__edit .user__profile-avatar {
+	width: 100px;
+	height: 100px;
+	margin: 0 0 15px 0;
+}
+.profile__edit .button.button-block {
+	padding: 6px 0;
+}
 /* 
 	==========================================================================
   	PAGE ABOUT
@@ -1371,6 +1418,9 @@ a:active {
 .articles__wrap {
 	
 }
+.page__articles ion-infinite-scroll {
+	height: 0 !important;
+}
 .articles__category-item {
 	border: 0;
 }
@@ -1392,14 +1442,21 @@ a:active {
   font-size: 22px;
   line-height: 24px;
   width: 100%;
-  background: rgba(0, 0, 0, 0.4);
   overflow: initial;
   white-space: normal;
+  background: -moz-linear-gradient(top, rgba(0,0,0,0) 0%, rgba(0,0,0,0.65) 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0)), color-stop(100%,rgba(0,0,0,0.65))); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top, rgba(0,0,0,0) 0%,rgba(0,0,0,0.65) 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top, rgba(0,0,0,0) 0%,rgba(0,0,0,0.65) 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top, rgba(0,0,0,0) 0%,rgba(0,0,0,0.65) 100%); /* IE10+ */
+	background: linear-gradient(to bottom, rgba(0,0,0,0) 0%,rgba(0,0,0,0.65) 100%); /* W3C */
 }
 .articles__category-title .rubric {
 	display: block;
+	margin-top: 5px;
+	font-family: Arial;
   font-size: 16px;
-  margin-top: 5px;
+  color: #CACACA;
 }
 
 
@@ -1476,7 +1533,7 @@ a:active {
 .search__no-result {
   text-align: center;
   display: block;
-  padding: 10px 0;
+  padding: 10px 5px;
   background-color: #C80020;
   color: #FFF;
   width: 90%;
@@ -1625,11 +1682,14 @@ a:active {
   	ACTION SHEET
   ========================================================================== 
 */
-
 .action-sheet-c {
+	width: 100%;
+   left: 0;
 	background: transparent;
 }
 .action-sheet-c .scroll-content {
+	width: 90%;
+	left: 5%;
 	top: auto;
 	bottom: 30px;
 } 
@@ -1642,7 +1702,7 @@ a:active {
 .action-sheet-c .button {
 	padding: 5px 15px;
 	width: 100%;
-	margin-top: -1px;
+	margin-top: -2px;
 	background: #363638;
 	color: #FFF;
 	font-size: 20px;
@@ -1684,4 +1744,63 @@ a:active {
 .action-sheet-c .action-sheet-cancel-c:hover,
 .action-sheet-c .action-sheet-cancel-c:active {
 	background: #354777;
+}
+
+
+/* FILTER */
+.filter__form {
+	background: #363638;
+  color: #FFF;
+  -moz-border-radius: 7px;
+  -webkit-border-radius: 7px;
+  border-radius: 7px;
+}
+.filter__block-title,
+.filter__form-title {
+	margin: 0;
+	padding: 10px;
+	color: #FFF;
+	font-size: 18px;
+	text-align: center;
+  border-bottom: 1px solid #2A2B2D;
+  border-top: 1px solid #2A2B2D;
+  background: #2E2F34;
+}
+.filter__form-title {
+	border: 0;
+	padding: 12px;
+	background: none;
+}
+.action-sheet-cance-wrapper {
+	overflow: hidden;
+	background: #354777;
+	-moz-border-radius: 0 0 7px 7px;
+	-webkit-border-radius: 0 0 7px 7px;
+	border-radius: 0 0 7px 7px;
+}
+.filter__form .action-sheet-cancel-c {
+	float: right;
+	width: 50%;
+	border-radius: 0;
+}
+.filter__form .action-sheet-cancel-c.first {
+	float: left;
+	border-right: 1px solid #273761;
+}
+
+.filter__type-manu-inner {
+	max-height: 207px;
+	overflow-y: auto;
+	overflow-x: hidden;
+}
+
+.filter__type-manuf .button,
+.filter__type-manuf .button:first-child {
+	border-radius: 0;
+}
+.filter__type-manuf .ng-binding {
+	padding-left: 40px;
+}
+.range input {
+	height: 35px;
 }

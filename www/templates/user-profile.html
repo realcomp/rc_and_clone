@@ -1,6 +1,6 @@
 <ion-view>
 	<ion-nav-title>Мой профиль</ion-nav-title>
-	<ion-content overflow-scroll="true" ng-controller="funcController">
+	<ion-content class="profile" overflow-scroll="true" ng-controller="funcController">
 		<div class="user__profile-head">
 			<div class="td">
 				<img class="user__profile-avatar" ng-src="{{ profile.avatar }}">
@@ -9,6 +9,7 @@
 				<span class="user__profile-name">{{ profile.first_name }} {{ profile.last_name }}</span>
 			</div>
 		</div>
+		<a href="#/app/user/profile/edit" class="profile__edit-link">Редактировать профиль<i class="icon ion-edit"></i></a>
 		<div class="user__profile-center">
 			<ion-list class="user__profile-list">
 				<ion-item>
@@ -50,5 +51,5 @@
 				</ion-item>
 			<ion-list>  
 		</div>
-	</ion-content>
+	</ion-content>	
 </ion-view>

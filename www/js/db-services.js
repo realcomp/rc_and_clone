@@ -6,7 +6,7 @@ angular.module('db-services', ['db.config', 'ngCordova'])
 
     self.url = function(url) {
         if (window.cordova) {
-            return 'http://api.roscontrol.com' + url;
+            // return 'http://api.roscontrol.com' + url;
         }
 
         return url;
@@ -184,7 +184,7 @@ angular.module('db-services', ['db.config', 'ngCordova'])
     * проверка версий локальной базы и на сервере
     */
     self.check = function() {
-        self.query('SELECT * FROM metadata ORDER BY version DESC LIMIT 1').then(function(res){
+        self.query('SELECT * FROM metadata ORDER BY version DESC LIMIT 1').then(function(res) {
                 var r = self.fetch(res);
                 console.log("META",r);
 
@@ -197,8 +197,8 @@ angular.module('db-services', ['db.config', 'ngCordova'])
                 }
 
                 console.log('GET '+Url.url('/v1/catalog/info?my_version=' + self.meta_db.version));
-                $http.get(Url.url('/v1/catalog/info?my_version=' + self.meta_db.version)).then(function(resp){
-                    self.meta_server = resp.data;
+                $http.get(Url.url('/v1/catalog/info?my_version=' + self.meta_db.version)).then(function(resp) {
+                    self.meta_server = resp.data; 
 
                     if (!('version' in self.meta_server)) {
                         self.loaded = true;
@@ -916,8 +916,21 @@ console.log(slice);
         });
     };
 
-    self.getByCategoryId = function(id) {
-        return DB.query('SELECT * FROM products WHERE category_id = ?', [id])
+    self.getByCategoryId = function(id, companyIds, price, rating) {
+        var q = '';
+
+        if(companyIds) {
+            q += ' AND (company_id IN (' + companyIds.join(',') + '))';
+        }
+
+        if(price) {
+            q += ' AND price >= ' + price;
+        }
+
+        if(rating) { 
+            q += ' AND rating >= ' + rating;
+        }
+        return DB.query('SELECT * FROM products WHERE (category_id IN ' +'('+id + '))' + q)
         .then(function(result){
             return DB.fetchAll(result);
         });
@@ -1054,7 +1067,6 @@ console.log(slice);
     self.list = function(category_id, rubric, limit, offset) {
 		var params = [];
         var api_token = User.api_token();
-
 		if (category_id) {
 			params.push('category_id=' + category_id);
 		}
@@ -1062,7 +1074,6 @@ console.log(slice);
 		if (rubric) {
 			params.push('rubric=' + rubric);
 		}
-
 		if (limit) {
 			params.push('limit=' + limit);
 		}
@@ -1110,6 +1121,7 @@ console.log("GET articles", Url.url('/v1/articles' + (params.length ? '?' + para
         }
         return $http.get(Url.url('v1/articles/rubrics_and_categories'))
             .then(function(resp) {
+                console.log('RESP', resp);
                 g_rubrics = {};
                 angular.forEach(resp.data.rubrics, function(elem) {
                     g_rubrics[elem.rubric] = elem;       

@@ -240,5 +240,5 @@ app.controller('funcController', function($scope, $ionicSlideBoxDelegate, $ionic
     document.getElementById('swipe_' + index).style.left = '-100%';
   }
   */
-
+  
 });

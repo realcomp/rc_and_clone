@@ -18,11 +18,12 @@ app.run(function($ionicPlatform, DB, $window, $rootScope) {
       StatusBar.styleDefault();
     }
     DB.init();
-
+    
     document.addEventListener("deviceready", onDeviceReady, false);
     function onDeviceReady() {
-        console.log(device.cordova);
+        console.log(cordova.device);
     }
+    
 
     document.addEventListener("pause", function() {
       DB.pause(true);
@@ -37,6 +38,9 @@ app.run(function($ionicPlatform, DB, $window, $rootScope) {
     console.log('end run');
   });
 
+  
+  // Не всегда корректно работает
+
   $rootScope.online = navigator.onLine;
     $window.addEventListener("offline", function () {
       $rootScope.$apply(function() {
@@ -49,6 +53,7 @@ app.run(function($ionicPlatform, DB, $window, $rootScope) {
       $rootScope.online = true;
     });
   }, false);
+  
 
 
 });
@@ -96,6 +101,7 @@ app.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
       }
     }
   })
+
 
   .state('app.product', {
     url: "/product/:id",
@@ -145,6 +151,15 @@ app.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
       'menuContent': {
         templateUrl: "templates/user-profile.html",
         controller: 'UserProfileCtrl'
+      }
+    }
+  })
+  .state('app.userProfileEdit', {
+    url: "/user/profile/edit",
+    views: {
+      'menuContent': {
+        templateUrl: "templates/user-profile-edit.html",
+        controller: 'UserProfileEditCtrl'
       }
     }
   })
