@@ -6,7 +6,7 @@ angular.module('db-services', ['db.config', 'ngCordova'])
 
     self.url = function(url) {
         if (window.cordova) {
-            // return 'http://api.roscontrol.com' + url;
+            return 'http://api.roscontrol.com' + url;
         }
 
         return url;

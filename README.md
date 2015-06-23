@@ -15,3 +15,13 @@
  `cordova plugin add https://github.com/brodysoft/Cordova-SQLitePlugin`
 - Copy SQLite Database from assets(Android) or Resources(iOS) to App Directory
  `cordova plugin add https://github.com/an-rahulpandey/cordova-plugin-dbcopy.git`
+
+
+
+###Сборка пакета
+
+- cordova build --release android
+- jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore release-key.keystore platforms/android/build/outputs/apk/android-armv7-release-unsigned.apk alias_name
+- zipalign -v 4 platforms/android/build/outputs/apk/android-armv7-release-unsigned.apk Roscontrol.apk
+
+https://play.google.com/apps/publish/?dev_acc=01474632627383622689#AppListPlace
