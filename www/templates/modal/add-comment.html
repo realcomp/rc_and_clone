@@ -1,0 +1,16 @@
+<ion-modal-view class="modal-review">
+  <ion-header-bar class="modal-head">
+    <h1 class="title">Оставить комментарий</h1>
+    <div class="buttons">
+      <button class="button button-clear" ng-click="close(); ">&times;</button>
+    </div>
+  </ion-header-bar>
+  <ion-content scroll="false" class="add-review add-comment">
+    <form ng-submit="addComment(article)">
+      <textarea ng-model="commentData.text" placeholder="Ваш комментарий"></textarea>
+      <button class="button button-rev button-block button-positive" ng-disabled="!commentData.text" type="submit">Добавить</button>
+          <p class="login__error">{{ commentErr }}</p>
+      </div>
+    </form>
+  </ion-content>
+</ion-modal-view>

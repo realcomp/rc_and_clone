@@ -797,7 +797,8 @@
   }
 
   /* article */
-  .page__articles {
+  .page__articles,
+  .article__single {
     margin-bottom: -6px;
   }
   .articles__category-title {
@@ -993,6 +994,8 @@
     font-size: 14px;
   }
   .product__slider-avatar span {
+    width: 40px;
+    display: inline-block;
     top: 14px;
   }
   .product__single-add-reviews {
@@ -1020,6 +1023,16 @@
   .danger__level-item {
     width: 150px;
     margin-top: -0;
+  }
+  .product__single-plus, .product__single-minus {
+    float: none;
+    width: 100%;
+    padding: 10px 10px 2px 10px;
+    background-color: #FCFCFC;
+  }
+  .product__single-minus {
+    margin-top: 15px;
+    margin-bottom: 10px;
   }
   .product__single-plus-and-minus .icon-plus-square-o,
   .product__single-plus-and-minus .icon-minus-square-o {

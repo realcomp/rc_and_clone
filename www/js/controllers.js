@@ -598,9 +598,12 @@ app.controller('ProductCtrl', function($scope, $location, $stateParams, $ionicHi
     max: 5
   }
   
+
+  /* Пример слушателя
 	$scope.$watch('revData.rating', function() {
 	  console.log('New value: '+$scope.revData.rating);
-	}); 
+	});
+	*/ 
 
   // Открыть
   $scope.showReview = function() {
@@ -762,7 +765,7 @@ app.controller('AuthorizationCtrl', function($scope, $http, $ionicModal, $ionicS
   // VK
   $scope.doVK = function() {
   	User.vk().then(function(data) {
-			console.log(data);
+			//console.log(data);
 		});
   };
 
@@ -1051,7 +1054,7 @@ app.controller('UserProfileEditCtrl', function($scope, User, DB) {
 			profileEditClick = true;
 	  	User.profileEdit($scope.profileEditData).then(function(response) {
 				if(response.status === 200) {
-					console.log('true');
+					//console.log('true');
 					$scope.profile = $scope.profileEditData;
 					DB.alert('Ваш профиль успешно изменен!', 'Выполнено!');
 				}
@@ -1169,16 +1172,16 @@ app.controller('ArticlesCtrl', function($scope, $ionicHistory, $ionicModal, $loc
 
 
   Article.getRubrics().then(function(r) {
-		for(var key in r) {
-			if(r[key].rubric === $scope.rubric) {
-				r[key].active = true;
+  	$scope.rubrics = r;
+		for(var key in $scope.rubrics) {
+			if($scope.rubrics[key].rubric === $scope.rubric) {
+				$scope.rubrics[key].active = true;
 				$scope.paramR = true;	
 			}
 			else {
-				r[key].active = false;
+				$scope.rubrics[key].active = false;
 			}
 		}
-		$scope.rubrics = r;
 	});
 
 
@@ -1232,7 +1235,8 @@ app.controller('ArticlesCtrl', function($scope, $ionicHistory, $ionicModal, $loc
 });
 
 // вывод статьи
-app.controller('ArticleCtrl', function($scope, $stateParams, $location, $ionicHistory, Article) {
+app.controller('ArticleCtrl', function($scope, $stateParams, $location, $ionicModal,  $ionicHistory, Article, User, DB) {
+
 	var onlyNumber = !isNaN(parseFloat($stateParams.id)) && isFinite($stateParams.id) && (0 < $stateParams.id);
 	if(!onlyNumber) {
 		$ionicHistory.nextViewOptions({
@@ -1250,7 +1254,7 @@ app.controller('ArticleCtrl', function($scope, $stateParams, $location, $ionicHi
 	$scope.hide_loader = false;
 	$scope.error = null;
 
-	Article.getById($stateParams.id).then(function(data){
+	Article.getById($stateParams.id).then(function(data) {
 		if ('html' in data) {
 			$scope.article = data;
 		} else {
@@ -1259,6 +1263,50 @@ app.controller('ArticleCtrl', function($scope, $stateParams, $location, $ionicHi
 
 		$scope.hide_loader = true;
 	});
+
+	// Показывать окно только для авторизованных пользователей
+	$scope.modalCommentUserCheck = function() {
+	  if (!User.is_auth()) {
+			DB.alert('Добавлять комментарии могут только авторизованные пользователи!', 'Внимание!');
+			return false;
+		}
+  	$scope.modalComment.show();
+	};
+
+	// Фильтр по рубрике
+  $ionicModal.fromTemplateUrl('templates/modal/add-comment.html', {
+    scope: $scope
+  }).then(function(modalComment) {
+    $scope.modalComment = modalComment;
+  });
+
+  // Закрыть
+  $scope.close = function() {
+    $scope.modalComment.hide();
+  };
+
+  // Попытка добавить комментарий
+  $scope.commentData = {};
+  $scope.addComment = function(article) {
+
+  	User.addComment(article, $scope.commentData.text).then(function(response) {
+  		if(response.status === 200) {
+				$scope.close();
+				DB.alert('Ваш комментарий успешно добавлен!' , 'Успех!');
+			}
+			else {
+				if(response.status === 400) {
+					$scope.commentErr = 'Ошибка добавления! ' + response.data.user_message;
+				}
+				else {
+					$scope.commentErr = 'Ошибка добавления! Статус: ' + response.status + ' Попробуйте позже!'
+				}
+			}
+  	});
+  };
+
+
+
 });
 
 

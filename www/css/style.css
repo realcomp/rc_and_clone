@@ -137,6 +137,9 @@ a:active {
 .button__disabled {
 	color: #E0E0E0 !important;
 }
+.button.disabled, .button[disabled] {
+	opacity: 0.2;
+}
 
 .product-rating {
 	width: 80px;
@@ -724,8 +727,10 @@ a:active {
 	border-bottom: 1px solid #e0e0e0;
 }
 .product__single-plus-and-minus ul li {
-	display: table;
+	width: 100%;
 	margin-bottom: 7px;
+	display: table;
+	table-layout: fixed;
 }
 .product__single-plus-and-minus span {
 	display: table-cell;
@@ -742,7 +747,7 @@ a:active {
 .product__single-plus-and-minus .ion-plus-circled,
 .product__single-plus-and-minus .ion-minus-circled {
 	float: none !important;
-	width: auto !important;
+	width: 23px !important;
 	display: table-cell;
   color: #199B50;
   font-size: 20px;
@@ -847,6 +852,7 @@ a:active {
 .product__slider-avatar span {
 	position: relative;
   top: 32px;
+  color: #354777;
 }
 .product__slider-in {
 	float: left;
@@ -1274,6 +1280,17 @@ a:active {
   margin: 30px auto;
 }
 
+.add-comment {
+	padding: 20px;
+}
+.add-comment textarea {
+	resize: none;
+  width: 100%;
+  border: 1px solid #e0e0e0;
+  padding: 15px;
+  height: 120px;
+}
+
 
 /* 
 	==========================================================================
@@ -1427,9 +1444,11 @@ a:active {
 .articles__category-item .item-content {
 	padding: 0;
 	margin-bottom: -4px;
+	background-color: #CBCBCB;
 }
 .articles__category-img {
 	width: 100%;
+	min-height: 120px;
 }
 .articles__category-title {
 	font-family: "BrutalMedium";
@@ -1458,7 +1477,10 @@ a:active {
   font-size: 16px;
   color: #CACACA;
 }
-
+.article__add-comment .footer__sorting-item {
+	border-right: 0 !important;
+	width: 100% !important;
+}
 
 /* 
 	==========================================================================
@@ -1469,7 +1491,7 @@ a:active {
 	padding: 0px 10px;
 }
 .article__single h2 {
-	margin: 10px 0 5px;
+	margin: 25px 0 5px;
 	line-height: 28px;
 	font-size: 24px;
 }
@@ -1478,7 +1500,7 @@ a:active {
 	font-size: 18px;
 }
 .article__single .html-content {
-	margin-top: 20px;
+	margin: 20px 0;
 }
 .article__single p {
 	margin-bottom: 10px;

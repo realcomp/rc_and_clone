@@ -37,11 +37,15 @@
 		{{ product.test_summary }}
 	</div>
 	<div ng-if="arrayPlus.length > 0 || arrayMinus.length > 0" class="product__single-plus-and-minus product__single-wblock">
-		<ul class="product__single-plus">
-			<li ng-repeat="plus in arrayPlus"> <i class="icon ion-plus-circled"></i> <span class="product__single-plus-and-minus-text">{{ plus }} </span></li>
-		</ul>
-		<ul class="product__single-minus">
-			<li ng-repeat="minus in arrayMinus"> <i class="icon ion-minus-circled"></i> <span class="product__single-plus-and-minus-text">{{ minus }} </span></li>
-		</ul>
+		<div class="product__single-plus">
+			<ul>
+				<li ng-repeat="plus in arrayPlus"> <i class="icon ion-plus-circled"></i> <span class="product__single-plus-and-minus-text">{{ plus }} </span></li>
+			</ul>
+		</div>
+		<div class="product__single-minus">
+			<ul>
+				<li ng-repeat="minus in arrayMinus"> <i class="icon ion-minus-circled"></i> <span class="product__single-plus-and-minus-text">{{ minus }} </span></li>
+			</ul>
+		</div>
 	</div>
 </div>

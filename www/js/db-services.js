@@ -6,7 +6,7 @@ angular.module('db-services', ['db.config', 'ngCordova'])
 
     self.url = function(url) {
         if (window.cordova) {
-            return 'http://api.roscontrol.com' + url;
+            //return 'http://api.roscontrol.com' + url;
         }
 
         return url;
@@ -1086,7 +1086,7 @@ console.log(slice);
             params.push('api_token=' + api_token);
         }
 
-console.log("GET articles", Url.url('/v1/articles' + (params.length ? '?' + params.join('&') : '')));
+//console.log("GET articles", Url.url('/v1/articles' + (params.length ? '?' + params.join('&') : '')));
         return $http.get(Url.url('/v1/articles' + (params.length ? '?' + params.join('&') : '')))
     		.then(function(resp){
 //            console.log("DEBUG articles", resp.data);
@@ -1121,7 +1121,7 @@ console.log("GET articles", Url.url('/v1/articles' + (params.length ? '?' + para
         }
         return $http.get(Url.url('v1/articles/rubrics_and_categories'))
             .then(function(resp) {
-                console.log('RESP', resp);
+                //console.log('RESP', resp);
                 g_rubrics = {};
                 angular.forEach(resp.data.rubrics, function(elem) {
                     g_rubrics[elem.rubric] = elem;       
@@ -1133,6 +1133,7 @@ console.log("GET articles", Url.url('/v1/articles' + (params.length ? '?' + para
                 return err;
             });
     };
+
 
     return self;
 })

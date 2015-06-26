@@ -578,6 +578,28 @@ angular.module('user-services', [])
 
     };
 
+    self.addComment = function(data, text) {
+
+        if (!self.is_auth()) {
+            var deferred = $q.defer();
+            deferred.resolve(null);
+            return deferred.promise;
+        };
+
+        return $http({
+            method: 'POST',
+            url: Url.url('/v1/comments'),
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            data: 'api_token=' + user.api_token + '&' +  'entity_id=' + data.id + '&' + 'entity_class_alias=article&' + 'text=' + text
+        }).then(function(result) {
+            return result
+        }, function(data) {
+            return data;
+        });
+
+    };
+
+
 
     return self;
 });

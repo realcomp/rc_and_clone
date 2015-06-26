@@ -23,8 +23,6 @@
       "locator": "https://github.com/driftyco/ionic-plugins-keyboard.git",
       "id": "com.ionic.keyboard"
     },
-    "cordova-plugin-crosswalk-webview",
-    "cordova-plugin-whitelist",
     "cordova-plugin-splashscreen"
   ],
   "cordovaPlatforms": [
@@ -32,5 +30,6 @@
       "platform": "android",
       "locator": "./engine/cordova-android-c0.6.1/"
     }
+
   ]
 }

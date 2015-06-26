@@ -4,8 +4,12 @@
 		<h2>{{ article.title }}</h2>
 		<span class="rubric">{{ rubrics[article.rubric].name }}</span>
 		<div class="html-content" ng-bind-html="article.html"></div>
-
 		<ion-spinner class="loader" ng-hide="hide_loader"></ion-spinner>
 		{{ error }}
 	</ion-content>
+	<ion-footer-bar class="bar-assertive article__add-comment footer__sorting">
+		<div class="footer__sorting-item">
+	    <button ng-click="modalCommentUserCheck();" class="button">Добавить комментарий</button>
+	  </div>
+	</ion-footer-bar>
 </ion-view>
