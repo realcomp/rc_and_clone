@@ -186,6 +186,8 @@ app.controller('CategoryCtrl', function($scope, $location, $stateParams, $ionicH
 
 							$scope.linkSlug = category.disposable ? 'У меня есть' : 'Покупаю постоянно';
 							$scope.showCatName = (category.show_name == 1) ? category.name_sg : '';
+							$scope.showBrand = (category.show_brand == 1) ? true : false;
+
 							var companyIds = {};
 
 							var priceMinMake = false;
@@ -201,7 +203,8 @@ app.controller('CategoryCtrl', function($scope, $location, $stateParams, $ionicH
 	      					'danger_level': productFull.danger_level,
 	      					'product_list': userProductList[productFull.id] ? true : false,
 	      					'shopping_list': userShoppingList[productFull.id] ? true : false,
-	      					'slug': userShoppingList[productFull.id] ? 'В списке покупок' : 'В список покупок'
+	      					'slug': userShoppingList[productFull.id] ? 'В списке покупок' : 'В список покупок',
+	      					'company_name': productFull['company_name']
 								};
 
 								if($scope.price.empty) {
@@ -380,7 +383,7 @@ app.controller('CategoryCtrl', function($scope, $location, $stateParams, $ionicH
 });
 
 // Контроллер товаров
-app.controller('ProductCtrl', function($scope, $location, $stateParams, $ionicHistory, $ionicModal, $http,  Product, Category, Rating, User, DB) {
+app.controller('ProductCtrl', function($scope, $location, $stateParams, $ionicHistory, $ionicModal, $http,  Product, Category, Rating, User, DB, Company) {
 	$scope.overlayload = true;
 	var onlyNumber = !isNaN(parseFloat($stateParams.id)) && isFinite($stateParams.id) && (0 < $stateParams.id);
 	if(!onlyNumber) {
@@ -404,7 +407,6 @@ app.controller('ProductCtrl', function($scope, $location, $stateParams, $ionicHi
 
      	User.productVotes().then(function() {
      		productVotes = User.getProductVotes();
-
 				var userProductList = User.getProductListArray(),
 						userShoppingList = User.getShoppingListArray();
 				product['images_array'] = JSON.parse(product.images);
@@ -508,6 +510,12 @@ app.controller('ProductCtrl', function($scope, $location, $stateParams, $ionicHi
 	      	$scope.title = category.name;
 	      	$scope.showCatName = category.show_name == 1 ? category.name_sg : '';
 	      	$scope.linkSlug = category.disposable ? 'У меня есть' : 'Покупаю постоянно';
+
+	      	if(category.show_brand == 1) {
+	      		Company.getById(product.company_id).then(function(company) {
+	      			product.company_name = company.name;
+	      		})
+	      	}
 	      	
 	      	var cproperties = []
 	      	if (category.properties) {
@@ -945,14 +953,13 @@ app.controller('ShoppingListCtrl', function($scope, $rootScope,  User, Product, 
 			if(!alreadyBuy.length)
 				return;
 
-			Product.getByIds(alreadyBuy, false, true).then(function(products) {
+			Product.getByIds(alreadyBuy, false, true, true).then(function(products) {
 			for (var i = 0, length = products.length; i < length; i++) {
 				products[i]['product_list'] = userProductList[products[i].id] ? true : false;
 				products[i]['shopping_list'] = userShoppingList[products[i].id] ? true : false;
 				products[i]['slug'] = userShoppingList[products[i].id] ? 'В списке покупок' : 'В список покупок';				
 			}
 			$scope.alreadyBuyList = products;
-
 			});
 		}
 
@@ -988,15 +995,14 @@ app.controller('ShoppingListCtrl', function($scope, $rootScope,  User, Product, 
 
 		// Рекомендованные товары
 		User.recommendedList().then(function(list) {
-			Product.getByIds(list, false, true).then(function(products) {
-
+			Product.getByIds(list, false, true, true).then(function(products) {
+				console.log(products);
 			for (var i = 0, length = products.length; i < length; i++) {
 				products[i]['product_list'] = userProductList[products[i].id] ? true : false;
 				products[i]['shopping_list'] = userShoppingList[products[i].id] ? true : false;
 				products[i]['slug'] = userShoppingList[products[i].id] ? 'В списке покупок' : 'В список покупок';				
 			}
 			$scope.recommendedList = products;
-
 			});
 		});
 

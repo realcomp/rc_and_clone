@@ -552,7 +552,6 @@ console.log(slice);
                 // пропускаем эту пустую категорию, чуваки не умеют работать с нестед деревом
                 return;
             }
-
             var values = [
                 category.id,
                 category.root,
@@ -930,7 +929,7 @@ console.log(slice);
         if(rating) { 
             q += ' AND rating >= ' + rating;
         }
-        return DB.query('SELECT * FROM products WHERE (category_id IN ' +'('+id + '))' + q)
+        return DB.query('SELECT p.*, c.name AS company_name FROM products p JOIN companies c ON (c.id=p.company_id) WHERE (p.category_id IN ' +'('+id + '))' + q)
         .then(function(result){
             return DB.fetchAll(result);
         });
@@ -943,16 +942,24 @@ console.log(slice);
         });
     };
 
-    self.getByIds = function(ids, order, category) {
+    self.getByIds = function(ids, order, category, company) {
         var places = [];
         angular.forEach(ids, function(){ places.push('?'); });
         var q = '';
-        var disposable = '*';
+        var r = '';
+        var disposable = 'products.*';
+
         if(category) {
-            q = 'JOIN categories ON (products.category_id=categories.id) ';
-            disposable = 'products.*,categories.disposable'
+            q += 'JOIN categories ON (products.category_id=categories.id) ';
+            disposable += ',categories.disposable,categories.name as category_name,categories.show_name,categories.show_brand'
         }
-        var q2 = 'SELECT ' + disposable + ' FROM products ' + q + 'WHERE products.id IN ('+places.join(',')+')' + (order ? ' ORDER BY ' + order : '');
+
+        if(company) {
+            q += 'JOIN companies ON (products.company_id=companies.id) ';
+            disposable += ',companies.name as company_name'
+        }
+
+        var q2 = 'SELECT '  + disposable + ' FROM products ' + q + 'WHERE products.id IN ('+places.join(',')+')' + (order ? ' ORDER BY ' + order : '');
         return DB.query(q2, ids)
         .then(function(result){
             return DB.fetchAll(result);
@@ -1013,7 +1020,7 @@ console.log(slice);
 
     self.getById = function(id) {
         return DB.query('SELECT * FROM companies WHERE id = ?', [id])
-        .then(function(result){
+        .then(function(result) {
             return DB.fetch(result);
         });
     };

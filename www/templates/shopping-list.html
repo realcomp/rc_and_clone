@@ -43,7 +43,7 @@
 			  		<ion-spinner icon="circles" class="loader"></ion-spinner>
 				  </span>
 				  <span class="product__category-center">
-			  		<span class="product__category-name">{{ showCatName  }} {{ product.name }}</span>
+			  		<span class="product__category-name"><span ng-show="product.show_name">{{ product.category_name }} </span> <span ng-show="product.show_brand">{{ product.company_name }} </span>{{ product.name }}</span>
 			  		<span ng-if="product.price" class="product__category-price">от {{ product.price }} Р</span>	
 			  	</span>
 			  	<span class="product__category-rating-wrap">
@@ -76,7 +76,7 @@
 			  		<ion-spinner icon="circles" class="loader"></ion-spinner>
 				  </span>
 				  <span class="product__category-center">
-			  		<span class="product__category-name">{{ showCatName  }} {{ product.name }}</span>
+			  		<span class="product__category-name"><span ng-show="product.show_name">{{ product.category_name }} </span> <span ng-show="product.show_brand">{{ product.company_name }} </span>{{ product.name }}</span>
 			  		<span ng-if="product.price" class="product__category-price">от {{ product.price }} Р</span>	
 			  	</span>
 			  	<span class="product__category-rating-wrap">
@@ -107,7 +107,7 @@
 			  		<ion-spinner icon="circles" class="loader"></ion-spinner>
 				  	</span>
 				  	<span class="product__category-center">
-				  		<span class="product__category-name">{{ showCatName  }} {{ product.name }}</span>
+				  		<span class="product__category-name"><span ng-show="product.show_name">{{ product.category_name }} </span> <span ng-show="product.show_brand">{{ product.company_name }} </span>{{ product.name }}</span>
 				  		<span ng-if="product.price" class="product__category-price">от {{ product.price }} Р</span>	
 				  	</span>
 				  	<span class="product__category-rating-wrap">
