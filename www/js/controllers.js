@@ -65,6 +65,8 @@ app.controller('MainCtrl', function($scope, $ionicLoading, $interval, $http, Cat
 			Product.count().then(function(res){
 				console.log("count products", res.count);
 			});*/
+
+		console.log(roots);
   		});
 	};
 

@@ -6,12 +6,12 @@
   <progress max="100" value="{{ percent }}"> </progress>
   </div>
     <ion-list class="main__category-wrap" ng-controller='funcController'>
-      <ion-item class="main__category-item" ng-repeat="item in roots | orderBy:'position'" ng-href="#/app/category/{{item.id}}">
+      <ion-item class="main__category-item" ng-repeat="item in roots" ng-href="#/app/category/{{item.id}}">
           <img ng-if="network" ng-src="http://api.roscontrol.com/assets/icons/ios2x/{{ item.background }}">
-          <img ng-src="img/main/bg-{{ $index }}.png">
+          <img ng-src="img/main/bg-{{ item.position }}.png">
           <ion-item class="main__category-icon">
             <img ng-if="network" ng-src="http://api.roscontrol.com/assets/icons/ios2x/{{ item.icon }}">
-            <img ng-if="!network" ng-src="img/main/icon-{{ $index }}.png">
+            <img ng-if="!network" ng-src="img/main/icon-{{ item.position }}.png">
           </ion-item>
           <ion-item class="main__category-name">
             {{ item.name }}
