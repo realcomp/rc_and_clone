@@ -141,7 +141,7 @@ a:active {
 	opacity: 0.2;
 }
 
-.product-rating {
+.product-rating-m {
 	width: 80px;
   margin: 32px 25px 0 15px;
   padding: 22px 0;
@@ -648,13 +648,13 @@ a:active {
 	border-bottom: 1px solid #e0e0e0;
 	border-top: 1px solid #e0e0e0;
 }
-.product__single-result .product-rating,
+.product__single-result .product-rating-m,
 .product__single-result .product__single-result-txt {
 	display: inline-block;
 	margin: 0;
   vertical-align: middle;
 }
-.product__single-result .product-rating {
+.product__single-result .product-rating-m {
 
 }
 .product__single-result .product__single-result-txt {

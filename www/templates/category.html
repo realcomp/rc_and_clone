@@ -47,7 +47,7 @@
 			  		<span ng-if="product.price" class="product__category-price">от {{ product.price }} Р</span>	
 			  	</span>
 			  	<span class="product__category-rating-wrap">
-			  		<span class="product__category-rating product-rating" ng-class="productRatingType(product)">
+			  		<span class="product__category-rating product-rating-m" ng-class="productRatingType(product)">
 				  		<i ng-if="product.ratingv == 'X'" class="icon ion-close-round"></i>
 				  		<i ng-if="product.ratingv != 'X'">
 				  			{{ product.ratingv }}
@@ -76,7 +76,7 @@
 				  		<span ng-if="product.price" class="product__category-price">от {{ product.price }} Р</span>	
 				  	</span>
 				  	<span class="product__category-rating-wrap">
-					  	<span class="product__category-rating product-rating" ng-class="productRatingType(product)">
+					  	<span class="product__category-rating product-rating-m" ng-class="productRatingType(product)">
 					  		<i class="icon ion-close-round"></i>
 					  	</span>
 				  	</span>

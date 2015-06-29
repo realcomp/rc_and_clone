@@ -119,6 +119,7 @@ app.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
 
   .state('app.articles', {
     url: "/article",
+    cache: false,
     views: {
       'menuContent': {
         templateUrl: "templates/articles.html",
@@ -129,6 +130,7 @@ app.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
 
   .state('app.article', {
     url: "/article/:id",
+    cache: false,
     views: {
       'menuContent': {
         templateUrl: "templates/article.html",

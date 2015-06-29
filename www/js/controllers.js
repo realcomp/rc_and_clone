@@ -14,6 +14,7 @@ app.controller('MainCtrl', function($scope, $ionicLoading, $interval, $http, Cat
 	var intervalPercent = $interval(function(){
 		getPercent();
 	}, 500);*/
+
 	$scope.loadingIndicator = $ionicLoading.show({
 	    content: 'Идет загрузка',
 	    animation: 'fade-in',
@@ -66,7 +67,6 @@ app.controller('MainCtrl', function($scope, $ionicLoading, $interval, $http, Cat
 				console.log("count products", res.count);
 			});*/
 
-		console.log(roots);
   		});
 	};
 
@@ -1265,6 +1265,13 @@ app.controller('ArticleCtrl', function($scope, $stateParams, $location, $ionicMo
 	Article.getById($stateParams.id).then(function(data) {
 		if ('html' in data) {
 			$scope.article = data;
+
+			/*
+			var s = document.createElement('script');
+      s.src = 'http://api.roscontrol.com/compiled/js/mobile_article.js';
+      document.body.appendChild(s);
+      */
+
 		} else {
 			$scope.error = 'проблемы с подключением';
 		}
@@ -1272,7 +1279,8 @@ app.controller('ArticleCtrl', function($scope, $stateParams, $location, $ionicMo
 		$scope.hide_loader = true;
 	});
 
-	// Показывать окно только для авторизованных пользователей
+
+	// Только для авторизованных пользователей
 	$scope.modalCommentUserCheck = function() {
 	  if (!User.is_auth()) {
 			DB.alert('Добавлять комментарии могут только авторизованные пользователи!', 'Внимание!');
