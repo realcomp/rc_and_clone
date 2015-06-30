@@ -67,6 +67,7 @@
 }
 .content_sortable .content_sortable-title .item {
 	padding: 1px 1px 0 1px;
+	font-size: 14px;
 	border: 0;
   background: none;
 }
@@ -94,6 +95,9 @@
 .b_reference.b_reference-left .b_reference-info {
   float: none;
   margin-bottom: 10px;
+}
+.comparison_test-table_with_list {
+	overflow-x: auto;
 }
 
 
