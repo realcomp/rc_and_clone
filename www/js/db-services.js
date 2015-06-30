@@ -6,7 +6,7 @@ angular.module('db-services', ['db.config', 'ngCordova'])
 
     self.url = function(url) {
         if (window.cordova) {
-            return 'http://api.roscontrol.com' + url;
+            //return 'http://api.roscontrol.com' + url;
         }
 
         return url;
@@ -51,7 +51,6 @@ angular.module('db-services', ['db.config', 'ngCordova'])
 
         return true;
     };
-
     self.loading = function() {
         return self.deferred.promise;
     };
@@ -119,7 +118,7 @@ angular.module('db-services', ['db.config', 'ngCordova'])
         });
 
         if (window.cordova) {
-            console.log("use cordova sqlite");
+            //console.log("use cordova sqlite");
             window.plugins.sqlDB.copy(DB_CONFIG.name + '.sqlite', function() {
                 self.db = window.sqlitePlugin.openDatabase({name: DB_CONFIG.name + '.sqlite'});
 //                self.db = $cordovaSQLite.openDB(DB_CONFIG.name + '.sqlite');
@@ -133,9 +132,12 @@ angular.module('db-services', ['db.config', 'ngCordova'])
                 init_deferred.resolve();
             });
 
+            /*    
             if (!self.db) {
                 console.error("Error: open database");
             }
+            */
+
         } else {
             console.log("use open database");
             self.db = window.openDatabase(DB_CONFIG.name, '1.0', 'database', -1);
@@ -1126,7 +1128,7 @@ console.log(slice);
             return deferred.promise;
             */
         }
-        return $http.get(Url.url('v1/articles/rubrics_and_categories'))
+        return $http.get(Url.url('/v1/articles/rubrics_and_categories'))
             .then(function(resp) {
                 //console.log('RESP', resp);
                 g_rubrics = {};

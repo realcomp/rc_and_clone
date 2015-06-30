@@ -1078,7 +1078,7 @@ app.controller('UserProfileEditCtrl', function($scope, User, DB) {
 });
 
 // О приложении
-app.controller('AboutCtrl', function($scope, DB, Product, Category) {
+app.controller('AboutCtrl', function($scope, DB, Product, Category, $window) {
 	DB.version().then(function(res){
 		$scope.dbv = res;
 	});
@@ -1095,6 +1095,7 @@ app.controller('AboutCtrl', function($scope, DB, Product, Category) {
   $scope.windowOpen = function(href) {
   	window.open(href, '_system', 'location=yes');
   }
+
 
 });
 
@@ -1151,14 +1152,13 @@ app.controller('ArticlesCtrl', function($scope, $ionicHistory, $ionicModal, $loc
     $scope.modalSortingCategory.hide();
   };
 
-
-  $scope.addParams = function(category, rubric) {
+	$scope.addParams = function(category, rubric) {
   	$location.search({
   		'category': category,
   		'rubric' : rubric
   	});
   	$window.location.reload();	
-  };
+	};
 
   var getParams = $location.search();
   $scope.cat = getParams.category;
@@ -1181,15 +1181,16 @@ app.controller('ArticlesCtrl', function($scope, $ionicHistory, $ionicModal, $loc
 
   Article.getRubrics().then(function(r) {
   	$scope.rubrics = r;
-		for(var key in $scope.rubrics) {
-			if($scope.rubrics[key].rubric === $scope.rubric) {
-				$scope.rubrics[key].active = true;
+		for(var key in r) {
+			if(r[key].rubric === $scope.rubric) {
+				r[key].active = true;
 				$scope.paramR = true;	
 			}
 			else {
-				$scope.rubrics[key].active = false;
+				r[key].active = false;
 			}
 		}
+		$scope.rubrics = r;
 	});
 
 
