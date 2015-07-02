@@ -1168,8 +1168,9 @@ console.log(slice);
             }
         }
 
+        q2 = q + '%';
         q = '%' + q + '%';
-        return DB.query('SELECT p.*,c.name AS category_name, co.name AS company_name, c.show_name AS show_name, c.show_brand AS show_brand FROM products p JOIN categories c ON (c.id=p.category_id) LEFT JOIN companies co ON (co.id=p.company_id) WHERE p.name LIKE ? OR c.name LIKE ? ORDER BY p.name' + qlimit, [q, q])
+        return DB.query('SELECT p.*,c.name AS category_name, co.name AS company_name, c.show_name AS show_name, c.show_brand AS show_brand FROM products p JOIN categories c ON (c.id=p.category_id) LEFT JOIN companies co ON (co.id=p.company_id) WHERE p.name LIKE ? OR c.name LIKE ? OR p.name LIKE ? OR c.name LIKE ? ORDER BY p.name' + qlimit, [q, q, q2, q2])
         .then(function(result){
             return DB.fetchAll(result);
         }, function(err){
