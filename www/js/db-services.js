@@ -1171,7 +1171,7 @@ console.log(slice);
         q2 = q + '%';
         q = '%' + q + '%';
         DB.query('PRAGMA case_sensitive_like=OFF');
-        return DB.query("SELECT id,rating,price,disposable,pn as name FROM (SELECT p.id, p.rating, p.price, c.disposable, CASE WHEN c.show_name == 1 AND c.show_brand == 0 THEN c.name || ' ' || p.name ELSE CASE WHEN c.show_name == 0 AND c.show_brand == 1 THEN co.name || ' ' || p.name ELSE CASE WHEN c.show_name == 1 AND c.show_brand == 1 THEN co.name || ' ' || c.name || ' ' || p.name ELSE p.name END END END AS pn FROM products p JOIN categories c ON (c.id=p.category_id) LEFT JOIN companies co ON (co.id=p.company_id)) as tp WHERE pn LIKE ?" + qlimit, [q])
+        return DB.query("SELECT id,rating,price,disposable,thumbnail,pn as name FROM (SELECT p.id, p.rating, p.price, p.thumbnail, c.disposable, CASE WHEN c.show_name == 1 AND c.show_brand == 0 THEN c.name || ' ' || p.name ELSE CASE WHEN c.show_name == 0 AND c.show_brand == 1 THEN co.name || ' ' || p.name ELSE CASE WHEN c.show_name == 1 AND c.show_brand == 1 THEN co.name || ' ' || c.name || ' ' || p.name ELSE p.name END END END AS pn FROM products p JOIN categories c ON (c.id=p.category_id) LEFT JOIN companies co ON (co.id=p.company_id)) as tp WHERE pn LIKE ?" + qlimit, [q])
         .then(function(result){
             return DB.fetchAll(result);
         }, function(err){
