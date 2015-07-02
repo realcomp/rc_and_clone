@@ -1170,7 +1170,8 @@ console.log(slice);
 
         q2 = q + '%';
         q = '%' + q + '%';
-        return DB.query('SELECT p.*,c.name AS category_name, co.name AS company_name, c.show_name AS show_name, c.show_brand AS show_brand FROM products p JOIN categories c ON (c.id=p.category_id) LEFT JOIN companies co ON (co.id=p.company_id) WHERE p.name LIKE ? OR c.name LIKE ? OR p.name LIKE ? OR c.name LIKE ? ORDER BY p.name' + qlimit, [q, q, q2, q2])
+        DB.query('PRAGMA case_sensitive_like=OFF');
+        return DB.query('SELECT id,ratnig,price,disposable,pn as name FROM (SELECT p.id, p.rating, p.price, c.disposable, CASE WHEN c.show_name == 1 AND c.show_brand == 0 THEN c.name || ' ' || p.name ELSE CASE WHEN c.show_name == 0 AND c.show_brand == 1 THEN co.name || ' ' || p.name ELSE CASE WHEN c.show_name == 1 AND c.show_brand == 1 THEN co.name || ' ' || c.name || ' ' || p.name ELSE p.name END END END AS pn FROM products p JOIN categories c ON (c.id=p.category_id) LEFT JOIN companies co ON (co.id=p.company_id)) as tp WHERE pn LIKE ?' + qlimit, [q])
         .then(function(result){
             return DB.fetchAll(result);
         }, function(err){
