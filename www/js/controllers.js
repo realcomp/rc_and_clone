@@ -1,7 +1,7 @@
 var app = angular.module('starter.controllers', ['ionic.rating']);
 
 // Контроллер главной
-app.controller('MainCtrl', function($scope, $ionicLoading, $interval, $http, Category, DB, Product, User) {
+app.controller('MainCtrl', function($scope, $ionicLoading, $rootScope, $interval, $http, Category, DB, Product, User) {
 	//console.log('main controller');
 
 	if (window.cordova) {
@@ -34,6 +34,8 @@ app.controller('MainCtrl', function($scope, $ionicLoading, $interval, $http, Cat
 	$scope.roots = [];
 	$scope.network = false;
 	$scope.title = 'Рейтинг товаров';
+	$rootScope.seachActiveRoot = false;
+	$rootScope.thisQuery = '';
 
 	User.productList();
 	User.shoppingList();
@@ -837,7 +839,7 @@ app.controller('RegistrationCtrl', function($scope, $ionicModal, $rootScope, $lo
 
 
 // Список покупок
-app.controller('ShoppingListCtrl', function($scope, $rootScope,  User, Product, Category, Search, DB) {
+app.controller('ShoppingListCtrl', function($scope, $rootScope, User, Product, Category, Search, DB) {
 	$scope.seachData = function (query, key) {
 		$scope.seachActive = false;
 		if(key == true) {
@@ -899,8 +901,18 @@ app.controller('ShoppingListCtrl', function($scope, $rootScope,  User, Product, 
 		});
 
 		if(query) {	
-			var el = document.getElementsByClassName('product__shopping-search');
-			el[0].setAttribute('disabled', true);
+			$rootScope.thisQuery = query; 
+
+			if($rootScope.seachActiveRoot) {
+				return false;
+			}
+
+			$rootScope.seachActiveRoot = true;
+			goSearch(query);
+
+		}
+
+		function goSearch(query) {
 			Search.products(query).then(function(products) {
 				for (var i = 0, length = products.length; i < length; i++) {
 					products[i]['product_list'] = userProductList[products[i].id] ? true : false;
@@ -908,9 +920,13 @@ app.controller('ShoppingListCtrl', function($scope, $rootScope,  User, Product, 
 					products[i]['slug'] = userShoppingList[products[i].id] ? 'В списке покупок' : 'В список покупок';				
 				}
 				$scope.searchList = products;
-				el[0].removeAttribute('disabled');
-				el[0].focus();
-			});
+				$rootScope.seachActiveRoot = false;
+
+				if(query != $rootScope.thisQuery) {
+					goSearch($rootScope.thisQuery);
+				}
+
+			});	
 		}
 
 		$scope.updateProductList = function(product) {
@@ -998,7 +1014,6 @@ app.controller('ShoppingListCtrl', function($scope, $rootScope,  User, Product, 
 		// Рекомендованные товары
 		User.recommendedList().then(function(list) {
 			Product.getByIds(list, false, true, true).then(function(products) {
-				console.log(products);
 			for (var i = 0, length = products.length; i < length; i++) {
 				products[i]['product_list'] = userProductList[products[i].id] ? true : false;
 				products[i]['shopping_list'] = userShoppingList[products[i].id] ? true : false;
