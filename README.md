@@ -15,7 +15,8 @@
  `cordova plugin add https://github.com/brodysoft/Cordova-SQLitePlugin`
 - Copy SQLite Database from assets(Android) or Resources(iOS) to App Directory
  `cordova plugin add https://github.com/an-rahulpandey/cordova-plugin-dbcopy.git`
-
+- авторизация через соцсети
+ `bower install ng-cordova-oauth -S`
 
 
 ###Сборка пакета
