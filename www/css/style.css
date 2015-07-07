@@ -1292,6 +1292,44 @@ a:active {
 }
 
 
+/* social button */
+.social__link {
+	display: block;
+	width: 200px;
+  padding: 8px 0;
+  margin: 15px auto;
+  text-align: left;
+  text-decoration: none;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+}
+.social__link.vk {
+	margin-top: 20px;
+	background: #48729e;
+}
+.social__link.fb {
+	background: #3c5a98;
+}
+.social__link .social-icon {
+	display: inline-block;
+  width: 32px;
+  height: 29px;
+  margin: 0 5px 0 17px;
+  position: relative;
+  top: 4px;
+  background: url('../img/icons-social.png') 2px -1px no-repeat;
+}
+.social__link.vk .social-icon{
+	background-position: -31px 4px;
+}
+.social__link .social-text {
+	position: relative;
+  top: -5px;
+  font-size: 16px;
+  color: #FFF;
+}
+
 /* 
 	==========================================================================
   	PROFILE

@@ -40,7 +40,7 @@ angular.module('user-services', [])
         localStorage.setItem(user_key, JSON.stringify(user));
     }
 
-    self._do_login = function(result) {
+    self._do_login = function(result, email) {
         if (result.status == 200) {
             self.lastLoginEmail(email);
             user = result.data;
@@ -65,7 +65,7 @@ angular.module('user-services', [])
 	  	return $http.get(Url.url('/v1/auth/email?' + 'email=' + email + '&password=' + password)).
 	  		then(function(result) {
 //                console.log("user", result.data);
-                return self._do_login(result);
+                return self._do_login(result,email);
 	  	    }, function(status) {
                 console.error("login error", status);
 		        return status;
