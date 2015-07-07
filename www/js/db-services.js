@@ -119,17 +119,23 @@ angular.module('db-services', ['db.config', 'ngCordova'])
 
         if (window.cordova) {
             //console.log("use cordova sqlite");
-            window.plugins.sqlDB.copy(DB_CONFIG.name + '.sqlite', function() {
+            window.plugins.sqlDB.copy(DB_CONFIG.name + '.sqlite', 0, function() {
                 self.db = window.sqlitePlugin.openDatabase({name: DB_CONFIG.name + '.sqlite'});
 //                self.db = $cordovaSQLite.openDB(DB_CONFIG.name + '.sqlite');
 //        self.db = window.openDB({name: DB_CONFIG.name + '.sqlite'});
                 init_deferred.resolve();
-            }, function (error) {
-                console.error("There was an error copying the database: " + error);
-                self.db = window.sqlitePlugin.openDatabase({name: DB_CONFIG.name + '.sqlite'});
-//                self.db = $cordovaSQLite.openDB(DB_CONFIG.name + '.sqlite');
-//                promise = self.create();
-                init_deferred.resolve();
+            }, function (e) {
+                if (e.code == 516) {
+                    // file already exists
+                    self.db = window.sqlitePlugin.openDatabase({name: DB_CONFIG.name + '.sqlite'});
+    //                self.db = $cordovaSQLite.openDB(DB_CONFIG.name + '.sqlite');
+    //                promise = self.create();
+                    init_deferred.resolve();
+                } else {
+                    console.error("There was an error copying the database: " + JSON.stringify(e));
+                    self.alert(e.message);
+                    self.deferred.resolve({loaded: false});
+                }
             });
 
             /*    
@@ -762,7 +768,10 @@ console.log(slice);
         var deferred = $q.defer();
  
         self.db.transaction(function(transaction) {
-            self.db.executeSql('PRAGMA case_sensitive_like=OFF');
+/*            if (window.cordova) {
+                self.db.executeSql('PRAGMA case_sensitive_like=OFF');
+            }*/
+
             transaction.executeSql(query, bindings, function(transaction, result) {
                 deferred.resolve(result);
             }, function(transaction, error) {
@@ -1183,4 +1192,5 @@ console.log(slice);
 
     return self;
 })
+
 ;

@@ -774,13 +774,14 @@ app.controller('AuthorizationCtrl', function($scope, $http, $ionicModal, $ionicS
   	$scope.userProfile = null;
   }
 
-  // VK
-  $scope.doVK = function() {
-  	User.vk().then(function(data) {
-			//console.log(data);
-		});
-  };
-
+	$scope.socialLogin = function(social) {
+		var method = social + 'Oauth';
+        User[method]().then(function(error) {
+        	console.log(JSON.stringify(result));
+        }, function(error) {
+        	console.log(JSON.stringify(error));
+        });
+    };
 });
 
 // Регистрация
@@ -1340,5 +1341,4 @@ app.controller('ArticleCtrl', function($scope, $stateParams, $location, $ionicMo
 
 
 });
-
 

@@ -18,7 +18,6 @@
 - авторизация через соцсети
  `bower install ng-cordova-oauth -S`
 
-
 ###Сборка пакета
 
 - cordova build --release android

@@ -20,5 +20,7 @@
     </form>
     <!--<a href="#" ng-click="doVK(); ">VK</a>-->
     <a ng-controller="RegistrationCtrl" class="reg__link" ng-click="closeLogin(); showReg();" href="#">Регистрация</a>
+    <a class="reg__link"  ng-click="socialLogin('vkontakte');" href="#">vk</a>
+    <a class="reg__link"  ng-click="socialLogin('facebook');" href="#">fb</a>
   </ion-content>
 </ion-modal-view>

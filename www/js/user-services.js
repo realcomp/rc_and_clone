@@ -1,7 +1,7 @@
 angular.module('user-services', [])
 
 // Resource service example
-.factory('User', function($http, $q, $rootScope, Url, DB) {
+.factory('User', function($http, $q, $rootScope, $cordovaOauth, Url, DB) {
     var self = this;
     var user_key = 'rk_user';
     var last_login_email_key = 'rk_last_login_email';
@@ -40,6 +40,20 @@ angular.module('user-services', [])
         localStorage.setItem(user_key, JSON.stringify(user));
     }
 
+    self._do_login = function(result) {
+        if (result.status == 200) {
+            self.lastLoginEmail(email);
+            user = result.data;
+            save();
+            self.productList();
+            self.shoppingList();
+            self.productVotes();
+            return {profile: user.profile};
+        }
+
+        return null;
+    }
+
   	self.login = function(email, password) {
         if (!email || !password) {
             var deferred = $q.defer();
@@ -51,18 +65,7 @@ angular.module('user-services', [])
 	  	return $http.get(Url.url('/v1/auth/email?' + 'email=' + email + '&password=' + password)).
 	  		then(function(result) {
 //                console.log("user", result.data);
-
-                if (result.status == 200) {
-                    self.lastLoginEmail(email);
-                    user = result.data;
-                    save();
-                    self.productList();
-                    self.shoppingList();
-                    self.productVotes();
-                    return {profile: user.profile};
-                }
-
-	    		return null;
+                return self._do_login(result);
 	  	    }, function(status) {
                 console.error("login error", status);
 		        return status;
@@ -80,20 +83,6 @@ angular.module('user-services', [])
         recommended_list = null;
         time_get_profile = 0;
   	};
-
-
-    self.vk = function() {
-
-        return $http({
-            method: 'GET',
-            url: Url.url('/v1/auth/vk?access_token=4535100')
-        }).then(function(result) {
-            return result
-        }, function(data) {
-            return data;
-        });
-
-    };
 
 
     self.registration = function(firstname, lastname, email) {
@@ -600,6 +589,42 @@ angular.module('user-services', [])
     };
 
 
+    self.authSocial = function(social, access_token) {
+        if (!social || !access_token) {
+            var deferred = $q.defer();
+            deferred.reject('empty socail or access_token');
+            return deferred.promise;
+        }
+
+        return $http.get(Url.url('/v1/auth/'+social+'?access_token='+access_token)).then(function(resp) {
+            return self._do_login(result);
+        },
+        function(err){
+            console.error("error get auth social "+social, err);
+            return err;
+        });
+    };
+
+
+    self.vkontakteOauth = function() {
+        return $cordovaOauth.vkontakte("4535100", ['uid', 'email', 'first_name', 'last_name', 'bdate', 'city', 'country', 'timezone', 'contacts', 'photo_medium']).then(function(result) {
+            return self.authSocial('vk', result.access_token);
+        }, function(error) {
+            var deferred = $q.defer();
+            deferred.reject(error);
+            return deferred.promise;
+        });
+    };
+
+    self.facebookOauth = function() {
+        return $cordovaOauth.facebook("312893302188904", ['email', 'first_name', 'last_name', 'bdate', 'city', 'country', 'timezone', 'contacts', 'photo_medium']).then(function(result) {
+            return self.authSocial('fb', result.access_token);
+        }, function(error) {
+            var deferred = $q.defer();
+            deferred.reject(error);
+            return deferred.promise;
+        });
+    };
 
     return self;
 });

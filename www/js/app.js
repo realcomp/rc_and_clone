@@ -4,7 +4,7 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-var app = angular.module('starter', ['ionic', 'db-services', 'user-services', 'starter.controllers', 'ionic.rating'])
+var app = angular.module('starter', ['ionic', 'db-services', 'user-services', 'starter.controllers', 'ionic.rating', 'ngCordovaOauth'])
 
 app.run(function($ionicPlatform, DB, $window, $rootScope) {
   $ionicPlatform.ready(function($) {
@@ -21,7 +21,8 @@ app.run(function($ionicPlatform, DB, $window, $rootScope) {
     
     document.addEventListener("deviceready", onDeviceReady, false);
     function onDeviceReady() {
-        console.log(cordova.device);
+//      window.open = window.cordova.InAppBrowser.open;
+        console.log('deviceready',cordova.device);
     }
     
 
