@@ -617,7 +617,7 @@ angular.module('user-services', [])
     };
 
     self.facebookOauth = function() {
-        return $cordovaOauth.facebook("312893302188904", ['email', 'first_name', 'last_name', 'bdate', 'city', 'country', 'timezone', 'contacts', 'photo_medium']).then(function(result) {
+        return $cordovaOauth.facebook("312893302188904", ['email', "read_stream", "user_website", "user_location", "user_relationships"]).then(function(result) {
             return self.authSocial('fb', result.access_token);
         }, function(error) {
             var deferred = $q.defer();

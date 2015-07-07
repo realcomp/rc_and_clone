@@ -25,3 +25,11 @@
 - zipalign -v 4 platforms/android/build/outputs/apk/android-armv7-release-unsigned.apk Roscontrol.apk
 
 https://play.google.com/apps/publish/?dev_acc=01474632627383622689#AppListPlace
+
+
+###Соцсети
+
+- для facebook
+ `keytool -exportcert -alias alias_name -keystore release-key.keystore | openssl sha1 -binary | openssl base64`
+- для vkontakte
+ `keytool -exportcert -alias alias_name -keystore release-key.keystore -list -v | grep 'SHA1:' | cut -d ' ' -f 2 | sed 's/://g'`
