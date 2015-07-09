@@ -41,8 +41,11 @@ angular.module('user-services', [])
     }
 
     self._do_login = function(result, email) {
-        if (result.status == 200) {
-            self.lastLoginEmail(email);
+        if (result && result.status == 200) {
+            if (email) {
+                self.lastLoginEmail(email);
+            }
+
             user = result.data;
             save();
             self.productList();
@@ -596,7 +599,8 @@ angular.module('user-services', [])
             return deferred.promise;
         }
 
-        return $http.get(Url.url('/v1/auth/'+social+'?access_token='+access_token)).then(function(resp) {
+        return $http.get(Url.url('/v1/auth/'+social+'?access_token='+access_token)).then(function(result) {
+//console.log(JSON.stringify(result));
             return self._do_login(result);
         },
         function(err){
@@ -607,7 +611,7 @@ angular.module('user-services', [])
 
 
     self.vkontakteOauth = function() {
-        return $cordovaOauth.vkontakte("4535100", ['uid', 'email', 'first_name', 'last_name', 'bdate', 'city', 'country', 'timezone', 'contacts', 'photo_medium']).then(function(result) {
+        return $cordovaOauth.vkontakte("4535100", ['uid', 'offline', 'email', 'first_name', 'last_name', 'bdate', 'city', 'country', 'timezone', 'contacts', 'photo_medium']).then(function(result) {
             return self.authSocial('vk', result.access_token);
         }, function(error) {
             var deferred = $q.defer();
@@ -618,6 +622,7 @@ angular.module('user-services', [])
 
     self.facebookOauth = function() {
         return $cordovaOauth.facebook("312893302188904", ['email', "read_stream", "user_website", "user_location", "user_relationships"]).then(function(result) {
+//console.log(JSON.stringify(result));
             return self.authSocial('fb', result.access_token);
         }, function(error) {
             var deferred = $q.defer();

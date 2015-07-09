@@ -120,14 +120,15 @@ angular.module('db-services', ['db.config', 'ngCordova'])
         if (window.cordova) {
             //console.log("use cordova sqlite");
             window.plugins.sqlDB.copy(DB_CONFIG.name + '.sqlite', 0, function() {
-                self.db = window.sqlitePlugin.openDatabase({name: DB_CONFIG.name + '.sqlite'});
+//                self.db = window.sqlitePlugin.openDatabase({name: DB_CONFIG.name + '.sqlite', androidDatabaseImplementation: 2});
+                self.db = window.sqlitePlugin.openDatabase({name: DB_CONFIG.name + '.sqlite', androidDatabaseImplementation: 2});
 //                self.db = $cordovaSQLite.openDB(DB_CONFIG.name + '.sqlite');
 //        self.db = window.openDB({name: DB_CONFIG.name + '.sqlite'});
                 init_deferred.resolve();
             }, function (e) {
                 if (e.code == 516) {
                     // file already exists
-                    self.db = window.sqlitePlugin.openDatabase({name: DB_CONFIG.name + '.sqlite'});
+                    self.db = window.sqlitePlugin.openDatabase({name: DB_CONFIG.name + '.sqlite', androidDatabaseImplementation: 2});
     //                self.db = $cordovaSQLite.openDB(DB_CONFIG.name + '.sqlite');
     //                promise = self.create();
                     init_deferred.resolve();
@@ -305,7 +306,6 @@ angular.module('db-services', ['db.config', 'ngCordova'])
 //                console.log(resp.data);
 
                 self.transaction(function(tx){
-console.log("DEBUG tx");
                     angular.forEach(slices, function(slice){
                         self.put_slice(slice, false, tx);
                     });
@@ -768,9 +768,9 @@ console.log(slice);
         var deferred = $q.defer();
  
         self.db.transaction(function(transaction) {
-/*            if (window.cordova) {
+            if (window.cordova) {
                 self.db.executeSql('PRAGMA case_sensitive_like=OFF');
-            }*/
+            }
 
             transaction.executeSql(query, bindings, function(transaction, result) {
                 deferred.resolve(result);
@@ -1179,7 +1179,7 @@ console.log(slice);
         }
 
         q = '%' + q + '%';
-        return DB.query("SELECT id,rating,price,disposable,thumbnail,pn as name FROM (SELECT p.id, p.rating, p.price, p.thumbnail, c.disposable, CASE WHEN c.show_name == 1 AND c.show_brand == 0 THEN c.name || ' ' || p.name ELSE CASE WHEN c.show_name == 0 AND c.show_brand == 1 THEN co.name || ' ' || p.name ELSE CASE WHEN c.show_name == 1 AND c.show_brand == 1 THEN co.name || ' ' || c.name || ' ' || p.name ELSE p.name END END END AS pn FROM products p JOIN categories c ON (c.id=p.category_id) LEFT JOIN companies co ON (co.id=p.company_id)) as tp WHERE LOWER(pn) LIKE LOWER(?)" + qlimit, [q])
+        return DB.query("SELECT id,rating,price,disposable,thumbnail,pn as name FROM (SELECT p.id, p.rating, p.price, p.thumbnail, c.disposable, CASE WHEN c.show_name == 1 AND c.show_brand == 0 THEN c.name || ' ' || p.name ELSE CASE WHEN c.show_name == 0 AND c.show_brand == 1 THEN co.name || ' ' || p.name ELSE CASE WHEN c.show_name == 1 AND c.show_brand == 1 THEN co.name || ' ' || c.name || ' ' || p.name ELSE p.name END END END AS pn FROM products p JOIN categories c ON (c.id=p.category_id) LEFT JOIN companies co ON (co.id=p.company_id)) as tp WHERE pn COLLATE LOCALIZED LIKE ? COLLATE LOCALIZED" + qlimit, [q])
         .then(function(result){
             return DB.fetchAll(result);
         }, function(err){

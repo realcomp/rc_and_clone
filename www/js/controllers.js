@@ -742,6 +742,23 @@ app.controller('AuthorizationCtrl', function($scope, $http, $ionicModal, $ionicS
   	}
   };
 
+  var do_login = function(data){
+	if ('profile' in data) {
+  		$scope.userProfile = data.profile;
+  		$scope.closeLogin();
+		} else {
+			if (data['data']['user_message']) {
+				$scope.loginError = data['data']['user_message'];
+			}
+	  	else if(data.status == 403) {
+	  		$scope.loginError = 'Указан неверный логин или пароль!';
+	  	}
+	  	else {
+	  		$scope.loginError = 'Ошибка авторизации, попробуйте позже!';
+	  	}
+	}
+  };
+
   // Обработка данных
   $scope.doLogin = function() {
 
@@ -749,20 +766,7 @@ app.controller('AuthorizationCtrl', function($scope, $http, $ionicModal, $ionicS
 
 		User.login($scope.loginData.username, $scope.loginData.password).then(function(data) {
 			//window.localStorage.clear();
-			if ('profile' in data) {
-		  		$scope.userProfile = data.profile;
-		  		$scope.closeLogin();
-	  		} else {
-	  			if (data['data']['user_message']) {
-	  				$scope.loginError = data['data']['user_message'];
-	  			}
-			  	else if(data.status == 403) {
-			  		$scope.loginError = 'Указан неверный логин или пароль!';
-			  	}
-			  	else {
-			  		$scope.loginError = 'Ошибка авторизации, попробуйте позже!';
-			  	}
-	  		}
+			do_login(data);
 		});
 
   };
@@ -776,8 +780,9 @@ app.controller('AuthorizationCtrl', function($scope, $http, $ionicModal, $ionicS
 
 	$scope.socialLogin = function(social) {
 		var method = social + 'Oauth';
-        User[method]().then(function(error) {
-        	console.log(JSON.stringify(result));
+        User[method]().then(function(result) {
+//        	console.log(JSON.stringify(result));
+        	do_login(result);
         }, function(error) {
         	console.log(JSON.stringify(error));
         });
