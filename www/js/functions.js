@@ -168,10 +168,10 @@ app.controller('funcController', function($scope, $ionicSlideBoxDelegate, $ionic
   // Методы для работы слайдера в отзывах
   $scope.currentIndex = 1;
   $scope.nextSlide = function() {
-    $ionicSlideBoxDelegate.next();
+    $ionicSlideBoxDelegate._instances[1].next();
   }
   $scope.prevSlide = function() {
-    $ionicSlideBoxDelegate.previous();
+    $ionicSlideBoxDelegate._instances[1].previous();
   }
   $scope.slideHasChanged = function($index) {
   	$scope.currentIndex = $index + 1
