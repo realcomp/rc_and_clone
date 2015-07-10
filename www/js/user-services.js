@@ -529,7 +529,7 @@ angular.module('user-services', [])
             return deferred.promise;
         }
 
-        return $http.get(Url.url('v1/votes/products?limit=1000&' + 'api_token=' + user.api_token)).
+        return $http.get(Url.url('/v1/votes/products?limit=1000&' + 'api_token=' + user.api_token)).
         then(function(result) {
             if (result.status == 200) {
                 for(var i = 0, length = result.data.product_ids.length; i < length; i++) {
