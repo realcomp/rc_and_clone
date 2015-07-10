@@ -92,7 +92,7 @@
 	  	<ion-spinner icon="lines"></ion-spinner>
 	  </div>
 	</ion-content>
-	<ion-footer-bar class="bar-assertive article__add-comment footer__sorting">
+	<ion-footer-bar ng-if="!overlayload" class="bar-assertive article__add-comment footer__sorting">
 		<div class="footer__sorting-item">
 	    <button ng-click="showReview(product);" class="button">Написать отзыв</button>
 	  </div>
