@@ -900,7 +900,7 @@ console.log(slice);
             params.push(lvl);
         }
 
-        return DB.query('SELECT * FROM categories WHERE root = ? AND lft > ? AND rgt < ?' + w + ' ORDER BY lft', params)
+        return DB.query('SELECT * FROM categories WHERE root = ? AND lft > ? AND rgt < ?' + w + ' ORDER BY position', params)
         .then(function(result){
             return DB.fetchAll(result);
         });
