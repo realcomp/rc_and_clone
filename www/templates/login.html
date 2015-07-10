@@ -9,7 +9,7 @@
     <form ng-submit="doLogin(); ">
       <div class="list">
         <label ng-class="loginError ? 'login__error-l' : ''" class="item item-input border-r-top">
-          <input type="text" ng-model="loginData.username" placeholder="Электронная почта">
+          <input type="email" ng-model="loginData.username" placeholder="Электронная почта">
         </label>
         <label ng-class="loginError ? 'login__error-l' : ''" class="item item-input border-r-bottom">
           <input type="password" ng-model="loginData.password" placeholder="Пароль">
