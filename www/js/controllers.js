@@ -925,6 +925,7 @@ app.controller('ShoppingListCtrl', function($scope, $rootScope, User, Product, C
 					products[i]['shopping_list'] = userShoppingList[products[i].id] ? true : false;
 					products[i]['slug'] = userShoppingList[products[i].id] ? 'В списке покупок' : 'В список покупок';				
 				}
+				console.log(products);
 				$scope.searchList = products;
 				$rootScope.seachActiveRoot = false;
 
