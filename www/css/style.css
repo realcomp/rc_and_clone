@@ -1510,6 +1510,12 @@ a:active {
   font-size: 16px;
   color: #CACACA;
 }
+.article__add-comment {
+	background: #354777 !important;
+}
+.article__add-comment .button {
+	color: #FFF !important;
+}
 .article__add-comment .footer__sorting-item {
 	border-right: 0 !important;
 	width: 100% !important;

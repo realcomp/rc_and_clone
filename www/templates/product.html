@@ -55,7 +55,7 @@
 				      		<div class="product__slider-rate">
 				      			{{ reviewRatingGenerator(review.mark) }}
 				      			<span class="product__slider-rating" ng-repeat="i in arrayRating track by $index" ng-class="i ? 'rating-full' : 'rating-empty'">
-		 									<i class="fa fa-star"></i>
+		 									<i class="icon ion-android-star"></i>
 		 								</span>
 				      		</div>
 				      	</div>
@@ -73,7 +73,6 @@
 							</div> 
 			      </ion-slide>
 		 		</div>
-				<button ng-click="showReview(product);" class="product__single-add-reviews">Написать отзыв</button>
 		 </div>
 		 <div class="product__single-prop">
 		 	<div class="product__single-prop-main">
@@ -93,4 +92,9 @@
 	  	<ion-spinner icon="lines"></ion-spinner>
 	  </div>
 	</ion-content>
+	<ion-footer-bar class="bar-assertive article__add-comment footer__sorting">
+		<div class="footer__sorting-item">
+	    <button ng-click="showReview(product);" class="button">Написать отзыв</button>
+	  </div>
+	</ion-footer-bar>
 </ion-view>

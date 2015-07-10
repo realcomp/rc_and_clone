@@ -56,10 +56,7 @@ app.run(function($ionicPlatform, DB, $window, $rootScope) {
   }, false);
   
 
-
 });
-
-
 
 
 app.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
