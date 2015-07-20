@@ -1,5 +1,10 @@
 var app = angular.module('starter.controllers', ['ionic.rating']);
 
+var articleUrlParam = {
+  cat: null,
+  rubric: null
+};
+
 // Контроллер главной
 app.controller('MainCtrl', function($scope, $ionicLoading, $rootScope, $interval, $http, Category, DB, Product, User) {
 	//console.log('main controller');
@@ -1178,7 +1183,18 @@ app.controller('ArticlesCtrl', function($scope, $ionicHistory, $ionicModal, $loc
 		$scope.hide_loader = true;
 	});*/
 
-	// Фильтр по рубрике
+
+  // Сохраненные параметры
+  var thisUrlParams = $location.search();
+  if((!thisUrlParams.category || !thisUrlParams.rubric) && (articleUrlParam.cat || articleUrlParam.rubric)) {
+    $location.search({
+      'category': articleUrlParam.cat,
+      'rubric' : articleUrlParam.rubric
+    });
+    $window.location.reload();
+  }
+
+  // Фильтр по рубрике
   $ionicModal.fromTemplateUrl('templates/modal/modal-sorting-rubric.html', {
     scope: $scope
   }).then(function(modalSortingRubric) {
@@ -1201,6 +1217,7 @@ app.controller('ArticlesCtrl', function($scope, $ionicHistory, $ionicModal, $loc
     $scope.modalSortingCategory.hide();
   };
 
+
 	$scope.addParams = function(category, rubric) {
   	$location.search({
   		'category': category,
@@ -1209,9 +1226,10 @@ app.controller('ArticlesCtrl', function($scope, $ionicHistory, $ionicModal, $loc
   	$window.location.reload();	
 	};
 
+
   var getParams = $location.search();
-  $scope.cat = getParams.category;
-  $scope.rubric = getParams.rubric;
+  $scope.cat = articleUrlParam.cat = getParams.category;
+  $scope.rubric = articleUrlParam.rubric = getParams.rubric;
 
 
 	Category.roots().then(function(r) {
