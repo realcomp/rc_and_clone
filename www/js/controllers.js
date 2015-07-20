@@ -420,7 +420,6 @@ app.controller('ProductCtrl', function($scope, $location, $stateParams, $ionicHi
 				product['vote_boolean'] = productVotes[product.id] ? true : false;
 			  product['vote_text'] = productVotes[product.id] ? 'Вы проголосовали!' : 'Проголосовать за тест';
 
-
 				$scope.updateProductList = function(product) {
 					User.updateProductList(product.id).then(function(response) {
 						var result = User.ProductResponse(response, 'товаров');
@@ -565,7 +564,6 @@ app.controller('ProductCtrl', function($scope, $location, $stateParams, $ionicHi
     	}	
     }
 
-
 		// Преобразованная дата для каждого элемента
 		angular.forEach(resp.items, function(item) {
 	   	var date = item.created_at;
@@ -598,7 +596,7 @@ app.controller('ProductCtrl', function($scope, $location, $stateParams, $ionicHi
 
   // Добавление отзывов от товаре
   $ionicModal.fromTemplateUrl('templates/modal/add-review.html', {
-    scope: $scope,
+    scope: $scope
   }).then(function(modal) {
     $scope.modal = modal;
   });
@@ -797,7 +795,7 @@ app.controller('RegistrationCtrl', function($scope, $ionicModal, $rootScope, $lo
 
 	// Шаблон
   $ionicModal.fromTemplateUrl('templates/modal/registration.html', {
-    scope: $scope,
+    scope: $scope
   }).then(function(modal) {
     $scope.modal = modal;
   });
