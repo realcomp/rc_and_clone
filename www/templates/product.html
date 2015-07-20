@@ -23,40 +23,59 @@
 		 <div class="product__single-reviews-wrap" ng-if="reviews">
 
 		 		<div class="product__single-reviews-rating product__single-wblock">
-		 			<p class="product__single-reviews-rating-title">Оценки покупателей</p>
-		 				<span class="product__single-reviews-rating" ng-repeat="i in arrayRating track by $index" ng-class="i ? 'rating-full' : 'rating-empty'">
+		 			<p class="product__single-reviews-rating-title">Отзывы покупателей</p>
+					<span class="product__single-review-type up">
+						<i class="fontello-icon icon-thumbs-up"></i>
+						<span>{{ objReviews.positive.procent }}%</span>
+					</span>
+					<span class="product__single-review-type down">
+						<i class="fontello-icon icon-thumbs-down"></i>
+						<span>{{ objReviews.negative.procent }}%</span>
+					</span>
+		 				<!--<span class="product__single-reviews-rating" ng-repeat="i in arrayRating track by $index" ng-class="i ? 'rating-full' : 'rating-empty'">
 		 					<i class="icon ion-android-star"></i>
-		 				</span>
-		 				<span class="product__single-reviews-text">{{ reviews.total_count }} {{ declension(reviews.total_count, ['оценка','оценки','оценок']); }} </span>
+		 				</span>-->
+		 				<span class="product__single-reviews-count">{{ reviews.total_count }} {{ declension(reviews.total_count, ['отзыв','отзыва','отзывов']); }} </span>
 		 		</div>
 
+			 <div ng-if="reviews && reviews.total_count > 0" class="product__single-reviews-slider-head">
+				 <div class="product__single-slider-count">
+					 Отзыв {{ currentIndex }} из {{ reviews.total_count }}
+				 </div>
+				 <div class="product__single-slider-nav">
+					 <button ng-click="prevSlide()" ng-class="currentIndex == 1 ? 'button__disabled' : '' "><i class="icon ion-chevron-left"></i></button>
+					 <button ng-click="nextSlide()" ng-class="currentIndex == reviews.total_count ? 'button__disabled' : '' "><i class="icon ion-chevron-right"></i></button>
+				 </div>
+			 </div>
+
 		 		<div class="product__single-reviews-slider product__single-wblock">
-		 			<div ng-if="reviews && reviews.total_count > 0" class="product__single-reviews-slider-head">
-			 			<div class="product__single-slider-count">
-			 				Отзыв {{ currentIndex }} из {{ reviews.total_count }}
-				 		</div>
-			 			<div class="product__single-slider-nav">
-			 				<button ng-click="prevSlide()" ng-class="currentIndex == 1 ? 'button__disabled' : '' "><i class="icon ion-chevron-left"></i></button>
-					  	<button ng-click="nextSlide()" ng-class="currentIndex == reviews.total_count ? 'button__disabled' : '' "><i class="icon ion-chevron-right"></i></button>
-			 			</div>
-		 			</div>
 				 	<ion-slide-box show-pager="false" ng-if="reviews" on-slide-changed="slideHasChanged($index)">            
 			      <ion-slide ng-repeat="review in reviews.items">
 				      <div class="product__single-reviews-slider-body">
 				      	<div class="product__single-reviews-slider-top">
-				      		<div class="product__slider-avatar">
-				      			<span ng-if="!review.user.avatar">Нет фото</span>
-				      			<img ng-if="review.user.avatar" ng-src="{{ review.user.avatar }}">
-				      		</div>
-				      		<div class="product__slider-in">
-				      			<p class="product__slider-name">{{ review.user.name }}</p>
-				      			<p class="product__slider-create">{{ review.created_date  | date:'dd-MM-yyyy' }}</p>
-				      		</div>
+				      		<div class="product__single-rev-left">
+										<div class="product__slider-avatar">
+											<span ng-if="!review.user.avatar">Нет фото</span>
+											<img ng-if="review.user.avatar" ng-src="{{ review.user.avatar }}">
+										</div>
+										<div class="product__slider-in">
+											<p class="product__slider-name">{{ review.user.name }}</p>
+											<p class="product__slider-create">{{ review.created_date  | date:'dd-MM-yyyy' }}</p>
+										</div>
+									</div>
 				      		<div class="product__slider-rate">
-				      			{{ reviewRatingGenerator(review.mark) }}
-				      			<span class="product__slider-rating" ng-repeat="i in arrayRating track by $index" ng-class="i ? 'rating-full' : 'rating-empty'">
-		 									<i class="icon ion-android-star"></i>
-		 								</span>
+										<span ng-show="review.mark >= 3" class="product__slider-rating-type">
+											<div class="positive">
+												<i class="fontello-icon icon-thumbs-up"></i>
+												<span class="text">Рекомендация</span>
+											</div>
+										</span>
+										<span ng-show="review.mark <= 2" class="product__slider-rating-type">
+											<div class="negative">
+												<i class="fontello-icon icon-thumbs-down"></i>
+												<span class="text">Негативный отзыв</span>
+											</div>
+										</span>
 				      		</div>
 				      	</div>
 				      	<div class="product__single-reviews-slider-bottom">

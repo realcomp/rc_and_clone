@@ -553,7 +553,9 @@ app.controller('ProductCtrl', function($scope, $location, $stateParams, $ionicHi
 		$scope.reviews = resp;
 
 		// Массив звезд рейтинга
-	 	$scope.arrayRating = [];
+
+    /* Старый рейтинг
+    $scope.arrayRating = [];
 
     for(var i = 0; i < 5; i++) {
     	if(i < resp.avg_mark) {
@@ -563,6 +565,33 @@ app.controller('ProductCtrl', function($scope, $location, $stateParams, $ionicHi
     		$scope.arrayRating.push(false);
     	}	
     }
+    */
+
+    var objReviews = {
+      positive: {
+        count: 0,
+        procent: 0
+      },
+      negative: {
+        count: 0,
+        procent: 0
+      }
+    };
+
+    var reviewsCount = resp.items.length;
+    for(var i = 0; i < reviewsCount; i++) {
+      if(resp.items[i].mark >= 3) {
+        objReviews.positive.count++;
+      }
+      else {
+        objReviews.negative.count++;
+      }
+    };
+
+    objReviews.positive.procent = (objReviews.positive.count * 100 / reviewsCount).toFixed(0);
+    objReviews.negative.procent = (objReviews.negative.count * 100 / reviewsCount).toFixed(0);
+
+    $scope.objReviews = objReviews;
 
 		// Преобразованная дата для каждого элемента
 		angular.forEach(resp.items, function(item) {

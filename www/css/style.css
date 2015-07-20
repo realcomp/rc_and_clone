@@ -752,7 +752,7 @@ a:active {
 	float: none !important;
 	width: 23px !important;
 	display: table-cell;
-  color: #199B50;
+  color: #093;
   font-size: 20px;
   vertical-align: top;
 }
@@ -777,31 +777,33 @@ a:active {
 /* Rating */
 .product__single-reviews-rating {
 	border-bottom: 1px solid #e0e0e0;
-
 }
 .product__single-reviews-rating-title {
-	font-size: 22px;
+	font-size: 20px;
 	color: #292a2f;
 	font-family: "BrutalMedium";	
 }
-.product__single-reviews-rating span {
+.product__single-review-type {
 	display: inline-block;
-	margin-right: 3px;
-	border: 0;
+	margin: 10px 15px 10px 0;
+	font-size: 30px;
 }
-.product__single-reviews-rating .icon {
-	font-size: 36px;
+.product__single-review-type.up {
+	color: #093;
 }
-.product__single-reviews-rating.rating-empty .icon {
-	color: #E0E0E0;
-}
-.product__single-reviews-rating.rating-full .icon {
-	color: #354777;
-}
-.product__single-reviews-text {
-	margin-left: 7px;
+.product__single-review-type.down .icon-thumbs-down {
 	position: relative;
-  top: -7px;
+	top: 7px;
+}
+.product__single-review-type span {
+	font-size: 22px;
+}
+.product__single-reviews-count {
+	margin-right: 10px;
+	float: right;
+	position: relative;
+	top: 15px;
+	color: #C7C7C7;
 }
 
 
@@ -813,11 +815,15 @@ a:active {
 	overflow: hidden;
 }
 .product__single-reviews-slider-head {
-
+	background: #F7F7F7;
+	padding: 15px 10px 10px 10px;
 }
 .product__single-slider-count {
 	width: 150px;
   float: left;
+	position: relative;
+	top: 5px;
+	color: #777;
 }
 .product__single-slider-nav {
 	width: 150px;
@@ -830,26 +836,32 @@ a:active {
 	padding: 0 7px;
 	color: #354777;
   border: none;
-  font-size: 22px;
+  font-size: 28px;
   background: none;
 }
-.product__single-reviews-slider-body {
+.product__single-slider-nav button:first-child {
+	margin-right: 15px;
+}
+ .product__single-reviews-slider-body {
   color: #292a2f;
 }
 .product__single-reviews-slider-top {
 	overflow: hidden;
 	margin-top: 10px;
 }
+.product__single-rev-left {
+	width: 49%;
+	float: left;
+}
 .product__slider-avatar {
 	width: 80px;
   height: 80px;
-  float: left;
   background: #E0E0E0;
   line-height: 16px;
   text-align: center;
   border-radius: 100px;
 }
-.product__slider-avatar img{
+.product__slider-avatar img {
   border-radius: 100px;
 }
 .product__slider-avatar span {
@@ -858,36 +870,37 @@ a:active {
   color: #354777;
 }
 .product__slider-in {
-	float: left;
-  margin-top: 20px;
-  margin-left: 10px;
+	margin: 15px 0;
 }
 .product__slider-rate {
-	width: 120px;
-	margin-top: 18px;
-  float: right;
-  text-align: right;
+	margin-top: 35px;
+	float: right;
 }
-.product__slider-rating .icon {
-	font-size: 20px;
+.product__slider-rating-type {
+	font-size: 56px;
+	text-align: center;
 }
-.product__slider-rating.rating-empty .icon {
-	color: #E0E0E0;
+.product__slider-rating-type .text {
+	display: block;
+	margin-top: 39px;
+	font-family: "BrutalMedium";
+	font-size: 16px;
 }
-.product__slider-rating .icon {
-	color: #354777;
+.product__slider-rating-type .positive {
+	color: #093;
+}
+.product__slider-rating-type .negative .fontello-icon {
+	position: relative;
+	top: 5px;
 }
 
 .product__slider-name {
 	font-family: "BrutalMedium";
-	margin-bottom: 2px;
+	margin-bottom: 7px;
 	color: #354777;
 }
 .product__slider-create {
-
-}
-.product__single-reviews-slider-bottom {
-	margin-top: 15px;
+	color: #C7C7C7;
 }
 .product__single-reviews-slider-bottom p strong {
 	display: block;
