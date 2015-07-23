@@ -593,8 +593,10 @@ app.controller('ProductCtrl', function($scope, $location, $stateParams, $ionicHi
       }
     };
 
-    objReviews.positive.procent = (objReviews.positive.count * 100 / reviewsCount).toFixed(0);
-    objReviews.negative.procent = (objReviews.negative.count * 100 / reviewsCount).toFixed(0);
+		if(objReviews.positive.count >= 1)
+    	objReviews.positive.procent = (objReviews.positive.count * 100 / reviewsCount).toFixed(0);
+		if(objReviews.negative.count >= 1)
+    	objReviews.negative.procent = (objReviews.negative.count * 100 / reviewsCount).toFixed(0);
 
     $scope.objReviews = objReviews;
 
@@ -1311,7 +1313,7 @@ app.controller('ArticlesCtrl', function($scope, $ionicHistory, $ionicModal, $loc
 });
 
 // вывод статьи
-app.controller('ArticleCtrl', function($scope, $stateParams, $location, $ionicModal,  $ionicHistory, Article, User, DB) {
+app.controller('ArticleCtrl', function($scope, $stateParams, $location, $ionicModal,  $ionicHistory, $sce, Article, User, DB) {
 
 	var onlyNumber = !isNaN(parseFloat($stateParams.id)) && isFinite($stateParams.id) && (0 < $stateParams.id);
 	if(!onlyNumber) {
@@ -1330,9 +1332,27 @@ app.controller('ArticleCtrl', function($scope, $stateParams, $location, $ionicMo
 	$scope.hide_loader = false;
 	$scope.error = null;
 
+	var promise = Article.getComments($stateParams.id);
+
+	// Список комментариев
+	var comments = {};
+	promise.then(function(response) {
+		comments['length'] = response.data.comments.length;
+		comments['list'] = response.data.comments;
+	});
+
 	Article.getById($stateParams.id).then(function(data) {
 		if ('html' in data) {
 			$scope.article = data;
+			$scope.article.html = $sce.trustAsHtml(data.html);
+
+			promise.then(function(){
+				$scope.comments = comments;
+			});
+
+			setTimeout(function() {
+				appendTrDom();
+			}, 0)
 
 			/*
 			var s = document.createElement('script');
@@ -1340,7 +1360,8 @@ app.controller('ArticleCtrl', function($scope, $stateParams, $location, $ionicMo
       document.body.appendChild(s);
       */
 
-		} else {
+		}
+		else {
 			$scope.error = 'проблемы с подключением';
 		}
 
@@ -1349,11 +1370,20 @@ app.controller('ArticleCtrl', function($scope, $stateParams, $location, $ionicMo
 
 
 	// Только для авторизованных пользователей
-	$scope.modalCommentUserCheck = function() {
+	var parentId = false;
+	$scope.modalCommentUserCheck = function(id) {
 	  if (!User.is_auth()) {
 			DB.alert('Добавлять комментарии могут только авторизованные пользователи!', 'Внимание!');
 			return false;
 		}
+
+		if(id) {
+			parentId = id;
+		}
+		else {
+			parentId = false
+		}
+
   	$scope.modalComment.show();
 	};
 
@@ -1372,8 +1402,7 @@ app.controller('ArticleCtrl', function($scope, $stateParams, $location, $ionicMo
   // Попытка добавить комментарий
   $scope.commentData = {};
   $scope.addComment = function(article) {
-
-  	User.addComment(article, $scope.commentData.text).then(function(response) {
+  	User.addComment(article, $scope.commentData.text, parentId).then(function(response) {
   		if(response.status === 200) {
 				$scope.close();
 				DB.alert('Ваш комментарий успешно добавлен!' , 'Успех!');

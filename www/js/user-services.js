@@ -570,7 +570,7 @@ angular.module('user-services', [])
 
     };
 
-    self.addComment = function(data, text) {
+    self.addComment = function(data, text, parentId) {
 
         if (!self.is_auth()) {
             var deferred = $q.defer();
@@ -578,14 +578,22 @@ angular.module('user-services', [])
             return deferred.promise;
         };
 
+        var parentComment = '';
+
+        if(parentId) {
+          parentComment = '&parent_id=' + parentId;
+        }
+
         return $http({
             method: 'POST',
             url: Url.url('/v1/comments'),
             headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-            data: 'api_token=' + user.api_token + '&' +  'entity_id=' + data.id + '&' + 'entity_class_alias=article&' + 'text=' + text
+            data: 'api_token=' + user.api_token + '&' +  'entity_id=' + data.id + '&' + 'entity_class_alias=article&'
+            + 'text=' + text + parentComment
         }).then(function(result) {
             return result
         }, function(data) {
+          console.log(data);
             return data;
         });
 

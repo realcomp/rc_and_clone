@@ -1112,7 +1112,7 @@ console.log(slice);
     			return resp.data;
             },
             function(err){
-                console.error("get articles error", err);
+               console.error("get articles error", err);
                 return err;
     		});
     };
@@ -1147,14 +1147,27 @@ console.log(slice);
                 });
                 return g_rubrics;
             },
-            function(err){
+            function(err) {
                 console.error("error get article id "+id, err);
                 return err;
             });
     };
 
 
+    self.getComments = function(id) {
+      return $http.get(Url.url('/v1/comments' + '?entity_id=' + id + '&entity_class_alias=article'))
+        .then(function(comments) {
+          return comments;
+        },
+        function(error) {
+          console.error('error get comments');
+          return error;
+        });
+    };
+
+
     return self;
+
 })
 
 // Поиск

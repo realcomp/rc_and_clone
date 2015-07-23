@@ -393,7 +393,6 @@
   }
   .article__single .rubric {
     font-size: 16px;
-    font-weight: bold;
   }
   .article__single h3 {
     font-size: 20px;
@@ -516,7 +515,7 @@
   .product__single-review-type span {
     font-size: 18px;
   }
-  .product__single-reviews-slider-head {
+  .comment__wrapper-head {
     padding-top: 17px;
   }
   .product__single-slider-nav button {
@@ -525,18 +524,25 @@
   .product__single-slider-nav button:first-child {
     margin-right: 10px;
   }
-  .product__single-slider-count {
+  .comment__wrapper-count {
     top: 0;
   }
-  .product__slider-rating-type {
+  .comment__item-rate-type {
     font-size: 46px;
   }
-  .product__slider-rate {
+  .comment__item-rate {
     margin-top: 43px;
   }
-  .product__slider-rating-type .text {
+  .comment__item-rate-type .text {
     margin-top: 32px;
     font-size: 15px;
+  }
+  .comment__item-content {
+    font-size: 14px;
+  }
+  .comment__type-article .comment__item-in {
+    margin-top: 15px;
+    width: auto;
   }
 
   /* menu */
@@ -736,7 +742,7 @@
   .product__single-reviews-count {
     top: 12px;
   }
-  .product__slider-rate {
+  .comment__item-rate {
 
   }
 
@@ -818,9 +824,10 @@
   }
 
   /* article */
-  .page__articles, 
-  .article__single {
-    margin-bottom: -6px;
+  .page__articles,
+  .article__single-wrap,
+  .product__single-global {
+    margin-bottom: -8px;
   }
   .articles__category-title {
     font-size: 18px;
@@ -1008,19 +1015,19 @@
   .product__single-review-type.down .icon-thumbs-down {
     top: 5px;
   }
-  .product__slider-rating-type .negative .fontello-icon {
+  .comment__item-rate-type .negative .fontello-icon {
     top: 3px;
   }
   .product__single-reviews-count {
     margin-right: 0;
     top: 8px;
   }
-  .product__slider-avatar {
+  .comment__item-avatar {
     width: 60px;
     height: 60px;
     font-size: 14px;
   }
-  .product__slider-avatar span {
+  .comment__item-avatar span {
     width: 40px;
     display: inline-block;
     top: 14px;
@@ -1028,16 +1035,16 @@
   .product__single-add-reviews {
     padding: 10px 0;
   }
-  .product__slider-rating-type {
+  .comment__item-rate-type {
     font-size: 42px;
   }
-  .product__slider-rate {
+  .comment__item-rate {
     margin-top: 25px;
   }
-  .product__slider-rating-type .text {
+  .comment__item-rate-type .text {
     margin-top: 28px;
   }
-  .product__slider-in {
+  .comment__item-in {
     width: 125px;
     margin-top: 12px;
   }
@@ -1082,7 +1089,6 @@
     font-size: 17px;
   }
   .menu__content .item-content {
-    font-size: 15px;
     font-size: 15px;
   }
   .menu__content .icon {
