@@ -95,7 +95,7 @@ app.controller('MainCtrl', function($scope, $ionicLoading, $rootScope, $interval
 });
 
 // Контроллер категорий
-app.controller('CategoryCtrl', function($scope, $location, $stateParams, $ionicHistory, $ionicModal,  $ionicScrollDelegate, Category, Product, Company, Rating, User, DB) {
+app.controller('CategoryCtrl', function($scope, $q, $location, $stateParams, $ionicHistory, $ionicModal,  $ionicScrollDelegate, Category, Product, Company, Rating, User, DB) {
 
 
 	var onlyNumber = !isNaN(parseFloat($stateParams.id)) && isFinite($stateParams.id) && (0 < $stateParams.id);
@@ -107,15 +107,157 @@ app.controller('CategoryCtrl', function($scope, $location, $stateParams, $ionicH
 		return false;
 	}
 
+
+	//
+  var productsCheck = [];
+  var productsBlack = [];
+  var productsWait = [];
+  var deferred = $q.defer();
+  var limit = 15;
+
+  $scope.tabActive = 0;
+  $scope.productsCheck = [];
+  $scope.productsBlack = [];
+  $scope.productsWait = [];
+  $scope.showLoadMore = 1;
+  $scope.showTabs = false
+  $scope.showEmptyText = false
+
+
+	// Переключение табов
+  $scope.tabsCategory = function($event, o) {
+    var c;
+
+    if (o == 1) {
+      c = $scope.classTabCheck;
+    }
+    else if (o == 2) {
+      c = $scope.classTabBlack;
+    }
+    else if (o == 3) {
+      c = $scope.classTabWait;
+    }
+
+    if (c == 'product__category-tabs-active' || c == 'product__category-tabs-disabled') {
+      return false;
+    }
+
+    if ($scope.classTabCheck == 'product__category-tabs-active') {
+      $scope.classTabCheck = 'product__category-tabs-deactive';
+    }
+    else if ($scope.classTabBlack == 'product__category-tabs-active') {
+      $scope.classTabBlack = 'product__category-tabs-deactive';
+    }
+    else if ($scope.classTabWait == 'product__category-tabs-active') {
+      $scope.classTabWait = 'product__category-tabs-deactive';
+    }
+
+    if (o == 1) {
+      $scope.classTabCheck = 'product__category-tabs-active';
+    }
+    else if (o == 2) {
+      $scope.classTabBlack = 'product__category-tabs-active';
+    }
+    else if (o == 3) {
+      $scope.classTabWait = 'product__category-tabs-active';
+    }
+
+    $scope.tabActive = o;
+		//moveProducts();
+		$ionicScrollDelegate.scrollTop();
+		return true;
+  };
+
+	// Копирование товаров в scope
+  var moveProducts = function(first) {
+
+		function f(tabActive) {
+
+			var arr = [];
+			var thisArr = [];
+			var thisLimit = limit;
+
+      if(tabActive == 1) {
+        arr = productsCheck;
+        thisArr =  $scope.productsCheck;
+      }
+      else if(tabActive == 2) {
+        arr = productsBlack;
+        thisArr =  $scope.productsBlack;
+      }
+      else if(tabActive == 3) {
+        arr = productsWait;
+        thisArr =  $scope.productsWait;
+      }
+
+      if(arr.length < thisLimit) {
+        thisLimit = arr.length;
+      }
+
+      for(var i = 0; i < thisLimit; i++) {
+        thisArr.push(arr[i]);
+      }
+
+      arr.splice(0, thisLimit);
+      $scope.showLoadMore = arr.length;
+
+    };
+
+    if(first) {
+      f(1);
+      f(2);
+      f(3);
+
+
+      if (productsCheck.length) {
+        $scope.showLoadMore = productsCheck.length;
+      } else if (productsBlack.length) {
+        $scope.showLoadMore = productsBlack.length;
+      } else {
+        $scope.showLoadMore = productsWait.length;
+      }
+    }
+    else {
+      f($scope.tabActive);
+    }
+
+    $scope.$broadcast('scroll.infiniteScrollComplete');
+
+		// Не показывать табы и текст, пока не загрузятся товары
+    setTimeout(function() {
+      $scope.showTabs = true;
+      $scope.showEmptyText = true;
+    }, 0)
+
+  };
+
+	//
+  $scope.loadMore = function() {
+    if (!$scope.showProducts) {
+      deferred.promise.then(function () {
+        moveProducts(true);
+      });
+    } else {
+      moveProducts();
+    }
+  }
+
+	//
+  $scope.$on('$stateChangeSuccess', function() {
+    $scope.loadMore();
+  });
+
 	$scope.hasProducts = false; // есть продукты в категории
 	$scope.showProducts = false; // показываем в категории продукты
   $scope.title = '';
 
+	// Получение категории
 	Category.getById($stateParams.id).then(function(category) {
 
       $scope.title = category.name;
       User.productVotes();
 
+			// Вернет дочерние категории или товаров
 			Category.childsByObj(category, category.lvl+1).then(function(categories) {
 				if(categories.length > 0) {
 					$scope.categories = [];
@@ -136,16 +278,26 @@ app.controller('CategoryCtrl', function($scope, $location, $stateParams, $ionicH
 						value: 0
 					}
 
-					var productGetCatProduct = function(companyIds, price, rating) {
+					// Основная функция получения товаров
+					var productGetCatProduct = function(companyIds, price, rating, filter) {
+
+            // Обнулить массивы
+            productsCheck = [];
+            productsBlack = [];
+            productsWait = [];
+
+            $scope.productsCheck = [];
+            $scope.productsBlack = [];
+            $scope.productsWait = [];
+
+            $scope.showLoadMore = 1;
+
 						Product.getByCategoryId($stateParams.id, companyIds, price, rating).then(function(products) {
 						if(products.length > 0) {
-
-							$scope.productsCheck = [];
-							$scope.productsBlack = [];
-							$scope.productsWait = [];
 							$scope.hasProducts = true;
 							$scope.productChar = [];
 							var arr = [];
+
 
 							var userShoppingList = User.getShoppingListArray(),
 									userProductList = User.getProductListArray();
@@ -198,9 +350,9 @@ app.controller('CategoryCtrl', function($scope, $location, $stateParams, $ionicH
 							$scope.showBrand = (category.show_brand == 1) ? true : false;
 
 							var companyIds = {};
-
 							var priceMinMake = false;
 
+							// Генерация своих объектов с товарами
 							angular.forEach(products, function(productFull, index) {
 								var product = {
 									'id': productFull.id,
@@ -216,6 +368,7 @@ app.controller('CategoryCtrl', function($scope, $location, $stateParams, $ionicH
 	      					'company_name': productFull['company_name']
 								};
 
+								// Филитрация по цене
 								if($scope.price.empty) {
 									if(product.price >= 1 && !priceMinMake) {
 										priceMinMake = true;
@@ -270,38 +423,47 @@ app.controller('CategoryCtrl', function($scope, $location, $stateParams, $ionicH
 								 		}
 								 		$scope.arrButtons = arrButtons;
 
+
+                    if(filter) {
+                      moveProducts(true);
+                    }
+
 									});
 
 								});
-								
+
+								// Разбить товары по типу на массивы
 		      			if(!product.tested) {
 		      				product['vote_boolean'] = productVotes[productFull.id] ? true : false;
 		      				product['vote_text'] = productVotes[productFull.id] ? 'Я Зa!' : 'На тест!'
-		      				$scope.productsWait.push(product);
+		      				productsWait.push(product);
 		      			}
 		      			else {
 			      			if(product.tested && product.danger_level > 1) {
-			      				$scope.productsBlack.push(product);
+			      				productsBlack.push(product);
 			      			}
-		      				$scope.productsCheck.push(product);
+		      				productsCheck.push(product);
 		      			}
+                deferred.resolve();
 
 		    			});
 
-							$scope.tabActive = 0;
+							//
 							if($scope.price.value == 0) {
 								$scope.price.value == $scope.price.min;
 							}
 
-							// Табы
-							if ($scope.productsCheck.length) {
+
+							// Выбирается активный таб
+							$scope.tabActive = 0;
+							if (productsCheck.length) {
 								$scope.classTabCheck = 'product__category-tabs-active';
 								$scope.tabActive = 1;
 							} else {
 								$scope.classTabCheck = 'product__category-tabs-disabled';
 							}
 
-							if ($scope.productsBlack.length) {
+							if (productsBlack.length) {
 								if (!$scope.tabActive) {
 									$scope.classTabBlack = 'product__category-tabs-active';
 									$scope.tabActive = 2;
@@ -312,7 +474,7 @@ app.controller('CategoryCtrl', function($scope, $location, $stateParams, $ionicH
 								$scope.classTabBlack = 'product__category-tabs-disabled';
 							}
 
-							if ($scope.productsWait.length) {
+							if (productsWait.length) {
 								if (!$scope.tabActive) {
 									$scope.classTabWait = 'product__category-tabs-active';
 									$scope.tabActive = 3;
@@ -369,11 +531,15 @@ app.controller('CategoryCtrl', function($scope, $location, $stateParams, $ionicH
 
 						}
 
-						$scope.showProducts = true;
 						});
+
+
+            $scope.showProducts = true;
 					}
+					//
 					productGetCatProduct();
 
+					// Сбор параметров для фильтрации
 					$scope.getFilterParams = function() {
 						var ids = [];
 						for(var company in $scope.companies) {
@@ -381,7 +547,7 @@ app.controller('CategoryCtrl', function($scope, $location, $stateParams, $ionicH
 								ids.push($scope.companies[company].id);
 							}
 						}
-						productGetCatProduct(ids, $scope.price.value, $scope.rating.value);
+						productGetCatProduct(ids, $scope.price.value, $scope.rating.value, true);
 					};
 
 					}
@@ -572,35 +738,23 @@ app.controller('ProductCtrl', function($scope, $location, $stateParams, $ionicHi
     }
     */
 
-    var objReviews = {
-      positive: {
-        count: 0,
-        procent: 0
-      },
-      negative: {
-        count: 0,
-        procent: 0
-      }
-    };
+		var objReviewsProcent = {
+			positive: 0,
+			negative: 0
+		};
 
-    var reviewsCount = resp.items.length;
-    for(var i = 0; i < reviewsCount; i++) {
-      if(resp.items[i].mark >= 3) {
-        objReviews.positive.count++;
-      }
-      else {
-        objReviews.negative.count++;
-      }
-    };
+		console.log(resp);
+		var reviewsPositive = resp.positive;
+		var reviewsNegative = resp.total_count - resp.positive;
 
-		if(objReviews.positive.count >= 1)
-    	objReviews.positive.procent = (objReviews.positive.count * 100 / reviewsCount).toFixed(0);
-		if(objReviews.negative.count >= 1)
-    	objReviews.negative.procent = (objReviews.negative.count * 100 / reviewsCount).toFixed(0);
+		if(resp.total_count >= 1) {
+			objReviewsProcent.positive = (reviewsPositive * 100 / resp.total_count).toFixed(0);
+			objReviewsProcent.negative = (reviewsNegative * 100 / resp.total_count).toFixed(0);
+		}
 
-    $scope.objReviews = objReviews;
+    $scope.objReviewsProcent = objReviewsProcent;
 
-		// Преобразованная дата для каждого элемента
+		// Преобразованная дата для каждого отзыва
 		angular.forEach(resp.items, function(item) {
 	   	var date = item.created_at;
 	   	item.created_date = new Date(item.created_at);
@@ -608,8 +762,16 @@ app.controller('ProductCtrl', function($scope, $location, $stateParams, $ionicHi
 
 	});
 
+
+  // Лайк/Дизлайк для отзывов
+  $scope.addVote = function(vote) {
+    console.log(vote)
+  };
+
+
 	// список названий рейтинга
 	Rating.allHash().then(function(gratings) {
+
 		// рейтинги продуктов
 		Product.ratings($stateParams.id).then(function(ratings) {
 			angular.forEach(ratings, function(rating){

@@ -927,7 +927,7 @@ console.log(slice);
         });
     };
 
-    self.getByCategoryId = function(id, companyIds, price, rating) {
+    self.getByCategoryId = function(id, companyIds, price, rating, limit, offset) {
         var q = '';
 
         if(companyIds) {
@@ -941,6 +941,15 @@ console.log(slice);
         if(rating) { 
             q += ' AND rating >= ' + rating;
         }
+
+        if(limit) {
+          q+= ' LIMIT ' + limit;
+        }
+
+        if(offset) {
+          q+= ' OFFSET ' + offset;
+        }
+
         return DB.query('SELECT p.*, c.name AS company_name FROM products p JOIN companies c ON (c.id=p.company_id) WHERE (p.category_id IN ' +'('+id + '))' + q)
         .then(function(result){
             return DB.fetchAll(result);
@@ -977,6 +986,16 @@ console.log(slice);
             return DB.fetchAll(result);
         });
     };
+
+
+    self.getAllProducts = function(category_id) {
+      var q = 'select (select count(*) from products where category_id = ? and tested=1 and danger_level = 0) as tested,(select count(*) from products where category_id = ? and tested=1 and danger_level>1) as bad,(select count(*) from products where category_id=? and tested = 0) as notested'
+      return DB.query(q, [category_id, category_id, category_id])
+        .then(function(result){
+          return DB.fetchAll(result);
+        });
+    };
+
 
     self.reviews = function(id, user_id, limit, offset) {
 		var params = ['product_id='+id];

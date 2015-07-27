@@ -90,7 +90,7 @@ app.controller('funcController', function($scope, $ionicSlideBoxDelegate, $ionic
   ];
 
   // Методы для работы и инициализации
-  $scope.tabsCategory = function($event, o) {
+  $scope.__tabsCategory = function($event, o) {
     var c;
 
     if (o == 1) {

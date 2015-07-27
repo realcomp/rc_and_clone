@@ -1078,6 +1078,17 @@
     top: 2px;
   }
 
+  /* vote */
+  .vote-block {
+    margin-top: 9px;
+  }
+  .vote-block .icon {
+    font-size: 22px;
+  }
+  .vote-block .vote-count {
+    font-size: 15px;
+  }
+
   /* menu */
   .menu__avatar {
     width: 85px;

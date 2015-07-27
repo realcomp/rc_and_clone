@@ -383,7 +383,7 @@ a:active {
 }
 .product__category .product__category-name {
 	display: block;
-	line-height: 30px
+	line-height: 30px;
 }
 .product__category .product__category-price {
 	display: block;
@@ -501,6 +501,26 @@ a:active {
 .product__category-filter-wrap {
 	margin: 0 0 10px 0;
 }
+
+/* vote block */
+.vote-block {
+  font-size: 16px;
+  margin-top: 8px;
+}
+.vote-block .icon {
+  margin: 0 3px;
+  font-size: 24px;
+  color: #C7C7C7;
+  cursor: pointer;
+}
+.vote-block .icon:hover {
+  color: #354777;
+}
+.vote-block .vote-count {
+  position: relative;
+  top: -3px;
+}
+
 
 /* footer sorting */
 .bar.footer__sorting.bar-footer {
@@ -948,7 +968,7 @@ a:active {
 	margin-top: -1px;
   color: #333;
   font-family: "BrutalMedium";
-  background: #F9F9F9;
+  background: #F7F7F7;
   border-top: 1px solid #EDEDED;
   border-bottom: 1px solid #EDEDED;
 }
