@@ -70,11 +70,11 @@
 												<span class="text">Рекомендация</span>
 											</div>
 											<div class="vote-block">
-                        <span ng-click="addVote('minus')" class="vote-minus">
+                        <span ng-click="addVote(review, -1)" class="vote-minus" ng-if="!review.umark">
                           <i class="icon ion-minus-circled"></i>
                         </span>
-                        <span class="vote-count">0</span>
-                        <span ng-click="addVote('plus')" class="vote-plus">
+                        <span class="vote-count">{{ review.marksum || 0 }}</span>
+                        <span ng-click="addVote(review, 1)" class="vote-plus" ng-if="!review.umark">
                           <i class="icon ion-plus-circled"></i>
                         </span>
                       </div>
@@ -85,11 +85,11 @@
 												<span class="text">Негативный отзыв</span>
 											</div>
                       <div class="vote-block">
-                        <span ng-click="addVote('minus')" class="vote-minus">
+                        <span ng-click="addVote(review, -1)" class="vote-minus" ng-if="!review.umark">
                           <i class="icon ion-minus-circled"></i>
                         </span>
-                        <span class="vote-count">0</span>
-                        <span ng-click="addVote('plus')" class="vote-plus">
+                        <span class="vote-count">{{ review.marksum || 0 }}</span>
+                        <span ng-click="addVote(review, 1)" class="vote-plus" ng-if="!review.umark">
                           <i class="icon ion-plus-circled"></i>
                         </span>
                       </div>

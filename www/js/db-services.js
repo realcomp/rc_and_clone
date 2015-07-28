@@ -917,7 +917,7 @@ console.log(slice);
 })
 
 // Resource service example
-.factory('Product', function($http, DB, Url) {
+.factory('Product', function($http, DB, Url, User) {
     var self = this;
 
     self.all = function() {
@@ -999,6 +999,11 @@ console.log(slice);
 
     self.reviews = function(id, user_id, limit, offset) {
 		var params = ['product_id='+id];
+        var api_token = User.api_token();
+
+        if (api_token) {
+            params.push('api_token=' + api_token);
+        }
 
 		if (limit) {
 			params.push('limit=' + limit);
@@ -1092,6 +1097,35 @@ console.log(slice);
         return DB.query('SELECT * FROM ratings WHERE id = ?', [id])
         .then(function(result){
             return DB.fetch(result);
+        });
+    };
+
+    return self;
+})
+
+/*
+ * добавление лайка
+ */
+.factory('Mark', function($http, Url, User) {
+    var self = this;
+    self.mark = function(type, id, mark) {
+        var api_token = User.api_token();
+
+        if (!api_token || !type || !id || !mark) {
+            var deferred = $q.defer();
+            deferred.reject();
+            return deferred.promise;
+        }
+
+        return $http({
+            method: 'POST',
+            url: Url.url('/v1/marks/'+type),
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            data: 'api_token=' + api_token + '&' +  'marks=' + '[['+id+','+(mark ? mark : '0')+']]'
+        }).then(function(result) {
+            return result
+        }, function(data) {
+            return data;
         });
     };
 

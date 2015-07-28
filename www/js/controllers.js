@@ -558,7 +558,7 @@ app.controller('CategoryCtrl', function($scope, $q, $location, $stateParams, $io
 });
 
 // Контроллер товаров
-app.controller('ProductCtrl', function($scope, $location, $stateParams, $ionicHistory, $ionicModal, $http,  Product, Category, Rating, User, DB, Company) {
+app.controller('ProductCtrl', function($scope, $location, $stateParams, $ionicHistory, $ionicModal, $http,  Product, Category, Rating, User, DB, Company, Mark) {
 	$scope.overlayload = true;
 	var onlyNumber = !isNaN(parseFloat($stateParams.id)) && isFinite($stateParams.id) && (0 < $stateParams.id);
 	if(!onlyNumber) {
@@ -763,10 +763,24 @@ app.controller('ProductCtrl', function($scope, $location, $stateParams, $ionicHi
 	});
 
 
-  // Лайк/Дизлайк для отзывов
-  $scope.addVote = function(vote) {
-    console.log(vote)
-  };
+	// Лайк/Дизлайк для отзывов
+	$scope.addVote = function(review, vote) {
+	    console.log(review, vote)
+
+	  	if (!review) {
+	  		console.error("dont set param review");
+	  		return;
+	  	}
+
+	  	if (!(vote == 1 || vote == -1)) {
+	  		console.error("bad param vote ", vote);
+	  		return;
+	  	}
+
+		Mark.mark('product_reviews', review.id, vote).then(function(res){
+			review['marksum'] = review['marksum'] + vote;
+		});
+	};
 
 
 	// список названий рейтинга
