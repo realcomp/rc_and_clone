@@ -767,6 +767,11 @@ app.controller('ProductCtrl', function($scope, $location, $stateParams, $ionicHi
 	$scope.addVote = function(review, vote) {
 	    console.log(review, vote)
 
+  		if (!User.is_auth()) {
+    		$scope.login();
+    		return;
+    	}
+
 	  	if (!review) {
 	  		console.error("dont set param review");
 	  		return;
