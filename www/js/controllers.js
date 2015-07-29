@@ -782,7 +782,7 @@ app.controller('ProductCtrl', function($scope, $location, $stateParams, $ionicHi
 	  		return;
 	  	}
 
-		Mark.mark('product_reviews', review.id, vote).then(function(res){
+		Mark.mark('product_reviews', review.id, vote > 0 ? 5 : 2).then(function(res){
 			review['marksum'] = review['marksum'] + vote;
 		});
 	};
