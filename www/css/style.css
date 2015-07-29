@@ -125,6 +125,9 @@ a:active {
 .green {
 	background: #093;
 }
+.color-green {
+  color: #093;
+}
 .black {
 	background: #000;
 }
@@ -505,7 +508,6 @@ a:active {
 /* vote block */
 .vote-block {
   font-size: 16px;
-  margin-top: 8px;
 }
 .vote-block .icon {
   margin: 0 3px;
@@ -519,6 +521,10 @@ a:active {
 .vote-block .vote-count {
   position: relative;
   top: -3px;
+  line-height: 42px;
+}
+.vote-block .hidden {
+  visibility: hidden;
 }
 
 
@@ -923,7 +929,7 @@ a:active {
   float: left;
 }
 .product__single-slider-nav {
-  width: 150px;
+  width: 120px;
   float: right;
   font-size: 0;
   margin-top: -4px;
@@ -1262,42 +1268,25 @@ a:active {
 }
 
 .add-review {
-
-}
-.add-review-head {
-  font-size: 16px;
-  text-align: center;
-  background: #ECECEC;
-  padding: 15px;
+  overflow-y: auto;
 }
 .add-review-star {
 	padding: 15px;
+  padding-bottom: 17px;
+  text-align: center;
 }
-.add-review-star .rating{
-	text-align: center;
+.add-review-star .product__single-review-type {
+  margin-right: 20px;
+  font-size: 38px;
+  cursor: pointer;
 }
-.add-review-star .rating li {
-	display: inline-block;
-	margin-right: 3px;
+.add-review-star .product__single-review-type:last-child {
+  margin-right: 0;
 }
-.add-review-star .icon {
-	font-size: 36px;
-	cursor: pointer;
-}
-.add-review-star .ion-ios-star {
-	color: #354777;
-}
-.add-review-star .ion-ios-star-outline {
-	color: #E0E0E0;
-}
-.add-review-star .ion-ios-star:before,
-.ion-ios-star-outline:before {
-	content: "\f2fc";
+.add-review-star .no-active {
+  color: #D8D8D8;
 }
 
-.review-list {
-
-}
 .review-list .item {
 	display: table;
 	width: 100%;
@@ -1318,6 +1307,33 @@ a:active {
 }
 .item-r-negative {
 	color: #C74441;
+}
+.item-r-select {
+  padding: 5px 20px;
+}
+.item-r-select:after {
+  display: none;
+}
+.item-r-select .input-label,
+.item-r-select select {
+  position: static;
+  float: left;
+  padding-left: 0;
+  font-size: 16px;
+  direction: ltr;
+}
+.item-r-select select {
+  padding: 16px 0 0 0;
+  max-width: 100%
+}
+.item-r-select .icon {
+  margin-left: 5px;
+}
+.item-r-select .text {
+  margin-left: 15px;
+  position: relative;
+  top: -3px;
+  color: #aaa;
 }
 .review-list textarea {
 	font-size: 16px;
@@ -1805,6 +1821,7 @@ a:active {
 	padding: 0 10px;
 	overflow: initial;
   white-space: normal;
+  color: #292a2f;
   font-size: 22px;
   line-height: 26px;
 	font-family: "BrutalMedium";

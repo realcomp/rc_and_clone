@@ -557,12 +557,15 @@ angular.module('user-services', [])
             deferred.resolve(null);
             return deferred.promise;
         }
-        return $http({
+
+       return $http({
             method: 'POST',
             url: Url.url('/v1/catalog/reviews'),
             headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-            data: 'api_token=' + user.api_token + '&' +  'mark=' + data.rating + '&' + 'text=' + data.text + '&' + 'advantages=' + data.positive + '&' + 'disadvantages=' + data.negative + '&' + 'product_id=' + id
+            data: 'api_token=' + user.api_token + '&' +  'mark=' + data.mark + '&' + 'text=' + data.text + '&' + 'advantages=' + data.positive + '&' + 'disadvantages=' + data.negative + '&' + 'product_id=' + id + '&' +
+            'owning=' + data.owning
         }).then(function(result) {
+            console.info(result);
             return result
         }, function(data) {
             return data;

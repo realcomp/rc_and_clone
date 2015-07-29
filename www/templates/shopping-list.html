@@ -22,17 +22,19 @@
 				  	<span class="product__category-s-count">{{ category.p.length}}</span>
 				  	<span class="clearfix"></span>
 				  <ion-item ng-if="!item.hide" class="product__category-s-inner" ng-repeat="item in category.p" on-swipe-right="item.class='swipe-active';addShoppingList(item, true); hide(item, category, shoppingList);" ng-class="item.class">
-			  		<div class="product__category-s-inner-image">
+			  		<a ng-href="#/app/product/{{ item.product.id }}" style="text-decoration: none;">
+            <div class="product__category-s-inner-image">
 			  			<ion-spinner icon="circles" class="loader"></ion-spinner>
 			  			<img src="{{ item.product.thumbnail }}" err-src="img/rk.png">
 			  		</div>
 			  		<span class="product__category-s-inner-name">{{ item.product.name }}</span>
-			  		<span class="product__category-s-inner-count">1</span>
+			  		<span class="product__category-s-inner-count"></span>
 			  		<span class="product__overlay-swipe two">
 							<span class="swipe__link-wrap">
 								<i class="icon ion-chevron-right"></i>
 							</span>
 						</span>
+            </a>
 				  </ion-item>
 				 </ion-item>
 				<span ng-if="shoppingList.length < 1 || shopping_list_count < 1" class="search__no-result">В вашем списке покупок пока нет ни одного товара!</span>

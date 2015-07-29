@@ -743,7 +743,6 @@ app.controller('ProductCtrl', function($scope, $location, $stateParams, $ionicHi
 			negative: 0
 		};
 
-		console.log(resp);
 		var reviewsPositive = resp.positive;
 		var reviewsNegative = resp.total_count - resp.positive;
 
@@ -754,6 +753,7 @@ app.controller('ProductCtrl', function($scope, $location, $stateParams, $ionicHi
 
     $scope.objReviewsProcent = objReviewsProcent;
 
+
 		// Преобразованная дата для каждого отзыва
 		angular.forEach(resp.items, function(item) {
 	   	var date = item.created_at;
@@ -762,11 +762,8 @@ app.controller('ProductCtrl', function($scope, $location, $stateParams, $ionicHi
 
 	});
 
-
 	// Лайк/Дизлайк для отзывов
 	$scope.addVote = function(review, vote) {
-	    console.log(review, vote)
-
   		if (!User.is_auth()) {
     		$scope.login();
     		return;
@@ -782,8 +779,12 @@ app.controller('ProductCtrl', function($scope, $location, $stateParams, $ionicHi
 	  		return;
 	  	}
 
-		Mark.mark('product_reviews', review.id, vote).then(function(res){
+		Mark.mark('product_reviews', review.id, vote).then(function(res) {
+      if(!review['marksum'])
+        review['marksum'] = 0;
+
 			review['marksum'] = review['marksum'] + vote;
+      review['umark'] = vote;
 		});
 	};
 
@@ -818,12 +819,29 @@ app.controller('ProductCtrl', function($scope, $location, $stateParams, $ionicHi
     $scope.modal = modal;
   });
 
-  
-  $scope.rating = 1;
   $scope.revData = {
-    rating : 1,
-    max: 5
-  }
+    mark: 0,
+    markClass: {
+      negative: 'no-active',
+      positive: 'no-active'
+    }
+  };
+
+  $scope.toggleActive = function(self) {
+    for(var item in $scope.revData.markClass) {
+      $scope.revData.markClass[item] = 'no-active';
+    }
+
+    if(self === 'negative') {
+      $scope.revData.mark = 2;
+      $scope.revData.markClass.negative = 'active'
+    }
+    else if(self === 'positive') {
+      $scope.revData.mark = 5;
+      $scope.revData.markClass.positive = 'active'
+    }
+
+  };
   
 
   /* Пример слушателя
@@ -853,11 +871,14 @@ app.controller('ProductCtrl', function($scope, $location, $stateParams, $ionicHi
 				$scope.closeReview();
 				DB.alert('Ваш отзыв успешно добавлен!' , 'Спасибо за отзыв!');
 				$scope.reмErr = '';
-				  $scope.revData = {
-    				rating : 1,
-    				max: 5
-  				}
-			}
+        $scope.revData = {
+          mark: 0,
+          markClass: {
+            negative: 'no-active',
+            positive: 'no-active'
+          }
+        };
+      }
 			else {
 				if(response.status === 400) {
 					$scope.revErr = 'Ошибка добавления! ' + response.data.user_message;

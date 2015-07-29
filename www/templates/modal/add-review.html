@@ -1,16 +1,18 @@
 <ion-modal-view class="modal-review">
   <ion-header-bar class="modal-head">
-    <h1 class="title">Оценка товара</h1>
+    <h1 class="title">Оцените товар</h1>
     <div class="buttons">
       <button class="button button-clear" ng-click="closeReview(); ">&times;</button>
     </div>
   </ion-header-bar>
   <ion-content scroll="false" class="add-review">
-    <div class="add-review-head">
-      У вас есть своё мнение о товаре?
-    </div>
     <div class="add-review-star">
-      <rating ng-model="revData.rating" max="revData.max" ></rating>
+      <span class="{{ revData.markClass.positive }} product__single-review-type up" ng-click="toggleActive('positive')">
+        <i class="fontello-icon icon-thumbs-up"></i>
+      </span>
+      <span class="{{ revData.markClass.negative }} product__single-review-type down" ng-click="toggleActive('negative')">
+        <i class="fontello-icon icon-thumbs-down"></i>
+      </span>
     </div>
     <form ng-submit="addReview(product)">
       <div class="list review-list">
@@ -37,6 +39,18 @@
           <div class="tb-cell">
             <textarea ng-model="revData.negative" placeholder="Недостатки"></textarea>
           </div>
+        </label>
+        <label class="item item-input item-r-select item-select">
+          <div class="input-label">
+            <i class="icon ion-flag"></i>
+            <span class="text">Опыт использования</span>
+          </div>
+          <select ng-model="revData.owning">
+            <option selected disabled>Кликните для выбора</option>
+            <option value="LESS_THAN_MONTH">Меньше месяца</option>
+            <option value="FEW_MONTHS">Больше месяца</option>
+            <option value="MORE_THAN_ONE_MONTH">Несколько месяцев</option>
+          </select>
         </label>
           <button class="button button-rev button-block button-positive" ng-disabled="!revData.text || !revData.positive || !revData.negative" type="submit">Добавить</button>
           <p class="login__error">{{ revErr }}</p>

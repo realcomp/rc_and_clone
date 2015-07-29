@@ -545,6 +545,26 @@
     width: auto;
   }
 
+
+  /* review select */
+  .item-r-select {
+    padding: 5px 20px !important;
+  }
+  .item-r-select select {
+    padding: 0px 0 10px 37px;
+    margin-top: -20px;
+    width: 100%;
+  }
+  .item-r-select .text {
+    margin-left: 15px;
+    top: -8px;
+  }
+  .item-r-select .icon {
+    position: relative;
+    top: 5px;
+  }
+
+
   /* menu */
   .menu__nologin-url {
     margin-bottom: 40px;
@@ -1150,11 +1170,23 @@
   .button-reg {
     margin-top: 0 !important;
   }
+  .review-list .item {
+    padding: 8px 20px 5px 20px;
+  }
   .review-list .icon {
     font-size: 24px;
   }
   .review-list textarea {
     top: -4px;
+  }
+  .item-r-select .input-label, .item-r-select select {
+    font-size: 15px;
+  }
+  .item-r-select select {
+    margin-left: -2px;
+  }
+  .add-review-star .product__single-review-type {
+    font-size: 34px;
   }
 
   /* shopping list */
