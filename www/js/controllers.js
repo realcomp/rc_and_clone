@@ -1554,6 +1554,24 @@ app.controller('ArticleCtrl', function($scope, $stateParams, $location, $ionicMo
 
 			setTimeout(function() {
 				appendTrDom();
+
+        var articleBlock = document.getElementsByClassName('article__single')[0];
+        var links = articleBlock.getElementsByTagName('a');
+
+        for(var i = 0; i < links.length; i++) {
+          links[i].addEventListener("click", modifyOpen, false);
+        }
+
+        function modifyOpen(event) {
+          var href = event.target.href;
+          if (typeof navigator !== "undefined" && navigator.app) {
+            navigator.app.loadUrl(event.target.href, {openExternal: true});
+          }
+          else {
+            window.open(event.target.href, "_blank");
+          }
+        }
+
 			}, 0)
 
 			/*
