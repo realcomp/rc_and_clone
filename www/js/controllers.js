@@ -824,7 +824,8 @@ app.controller('ProductCtrl', function($scope, $location, $stateParams, $ionicHi
     markClass: {
       negative: 'no-active',
       positive: 'no-active'
-    }
+    },
+    owning: '0'
   };
 
   $scope.toggleActive = function(self) {
@@ -856,7 +857,7 @@ app.controller('ProductCtrl', function($scope, $location, $stateParams, $ionicHi
 			DB.alert('Добавлять отзывы о товаре могут только авторизованные пользователи!', 'Внимание!');
 			return false;
 		}
-	$scope.revData.owning = '';
+
   	$scope.modal.show();
   };
 
@@ -878,7 +879,7 @@ app.controller('ProductCtrl', function($scope, $location, $stateParams, $ionicHi
             negative: 'no-active',
             positive: 'no-active'
           },
-          owning: 0
+          owning: '0'
         };
       }
 			else {

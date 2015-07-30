@@ -46,13 +46,13 @@
             <span class="text">Опыт использования</span>
           </div>
           <select ng-model="revData.owning">
-            <option value="" selected disabled>Кликните для выбора</option>
+            <option value="0" selected disabled>Кликните для выбора</option>
             <option value="LESS_THAN_MONTH">Меньше месяца</option>
             <option value="FEW_MONTHS">Больше месяца</option>
             <option value="MORE_THAN_ONE_MONTH">Несколько месяцев</option>
           </select>
         </label>
-          <button class="button button-rev button-block button-positive" ng-disabled="!revData.text || !revData.positive || !revData.negative" type="submit">Добавить</button>
+          <button class="button button-rev button-block button-positive" ng-disabled="!revData.text || !revData.positive || !revData.negative || !revData.owning" type="submit">Добавить</button>
           <p class="login__error">{{ revErr }}</p>
       </div>
     </form>
