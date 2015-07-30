@@ -1171,8 +1171,13 @@ console.log(slice);
 
     self.getById = function(id) {
         var api_token = User.api_token();
+        var params = ['platform=ionic'];
 
-        return $http.get(Url.url('/v1/articles/' + id + (api_token ? '?api_token=' + api_token : '' + 'platform=ionic')))
+        if (api_token) {
+            params.push('api_token=' + api_token);
+        }
+
+        return $http.get(Url.url('/v1/articles/' + id + (params.length ? '?' + params.join('&') : '')))
     		.then(function(resp){
     			return resp.data;
     		},

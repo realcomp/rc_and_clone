@@ -1563,13 +1563,19 @@ app.controller('ArticleCtrl', function($scope, $stateParams, $location, $ionicMo
         }
 
         function modifyOpen(event) {
+        	if (event.preventDefault) {
+			    event.preventDefault();
+			} else {
+				event.returnValue = false;
+			}
           var href = event.target.href;
           if (typeof navigator !== "undefined" && navigator.app) {
             navigator.app.loadUrl(event.target.href, {openExternal: true});
           }
           else {
-            window.open(event.target.href, "_blank");
+            window.open(event.target.href, "_system");
           }
+          return false;
         }
 
 			}, 0)
