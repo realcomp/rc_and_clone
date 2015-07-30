@@ -558,7 +558,7 @@ app.controller('CategoryCtrl', function($scope, $q, $location, $stateParams, $io
 });
 
 // Контроллер товаров
-app.controller('ProductCtrl', function($scope, $location, $stateParams, $ionicHistory, $ionicModal, $http,  Product, Category, Rating, User, DB, Company, Mark) {
+app.controller('ProductCtrl', function($scope, $location, $stateParams, $ionicHistory, $ionicModal, $http, $ionicSlideBoxDelegate, Product, Category, Rating, User, DB, Company, Mark) {
 	$scope.overlayload = true;
 	var onlyNumber = !isNaN(parseFloat($stateParams.id)) && isFinite($stateParams.id) && (0 < $stateParams.id);
 	if(!onlyNumber) {
@@ -719,48 +719,53 @@ app.controller('ProductCtrl', function($scope, $location, $stateParams, $ionicHi
      	});
 	});
 
-	// Отзывы
-	Product.reviews($stateParams.id).then(function(resp) {
-		$scope.reviews = resp;
+	var getReviews = function() {
+		// Отзывы
+		Product.reviews($stateParams.id).then(function(resp) {
+			$scope.reviews = null;
+			$scope.reviews = resp;
 
-		// Массив звезд рейтинга
+			// Массив звезд рейтинга
 
-    /* Старый рейтинг
-    $scope.arrayRating = [];
+	    /* Старый рейтинг
+	    $scope.arrayRating = [];
 
-    for(var i = 0; i < 5; i++) {
-    	if(i < resp.avg_mark) {
-    		$scope.arrayRating.push(true)
-    	}
-    	else {
-    		$scope.arrayRating.push(false);
-    	}	
-    }
-    */
+	    for(var i = 0; i < 5; i++) {
+	    	if(i < resp.avg_mark) {
+	    		$scope.arrayRating.push(true)
+	    	}
+	    	else {
+	    		$scope.arrayRating.push(false);
+	    	}	
+	    }
+	    */
 
-		var objReviewsProcent = {
-			positive: 0,
-			negative: 0
-		};
+			var objReviewsProcent = {
+				positive: 0,
+				negative: 0
+			};
 
-		var reviewsPositive = resp.positive;
-		var reviewsNegative = resp.total_count - resp.positive;
+			var reviewsPositive = resp.positive;
+			var reviewsNegative = resp.total_count - resp.positive;
 
-		if(resp.total_count >= 1) {
-			objReviewsProcent.positive = (reviewsPositive * 100 / resp.total_count).toFixed(0);
-			objReviewsProcent.negative = (reviewsNegative * 100 / resp.total_count).toFixed(0);
-		}
+			if(resp.total_count >= 1) {
+				objReviewsProcent.positive = (reviewsPositive * 100 / resp.total_count).toFixed(0);
+				objReviewsProcent.negative = (reviewsNegative * 100 / resp.total_count).toFixed(0);
+			}
 
-    $scope.objReviewsProcent = objReviewsProcent;
+	    	$scope.objReviewsProcent = objReviewsProcent;
 
+			// Преобразованная дата для каждого отзыва
+			angular.forEach(resp.items, function(item) {
+		   	var date = item.created_at;
+		   	item.created_date = new Date(item.created_at);
+		   	$ionicSlideBoxDelegate.update();
+		  });
 
-		// Преобразованная дата для каждого отзыва
-		angular.forEach(resp.items, function(item) {
-	   	var date = item.created_at;
-	   	item.created_date = new Date(item.created_at);
-	  });
+		});
+	};
 
-	});
+	getReviews();
 
 	// Лайк/Дизлайк для отзывов
 	$scope.addVote = function(review, vote) {
@@ -881,6 +886,8 @@ app.controller('ProductCtrl', function($scope, $location, $stateParams, $ionicHi
           },
           owning: '0'
         };
+
+        getReviews();
       }
 			else {
 				if(response.status === 400) {

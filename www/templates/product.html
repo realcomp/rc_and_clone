@@ -48,7 +48,7 @@
 				 </div>
 			 </div>
 
-		 		<div ng-if="reviews && reviews.total_count > 0" class="product__single-reviews-slider product__single-wblock">
+		 		<div ng-show="reviews && reviews.total_count > 0" class="product__single-reviews-slider product__single-wblock">
 				 	<ion-slide-box show-pager="false" on-slide-changed="slideHasChanged($index)">
 			      <ion-slide ng-repeat="review in reviews.items">
 				      <div class="comment__item">

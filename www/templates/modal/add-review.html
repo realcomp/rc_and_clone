@@ -52,7 +52,7 @@
             <option value="MORE_THAN_ONE_MONTH">Несколько месяцев</option>
           </select>
         </label>
-          <button class="button button-rev button-block button-positive" ng-disabled="!revData.text || !revData.positive || !revData.negative || !revData.owning" type="submit">Добавить</button>
+          <button class="button button-rev button-block button-positive" ng-disabled="!revData.text || !revData.positive || !revData.negative || revData.owning=='0'" type="submit">Добавить</button>
           <p class="login__error">{{ revErr }}</p>
       </div>
     </form>
