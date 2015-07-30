@@ -856,6 +856,7 @@ app.controller('ProductCtrl', function($scope, $location, $stateParams, $ionicHi
 			DB.alert('Добавлять отзывы о товаре могут только авторизованные пользователи!', 'Внимание!');
 			return false;
 		}
+	$scope.revData.owning = '';
   	$scope.modal.show();
   };
 
@@ -866,17 +867,18 @@ app.controller('ProductCtrl', function($scope, $location, $stateParams, $ionicHi
 
   // Попытка добавить отзыв
   $scope.addReview = function(product) {
+  	$scope.revErr = '';
   	User.productReviews(product.id, $scope.revData).then(function(response) {
   		if(response.status === 200) {
 				$scope.closeReview();
 				DB.alert('Ваш отзыв успешно добавлен!' , 'Спасибо за отзыв!');
-				$scope.reмErr = '';
         $scope.revData = {
           mark: 0,
           markClass: {
             negative: 'no-active',
             positive: 'no-active'
-          }
+          },
+          owning: 0
         };
       }
 			else {
