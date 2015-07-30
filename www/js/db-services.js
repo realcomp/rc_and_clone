@@ -118,7 +118,6 @@ angular.module('db-services', ['db.config', 'ngCordova'])
         });
 
         if (window.cordova) {
-            //console.log("use cordova sqlite");
             window.plugins.sqlDB.copy(DB_CONFIG.name + '.sqlite', 0, function() {
 //                self.db = window.sqlitePlugin.openDatabase({name: DB_CONFIG.name + '.sqlite', androidDatabaseImplementation: 2});
                 self.db = window.sqlitePlugin.openDatabase({name: DB_CONFIG.name + '.sqlite', androidDatabaseImplementation: 2});
@@ -1173,7 +1172,7 @@ console.log(slice);
     self.getById = function(id) {
         var api_token = User.api_token();
 
-        return $http.get(Url.url('/v1/articles/' + id + (api_token ? '?api_token=' + api_token : '')))
+        return $http.get(Url.url('/v1/articles/' + id + (api_token ? '?api_token=' + api_token : '' + 'platform=ionic')))
     		.then(function(resp){
     			return resp.data;
     		},
