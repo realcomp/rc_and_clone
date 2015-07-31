@@ -17,6 +17,8 @@
  `cordova plugin add https://github.com/an-rahulpandey/cordova-plugin-dbcopy.git`
 - авторизация через соцсети
  `bower install ng-cordova-oauth -S`
+- вывод версии приложения
+ `cordova plugin add https://github.com/whiteoctober/cordova-plugin-app-version.git`
 
 ###Сборка пакета
 
