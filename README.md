@@ -7,7 +7,7 @@
  `cordova plugin add https://git-wip-us.apache.org/repos/asf/cordova-plugin-inappbrowser.git`
 - Использование одной версии WebView на разных устройствах:<br>
  `cordova plugin add cordova-plugin-crosswalk-webview`
-- Устраняет проблемы с сетью в Cordova 5:<br>  
+- Устраняет проблемы с сетью в Cordova 5: 
  `ionic plugin add https://github.com/apache/cordova-plugin-whitelist.git`
 - Клавиатура: <br>
  `ionic plugin add https://github.com/driftyco/ionic-plugins-keyboard.git`
