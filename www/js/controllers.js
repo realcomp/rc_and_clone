@@ -1346,10 +1346,17 @@ app.controller('UserProfileEditCtrl', function($scope, User, DB) {
 });
 
 // О приложении
-app.controller('AboutCtrl', function($scope, DB, Product, Category, $window) {
+app.controller('AboutCtrl', function($scope, $cordovaAppVersion, DB, Product, Category, $window) {
 	DB.version().then(function(res){
 		$scope.dbv = res;
 	});
+
+  if(window.cordova) {
+    $cordovaAppVersion.getAppVersion().then(function (version) {
+      $scope.appVersion = version;
+    });
+  }
+
 	Product.count().then(function(res){
 		$scope.pcount = res.count;
 	});
