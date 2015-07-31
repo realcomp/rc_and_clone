@@ -7,17 +7,17 @@
  `cordova plugin add https://git-wip-us.apache.org/repos/asf/cordova-plugin-inappbrowser.git`
 - Использование одной версии WebView на разных устройствах:<br>
  `cordova plugin add cordova-plugin-crosswalk-webview`
-- Устраняет проблемы с сетью в Cordova 5:  
+- Устраняет проблемы с сетью в Cordova 5:<br>  
  `ionic plugin add https://github.com/apache/cordova-plugin-whitelist.git`
-- Клавиатура
+- Клавиатура: <br>
  `ionic plugin add https://github.com/driftyco/ionic-plugins-keyboard.git`
-- sqlite
+- sqlite: <br>
  `cordova plugin add https://github.com/brodysoft/Cordova-SQLitePlugin`
-- Copy SQLite Database from assets(Android) or Resources(iOS) to App Directory
+- Copy SQLite Database from assets(Android) or Resources(iOS) to App Directory<br>
  `cordova plugin add https://github.com/an-rahulpandey/cordova-plugin-dbcopy.git`
-- авторизация через соцсети
+- Авторизация через соцсети: <br>
  `bower install ng-cordova-oauth -S`
-- вывод версии приложения
+- Вывод версии приложения: <br>
  `cordova plugin add https://github.com/whiteoctober/cordova-plugin-app-version.git`
 
 ###Сборка пакета
