@@ -405,7 +405,7 @@ app.controller('CategoryCtrl', function($scope, $q, $location, $stateParams, $io
 
 										var arrButtons = [];
 										arrButtons.push(
-											{ text: 'Общий рейтинг', order: ['danger_level', '-rating'], 'active': true },
+											{ text: 'Общий рейтинг', order: ['-tested', 'danger_level', '-rating', 'name'], 'active': true },
 											{ text: 'Цена', order: ['-price'], 'active': false },
 											{ text: 'Алфавит', order: ['name'], 'active': false }
 										);
@@ -488,7 +488,7 @@ app.controller('CategoryCtrl', function($scope, $q, $location, $stateParams, $io
 						  };
 
 						  // Сортировка 
-						  $scope.orderProp = ['danger_level', '-rating'];
+						  $scope.orderProp = ['-tested', 'danger_level', '-rating', 'name'];
 						  $scope.sorting = function(index, order) {
 						  	$ionicScrollDelegate.scrollTop();
 						    $scope.orderProp = order;
