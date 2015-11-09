@@ -26,7 +26,8 @@
     "cordova-plugin-whitelist",
     "cordova-plugin-splashscreen",
     "me.rahul.plugins.sqldb@1.0.3",
-    "cordova-plugin-crosswalk-webview"
+    "cordova-plugin-crosswalk-webview",
+    "cordova-plugin-app-version"
   ],
   "cordovaPlatforms": [
     {

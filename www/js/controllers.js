@@ -6,7 +6,7 @@ var articleUrlParam = {
 };
 
 // Контроллер главной
-app.controller('MainCtrl', function($scope, $ionicLoading, $rootScope, $interval, $http, Category, DB, Product, User) {
+app.controller('MainCtrl', function($scope, $ionicLoading, $rootScope, $interval, $http, Category, DB, Product, User, Url) {
 	//console.log('main controller');
 
 	if (window.cordova) {
@@ -37,7 +37,6 @@ app.controller('MainCtrl', function($scope, $ionicLoading, $rootScope, $interval
 	}
 
 	$scope.roots = [];
-	$scope.network = false;
 	$scope.title = 'Рейтинг товаров';
 	$rootScope.seachActiveRoot = false;
 	$rootScope.thisQuery = '';
@@ -47,13 +46,6 @@ app.controller('MainCtrl', function($scope, $ionicLoading, $rootScope, $interval
 	User.productVotes();
 
 	var load_roots = function() {
-		$http.get('/v1/catalog/info?my_version=0').
-		  success(function(data, status, headers, config) {
-		  	$scope.network = true;
-		  }).
-		  error(function(data, status, headers, config) {
-		  	$scope.network = false;
-		  });
 		Category.roots().then(function(roots) {
 			angular.forEach(roots, function(root) {
       			Category.countProductsByObj(root, true).then(function(count) {
@@ -1352,7 +1344,7 @@ app.controller('AboutCtrl', function($scope, $cordovaAppVersion, DB, Product, Ca
 	});
 
   if(window.cordova) {
-    $cordovaAppVersion.getAppVersion().then(function (version) {
+    $cordovaAppVersion.getVersionNumber().then(function (version) {
       $scope.appVersion = version;
     });
   }

@@ -177,8 +177,11 @@ app.directive('errSrc', function() {
   return {
     link: function(scope, element, attrs) {
       element.bind('error', function() {
-        if (attrs.src != attrs.errSrc) {
+        if (attrs['default'] && attrs.src == attrs['default']) {
+        } else if (attrs.src != attrs.errSrc) {
           attrs.$set('src', attrs.errSrc);
+        } else if (attrs['default'] && attrs.src != attrs['default']) {
+          attrs.$set('src', attrs['default']);
         }
       });
     }

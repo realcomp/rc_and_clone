@@ -926,7 +926,7 @@ console.log(slice);
         });
     };
 
-    self.getByCategoryId = function(id, companyIds, price, rating, limit, offset) {
+    self.getByCategoryId = function(id, companyIds, price, rating, limit, offset, order) {
         var q = '';
 
         if(companyIds) {
@@ -940,6 +940,12 @@ console.log(slice);
         if(rating) { 
             q += ' AND rating >= ' + rating;
         }
+
+        if (!order) {
+            order = 'tested DESC,danger_level,rating DESC,name';
+        }
+
+        q += ' ORDER BY ' + order;
 
         if(limit) {
           q+= ' LIMIT ' + limit;

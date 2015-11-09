@@ -18,7 +18,7 @@
 - Авторизация через соцсети: <br>
  `bower install ng-cordova-oauth -S`
 - Вывод версии приложения: <br>
- `cordova plugin add https://github.com/whiteoctober/cordova-plugin-app-version.git`
+ `cordova plugin add cordova-plugin-app-version`
 
 ###Сборка пакета
 
