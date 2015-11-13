@@ -166,7 +166,16 @@ app.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
       }
     }
   })
-  ;
+
+  .state('app.barcode', {
+    url: "/barcode",
+    views: {
+      'menuContent': {
+        templateUrl: "templates/barcode.html",
+        controller: 'BarcodeCtrl'
+      }
+    }
+  });
 
   // Default Router
   $urlRouterProvider.otherwise('/app/main');

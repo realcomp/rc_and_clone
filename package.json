@@ -27,7 +27,11 @@
     "cordova-plugin-splashscreen",
     "me.rahul.plugins.sqldb@1.0.3",
     "cordova-plugin-crosswalk-webview",
-    "cordova-plugin-app-version"
+    "cordova-plugin-app-version",
+    {
+      "locator": "https://github.com/driftyco/ionic-plugins-keyboard.git",
+      "id": "ionic-plugin-keyboard"
+    }
   ],
   "cordovaPlatforms": [
     {

@@ -1653,7 +1653,33 @@ app.controller('ArticleCtrl', function($scope, $stateParams, $location, $ionicMo
   	});
   };
 
+});
 
+
+// Штрихкод
+app.controller('BarcodeCtrl', function($scope, $location, $cordovaBarcodeScanner, DB, Barcode) {
+
+	$scope.scanBarcode = function() {
+		$cordovaBarcodeScanner.scan().then(function(imageData) {
+			alert(imageData.text);
+			alert("Barcode Format -> " + imageData.format);
+			alert("Cancelled -> " + imageData.cancelled);
+
+			var code = imageData.text;
+			Barcode.getProducts(code).then(function(products) {
+				if(products.length === 0) {
+					DB.alert('Товар не найден!', 'Внимание!');
+				}
+				else {
+					$location.path('/app/product/' + products[0]['pid']);
+				}
+			});
+
+		}, function(error) {
+			alert("An error happened -> " + error);
+		});
+
+	};
 
 });
 

@@ -1269,4 +1269,21 @@ console.log(slice);
     return self;
 })
 
-;
+// Штрихкод
+.factory('Barcode', function($http, Url, User) {
+  var self = this;
+
+  self.getProducts = function(code) {
+
+      return $http.get(Url.url('/v1/barcode/product?code=' + code)).
+        then(function(result) {
+            return result.data.pids;
+        }, function(status) {
+            return status;
+        });
+
+  };
+
+  return self;
+});
+
