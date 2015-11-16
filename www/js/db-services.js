@@ -964,6 +964,9 @@ console.log(slice);
     self.getById = function(id) {
         return DB.query('SELECT * FROM products WHERE id = ?', [id])
         .then(function(result){
+            if(result.rows.length === 0) {
+                return false;
+            }
             return DB.fetch(result);
         });
     };

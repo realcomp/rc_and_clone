@@ -115,6 +115,17 @@ app.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
     }
   })
 
+  .state('app.product-not-found', {
+    url: "/product-not-found",
+    cache: false,
+    views: {
+      'menuContent': {
+        templateUrl: "templates/product-not-found.html",
+        controller: 'ProductNotFoundCtrl'
+      }
+    }
+  })
+
   .state('app.articles', {
     url: "/article",
     cache: false,

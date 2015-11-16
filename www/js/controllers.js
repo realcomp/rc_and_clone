@@ -566,11 +566,15 @@ app.controller('ProductCtrl', function($scope, $location, $stateParams, $ionicHi
 	$scope.main_properties = [];
 	$scope.properties = [];
 
-
 	// Общая информация
 	Product.getById($stateParams.id).then(function(product) {
      	$scope.title = product.name
       $scope.product = product;
+
+			// Продукт не найден в локальной базе
+			if(product === false) {
+				$location.path('/app/product-not-found');
+			}
 
      	User.productVotes().then(function() {
      		productVotes = User.getProductVotes();
@@ -1656,7 +1660,7 @@ app.controller('ArticleCtrl', function($scope, $stateParams, $location, $ionicMo
 });
 
 
-// Штрихкод
+// *** Штрихкод
 app.controller('BarcodeCtrl', function($scope, $location, $cordovaBarcodeScanner, DB, Barcode) {
 
 	$scope.scanBarcode = function() {
@@ -1682,3 +1686,9 @@ app.controller('BarcodeCtrl', function($scope, $location, $cordovaBarcodeScanner
 
 });
 
+
+// *** Не найденный продукт
+app.controller('ProductNotFoundCtrl', function($scope) {
+		$scope.title = 'Товар не найден!';
+		$scope.notFoundText = 'Извините, данный товар на найден в локальной базе данных, попробуйте обновить приложение.';
+});
