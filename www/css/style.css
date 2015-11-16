@@ -140,6 +140,9 @@ a:active {
 .button.disabled, .button[disabled] {
 	opacity: 0.2;
 }
+.button.button-default-style.activated {
+	background: #B70522;
+}
 .product-rating-m {
 	width: 80px;
   margin: 32px 25px 0 15px;
@@ -239,7 +242,9 @@ a:active {
 	font-size: 16px;
 	line-height: 22px;
 }
-
+.util-align-center {
+	text-align: center;
+}
 
 /* font-family: "BrutalMedium"; */
 @font-face {
@@ -1988,4 +1993,23 @@ a:active {
 }
 .range input {
 	height: 35px;
+}
+
+
+/*
+	==========================================================================
+  	BARCODE NOT FOUND
+  ==========================================================================
+*/
+
+.not-found-barcode__img {
+
+}
+.not-found-barcode__code {
+	margin-bottom: 15px;
+	font-size: 26px;
+	letter-spacing: 1px;
+}
+.not-found-barcode__text {
+	margin: 10px 0 15px;
 }

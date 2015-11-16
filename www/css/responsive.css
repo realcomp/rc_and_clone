@@ -54,7 +54,7 @@
   .product__category .product__category-rating,
   .product__single-result .product-rating-m {
     width: 70px;
-    padding: 19px 0px;
+    padding: 19px 0;
     font-size: 32px;
   }
   .bar.footer__sorting.bar-footer .footer__sorting-item .button,
@@ -223,7 +223,7 @@
   .product__category .product__category-rating,
   .product__single-result .product-rating-m {
     width: 60px;
-    padding: 16px 0px;
+    padding: 16px 0;
     font-size: 28px;
   }
   .bar.footer__sorting.bar-footer .footer__sorting-item .button,
@@ -452,7 +452,7 @@
   }
   .product__category .product__category-rating {
     width: 50px;
-    padding: 13px 0px;
+    padding: 13px 0;
     font-size: 24px;
   }
   .product__category .product__category-rating-wrap, .product__category-button-wrap {
@@ -916,7 +916,6 @@
 
   /* cat */
   .categories-list .item-content {
-    padding-right: 25px;
     font-size: 15px;
     padding: 10px 12px;
   }

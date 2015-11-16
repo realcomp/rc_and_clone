@@ -1280,9 +1280,10 @@ console.log(slice);
 
       return $http.get(Url.url('/v1/barcode/product?code=' + code + '&type=' + type)).
         then(function(result) {
-            return result.data.pids;
-        }, function(status) {
-            return status;
+            console.log(result);
+            return result;
+        }, function(result) {
+            return result;
         });
 
   };

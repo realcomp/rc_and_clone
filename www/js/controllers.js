@@ -1411,6 +1411,7 @@ app.controller('ArticlesCtrl', function($scope, $ionicHistory, $ionicModal, $loc
     $window.location.reload();
   }
 
+
   // Фильтр по рубрике
   $ionicModal.fromTemplateUrl('templates/modal/modal-sorting-rubric.html', {
     scope: $scope
@@ -1663,33 +1664,57 @@ app.controller('ArticleCtrl', function($scope, $stateParams, $location, $ionicMo
 // *** Штрихкод
 app.controller('BarcodeCtrl', function($scope, $location, $cordovaBarcodeScanner, DB, Barcode) {
 
-	// $scope.scanBarcode = function() {
+	 $scope.scanBarcode = function() {
 		if (window.cordova) {
 			$cordovaBarcodeScanner.scan().then(function (imageData) {
 
 				var code = imageData.text;
 				var type = (imageData.format.indexOf('EAN') >= 0) ? 'EAN' : imageData.format;
 
-				Barcode.getProducts(code, type).then(function (products) {
+				Barcode.getProducts(code, type).then(function (response) {
+
+					if(response.status !== 200) {
+						DB.alert('Проверьте соединение с интернетом или повторите попытку позже' , 'Ошибка сканирования!');
+						return false;
+					}
+
+					var products = response.data.pids;
 					if (products.length === 0) {
-						DB.alert('Товар c таким штрих кодом не найден!', 'Ошибка!');
+						$location.path('/app/barcode-not-found/').search({code: code});
 					}
 					else {
 						$location.path('/app/product/' + products[0]['pid']);
 					}
+
 				});
 
 			}, function (error) {
 				alert("Ошибка сканирования -> " + error);
 			});
 		}
-	// };
+	 };
+
+});
+
+
+// *** Штрихкод не найден
+app.controller('BarcodeNotFoundCtrl', function($scope, $location) {
+
+	$scope.code = $location.search().code;
+	if(!$scope.code) $scope.code = ' ';
+
+	$scope.goScanningBarcode = function() {
+		$location.path('/app/barcode');
+	}
+
 
 });
 
 
 // *** Не найденный продукт
 app.controller('ProductNotFoundCtrl', function($scope) {
+
 		$scope.title = 'Товар не найден!';
 		$scope.notFoundText = 'Извините, данный товар на найден в локальной базе данных, попробуйте обновить приложение.';
+
 });
