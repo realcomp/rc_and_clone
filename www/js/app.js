@@ -180,10 +180,22 @@ app.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
 
   .state('app.barcode', {
     url: "/barcode",
+    cache: false,
     views: {
       'menuContent': {
         templateUrl: "templates/barcode.html",
         controller: 'BarcodeCtrl'
+      }
+    }
+  })
+
+  .state('app.barcodeNotFound', {
+    url: "/barcode-not-found/:code",
+    cache: false,
+    views: {
+      'menuContent': {
+        templateUrl: "templates/barcode-not-found.html",
+        controller: 'BarcodeNotFoundCtrl'
       }
     }
   });
