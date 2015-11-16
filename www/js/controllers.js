@@ -1664,35 +1664,38 @@ app.controller('ArticleCtrl', function($scope, $stateParams, $location, $ionicMo
 // *** Штрихкод
 app.controller('BarcodeCtrl', function($scope, $location, $cordovaBarcodeScanner, DB, Barcode) {
 
-	 $scope.scanBarcode = function() {
-		if (window.cordova) {
-			$cordovaBarcodeScanner.scan().then(function (imageData) {
+	if (window.cordova) {
+		$cordovaBarcodeScanner.scan().then(function (imageData) {
 
-				var code = imageData.text;
-				var type = (imageData.format.indexOf('EAN') >= 0) ? 'EAN' : imageData.format;
+			var code = imageData.text;
+			var type = (imageData.format.indexOf('EAN') >= 0) ? 'EAN' : imageData.format;
 
-				Barcode.getProducts(code, type).then(function (response) {
+			Barcode.getProducts(code, type).then(function (response) {
 
-					if(response.status !== 200) {
-						DB.alert('Проверьте соединение с интернетом или повторите попытку позже' , 'Ошибка сканирования!');
-						return false;
-					}
+				if (response.status !== 200) {
+					DB.alert(
+						'Проверьте соединение с интернетом или повторите попытку позже',
+						'Ошибка сканирования!',
+						function() {
+							$location.path('/app/main');
+						});
+					return false;
+				}
 
-					var products = response.data.pids;
-					if (products.length === 0) {
-						$location.path('/app/barcode-not-found/').search({code: code});
-					}
-					else {
-						$location.path('/app/product/' + products[0]['pid']);
-					}
+				var products = response.data.pids;
+				if (products.length === 0) {
+					$location.path('/app/barcode-not-found/').search({code: code});
+				}
+				else {
+					$location.path('/app/product/' + products[0]['pid']);
+				}
 
-				});
-
-			}, function (error) {
-				alert("Ошибка сканирования -> " + error);
 			});
-		}
-	 };
+
+		}, function (error) {
+			DB.alert(error, 'Ошибка сканирования!');
+		});
+	}
 
 });
 

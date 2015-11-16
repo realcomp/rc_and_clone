@@ -68,14 +68,14 @@ angular.module('db-services', ['db.config', 'ngCordova'])
 //        return count_slices ? parseInt(load_slices * 100 / count_slices) : 0;
     };
 
-    self.alert = function(msg, title) {
+    self.alert = function(msg, title, callback) {
         title = title || 'Ошибка!';
         var alertPopup = $ionicPopup.alert({
              title: title,
              template: msg
            });
            alertPopup.then(function(res) {
-//             console.log('Thank you for not eating my delicious ice cream cone');
+             callback();
         });
     };
 
