@@ -1273,9 +1273,9 @@ console.log(slice);
 .factory('Barcode', function($http, Url, User) {
   var self = this;
 
-  self.getProducts = function(code) {
+  self.getProducts = function(code, type) {
 
-      return $http.get(Url.url('/v1/barcode/product?code=' + code)).
+      return $http.get(Url.url('/v1/barcode/product?code=' + code + '&type=' + type)).
         then(function(result) {
             return result.data.pids;
         }, function(status) {

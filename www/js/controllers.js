@@ -1661,12 +1661,11 @@ app.controller('BarcodeCtrl', function($scope, $location, $cordovaBarcodeScanner
 
 	$scope.scanBarcode = function() {
 		$cordovaBarcodeScanner.scan().then(function(imageData) {
-			alert(imageData.text);
-			alert("Barcode Format -> " + imageData.format);
-			alert("Cancelled -> " + imageData.cancelled);
 
 			var code = imageData.text;
-			Barcode.getProducts(code).then(function(products) {
+			var type = (imageData.format.indexOf('EAN') >= 0) ? 'EAN' : imageData.format;
+
+			Barcode.getProducts(code, type).then(function(products) {
 				if(products.length === 0) {
 					DB.alert('Товар не найден!', 'Внимание!');
 				}
@@ -1676,7 +1675,7 @@ app.controller('BarcodeCtrl', function($scope, $location, $cordovaBarcodeScanner
 			});
 
 		}, function(error) {
-			alert("An error happened -> " + error);
+			alert("Ошибка сканирования -> " + error);
 		});
 
 	};
