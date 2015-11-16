@@ -931,7 +931,7 @@ app.controller('MenuCtrl', function($scope, $ionicSideMenuDelegate, $rootScope, 
 	}
 	else {
 		$scope.menuWidth = 557;
-	} 
+	}
 
 });
  
@@ -1663,26 +1663,27 @@ app.controller('ArticleCtrl', function($scope, $stateParams, $location, $ionicMo
 // *** Штрихкод
 app.controller('BarcodeCtrl', function($scope, $location, $cordovaBarcodeScanner, DB, Barcode) {
 
-	$scope.scanBarcode = function() {
-		$cordovaBarcodeScanner.scan().then(function(imageData) {
+	// $scope.scanBarcode = function() {
+		if (window.cordova) {
+			$cordovaBarcodeScanner.scan().then(function (imageData) {
 
-			var code = imageData.text;
-			var type = (imageData.format.indexOf('EAN') >= 0) ? 'EAN' : imageData.format;
+				var code = imageData.text;
+				var type = (imageData.format.indexOf('EAN') >= 0) ? 'EAN' : imageData.format;
 
-			Barcode.getProducts(code, type).then(function(products) {
-				if(products.length === 0) {
-					DB.alert('Товар не найден!', 'Внимание!');
-				}
-				else {
-					$location.path('/app/product/' + products[0]['pid']);
-				}
+				Barcode.getProducts(code, type).then(function (products) {
+					if (products.length === 0) {
+						DB.alert('Товар c таким штрих кодом не найден!', 'Ошибка!');
+					}
+					else {
+						$location.path('/app/product/' + products[0]['pid']);
+					}
+				});
+
+			}, function (error) {
+				alert("Ошибка сканирования -> " + error);
 			});
-
-		}, function(error) {
-			alert("Ошибка сканирования -> " + error);
-		});
-
-	};
+		}
+	// };
 
 });
 

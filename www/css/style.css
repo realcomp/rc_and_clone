@@ -1096,7 +1096,10 @@ a:active {
   position: relative;
   top: 5px;
  	font-size: 34px;
-} 
+}
+.menu__content .icon-barcode {
+	top: 7px;
+}
 
 /*all*/
 .menu__avatar {

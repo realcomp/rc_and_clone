@@ -34,6 +34,12 @@
             <span class="menu__item-inner-text">Рейтинг товаров</span>
           </span>
         </ion-item>
+        <ion-item nav-clear menu-close ng-href="#/app/barcode">
+          <span class="menu__item-inner">
+          <i class="fontello-icon icon icon-barcode"></i>
+            <span class="menu__item-inner-text">Поиск по штрих коду</span>
+          </span>
+        </ion-item>
         <ion-item nav-clear ng-href='{{ userProfile ? "#/app/user/shopping-list" : "#" }}' ng-click="closeMenu('recommended'); login();">
         	<span class="menu__item-inner">
             <i class="icon ion-bag"></i>
@@ -58,12 +64,6 @@
           <i class="icon ion-information-circled"></i>
             <span class="menu__item-inner-text">О приложении</span>
           </span>  
-        </ion-item>
-        <ion-item nav-clear menu-close ng-href="#/app/barcode">
-          <span class="menu__item-inner">
-          <i class="icon ion-information-circled"></i>
-            <span class="menu__item-inner-text">Barcode</span>
-          </span>
         </ion-item>
       </ion-list>
     </ion-content>
