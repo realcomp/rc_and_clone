@@ -234,6 +234,12 @@ a:active {
   fill: #c80020;
 }
 
+.not-found-text {
+	padding: 20px;
+	font-size: 16px;
+	line-height: 22px;
+}
+
 
 /* font-family: "BrutalMedium"; */
 @font-face {
@@ -1090,7 +1096,10 @@ a:active {
   position: relative;
   top: 5px;
  	font-size: 34px;
-} 
+}
+.menu__content .icon-barcode {
+	top: 7px;
+}
 
 /*all*/
 .menu__avatar {

@@ -964,6 +964,9 @@ console.log(slice);
     self.getById = function(id) {
         return DB.query('SELECT * FROM products WHERE id = ?', [id])
         .then(function(result){
+            if(result.rows.length === 0) {
+                return false;
+            }
             return DB.fetch(result);
         });
     };
@@ -1273,9 +1276,9 @@ console.log(slice);
 .factory('Barcode', function($http, Url, User) {
   var self = this;
 
-  self.getProducts = function(code) {
+  self.getProducts = function(code, type) {
 
-      return $http.get(Url.url('/v1/barcode/product?code=' + code)).
+      return $http.get(Url.url('/v1/barcode/product?code=' + code + '&type=' + type)).
         then(function(result) {
             return result.data.pids;
         }, function(status) {

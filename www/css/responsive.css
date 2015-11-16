@@ -324,6 +324,9 @@
     top: 4px;
     margin-right: 10px;
   }
+  .menu__content .icon-barcode {
+    top: 6px;
+  }
 
   /* modal */
   .modal-head {
@@ -786,6 +789,9 @@
     width: 30px;
     margin-top: -15px;
     line-height: 32px;
+  }
+  .menu__content .icon-barcode {
+    top: 5px;
   }
 
   /* modal */

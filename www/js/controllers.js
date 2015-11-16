@@ -566,11 +566,15 @@ app.controller('ProductCtrl', function($scope, $location, $stateParams, $ionicHi
 	$scope.main_properties = [];
 	$scope.properties = [];
 
-
 	// Общая информация
 	Product.getById($stateParams.id).then(function(product) {
      	$scope.title = product.name
       $scope.product = product;
+
+			// Продукт не найден в локальной базе
+			if(product === false) {
+				$location.path('/app/product-not-found');
+			}
 
      	User.productVotes().then(function() {
      		productVotes = User.getProductVotes();
@@ -927,7 +931,7 @@ app.controller('MenuCtrl', function($scope, $ionicSideMenuDelegate, $rootScope, 
 	}
 	else {
 		$scope.menuWidth = 557;
-	} 
+	}
 
 });
  
@@ -1656,30 +1660,36 @@ app.controller('ArticleCtrl', function($scope, $stateParams, $location, $ionicMo
 });
 
 
-// Штрихкод
+// *** Штрихкод
 app.controller('BarcodeCtrl', function($scope, $location, $cordovaBarcodeScanner, DB, Barcode) {
 
-	$scope.scanBarcode = function() {
-		$cordovaBarcodeScanner.scan().then(function(imageData) {
-			alert(imageData.text);
-			alert("Barcode Format -> " + imageData.format);
-			alert("Cancelled -> " + imageData.cancelled);
+	// $scope.scanBarcode = function() {
+		if (window.cordova) {
+			$cordovaBarcodeScanner.scan().then(function (imageData) {
 
-			var code = imageData.text;
-			Barcode.getProducts(code).then(function(products) {
-				if(products.length === 0) {
-					DB.alert('Товар не найден!', 'Внимание!');
-				}
-				else {
-					$location.path('/app/product/' + products[0]['pid']);
-				}
+				var code = imageData.text;
+				var type = (imageData.format.indexOf('EAN') >= 0) ? 'EAN' : imageData.format;
+
+				Barcode.getProducts(code, type).then(function (products) {
+					if (products.length === 0) {
+						DB.alert('Товар c таким штрих кодом не найден!', 'Ошибка!');
+					}
+					else {
+						$location.path('/app/product/' + products[0]['pid']);
+					}
+				});
+
+			}, function (error) {
+				alert("Ошибка сканирования -> " + error);
 			});
-
-		}, function(error) {
-			alert("An error happened -> " + error);
-		});
-
-	};
+		}
+	// };
 
 });
 
+
+// *** Не найденный продукт
+app.controller('ProductNotFoundCtrl', function($scope) {
+		$scope.title = 'Товар не найден!';
+		$scope.notFoundText = 'Извините, данный товар на найден в локальной базе данных, попробуйте обновить приложение.';
+});
