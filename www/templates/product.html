@@ -13,6 +13,7 @@
 					<div class="product__single-info-right">
 						<a ng-href="#" ng-class="(product.shopping_list==true) ? 'active' : ''" ng-click="addShoppingList(product)" href="#"><i class="icon ion-bag"></i>{{ product.slug }}</a>
 						<a ng-href="#" ng-class="(product.product_list==true) ? 'active' : ''" ng-click="updateProductList(product)"><i class="icon ion-android-favorite-outline"></i>{{ linkSlug }}</a>
+						<a ng-href="#" ng-class="(product.barcode_status==true) ? 'active' : ''" ng-click="addBarcodeProduct(product.barcode_status, product.id)"><i class="fontello-icon icon icon-barcode"></i>{{ product.barcode_text }}</a>
 					</div>
 				</div>
 			</div>

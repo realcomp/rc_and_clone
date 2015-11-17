@@ -74,10 +74,8 @@
     line-height: 32px;
   }
   .product__single-head .product__single-info-left {
-    width: 230px;
-    height: 230px;
-    margin-left: 10px;
-    margin-right: 10px;
+    width: 220px;
+    height: 220px;
   }
   .product__single-head .product__single-info-right a,
   .product__overlay-swipe a {
@@ -89,8 +87,10 @@
     font-size: 28px;
   }
   .product__single-head .product__single-info-right {
-    padding-top: 75px;
-    width: 235px;
+    padding-top: 50px;
+  }
+  .product__single-head .product__single-info-right a .icon-barcode {
+    font-size: 22px;
   }
   .product__single-result .product__single-result-txt,
   .product__single-reviews-rating-title {
@@ -126,8 +126,15 @@
     margin-right: 15px;
     font-size: 30px;
   }
-
-  /* modal */
+  .menu__content .icon-barcode {
+    margin-right: 12px;
+  }
+  .menu__content .ion-ios-book {
+    margin-right: 18px;
+  }
+  .menu__content  .menu__item-inner-text {
+    padding: 27px 0;
+  }
 
   /* shopping list */
   .product__category-s-inner-name {
@@ -277,9 +284,11 @@
   .product__overlay-swipe a .icon {
     font-size: 26px;
   }
+  .product__single-head .product__single-info-right a .icon-barcode {
+    font-size: 20px;
+  }
   .product__single-head .product__single-info-right {
-    padding-top: 55px;
-    width: 215px;
+    padding-top: 32px;
   }
   .product__single-reviews-rating .icon {
     font-size: 32px;
@@ -313,9 +322,6 @@
   .menu__nologin-url {
     font-size: 22px;
   }
-  .menu__content .menu__item-inner {
-    padding: 15px 0 21px;
-  }
   .menu__content .item-content {
     font-size: 18px;
   }
@@ -325,7 +331,13 @@
     margin-right: 10px;
   }
   .menu__content .icon-barcode {
-    top: 6px;
+    margin-right: 8px;
+  }
+  .menu__content .ion-ios-book {
+    margin-right: 15px;
+  }
+  .menu__content  .menu__item-inner-text {
+    padding: 22px 0;
   }
 
   /* modal */
@@ -570,10 +582,7 @@
 
   /* menu */
   .menu__nologin-url {
-    margin-bottom: 40px;
-  }
-  .menu__content .menu__item-inner {
-    padding: 12px 0 21px;
+    margin-bottom: 35px;
   }
   .menu__login-name, .menu__nologin-url {
     font-size: 19px;
@@ -731,8 +740,8 @@
     height: 130px;
   }
   .product__single-head .product__single-info-right {
-    width: 195px; 
-    padding-top: 27px;
+    margin-right: 10px;
+    padding-top: 20px;
   }
   .product__single-head .product__single-info-right a {
     margin-bottom: 15px;
@@ -749,6 +758,9 @@
   .product__single-head .product__single-info-right a .icon,
   .product__overlay-swipe a .icon {
     font-size: 24px;
+  }
+  .product__single-head .product__single-info-right a .icon-barcode {
+    font-size: 20px;
   }
   .product__single-review-type {
     margin: 7px 15px 7px 0;
@@ -775,9 +787,6 @@
     height: 100px;
     margin-bottom: 10px;
   }
-  .menu__content .menu__item-inner {
-    padding: 9px 0 15px;
-  }
   .menu__content .item-content {
     font-size: 16px;
   }
@@ -790,8 +799,13 @@
     margin-top: -15px;
     line-height: 32px;
   }
-  .menu__content .icon-barcode {
-    top: 5px;
+
+  .menu__content .ion-ios-book {
+    margin-right: 13px;
+  }
+  .menu__content  .menu__item-inner-text {
+    padding: 20px 0;
+    top: 1px;
   }
 
   /* modal */
@@ -991,11 +1005,8 @@
     line-height: 20px;
   }
   .product__single-head .product__single-info-left {
-    width: 105px;
-    height: 105px;
-  }
-  .product__single-head .product__single-info-right {
-    width: 178px;
+    width: 120px;
+    height: 120px;
   }
   .product__single-head .product__single-info-right a,
   .product__overlay-swipe a,
@@ -1011,6 +1022,10 @@
   .product__overlay-swipe a .icon {
     font-size: 20px;
     margin-right: 7px;
+  }
+  .product__single-head .product__single-info-right a .icon-barcode {
+    top: 0;
+    font-size: 16px;
   }
   .product__single-rating-row {
     margin-bottom: 15px;
@@ -1124,11 +1139,9 @@
   .menu__login-name, .menu__nologin-url {
     font-size: 17px;
   }
-  .menu__content .item-content {
-    font-size: 15px;
-  }
-  .menu__content .icon {
-    font-size: 22px;
+
+  .menu__content  .menu__item-inner-text {
+    padding: 18px 0;
   }
   .menu__logout {
     margin-top: 5px;
@@ -1261,28 +1274,13 @@
 
 }
 
-@media only screen and (max-width: 340px) {
-  .product__shopping-tab {
-    font-size: 13px;
-  }
-  .product__overlay-swipe a {
-    font-size: 13px;
-  }
-  .product__overlay-swipe.two .icon {
-    right: 20px;
-    font-size: 28px;
-    margin-top: -14px;
-  }
-}
-
-
-/* 
+/*
 	==========================================================================
-  	320
+  	340
   ========================================================================== 
 */
-@media only screen and (max-width: 320px) {
+@media only screen and (max-width: 340px) {
   #mainContainer {
-    width: 320px;
+    width: 340px;
   }
 }
