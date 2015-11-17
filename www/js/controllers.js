@@ -576,6 +576,37 @@ app.controller('ProductCtrl', function($scope, $location, $stateParams, $ionicHi
 				$location.path('/app/product-not-found');
 			}
 
+
+			// *** Был ли добавлен штрихкод в товару
+			Product.getBarcodeList($stateParams.id).then(function(response) {
+				var count = parseInt(response.data.count);
+				product['barcode_status'] = false;
+				product['barcode_text'] = 'Добавить штрихкод';
+				if(count > 0) {
+					product['barcode_status'] = true;
+					product['barcode_text'] = 'Штрихкод добавлен';
+				}
+			});
+
+
+			// *** Добавление своего штрихкода к текущему продукту
+			$scope.addBarcodeProduct = function(status, productId) {
+
+				// Штрихкод не был добавлен
+				if (status === false) {
+
+					if (!User.is_auth()) {
+						DB.alert('Добавлять штрихкод могут только авторизованные пользователи!', 'Внимание!');
+						return false;
+					}
+
+					$location.path('/app/barcode').search({productId: productId});
+
+				}
+
+			};
+
+
      	User.productVotes().then(function() {
      		productVotes = User.getProductVotes();
 				var userProductList = User.getProductListArray(),
@@ -586,6 +617,7 @@ app.controller('ProductCtrl', function($scope, $location, $stateParams, $ionicHi
 				product['slug'] = userShoppingList[product.id] ? 'В списке покупок' : 'В список покупок';
 				product['vote_boolean'] = productVotes[product.id] ? true : false;
 			  product['vote_text'] = productVotes[product.id] ? 'Вы проголосовали!' : 'Проголосовать за тест';
+
 
 				$scope.updateProductList = function(product) {
 					User.updateProductList(product.id).then(function(response) {
@@ -1667,30 +1699,77 @@ app.controller('BarcodeCtrl', function($scope, $location, $cordovaBarcodeScanner
 	if (window.cordova) {
 		$cordovaBarcodeScanner.scan().then(function (imageData) {
 
+			var urlParametrs = $location.search();
 			var code = imageData.text;
 			var type = (imageData.format.indexOf('EAN') >= 0) ? 'EAN' : imageData.format;
 
-			Barcode.getProducts(code, type).then(function (response) {
+			// *** Если передан id продукта, значит добавим штрихкод к нему
+			if('productId' in urlParametrs) {
 
-				if (response.status !== 200) {
-					DB.alert(
-						'Проверьте соединение с интернетом или повторите попытку позже',
-						'Ошибка сканирования!',
-						function() {
-							$location.path('/app/main');
-						});
-					return false;
-				}
+				Barcode.setBarcode(urlParametrs.productId, code, type).then(function (response) {
 
-				var products = response.data.pids;
-				if (products.length === 0) {
-					$location.path('/app/barcode-not-found/').search({code: code});
-				}
-				else {
-					$location.path('/app/product/' + products[0]['pid']);
-				}
+					if (response.status !== 200) {
+						DB.alert(
+							'Проверьте соединение с интернетом или повторите попытку позже',
+							'Ошибка сканирования!',
+							function() {
+								$location.path('/app/main');
+							});
+						return false;
+					}
 
-			});
+					var success = response.success;
+
+					// Успешное добавление
+					if (success == 1) {
+						DB.alert(
+							'Спасибо, что добавили штрихкод к товару!',
+							'Успех!',
+							function() {
+								$location.path('/app/main');
+							});
+						return false;
+					}
+					// Ошибка добавления добавление
+					else {
+						DB.alert(
+							response.error,
+							'Ошибка добавления!',
+							function() {
+								$location.path('/app/main');
+							});
+						return false;
+					}
+
+				});
+
+			}
+			// *** В противном случае осуществляем поиск по штрихкоду
+			else {
+
+				Barcode.getProducts(code, type).then(function (response) {
+
+					if (response.status !== 200) {
+						DB.alert(
+							'Проверьте соединение с интернетом или повторите попытку позже',
+							'Ошибка сканирования!',
+							function() {
+								$location.path('/app/main');
+							});
+						return false;
+					}
+
+					var products = response.data.pids;
+					if (products.length === 0) {
+						$location.path('/app/barcode-not-found/').search({code: code});
+					}
+					else {
+						$location.path('/app/product/' + products[0]['pid']);
+					}
+
+				});
+
+			}
 
 		}, function (error) {
 			DB.alert(error, 'Ошибка сканирования!');

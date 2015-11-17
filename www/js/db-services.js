@@ -75,7 +75,9 @@ angular.module('db-services', ['db.config', 'ngCordova'])
              template: msg
            });
            alertPopup.then(function(res) {
-             callback();
+             if(typeof callback === 'function') {
+                 callback();
+             }
         });
     };
 
@@ -971,6 +973,15 @@ console.log(slice);
         });
     };
 
+    self.getBarcodeList = function(productId) {
+        return $http.get(Url.url('/v1/barcode/count_by_product?product_id=' + productId)).
+          then(function(result) {
+              return result;
+          }, function(result) {
+              return result;
+          });
+    };
+
     self.getByIds = function(ids, order, category, company) {
         var places = [];
         angular.forEach(ids, function(){ places.push('?'); });
@@ -1280,7 +1291,6 @@ console.log(slice);
 
       return $http.get(Url.url('/v1/barcode/product?code=' + code + '&type=' + type)).
         then(function(result) {
-            console.log(result);
             return result;
         }, function(result) {
             return result;
@@ -1288,6 +1298,23 @@ console.log(slice);
 
   };
 
+
+  self.setBarcode = function(productId, code, type) {
+
+
+      var api_token = User.api_token();
+
+      return $http({
+          method: 'POST',
+          url: Url.url('/v1/barcode/?api_token=' + api_token),
+          data: 'product_id=' + productId + '&code=' + code + '&type=' + type
+      }).then(function(result) {
+          return result
+      }, function(result) {
+          return result;
+      });
+
+  }
+
   return self;
 });
-
