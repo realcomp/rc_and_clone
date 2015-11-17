@@ -1695,30 +1695,55 @@ app.controller('ArticleCtrl', function($scope, $stateParams, $location, $ionicMo
 
 // *** Штрихкод
 app.controller('BarcodeCtrl', function($scope, $location, $cordovaBarcodeScanner, DB, Barcode) {
+	var urlParametrs = $location.search();
+	var productId = 0;
 
-	if (window.cordova) {
+	var setLocation = function() {
+		if (productId) {
+			$location.path('/app/product/' + productId);
+		} else {
+			$location.path('/app/main');
+		}
+	};
+
+	if('productId' in urlParametrs) {
+		productId = urlParametrs.productId;
+	}
+
+	if (!window.cordova) {
+		setLocation();
+		return;
+	}
+
 		$cordovaBarcodeScanner.scan().then(function (imageData) {
+			if (imageData.cancelled) {
+				setLocation();
+				return;
+			}
 
-			var urlParametrs = $location.search();
 			var code = imageData.text;
 			var type = (imageData.format.indexOf('EAN') >= 0) ? 'EAN' : imageData.format;
 
-			// *** Если передан id продукта, значит добавим штрихкод к нему
-			if('productId' in urlParametrs) {
+			if (!code) {
+				return false;
+			}
 
-				Barcode.setBarcode(urlParametrs.productId, code, type).then(function (response) {
+			// *** Если передан id продукта, значит добавим штрихкод к нему
+			if (productId) {
+
+				Barcode.setBarcode(productId, code, type).then(function (response) {
 
 					if (response.status !== 200) {
 						DB.alert(
 							'Проверьте соединение с интернетом или повторите попытку позже',
 							'Ошибка сканирования!',
 							function() {
-								$location.path('/app/main');
+								setLocation();
 							});
 						return false;
 					}
 
-					var success = response.success;
+					var success = response.data.success;
 
 					// Успешное добавление
 					if (success == 1) {
@@ -1726,17 +1751,17 @@ app.controller('BarcodeCtrl', function($scope, $location, $cordovaBarcodeScanner
 							'Спасибо, что добавили штрихкод к товару!',
 							'Успех!',
 							function() {
-								$location.path('/app/main');
+								setLocation();
 							});
 						return false;
 					}
 					// Ошибка добавления добавление
 					else {
 						DB.alert(
-							response.error,
+							response.data.error,
 							'Ошибка добавления!',
 							function() {
-								$location.path('/app/main');
+								setLocation();
 							});
 						return false;
 					}
@@ -1746,7 +1771,6 @@ app.controller('BarcodeCtrl', function($scope, $location, $cordovaBarcodeScanner
 			}
 			// *** В противном случае осуществляем поиск по штрихкоду
 			else {
-
 				Barcode.getProducts(code, type).then(function (response) {
 
 					if (response.status !== 200) {
@@ -1754,7 +1778,7 @@ app.controller('BarcodeCtrl', function($scope, $location, $cordovaBarcodeScanner
 							'Проверьте соединение с интернетом или повторите попытку позже',
 							'Ошибка сканирования!',
 							function() {
-								$location.path('/app/main');
+								setLocation();
 							});
 						return false;
 					}
@@ -1774,7 +1798,6 @@ app.controller('BarcodeCtrl', function($scope, $location, $cordovaBarcodeScanner
 		}, function (error) {
 			DB.alert(error, 'Ошибка сканирования!');
 		});
-	}
 
 });
 

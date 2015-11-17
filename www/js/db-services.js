@@ -1306,8 +1306,9 @@ console.log(slice);
 
       return $http({
           method: 'POST',
-          url: Url.url('/v1/barcode/?api_token=' + api_token),
-          data: 'product_id=' + productId + '&code=' + code + '&type=' + type
+          url: Url.url('/v1/barcode/product'),
+          headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+          data: 'api_token=' + api_token + '&product_id=' + productId + '&code=' + code + '&type=' + type
       }).then(function(result) {
           return result
       }, function(result) {
