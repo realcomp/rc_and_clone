@@ -605,9 +605,9 @@ a:active {
 .product__single-head .product__single-info-left {
 	float: left;
 	position: relative;
-	width: 260px;
-	height: 260px;
-	margin: 0 0 10px 30px;
+	width: 240px;
+	height: 240px;
+	margin: 0 0 20px 10px;
 	text-align: center;
 }
 .product__single-head img {
@@ -619,8 +619,8 @@ a:active {
 }
 .product__single-head .product__single-info-right {
 	float: right;
-	width: 290px;
-	padding-top: 30px;
+	margin: 0 20px 20px 0;
+	padding-top: 35px;
 }
 .product__single-head .product__single-info-right a,
 .product__overlay-swipe a {
@@ -636,7 +636,12 @@ a:active {
 .product__single-head .product__single-info-right a .icon,
 .product__overlay-swipe a .icon {
 	margin-right: 10px;
+	position: relative;
 	font-size: 36px;
+}
+.product__single-head .product__single-info-right a .icon-barcode {
+	font-size: 28px;
+	top: 1px;
 }
 .product__overlay-swipe a .ion-android-favorite-outline,
 .product__single-head .product__single-info-right a .ion-android-favorite-outline {
@@ -1062,7 +1067,6 @@ a:active {
 .menu__content .menu__item-inner {
 	display: block;
 	position: relative;
-	padding: 18px 0 28px;
 }
 .menu__content .menu__item-inner:after {
 	content: '';
@@ -1078,8 +1082,9 @@ a:active {
 	display: none;
 }
 .menu__content .menu__item-inner-text {
+	display: inline-block;
+	padding: 30px 0;
 	position: relative;
-	top: 2px;	
 }
 .menu__content .list-count {
   display: inline-block;
@@ -1103,7 +1108,10 @@ a:active {
  	font-size: 34px;
 }
 .menu__content .icon-barcode {
-	top: 7px;
+	margin-right: 16px;
+}
+.menu__content .ion-ios-book {
+	margin-right: 24px;
 }
 
 /*all*/
