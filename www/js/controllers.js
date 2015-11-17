@@ -1664,7 +1664,6 @@ app.controller('ArticleCtrl', function($scope, $stateParams, $location, $ionicMo
 // *** Штрихкод
 app.controller('BarcodeCtrl', function($scope, $location, $cordovaBarcodeScanner, DB, Barcode) {
 
-	 $scope.scanBarcode = function() {
 		if (window.cordova) {
 			$cordovaBarcodeScanner.scan().then(function (imageData) {
 
@@ -1692,7 +1691,6 @@ app.controller('BarcodeCtrl', function($scope, $location, $cordovaBarcodeScanner
 				alert("Ошибка сканирования -> " + error);
 			});
 		}
-	 };
 
 });
 
