@@ -1,3 +1,22 @@
+0.2.3 - February 10, 2016
+
+* Fix issue with Apache Cordova 6.0 where the InAppBrowser plugin now holds a new name
+* Rename all factories to avoid conflict with other libraries
+
+0.2.2 - January 6, 2016
+
+* Update Karma
+
+0.2.1 - January 6, 2016
+
+* Add support for authorization code flow for Spotify
+
+0.2.0 - November 22, 2015
+
+* Fix InAppBrowser issue with Apache Cordova 5.4.0
+* Complete code refactor for future maintainability
+* Add a few test cases
+
 0.1.4 - June 28, 2015
 
 * Add Envato support

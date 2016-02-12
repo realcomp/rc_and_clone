@@ -1,0 +1,125 @@
+<ion-view ng-controller='funcController'>
+	<ion-nav-title> {{ title }} </ion-nav-title>
+
+	<div class="tabs-top tabs-top-cat" ng-if="showTabs && hasProducts">
+    <div class="tabs">
+	    <ul class="product__category-tabs-wrap">
+		    <li class="product__category-tabs" ng-click="tabsCategory($event, 1);" ng-class="classTabCheck">
+		      <i class="icon ion-checkmark-circled"></i>
+		      <span>Проверенные товары</span>
+		    </li>
+		    <li class="product__category-tabs" ng-click="tabsCategory($event, 2);" ng-class="classTabBlack">
+		      <i class="icon ion-close-circled"></i>
+		      <span>Черный список</span>
+		    </li>
+		    <li class="product__category-tabs" ng-click="tabsCategory($event, 3);" ng-class="classTabWait">
+		      <i class="icon ion-help-circled"></i>
+		      <span>Ожидают проверки</span>
+		    </li>
+	  	</ul>
+    </div>
+  </div>
+
+	<ion-content overflow-scroll="true" locking="true" class="product__category-content">
+
+	<!-- products list -->
+		<ion-list>
+			<div ng-if="tabActive == 1">
+				<ion-item ng-repeat="product in productsCheck | filter:query | orderBy: orderProp" class="product__category" on-swipe-right="product.class='swipe-active'" ng-class="product.class" on-swipe-left="product.class = ''" ng-href="#/app/product/{{ product.id }}">
+			  	<span class="product__category-thumbnail">
+			  		<img ng-src="{{ ::product.thumbnail }}">
+			  		<ion-spinner icon="circles" class="loader"></ion-spinner>
+			  	</span>
+			  	<span class="product__category-center">
+			  		<span class="product__category-name">{{ ::showCatName  }}<span ng-show="showBrand"> {{ ::product.company_name }} </span>{{ ::product.name }}</span>
+			  		<span ng-if="product.price" class="product__category-price">от {{ ::product.price }} Р</span>
+			  	</span>
+			  	<span class="product__category-rating-wrap">
+			  		<span class="product__category-rating product-rating-m" ng-class="productRatingType(product)">
+				  		<i ng-if="product.ratingv == 'X'" class="icon ion-close-round"></i>
+				  		<i ng-if="product.ratingv != 'X'">
+				  			{{ product.ratingv }}
+				  		</i>				  	
+				  		</span>	
+			  	</span>
+			  	<span ng-show="product.danger_level < 2" class="product__overlay-swipe">
+						<span class="swipe__link-wrap">
+							<a ng-href="#" ng-class="(product.shopping_list==true) ? 'active' : ''" ng-click="addShoppingList(product)" href="#"><i class="icon ion-bag"></i>{{ product.slug }}</a>
+							<a ng-href="#" ng-class="(product.product_list==true) ? 'active' : ''" ng-click="updateProductList(product)" href="#"><i class="icon ion-android-favorite-outline"></i>{{ linkSlug }}</a>
+						</span>
+					</span>	
+			  	<span class="product__overlay-active"></span>
+				</ion-item>
+			</div>
+
+			<div ng-if="tabActive == 2">
+				<ion-item ng-repeat="product in productsBlack | filter:query | orderBy: orderProp" on-swipe-right="product.class='swipe-active'" ng-class="product.class" on-swipe-left="product.class = ''" class="product__category" ng-href="#/app/product/{{ product.id }}">
+				  	<span class="product__category-thumbnail">
+				  		<img ng-src="{{ ::product.thumbnail }}">
+				  		<ion-spinner icon="circles" class="loader"></ion-spinner>
+				  	</span>
+				  	<span class="product__category-center">
+				  		<span class="product__category-name">{{ ::showCatName  }}<span ng-show="showBrand"> {{ ::product.company_name }} </span>{{ ::product.name }}</span>
+				  		<span ng-if="product.price" class="product__category-price">от {{ ::product.price }} Р</span>
+				  	</span>
+				  	<span class="product__category-rating-wrap">
+					  	<span class="product__category-rating product-rating-m" ng-class="productRatingType(product)">
+					  		<i class="icon ion-close-round"></i>
+					  	</span>
+				  	</span>
+				  	<!--
+				  	<span class="product__overlay-swipe">
+							<span class="swipe__link-wrap">
+								<a ng-href="#" ng-class="(product.shopping_list==true) ? 'active' : ''" ng-click="addShoppingList(product)" href="#"><i class="icon ion-bag"></i>{{ product.slug }}</a>
+								<a ng-href="#" ng-class="(product.product_list==true) ? 'active' : ''" ng-click="updateProductList(product)" href="#"><i class="icon ion-android-favorite-outline"></i>{{ linkSlug }}</a>
+							</span>
+						</span>
+						-->	
+			  		<span class="product__overlay-active"></span>
+				</ion-item>
+			</div>
+
+			<div ng-if="tabActive == 3">
+				<ion-item ng-repeat="product in productsWait | filter:query | orderBy: orderProp" on-swipe-right="product.class='swipe-active'" ng-class="product.class" on-swipe-left="product.class = ''" class="product__category product__category-type-notest" ng-href="#/app/product/{{ product.id }}">
+				  	<span class="product__category-thumbnail">
+				  		<img ng-src="{{ ::product.thumbnail }}">
+				  		<ion-spinner icon="circles" class="loader"></ion-spinner>
+				  	</span>
+				  	<span class="product__category-center">
+				  		<span class="product__category-name">{{ ::showCatName  }} <span ng-show="showBrand"> {{ ::product.company_name }} </span>{{ ::product.name }}</span>
+				  		<span ng-if="product.price" class="product__category-price">от {{ product.price }} Р</span>	
+				  	</span>
+				  	<span class="product__category-button-wrap">
+				  		<a class="product__category-button-test" ng-class="(product.vote_boolean==true) ? 'button-test-active' : ''" ng-href="#" ng-click="addProductVotes(product);">{{ product.vote_text }}</a>
+				  	</span>
+				  	<span class="product__overlay-swipe">
+							<span class="swipe__link-wrap">
+								<a ng-href="#" ng-class="(product.shopping_list==true) ? 'active' : ''" ng-click="addShoppingList(product)" href="#"><i class="icon ion-bag"></i>{{ product.slug }}</a>
+								<a ng-href="#" ng-class="(product.product_list==true) ? 'active' : ''" ng-click="updateProductList(product)" href="#"><i class="icon ion-android-favorite-outline"></i>{{ linkSlug }}</a>
+							</span>
+						</span>	
+			  		<span class="product__overlay-active"></span>
+				</ion-item>
+			</div>
+
+		</ion-list>
+
+  	<ion-infinite-scroll ng-if="showLoadMore" on-infinite="loadMore()" distance="10%"></ion-infinite-scroll>
+
+	<!-- END products list -->
+	<div ng-if="!hasProducts && showEmptyText">
+  		<span class="product__empty">Товары в эту категорию еще не были добавлены..</span>
+  	</div>
+
+  </ion-content>
+
+	<ion-footer-bar ng-show="hasProducts" class="bar-assertive footer__sorting">
+	  <div class="footer__sorting-item">
+	    <button ng-click="modalSorting.show();" class="button">Сортировать</button>
+	  </div>
+	  <div class="footer__sorting-item">
+	    <button ng-click="modalFilter.show();" class="button">Параметры</button>
+	  </div>
+	</ion-footer-bar>
+</ion-view>
+

@@ -19,6 +19,8 @@
  `bower install ng-cordova-oauth -S`
 - Вывод версии приложения: <br>
  `cordova plugin add cordova-plugin-app-version`
+- Добавление параметров в манифест
+ `cordova plugin add cordova-custom-config`
 
 ###Сборка пакета
 
@@ -35,3 +37,12 @@ https://play.google.com/apps/publish/?dev_acc=01474632627383622689#AppListPlace
  `keytool -exportcert -alias alias_name -keystore release-key.keystore | openssl sha1 -binary | openssl base64`
 - для vkontakte
  `keytool -exportcert -alias alias_name -keystore release-key.keystore -list -v | grep 'SHA1:' | cut -d ' ' -f 2 | sed 's/://g'`
+
+
+###Обновление
+
+- sudo npm install -g ionic
+- sudo npm install -g bower
+- bower install
+- редактируем файл bower.json, меняем версию на новую
+- bower update
