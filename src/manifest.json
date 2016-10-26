@@ -1,0 +1,13 @@
+{
+  "name": "rk-android",
+  "short_name": "rk",
+  "start_url": "index.html",
+  "display": "standalone",
+  "icons": [{
+    "src": "assets/imgs/logo.png",
+    "sizes": "512x512",
+    "type": "image/png"
+  }],
+  "background_color": "#a32630",
+  "theme_color": "#a32630"
+}

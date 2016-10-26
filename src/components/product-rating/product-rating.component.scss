@@ -1,0 +1,26 @@
+
+
+.b-rating {
+  height: 40px;
+  width: 40px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  font-size: 22px;
+  color: #FFF;
+
+  &.fine {
+    background: $greenColor;
+  }
+  &.danger {
+    background:$yellowColor;
+  }
+  &.wait {
+    background: $grayColor;
+  }
+  &.blacklist {
+    background: #000;
+  }
+
+}

@@ -1,0 +1,20 @@
+.container-product-props {
+  margin-bottom: 20px;
+}
+
+.b-props-row {
+  padding: 5px;
+  line-height: 1.4em;
+  &:nth-child(even) {
+    background: #fbfbfb;
+  }
+}
+.b-props-key,
+.b-props-value {
+}
+.b-props-key {
+  font-weight: bold;
+}
+.b-props-value {
+
+}

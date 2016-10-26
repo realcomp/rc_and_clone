@@ -1,0 +1,7 @@
+<div class="container-product-props" *ngIf="props.length > 0">
+  <div class="b-title b-title-small">{{ title }}</div>
+  <ion-row class="b-props-row" *ngFor="let prop of props">
+    <ion-col class="b-props-key" width-50>{{ prop.name }}</ion-col>
+    <ion-col class="b-props-value" width-50>{{ prop.value }}</ion-col>
+  </ion-row>
+</div>

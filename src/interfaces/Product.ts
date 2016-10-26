@@ -1,0 +1,10 @@
+/**
+ * Created by maxim on 21.10.16.
+ */
+
+
+export interface Product {
+    id: number
+    name: string
+    images: any
+}

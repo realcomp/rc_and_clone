@@ -1,0 +1,50 @@
+<ion-header>
+  <ion-navbar no-border-bottom>
+
+    <ion-navbar>
+      <ion-title>{{ categoryTitle }}</ion-title>
+    </ion-navbar>
+
+    <ion-buttons end>
+      <button ion-button icon-only>
+        <ion-icon ios="ios-search" md="md-search"></ion-icon>
+      </button>
+    </ion-buttons>
+
+
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content no-bounce>
+
+  <div class="container-section">
+
+    <div class="b-title b-title-large">{{ slug }} {{ product.name }}</div>
+
+    <ion-slides *ngIf="product.images.length > 1" [options]="{pager: true}">
+      <ion-slide *ngFor="let slide of product.images">
+        <img [src]="slide" class="slide-image"/>
+      </ion-slide>
+    </ion-slides>
+
+    <div class="b-product-photo" *ngIf="product.images.length == 1">
+      <img [src]="product.images[0]" class="slide-image"/>
+    </div>
+
+  </div>
+
+
+  <product-test-component [product]="product"></product-test-component>
+
+  <product-reviews-component [id]="product.id"></product-reviews-component>
+
+
+  <div class="container-section" *ngIf="productPropsGroupMain.length > 0 || productPropsGroupAddition.length > 0">
+    <div class="b-title">Характеристики</div>
+    <product-props-component [props]="productPropsGroupMain" [title]="productPropsTitleMain"></product-props-component>
+    <product-props-component [props]="productPropsGroupAddition" [title]="productPropsTitleAddition"></product-props-component>
+  </div>
+
+
+</ion-content>

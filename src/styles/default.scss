@@ -1,0 +1,38 @@
+
+//
+.loading-md .spinner-crescent circle {
+  stroke: $mainColor;
+}
+
+
+//
+.spinner-crescent circle {
+  stroke: $mainColor;
+}
+.infinite-loading {
+  margin-bottom: 20px;
+}
+
+
+
+.ion-app.md {
+  line-height: 1.2em;
+}
+
+
+
+
+//
+@media screen and (max-width: 380px) {
+  html {
+    font-size: 60%;
+  }
+}
+
+
+//
+@media screen and (max-width: 340px) {
+  html {
+    font-size: 54%;
+  }
+}

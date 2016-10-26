@@ -1,0 +1,9 @@
+
+// footer
+.footer-md {
+  background: #fdfdfd;
+  &:before {
+    top: -1px;
+    height: 1px;
+  }
+}

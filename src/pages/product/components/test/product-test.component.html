@@ -1,0 +1,67 @@
+<div class="container-section container-test">
+
+  <!-- Fine or Danger -->
+  <div *ngIf="isFineProduct() || isDangerProduct()">
+    <div class="container-test-rating">
+      <product-rating-component [dangerLevel]="product.danger_level" [rating]="product.rating" [tested]="product.tested"></product-rating-component>
+      <span class="b-title" *ngIf="isFineProduct()">Результаты экпертизы</span>
+      <span class="b-title" *ngIf="isDangerProduct()">Товар с замечаниями</span>
+    </div>
+    <div class="b-title-small">Результаты теста</div>
+  </div>
+
+
+
+  <!-- Black -->
+  <div *ngIf="isBlackList()">
+    <div class="container-test-rating">
+      <product-rating-component [dangerLevel]="product.danger_level" [rating]="product.rating" [tested]="product.tested"></product-rating-component>
+      <span class="b-title">В черном списке</span>
+    </div>
+    <product-blacklist-strip-component [dangerLevel]="product.danger_level"></product-blacklist-strip-component>
+    <div class="b-title-small">Товар с нарушением</div>
+  </div>
+
+
+
+  <!-- Wait -->
+  <div *ngIf="isWaitProduct()">
+    <div class="container-test-rating">
+      <product-rating-component [dangerLevel]="product.danger_level" [rating]="product.rating" [tested]="product.tested"></product-rating-component>
+      <span class="b-title">Товар еще не проверен</span>
+    </div>
+    <div class="container-test-text">
+      Помогите товару набрать больше голосов и попасть в список тестируемых товаров.
+    </div>
+  </div>
+
+
+
+  <!-- All -->
+
+  <div class="container-test-text" *ngIf="product.test && product.test.summary">
+    {{ product.test.summary }}
+  </div>
+
+
+  <div class="container-test-image" *ngIf="product.test && product.test.images && product.test.images[0]">
+    <img [src]="product.test.images[0]">
+  </div>
+
+
+  <div class="container-plus-and-minus" *ngIf="product.test && (product.test.cons || product.test.pros) && (product.test.cons.length || product.test.pros.length)">
+    <div class="container-plus" *ngIf="product.test.pros.length > 0">
+      <ion-icon name="add-circle">
+        <span class="b-title-plus-and-minus">Достоинства</span>
+      </ion-icon>
+      <div class="b-plus-and-minus-item is-positive" *ngFor="let pros of product.test.pros">{{ pros }}</div>
+    </div>
+    <div class="container-minus" *ngIf="product.test.cons.length > 0">
+      <ion-icon name="remove-circle">
+        <span class="b-title-plus-and-minus">Недостатки</span>
+      </ion-icon>
+      <div class="b-plus-and-minus-item" *ngFor="let cons of product.test.cons">{{ cons }}</div>
+    </div>
+  </div>
+
+</div>

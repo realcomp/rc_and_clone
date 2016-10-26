@@ -1,0 +1,31 @@
+// toolbar
+.toolbar-background {
+  background-color: $mainColor;
+}
+
+
+// header
+.back-button.show-back-button {
+  margin-right: -5px;
+}
+.list-header-md {
+  border-bottom: 1px solid $borderColor;
+}
+
+
+
+// logo
+.container-logo-group {
+  background: transparent;
+  margin: 0;
+}
+.container-logo {
+  background: transparent;
+  padding: 0;
+  display: block;
+}
+.b-logo {
+  width: 3.5rem;
+  margin-left: 12px;
+  display: block;
+}

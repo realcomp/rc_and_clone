@@ -1,0 +1,111 @@
+
+// *** Универсальные стили
+
+
+// Конейтер для блоков
+.util-container-style {
+  margin-bottom: 15px;
+  padding: 15px;
+  position: relative;
+  border: 1px solid #e6e6e6;
+}
+
+// Рубль
+.util-price {
+  font-family:'als_rublregular';
+  text-transform: none;
+}
+
+
+// Очистка флоатов
+.util-clear-group {
+  &:after {
+    visibility: hidden;
+    display: block;
+    font-size: 0;
+    content: " ";
+    clear: both;
+    height: 0;
+  }
+}
+
+
+// Выравнивание
+.util-align-center {
+  text-align: center;
+}
+.util-align-left {
+  text-align: left;
+}
+.util-align-right {
+  text-align: right;
+}
+
+
+//
+.util-position-relative {
+  position: relative;
+}
+
+
+// Таблица
+.util-table {
+  width: 100%;
+  display: table;
+  table-layout: fixed;
+}
+.util-table-cell {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+
+// Обрезать
+.util-overflow-hidden {
+  overflow: hidden;
+}
+
+
+// Ссылки
+.util-link-type-2 {
+  color: #588dbe;
+  &:hover {
+    color: #b82c46;
+  }
+}
+
+
+// Состояние
+.util-state-hidden {
+  display: none;
+}
+
+
+// Троеточик
+.util-three-dots {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+
+// *** Выравнивание
+.util-align-vertical-outer {
+  &:before {
+    content: '';
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+  }
+}
+.util-align-vertical-inner {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+
+.util-hover-shadow:hover {
+  webkit-box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  -moz-box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}

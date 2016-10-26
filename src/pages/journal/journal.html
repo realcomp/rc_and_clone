@@ -1,0 +1,33 @@
+<ion-header>
+  <ion-navbar no-border-bottom>
+    <ion-navbar>
+      <ion-title>{{ title }}</ion-title>
+    </ion-navbar>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content>
+  <ion-list [hidden]="articlesEmpty">
+
+    <ion-card *ngFor="let article of articles" (click)="handlerSelect(article.id)">
+      <img src="{{ article.image }}"/>
+      <ion-card-content>
+        <ion-card-title>
+          {{ article.title }}
+        </ion-card-title>
+        <p>
+          <a href="#" class="subdued">{{ article.like_count }} Like</a>
+          <a href="#" class="subdued">{{ article.comment_count }} Comments</a>
+        </p>
+      </ion-card-content>
+    </ion-card>
+
+  </ion-list>
+
+  <ion-list-header [hidden]="!articlesEmpty">
+      Статьи не найдены
+  </ion-list-header>
+
+
+</ion-content>

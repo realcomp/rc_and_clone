@@ -1,0 +1,28 @@
+
+// tabbar
+.tabs-md .tabbar {
+  background: #fbfbfb;
+  border-top: 1px solid #e6e6e6;
+  overflow: hidden;
+}
+
+.tabs-md {
+  .tab-button {
+    color: $grayColor;
+    overflow: visible;
+  }
+  .tab-button:hover,
+  .tab-button[aria-selected=true] {
+    padding: 8px 0 10px 0;
+    color: $mainColor;
+    opacity: 1;
+    .tab-button-text {
+      margin: 3px 0 0 0;
+    }
+  }
+  .tab-button-text {
+    margin: 3px 0;
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+}

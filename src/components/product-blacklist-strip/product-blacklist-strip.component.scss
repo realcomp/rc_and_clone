@@ -1,0 +1,33 @@
+
+
+.b-danger-level-text {
+  margin-bottom: 8px;
+}
+
+.b-product-blacklist-strip {
+  max-width: 420px;
+  margin-bottom: 15px;
+  font-size: 0;
+  .blacklist-item-out {
+    display: inline-block;
+    width: 25%;
+    &:first-child {
+      .blacklist-strip-inner {
+        margin-left: 0;
+      }
+    }
+    &:last-child {
+      .blacklist-strip-inner {
+        margin-right: 0;
+      }
+    }
+  }
+  .blacklist-strip-inner {
+    height: 8px;
+    margin: 0 5px;
+    background: $grayColor;
+    &.is-black {
+      background: #000;
+    }
+  }
+}

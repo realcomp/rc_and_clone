@@ -1,0 +1,7 @@
+
+<div class="b-danger-level-text">Степень опасности: {{ dangerLevelText }}</div>
+<div class="b-product-blacklist-strip">
+  <div class="blacklist-item-out" *ngFor="let item of blackStrip">
+    <div class="blacklist-strip-inner {{ item }}"></div>
+  </div>
+</div>

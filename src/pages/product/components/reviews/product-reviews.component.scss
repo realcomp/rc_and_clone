@@ -1,0 +1,151 @@
+.container-reviews {
+  margin-bottom: 10px;
+  .button-default {
+    width: 300px;
+    margin-top: 20px;
+  }
+}
+
+.b-header-review {
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  position: relative;
+  border-bottom: 1px solid $borderColor;
+  .positive {
+    color: $greenColor;
+  }
+  .header-review-stats {
+
+  }
+  ion-icon {
+    font-size: 26px;
+    &:first-child {
+      margin-right: 10px;
+    }
+    &.ion-ios-thumbs-down {
+      &:before {
+        position: relative;
+        top: 5px;
+      }
+    }
+  }
+  .header-review-stats__text {
+    font-size: 18px;
+  }
+  .header-review-total {
+    position: absolute;
+    right: 0;
+    top: 10px;
+    color: $grayColor;
+  }
+}
+
+.b-review {
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid $borderColor;
+  line-height: 1.4em;
+  &:last-child {
+    padding-bottom: 0;
+    margin-bottom: 0;
+    border-bottom: 0;
+  }
+  .review-meta {
+    display: flex;
+    width: 100%;
+    height: 60px;
+    margin-bottom: 18px;
+  }
+  .review-user {
+    width: 60%;
+    display: flex;
+    align-items: center;
+  }
+  .review-user__avatar {
+    display: flex;
+    width: 60px;
+    height: 60px;
+    padding: 2px;
+    align-items: center;
+    border-radius: 100%;
+    border: 1px solid $greenColor;
+  }
+  .review-user__name {
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+    font-size: 16px;
+  }
+  .review-mark {
+    display: flex;
+    flex-wrap: wrap;
+    width: 40%;
+    text-align: right;
+    color: #000;
+    .positive {
+      color: $greenColor;
+    }
+  }
+  .review-mark-inner {
+    margin-left: auto;
+    position: relative;
+    top: -15px;
+    text-align: center;
+  }
+  .review-mark__icon {
+    font-size: 30px;
+  }
+  .review-mark__text {
+    font-size: 14px;
+    margin: 2px 0;
+  }
+  .review-mark__rating {
+    margin: 0 auto;
+  }
+
+
+  .review-data {
+
+  }
+  .review-data-group {
+    margin-bottom: 15px;
+  }
+  .review-subtitle {
+    font-weight: bold;
+  }
+  .review-text {
+
+  }
+  .review-date {
+    margin-top: -3px;
+    color: $grayColor;
+  }
+}
+
+
+@media screen and (max-width: 479px) {
+
+  .b-review {
+    .review-meta {
+      height: 50px;
+    }
+    .review-user__avatar {
+      width: 50px;
+      height: 50px;
+    }
+  }
+
+}
+
+
+
+@media screen and (max-width: 380px) {
+  .b-review {
+    .review-user__name {
+      font-size: 15px;
+    }
+    .review-mark__text {
+      font-size: 13px;
+    }
+  }
+}

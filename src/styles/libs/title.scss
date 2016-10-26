@@ -1,0 +1,41 @@
+
+.b-title {
+  margin-bottom: 10px;
+  font-size: 22px;
+}
+
+.b-title-large {
+  font-size: 24px;
+}
+
+.b-title-small {
+  font-size: 18px;
+}
+
+
+
+@media screen and (max-width: 479px) {
+  .b-title {
+    font-size: 20px;
+  }
+  .b-title-large {
+    font-size: 22px;
+  }
+  .b-title-small {
+    font-size: 17px;
+  }
+}
+
+
+
+@media screen and (max-width: 380px) {
+  .b-title {
+    font-size: 18px;
+  }
+  .b-title-large {
+    font-size: 20px;
+  }
+  .b-title-small {
+    font-size: 16px;
+  }
+}

@@ -1,0 +1,78 @@
+
+
+<div class="container-reviews container-section" *ngIf="reviews.length > 0">
+
+  <div class="b-title">Отзывы покупателей</div>
+
+  <div class="b-header-review">
+    <div class="header-review-stats">
+      <ion-icon class="positive" name="ios-thumbs-up">
+        <span class="header-review-stats__text">
+           {{ positiveProcent }}%
+        </span>
+      </ion-icon>
+      <ion-icon name="ios-thumbs-down">
+        <span class="header-review-stats__text">
+          {{ negativeProcent }}%
+        </span>
+      </ion-icon>
+    </div>
+    <div class="header-review-total">
+      {{ totalCount }} {{ getDecl(totalCount) }}
+    </div>
+  </div>
+
+
+  <div class="container-reviews-list">
+    <div *ngFor="let review of reviews" class="b-review">
+
+      <div class="review-meta">
+        <div class="review-user">
+          <img *ngIf="review.user.avatar" class="review-user__avatar" [src]="review.user.avatar">
+          <img *ngIf="review.user.avatar == null" class="review-user__avatar" src="assets/img/no-avatar.png">
+          <div class="review-user__name">{{ review.user.name }}</div>
+        </div>
+
+        <div class="review-mark">
+          <div class="review-mark-inner">
+            <div class="positive" *ngIf="review.mark >= 3">
+              <ion-icon class="review-mark__icon" name="ios-thumbs-up"></ion-icon>
+              <div class="review-mark__text">Рекомендация</div>
+            </div>
+            <div *ngIf="review.mark < 3">
+              <ion-icon class="review-mark__icon" name="ios-thumbs-down"></ion-icon>
+              <div class="review-mark__text">Негативный отзыв</div>
+            </div>
+
+            <div class="review-mark__rating positive" *ngIf="review.marksum > 0">{{ review.marksum }}</div>
+            <div class="review-mark__rating" *ngIf="review.marksum <= 0">{{ review.marksum }}</div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="review-data">
+        <div class="review-data-group">
+          <div class="review-subtitle">Достоинства</div>
+          <div class="review-text">{{ review.advantages }}</div>
+        </div>
+        <div class="review-data-group">
+          <div class="review-subtitle">Недостатки</div>
+          <div class="review-text">{{ review.disadvantages }}</div>
+        </div>
+        <div class="review-data-group">
+          <div class="review-subtitle">Комментарий</div>
+          <div class="review-text">{{ review.text }}</div>
+        </div>
+      </div>
+
+      <div class="review-date">{{ getDate(review.created_at) }}</div>
+
+    </div>
+  </div>
+
+  <div class="util-align-center" *ngIf="reviews.length > 0 && totalCount > reviews.length">
+    <button ion-button (click)="handlerGetReviews(true)">Показать еще</button>
+  </div>
+
+</div>

@@ -1,0 +1,51 @@
+<ion-header>
+  <ion-navbar no-border-bottom>
+
+    <ion-buttons class="container-logo-group" left *ngIf="isRootCategories === true">
+      <button class="container-logo" (click)="handlerLogoClick()">
+        <img class="b-logo" src="assets/img/logo.svg">
+      </button>
+    </ion-buttons>
+
+    <ion-navbar>
+      <ion-title>{{ title }}</ion-title>
+    </ion-navbar>
+
+
+    <ion-buttons end>
+      <button ion-button icon-only>
+        <ion-icon ios="ios-search" md="md-search"></ion-icon>
+      </button>
+    </ion-buttons>
+
+  </ion-navbar>
+</ion-header>
+
+<ion-content no-bounce>
+
+  <ion-list [hidden]="categoriesEmpty" class="grid-row" no-lines>
+    <div class="container-section grid-flex">
+      <div class="grid-padding grid-column-6 grid-column-small-12 grid-left grid-flex"
+           *ngFor="let category of categories">
+        <div class="b-category util-container-style util-hover-shadow fadeIn animated"
+             (click)="handlerSelect(category)">
+          <div class="category-inner grid-flex grid-flex-align-center">
+            <img class="grid-flex category-logo" src="{{ category.logo }}">
+
+            <div class="category-data grid-flex">
+              <div class="category-name">{{ category.name }}</div>
+              <span class="category-tested" *ngIf="category.stats.product_tested_count > 0">{{ category.stats.product_tested_count }} {{ getDecl(category.stats.product_tested_count) }}</span>
+              <span class="category-tested" *ngIf="category.stats.product_tested_count === 0">Ожидают проверки</span>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </ion-list>
+
+  <ion-list-header [hidden]="!categoriesEmpty">
+      Категории не найдены
+  </ion-list-header>
+
+</ion-content>
