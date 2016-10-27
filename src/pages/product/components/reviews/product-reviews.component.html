@@ -72,7 +72,7 @@
   </div>
 
   <div class="util-align-center" *ngIf="reviews.length > 0 && totalCount > reviews.length">
-    <button ion-button (click)="handlerGetReviews(true)">Показать еще</button>
+    <button ion-button (click)="loadMoreReviews(true, true)">Показать еще</button>
   </div>
 
 </div>

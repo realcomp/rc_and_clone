@@ -62,17 +62,18 @@ export class ProductReviews implements IntefaceLoading {
      *
      */
     ngOnInit() {
-        this.handlerGetReviews();
+        this.loadMoreReviews();
     }
 
 
     /**
      *
      * @param showAlert
+     * @param showLoader
      */
-    handlerGetReviews(showAlert?:boolean) {
+    loadMoreReviews(showAlert?:boolean, showLoader?:boolean) {
         if(this.id != null) {
-            let promise = this.getReviews(this.id);
+            let promise = this.getReviews(this.id, showLoader);
             promise.then(
                 (data) => {
                     if(this.calculate === false) {
@@ -106,11 +107,10 @@ export class ProductReviews implements IntefaceLoading {
     /**
      *
      */
-    showLoader() {
+    showLoader(content?: string) {
         this.loading = this.loadingCtrl.create({
-            content: 'Загружаю...',
+            content: content || ''
         });
-
         this.loading.present();
     }
 
@@ -137,30 +137,41 @@ export class ProductReviews implements IntefaceLoading {
     /**
      *
      * @param id
+     * @param showLoader
      * @returns {Promise<T>}
      */
-    private getReviews(id: number) {
+    private getReviews(id: number, showLoader?: boolean) {
         return new Promise((resolve, reject) => {
-            this.showLoader();
+
+            if(showLoader) {
+                this.showLoader('Загружаю комментарии');
+            }
+
             let url = UrlManager.createUrlWithParams(API.reviews, {
                 product_id: id,
                 limit: this.limit,
                 offset: this.offset
             });
+
             let promise = this.connect.load('get', url);
             promise.then((result) => {
                     let data = Utils.jsonParse(result['_body']);
                     this.totalCount = data['total_count'];
                     this.positiveCount = data['positive'];
 
+                    if(showLoader) {
+                        this.hideLoader();
+                    }
+
                     let items = data['items'];
                     if(items != null) {
                         resolve(items);
                     }
-                    this.hideLoader();
                 },
                 (error) => {
-                    this.hideLoader();
+                    if(showLoader) {
+                        this.hideLoader();
+                    }
                     reject(`Error: ${error}`);
                 }
             );
