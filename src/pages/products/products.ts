@@ -28,7 +28,7 @@ enum ProductStatus {Tested, BlackList, NotTested }
 })
 
 
-export class ProductsPage {
+export class ProductsPage implements IntefaceLoading {
 
 
     public products: Array<any>;

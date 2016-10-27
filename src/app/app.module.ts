@@ -18,6 +18,7 @@ import { App } from './app.component';
 // Общие компоненты
 import { ProductRating } from '../components/product-rating/product-rating.component';
 import { ProductBlackListStrip } from '../components/product-blacklist-strip/product-blacklist-strip.component';
+import { Search } from '../components/search/search.component';
 
 
 // Страницы и их компоненты
@@ -50,6 +51,8 @@ import { SearchPage } from '../pages/search/search';
     App,
 
     ProductRating,
+    ProductBlackListStrip,
+    Search,
 
     AboutPage,
     AccountPage,
@@ -62,7 +65,6 @@ import { SearchPage } from '../pages/search/search';
     ProductTest,
     ProductProps,
     ProductReviews,
-    ProductBlackListStrip,
 
     SignupPage,
     ProfilePage,
@@ -83,6 +85,8 @@ import { SearchPage } from '../pages/search/search';
     App,
 
     ProductRating,
+    ProductBlackListStrip,
+    Search,
 
     AboutPage,
     AccountPage,
@@ -95,7 +99,6 @@ import { SearchPage } from '../pages/search/search';
     ProductTest,
     ProductProps,
     ProductReviews,
-    ProductBlackListStrip,
 
     SignupPage,
     ProfilePage,

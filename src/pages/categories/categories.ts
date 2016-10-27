@@ -60,7 +60,7 @@ export class CategoriesPage implements IntefaceLoading {
         this.categoriesEmpty = false;
         this.isRootCategories = false;
         this.segment = 'all';
-        this.title = 'Рейтинг товаров';
+        this.title = '';
 
         this.limit = 30;
         this.offset = 0;
