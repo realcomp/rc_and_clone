@@ -1,10 +1,6 @@
 import { Component } from '@angular/core';
-import { App, ItemSliding, List, NavController, NavParams } from 'ionic-angular';
+import { App, NavParams } from 'ionic-angular';
 
-import { Utils } from '../../libs/Utils';
-import { UrlManager } from '../../libs/UrlManager';
-import { API } from '../../config/';
-import { Connect } from '../../providers/Connect';
 import { Product } from '../../interfaces/Product';
 
 
@@ -30,9 +26,8 @@ export class ProductPage {
    *
    * @param app
    * @param navParams
-   * @param connect
    */
-  constructor(public app:App, public navParams:NavParams, private connect:Connect) {
+  constructor(public app:App, public navParams:NavParams) {
     this.categoryTitle = '';
     this.product = <Product>{};
     this.productPropsTitleMain = 'Основные';
@@ -78,7 +73,7 @@ export class ProductPage {
     // Main
     let propsMain = properties[0];
     for(let key in propsMain['properties']) {
-      let item = propsMain.properties[key]
+      let item = propsMain.properties[key];
       let id = item['id'];
       if(productValues[id] != null) {
         this.productPropsGroupMain.push({

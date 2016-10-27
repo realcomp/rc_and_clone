@@ -1,0 +1,16 @@
+
+.loading-stupid {
+  ion-backdrop {
+    opacity: 0 !important;
+    transition-duration: 0s !important;
+  }
+  .loading-wrapper {
+    background: transparent !important;
+    box-shadow: none !important;
+    transition-delay: 0s !important;
+    transition-duration: 0s !important;
+  }
+}
+
+
+// Меня заставили

@@ -178,11 +178,11 @@ export class ProductsPage implements IntefaceLoading {
     /**
      *
      */
-    showLoader() {
+    showLoader(content?: string) {
         this.loading = this.loadingCtrl.create({
-            content: 'Загружаю...'
+            cssClass: 'loading-stupid',
+            content: content || ''
         });
-
         this.loading.present();
     }
 
@@ -191,6 +191,10 @@ export class ProductsPage implements IntefaceLoading {
      *
      */
     hideLoader() {
+        let loading = <HTMLElement>document.querySelector('.loading-stupid');
+        if(loading != null) {
+            loading.style.display = 'none';
+        }
         this.loading.dismissAll();
     }
 
@@ -220,9 +224,10 @@ export class ProductsPage implements IntefaceLoading {
                     this.filter = this.lastFilter = 'Tested';
                 }
 
+                callback();
+
                 let products = this.sortingProducts(data);
                 this.updateProducts(products);
-                callback();
             },
             (error) => {
                 this.hideLoader();
@@ -285,6 +290,7 @@ export class ProductsPage implements IntefaceLoading {
      * @param products
      */
     private updateProducts(products: any) {
+        console.log('обновить продукты');
         this.products = this.products.concat(products);
         this.productsEmpty = this.products.length == 0;
     }

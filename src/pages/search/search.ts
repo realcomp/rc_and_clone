@@ -7,7 +7,7 @@
 
 
 import { Component } from '@angular/core';
-import { App, List, NavController, NavParams, LoadingController } from 'ionic-angular';
+import { App, NavController, LoadingController } from 'ionic-angular';
 
 import { Utils } from '../../libs/Utils';
 import { UrlManager } from '../../libs/UrlManager';
@@ -40,16 +40,14 @@ export class SearchPage implements IntefaceLoading {
     public lastFilter: string;
     public totalCount: any;
 
-    private id: number;
-    private properties;
     private limit: number;
     private offset: number;
     private loading: any;
-    private stepOffset: number;
+    private searchFreeze: boolean;
 
 
 
-    constructor(public app:App, public navCtrl:NavController, public navParams:NavParams, public connect:Connect, public loadingCtrl: LoadingController) {
+    constructor(public app:App, public navCtrl:NavController, public connect:Connect, public loadingCtrl: LoadingController) {
         this.inputSearchValue = '';
 
         this.products = [];
@@ -61,33 +59,35 @@ export class SearchPage implements IntefaceLoading {
 
         this.limit = 100;
         this.offset = 0;
+        this.searchFreeze = false;
 
     }
 
 
     onInput(event) {
-        console.log(this.inputSearchValue.length)
-        if(this.inputSearchValue.length >= 3) {
+        if(this.inputSearchValue.length >= 3 && this.searchFreeze) {
             this.doSearch();
         }
     }
 
     onCancel(event) {
-        console.log(this);
-        //this.resetProduct();
+
     }
 
 
     doSearch() {
+        this.searchFreeze = true;
         this.showLoader();
-        this.getProducts(this.id).then(
+        this.getProducts().then(
             (data) => {
                 this.hideLoader();
                 this.updateProducts(data);
+                this.searchFreeze = false;
             },
             (error) => {
                 this.hideLoader();
                 this.connect.showErrorAlert();
+                this.searchFreeze = false
                 console.error(`Error: ${error}`);
             }
         );
@@ -113,14 +113,11 @@ export class SearchPage implements IntefaceLoading {
     }
 
 
-
-
     /**
      *
-     * @param id
      * @returns {Promise<T>}
      */
-    private getProducts(id?: number) {
+    private getProducts() {
         return new Promise((resolve, reject) => {
             let url = UrlManager.createUrlWithParams(API.search, {
                 limit: this.limit,

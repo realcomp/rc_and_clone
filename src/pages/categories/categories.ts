@@ -146,11 +146,11 @@ export class CategoriesPage implements IntefaceLoading {
     /**
      *
      */
-    showLoader() {
+    showLoader(content?: string) {
         this.loading = this.loadingCtrl.create({
-            content: 'Загружаю...',
+            cssClass: 'loading-stupid',
+            content: content || ''
         });
-
         this.loading.present();
     }
 
@@ -159,8 +159,13 @@ export class CategoriesPage implements IntefaceLoading {
      *
      */
     hideLoader() {
+        let loading = <HTMLElement>document.querySelector('.loading-stupid');
+        if(loading != null) {
+            loading.style.display = 'none';
+        }
         this.loading.dismissAll();
     }
+
 
 
     /**
