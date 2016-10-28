@@ -31,6 +31,7 @@ import { TabsPage } from '../pages/tabs/tabs';
 import { TutorialPage } from '../pages/tutorial/tutorial';
 
 import { CategoriesPage } from '../pages/categories/categories';
+import { Category } from '../pages/categories/components/category.component';
 
 import { ProductsPage } from '../pages/products/products';
 import { ProductTest } from '../pages/product/components/test/product-test.component';
@@ -50,6 +51,9 @@ import { SearchPage } from '../pages/search/search';
   declarations: [
     App,
 
+    CategoriesPage,
+    Category,
+
     ProductRating,
     ProductBlackListStrip,
     Search,
@@ -58,7 +62,6 @@ import { SearchPage } from '../pages/search/search';
     AccountPage,
     LoginPage,
     PopoverPage,
-    CategoriesPage,
     ArticlePage,
 
     ProductsPage,
@@ -84,6 +87,9 @@ import { SearchPage } from '../pages/search/search';
   entryComponents: [
     App,
 
+    CategoriesPage,
+    Category,
+
     ProductRating,
     ProductBlackListStrip,
     Search,
@@ -92,7 +98,6 @@ import { SearchPage } from '../pages/search/search';
     AccountPage,
     LoginPage,
     PopoverPage,
-    CategoriesPage,
     ArticlePage,
 
     ProductsPage,

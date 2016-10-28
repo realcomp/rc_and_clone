@@ -24,21 +24,8 @@
 
   <ion-list [hidden]="categoriesEmpty" class="grid-row" no-lines>
     <div class="container-section grid-flex">
-      <div class="grid-padding grid-column-6 grid-column-small-12 grid-left grid-flex"
-           *ngFor="let category of categories">
-        <div class="b-category util-container-style util-hover-shadow fadeIn animated"
-             (click)="handlerSelect(category)">
-          <div class="category-inner grid-flex grid-flex-align-center">
-            <img class="grid-flex category-logo" src="{{ category.logo }}">
-
-            <div class="category-data grid-flex">
-              <div class="category-name">{{ category.name }}</div>
-              <span class="category-tested" *ngIf="category.stats.product_tested_count > 0">{{ category.stats.product_tested_count }} {{ getDecl(category.stats.product_tested_count) }}</span>
-              <span class="category-tested" *ngIf="category.stats.product_tested_count === 0">Ожидают проверки</span>
-            </div>
-
-          </div>
-        </div>
+      <div class="grid-padding grid-column-6 grid-column-small-12 grid-left grid-flex" *ngFor="let category of categories">
+        <category-component [category]="category" ></category-component>
       </div>
     </div>
   </ion-list>

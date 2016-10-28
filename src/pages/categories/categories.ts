@@ -16,15 +16,7 @@ import { Connect } from '../../providers/Connect';
 
 import { IntefaceLoading } from '../../interfaces/Loading';
 
-import { ProductsPage } from '../products/products';
 import { AboutPage } from '../about/about';
-
-
-interface Category {
-    logo: string;
-    name: string;
-    stats: any
-}
 
 
 @Component({
@@ -100,29 +92,6 @@ export class CategoriesPage implements IntefaceLoading {
     }
 
 
-    /**
-     *
-     * @param category
-     */
-    handlerSelect(category: any) {
-        let id = category.id;
-        let title = category.name;
-        let properties = category.properties;
-        let subCount = Number(category.stats.subcategory_count);
-
-        let slug = '';
-        if(category['show_brand']) {
-            slug = category['name_sg'];
-        }
-
-        if(subCount > 0) {
-            this.goToCategoriesPage(id, title);
-        }
-        else {
-            this.goToProductsPage(id, title, properties, slug);
-        }
-    }
-
 
     /**
      *
@@ -131,16 +100,6 @@ export class CategoriesPage implements IntefaceLoading {
         this.goToAboutPage();
     }
 
-
-    /**
-     *
-     * @param count
-     * @returns {any}
-     */
-    getDecl(count: number) {
-        let decl = ['тест', 'теста', 'тестов'];
-        return Utils.declOfNum(count, decl);
-    }
 
 
     /**
@@ -209,36 +168,6 @@ export class CategoriesPage implements IntefaceLoading {
 
         this.categories = categories;
         this.categoriesEmpty = this.categories.length == 0;
-    }
-
-
-    /**
-     *
-     * @param id
-     * @param title
-     */
-    private goToCategoriesPage(id: number, title: string) {
-        this.navCtrl.push(CategoriesPage, {
-            id,
-            title
-        });
-    }
-
-
-    /**
-     *
-     * @param id
-     * @param title
-     * @param properties
-     * @param slug
-     */
-    private goToProductsPage(id: number, title: string, properties, slug?: string) {
-        this.navCtrl.push(ProductsPage, {
-            id,
-            title,
-            properties,
-            slug
-        });
     }
 
 
