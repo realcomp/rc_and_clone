@@ -64,7 +64,7 @@ export class ProductsPage implements LoadingInterface {
         this.segment = 'all';
         this.title = '';
         this.slug = '';
-        this.filter = ''
+        this.filter = '';
 
         this.limit = 20;
         this.offset = 0;
@@ -291,7 +291,6 @@ export class ProductsPage implements LoadingInterface {
      * @param products
      */
     private updateProducts(products: any) {
-        console.log('обновить продукты');
         this.products = this.products.concat(products);
         this.productsEmpty = this.products.length == 0;
     }

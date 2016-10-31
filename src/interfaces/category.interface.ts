@@ -4,7 +4,6 @@
 
 export interface CategoryInterface {
     id: number,
-    title: string,
     logo: string;
     name: string;
     show_brand: boolean,

@@ -48,15 +48,15 @@ export class Category {
      *
      */
     handlerSelect() {
-        let { id, title, properties } = this.category;
+        let { id, name, properties } = this.category;
         let subCount = Number(this.category.stats['subcategory_count']);
         let slug = this.category['show_brand'] ? this.category['name_sg'] : '';
 
         if(subCount > 0) {
-            this.goToCategoriesPage(id, title);
+            this.goToCategoriesPage(id, name);
         }
         else {
-            this.goToProductsPage(id, title, properties, slug);
+            this.goToProductsPage(id, name, properties, slug);
         }
     }
 
