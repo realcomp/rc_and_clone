@@ -7,7 +7,8 @@ import { Component, Input } from '@angular/core';
 import { NavController } from 'ionic-angular';
 
 import { Utils } from '../../../libs/Utils';
-import { ProductServices } from '../../../../providers/ProductServices';
+
+import { CategoryInterface } from '../../../interfaces/category.interface';
 
 import { ProductsPage } from '../../products/products';
 import { CategoriesPage } from '../categories';
@@ -22,7 +23,7 @@ import { CategoriesPage } from '../categories';
 export class Category {
 
 
-    @Input() category: any;
+    @Input() category: CategoryInterface;
 
 
     public countTestedText: string;

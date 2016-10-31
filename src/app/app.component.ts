@@ -10,8 +10,6 @@ import { TabsPage } from '../pages/tabs/tabs';
 import { CategoriesPage } from '../pages/categories/categories';
 import { TutorialPage } from '../pages/tutorial/tutorial';
 
-import { ConferenceData } from '../providers/conference-data';
-import { UserData } from '../providers/user-data';
 import { LocalStorage } from '../libs/LocalStorage';
 
 
@@ -59,24 +57,14 @@ export class App {
 
   constructor(
     public events: Events,
-    public userData: UserData,
     public menu: MenuController,
-    platform: Platform,
-    confData: ConferenceData
+    platform: Platform
   ) {
     // Call any initial plugins when ready
     platform.ready().then(() => {
       StatusBar.overlaysWebView(true); // let status bar overlay webview
       StatusBar.backgroundColorByHexString('#a32630'); // set status bar to white
       Splashscreen.hide();
-    });
-
-    // load the conference data
-    confData.load();
-
-    // decide which menu items should be hidden by current login status stored in local storage
-    this.userData.hasLoggedIn().then((hasLoggedIn) => {
-      this.enableMenu(hasLoggedIn === true);
     });
 
 
@@ -111,7 +99,6 @@ export class App {
     if (page.logsOut === true) {
       // Give the menu time to close before changing to logged out
       setTimeout(() => {
-        this.userData.logout();
       }, 1000);
     }
   }

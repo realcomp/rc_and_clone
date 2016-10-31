@@ -9,9 +9,10 @@ import { LoadingController } from 'ionic-angular';
 import { Utils } from '../../../../libs/Utils';
 import { UrlManager } from '../../../../libs/UrlManager';
 import { API } from '../../../../config/';
-import { Connect } from '../../../../providers/Connect';
 
-import { IntefaceLoading } from '../../../../interfaces/Loading';
+import { ConnectService } from '../../../../services/connect.service';
+
+import { LoadingInterface } from '../../../../interfaces/loading.interface';
 
 
 @Component({
@@ -20,7 +21,7 @@ import { IntefaceLoading } from '../../../../interfaces/Loading';
 })
 
 
-export class ProductReviews implements IntefaceLoading {
+export class ProductReviews implements LoadingInterface {
 
 
     @Input() id: number;
@@ -44,7 +45,7 @@ export class ProductReviews implements IntefaceLoading {
      * @param connect
      * @param loadingCtrl
      */
-    constructor(private connect:Connect, private loadingCtrl: LoadingController) {
+    constructor(private connect:ConnectService, private loadingCtrl: LoadingController) {
         this.reviews = [];
         this.totalCount = 0;
         this.positiveCount = 0;

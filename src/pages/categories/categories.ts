@@ -7,14 +7,15 @@
 
 
 import { Component } from '@angular/core';
-import { App, List, NavController, NavParams, LoadingController } from 'ionic-angular';
+import { App, NavController, NavParams, LoadingController } from 'ionic-angular';
 
 import { Utils } from '../../libs/Utils';
 import { UrlManager } from '../../libs/UrlManager';
 import { API } from '../../config/';
-import { Connect } from '../../providers/Connect';
 
-import { IntefaceLoading } from '../../interfaces/Loading';
+import { ConnectService } from '../../services/connect.service';
+
+import { LoadingInterface } from '../../interfaces/loading.interface';
 
 import { AboutPage } from '../about/about';
 
@@ -25,7 +26,7 @@ import { AboutPage } from '../about/about';
 })
 
 
-export class CategoriesPage implements IntefaceLoading {
+export class CategoriesPage implements LoadingInterface {
 
 
     public categories: Array<any>;
@@ -47,7 +48,7 @@ export class CategoriesPage implements IntefaceLoading {
      * @param connect
      * @param loadingCtrl
      */
-    constructor(public app:App, public navCtrl:NavController, public navParams:NavParams, public connect:Connect, public loadingCtrl: LoadingController) {
+    constructor(public app:App, public navCtrl:NavController, public navParams:NavParams, public connect:ConnectService, public loadingCtrl: LoadingController) {
         this.categories = [];
         this.categoriesEmpty = false;
         this.isRootCategories = false;

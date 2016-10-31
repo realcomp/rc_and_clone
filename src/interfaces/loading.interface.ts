@@ -3,7 +3,7 @@
  */
 
 
-export interface IntefaceLoading {
+export interface LoadingInterface {
     showLoader(): void,
     hideLoader(): void
 }

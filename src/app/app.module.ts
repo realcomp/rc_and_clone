@@ -1,14 +1,11 @@
 // Ядро
 import { NgModule } from '@angular/core';
 import { IonicApp, IonicModule } from 'ionic-angular';
-import { Storage } from '@ionic/storage';
 
 
-// Провайдеры
-import { ConferenceData } from '../providers/conference-data';
-import { UserData } from '../providers/user-data';
-import { Connect } from '../providers/Connect';
-import { ProductServices } from '../providers/ProductServices';
+// Сервисы
+import { ConnectService } from '../services/connect.service';
+import { ProductService } from '../services/product.service';
 
 
 // Основной компонент
@@ -116,7 +113,7 @@ import { SearchPage } from '../pages/search/search';
     SearchPage
 
   ],
-  providers: [ConferenceData, UserData, Storage, Connect, ProductServices]
+  providers: [ConnectService, ProductService]
 })
 
 

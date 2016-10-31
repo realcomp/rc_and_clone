@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
-import { App, List, NavController, NavParams } from 'ionic-angular';
+import { App, NavController, NavParams } from 'ionic-angular';
 
 import { Utils } from '../../libs/Utils';
 import { UrlManager } from '../../libs/UrlManager';
 import { API } from '../../config/';
-import { Connect } from '../../providers/Connect';
+
+import { ConnectService } from '../../services/connect.service';
 
 import { ArticlePage } from '../article/article';
 
@@ -22,12 +23,9 @@ export class JournalPage {
     public articlesEmpty: boolean = false;
     public title: string = 'Журнал покупателя';
 
-    private limit: number = 20;
-    private offset: number = 0;
 
 
-
-    constructor(public app:App, public navCtrl:NavController, public navParams:NavParams, public connect:Connect) {}
+    constructor(public app:App, public navCtrl:NavController, public navParams:NavParams, private connect:ConnectService) {}
 
 
 

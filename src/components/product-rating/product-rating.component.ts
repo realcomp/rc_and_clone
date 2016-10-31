@@ -5,7 +5,7 @@
 
 import { Component, Input } from '@angular/core';
 
-import { ProductServices } from '../../providers/ProductServices';
+import { ProductService } from '../../services/product.service';
 
 
 @Component({
@@ -33,9 +33,9 @@ export class ProductRating {
 
     /**
      *
-     * @param productServices
+     * @param productService
      */
-    constructor(public productServices:ProductServices) {
+    constructor(public productService:ProductService) {
         this.classNameFine = 'fine';
         this.classNameDanger = 'danger';
         this.classNameWait = 'wait';
@@ -56,17 +56,17 @@ export class ProductRating {
      */
     private setClassAndRate() {
 
-        if(this.productServices.isWaitProduct(this.tested)) {
+        if(this.productService.isWaitProduct(this.tested)) {
             this.cl = this.classNameWait;
             this.rate = '?';
         }
 
-        else if(this.productServices.isDangerProduct(this.dangerLevel)) {
+        else if(this.productService.isDangerProduct(this.dangerLevel)) {
             this.cl = this.classNameDanger;
             this.rate = String(this.rating);
         }
 
-        else if(this.productServices.isBlackListProduct(this.dangerLevel)) {
+        else if(this.productService.isBlackListProduct(this.dangerLevel)) {
             this.cl = this.classNameBlackList;
             this.rate = '';
         }

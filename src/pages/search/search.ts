@@ -12,9 +12,9 @@ import { App, NavController, LoadingController } from 'ionic-angular';
 import { Utils } from '../../libs/Utils';
 import { UrlManager } from '../../libs/UrlManager';
 import { API } from '../../config/';
-import { Connect } from '../../providers/Connect';
+import { ConnectService } from '../../services/connect.service';
 
-import { IntefaceLoading } from '../../interfaces/Loading';
+import { LoadingInterface } from '../../interfaces/loading.interface';
 
 import { ProductPage } from '../product/product';
 
@@ -25,7 +25,7 @@ import { ProductPage } from '../product/product';
 })
 
 
-export class SearchPage implements IntefaceLoading {
+export class SearchPage implements LoadingInterface {
 
 
     public inputSearchValue: string;
@@ -47,7 +47,7 @@ export class SearchPage implements IntefaceLoading {
 
 
 
-    constructor(public app:App, public navCtrl:NavController, public connect:Connect, public loadingCtrl: LoadingController) {
+    constructor(public app:App, public navCtrl:NavController, public connect:ConnectService, public loadingCtrl: LoadingController) {
         this.inputSearchValue = '';
 
         this.products = [];

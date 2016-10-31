@@ -3,7 +3,7 @@
  */
 
 
-export interface Product {
+export interface ProductInterface {
     id: number
     name: string
     images: any

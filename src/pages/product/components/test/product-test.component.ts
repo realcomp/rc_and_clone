@@ -5,7 +5,7 @@
 
 import { Component, Input } from '@angular/core';
 
-import { ProductServices } from '../../../../providers/ProductServices';
+import { ProductService } from '../../../../services/product.service';
 
 
 @Component({
@@ -22,9 +22,9 @@ export class ProductTest {
 
     /**
      *
-     * @param productServices
+     * @param productService
      */
-    constructor(private productServices: ProductServices) {}
+    constructor(private productService: ProductService) {}
 
 
     /**
@@ -32,7 +32,7 @@ export class ProductTest {
      * @returns {boolean}
      */
     isFineProduct() {
-        return this.productServices.isFineProduct(this.product['tested'], this.product['danger_level']);
+        return this.productService.isFineProduct(this.product['tested'], this.product['danger_level']);
     }
 
 
@@ -41,7 +41,7 @@ export class ProductTest {
      * @returns {boolean}
      */
     isDangerProduct() {
-        return this.productServices.isDangerProduct(this.product['danger_level']);
+        return this.productService.isDangerProduct(this.product['danger_level']);
     }
 
 
@@ -50,7 +50,7 @@ export class ProductTest {
      * @returns {boolean}
      */
     isBlackList() {
-        return this.productServices.isBlackListProduct(this.product['danger_level']);
+        return this.productService.isBlackListProduct(this.product['danger_level']);
     }
 
 
@@ -60,7 +60,7 @@ export class ProductTest {
      * @returns {boolean}
      */
     isWaitProduct() {
-        return this.productServices.isWaitProduct(this.product['tested']);
+        return this.productService.isWaitProduct(this.product['tested']);
     }
 
 

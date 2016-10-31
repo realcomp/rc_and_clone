@@ -14,7 +14,7 @@ import { Network } from 'ionic-native';
 
 
 @Injectable()
-export class Connect {
+export class ConnectService {
 
 
     promise: any;

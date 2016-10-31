@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { App, NavParams } from 'ionic-angular';
 
-import { Product } from '../../interfaces/Product';
+import { ProductInterface } from '../../interfaces/product.interface';
 
 
 @Component({
@@ -14,7 +14,7 @@ export class ProductPage {
 
 
   public categoryTitle: string;
-  public product: Product;
+  public product: ProductInterface;
   public slug: string;
   public productPropsTitleMain: string;
   public productPropsGroupMain;
@@ -29,7 +29,7 @@ export class ProductPage {
    */
   constructor(public app:App, public navParams:NavParams) {
     this.categoryTitle = '';
-    this.product = <Product>{};
+    this.product = <ProductInterface>{};
     this.productPropsTitleMain = 'Основные';
     this.productPropsGroupMain = [];
     this.productPropsTitleAddition = 'Дополнительные';
