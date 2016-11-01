@@ -13,6 +13,7 @@ import { App } from './app.component';
 
 
 // Общие компоненты
+import { ProductItem } from '../components/product-item/product-item.component';
 import { ProductRating } from '../components/product-rating/product-rating.component';
 import { ProductBlackListStrip } from '../components/product-blacklist-strip/product-blacklist-strip.component';
 import { Search } from '../components/search/search.component';
@@ -51,6 +52,7 @@ import { SearchPage } from '../pages/search/search';
     CategoriesPage,
     Category,
 
+    ProductItem,
     ProductRating,
     ProductBlackListStrip,
     Search,
@@ -87,6 +89,7 @@ import { SearchPage } from '../pages/search/search';
     CategoriesPage,
     Category,
 
+    ProductItem,
     ProductRating,
     ProductBlackListStrip,
     Search,

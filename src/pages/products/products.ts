@@ -17,8 +17,6 @@ import { ConnectService } from '../../services/connect.service';
 
 import { LoadingInterface } from '../../interfaces/loading.interface';
 
-import { ProductPage } from '../product/product';
-
 
 enum ProductStatus {Tested, BlackList, NotTested }
 
@@ -103,13 +101,6 @@ export class ProductsPage implements LoadingInterface {
     }
 
 
-    /**
-     *
-     * @param product
-     */
-    handlerSelect(product: any) {
-        this.goToProductPage(product);
-    }
 
 
     /**
@@ -237,20 +228,6 @@ export class ProductsPage implements LoadingInterface {
             }
         );
 
-    }
-
-
-    /**
-     *
-     * @param product
-     */
-    private goToProductPage(product: any) {
-        this.navCtrl.push(ProductPage, {
-            product,
-            slug: this.slug,
-            categoryTitle: this.title,
-            properties: this.properties
-        });
     }
 
 

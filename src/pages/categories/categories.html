@@ -30,8 +30,6 @@
     </div>
   </ion-list>
 
-  <ion-list-header [hidden]="!categoriesEmpty">
-      Категории не найдены
-  </ion-list-header>
+  <div [hidden]="!categoriesEmpty" class="b-empty-box">Категории не найдены</div>
 
 </ion-content>

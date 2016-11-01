@@ -65,7 +65,7 @@ export class SearchPage implements LoadingInterface {
 
 
     onInput(event) {
-        if(this.inputSearchValue.length >= 3 && this.searchFreeze) {
+        if(this.inputSearchValue.length >= 3 && !this.searchFreeze) {
             this.doSearch();
         }
     }
@@ -76,6 +76,7 @@ export class SearchPage implements LoadingInterface {
 
 
     doSearch() {
+        console.log(12111)
         this.searchFreeze = true;
         this.showLoader();
         this.getProducts().then(

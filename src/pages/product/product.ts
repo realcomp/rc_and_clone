@@ -72,8 +72,7 @@ export class ProductPage {
 
     // Main
     let propsMain = properties[0];
-    for(let key in propsMain['properties']) {
-      let item = propsMain.properties[key];
+    for(let item of propsMain['properties']) {
       let id = item['id'];
       if(productValues[id] != null) {
         this.productPropsGroupMain.push({
@@ -85,8 +84,7 @@ export class ProductPage {
 
     // Addition
     let propsAddition = properties[1];
-    for(let key in propsAddition['properties']) {
-      let item = propsAddition.properties[key];
+    for(let item of propsAddition['properties']) {
       let id = item['id'];
       if(productValues[id] != null) {
         this.productPropsGroupAddition.push({

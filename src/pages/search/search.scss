@@ -1,57 +1,10 @@
-page-products {
+page-search {
   background: #fdfdfd;
-}
-
-
-.b-product {
-  width: 100%;
-  padding-right: 80px;
-  background: #FFF;
-  cursor: pointer;
-  &:hover {
-    .product-name {
-      color: $mainColor;
-    }
-  }
-
-  .product-inner {
-    height: 100%;
-  }
-
-  .b-rating {
-    position: absolute;
-    left: 0;
-    top: 0;
-  }
-
-  .product-logo {
-    width: 35%;
-    max-width: 150px;
-  }
-  .product-name {
-    display: inline-block;
-    margin-bottom: 5px;
-    font-size: 18px;
-    width: 65%;
-    padding-left: 15px;
-  }
-
-}
-
-
-
-// 840 - 641 and 479
-@media screen and (min-width: 641px) and (max-width: 840px), screen and (max-width: 479px) {
-  .b-product {
-    padding-right: 50px;
-    .product-name {
-      font-size: 16px;
-    }
-    .b-rating {
-      height: 32px;
-      width: 32px;
-      font-size: 16px;
-    }
+  .b-empty-box {
+    margin-top: -12px;
   }
 }
 
+.searchbar-md {
+  padding: 15px;
+}
