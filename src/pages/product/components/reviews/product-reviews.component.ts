@@ -145,7 +145,7 @@ export class ProductReviews implements LoadingInterface {
         return new Promise((resolve, reject) => {
 
             if(showLoader) {
-                this.showLoader('Загружаю комментарии');
+                this.showLoader('Загружаю отзывы');
             }
 
             let url = UrlManager.createUrlWithParams(API.reviews, {

@@ -108,10 +108,10 @@ export class ConnectService {
      * @param subTitle
      * @param message
      */
-    showErrorAlert(title: string = 'Ошибка загрузки', subTitle: string = 'Не удается загрузить страницу, попробуйте позже!', message?: string ) {
+    showErrorAlert(title: string = 'Ошибка загрузки!', subTitle: string = 'Не удается загрузить данные, попробуйте позже.', message?: string ) {
 
         if (this.noConnection()) {
-            subTitle = 'Проверьте соединение с интернетом!'
+            subTitle = 'Не удается загрузить данные, потеряно соединение с интернетом'
         }
 
         const alert = this.alertCtrl.create({

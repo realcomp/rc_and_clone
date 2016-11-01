@@ -172,8 +172,8 @@ export class ProductsPage implements LoadingInterface {
      */
     showLoader(content?: string) {
         this.loading = this.loadingCtrl.create({
-            cssClass: 'loading-stupid',
-            content: content || ''
+            //cssClass: 'loading-stupid',
+            content: content || 'Загружаю'
         });
         this.loading.present();
     }
@@ -183,10 +183,10 @@ export class ProductsPage implements LoadingInterface {
      *
      */
     hideLoader() {
-        let loading = <HTMLElement>document.querySelector('.loading-stupid');
-        if(loading != null) {
-            loading.style.display = 'none';
-        }
+        //let loading = <HTMLElement>document.querySelector('.loading-stupid');
+        //if(loading != null) {
+        //    loading.style.display = 'none';
+        //}
         this.loading.dismissAll();
     }
 

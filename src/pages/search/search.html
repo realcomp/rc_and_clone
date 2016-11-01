@@ -27,14 +27,11 @@
     <div class="container-section grid-flex">
       <div class="grid-padding grid-column-6 grid-column-small-12 grid-left grid-flex"
            *ngFor="let product of products">
-        <div class="b-product util-container-style util-hover-shadow fadeIn animated"
-             (click)="handlerSelect(product)">
-          <div class="product-inner grid-flex grid-flex-align-center">
-            <product-rating-component [dangerLevel]="product.danger_level" [rating]="product.rating" [tested]="product.tested"></product-rating-component>
-            <img class="product-logo" src="{{ product.thumbnail }}">
-            <div class="product-name">{{ slug }} {{ product.name }}</div>
-          </div>
-        </div>
+
+        <product-item-component
+          [product]="product">
+        </product-item-component>
+
       </div>
 
     </div>
