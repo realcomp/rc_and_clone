@@ -5,16 +5,11 @@
       <ion-title>Поиск товаров</ion-title>
     </ion-navbar>
 
-
   </ion-navbar>
-</ion-header>
-
-
-
-<ion-content no-bounce>
 
   <ion-searchbar
     placeholder="Название товара..."
+    debounce="500"
     [(ngModel)]="inputSearchValue"
     [showCancelButton]="shouldShowCancel"
     (ionInput)="onInput($event)"
@@ -22,27 +17,29 @@
   </ion-searchbar>
 
 
-  <ion-list no-lines [hidden]="productsEmpty" class="grid-row" no-lines>
+</ion-header>
+
+
+
+<ion-content no-bounce>
+
+
+  <ion-list no-lines *ngIf="!productsEmpty && inputSearchValue.length >= 3" class="grid-row" no-lines>
 
     <div class="container-section grid-flex">
-      <div class="grid-padding grid-column-6 grid-column-small-12 grid-left grid-flex"
-           *ngFor="let product of products">
+      <div class="grid-padding grid-column-6 grid-column-small-12 grid-left grid-flex" *ngFor="let product of products">
 
         <product-item-component
           [product]="product">
         </product-item-component>
 
       </div>
-
     </div>
 
   </ion-list>
 
-  <div class="b-empty-box">Начните вводить название товара для поиска</div>
+  <div class="b-empty-box" *ngIf="inputSearchValue.length < 3">Начните вводить название товара для поиска</div>
 
-  <ion-list-header [hidden]="!productsEmpty">
-    По вашему запросу ничего не найдено
-  </ion-list-header>
-
+  <div class="b-empty-box" *ngIf="productsEmpty && inputSearchValue.length >= 3">К сожалению, по вашему запросу ничего не найдено</div>
 
 </ion-content>

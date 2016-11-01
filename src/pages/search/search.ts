@@ -46,7 +46,13 @@ export class SearchPage implements LoadingInterface {
     private searchFreeze: boolean;
 
 
-
+    /**
+     *
+     * @param app
+     * @param navCtrl
+     * @param connect
+     * @param loadingCtrl
+     */
     constructor(public app:App, public navCtrl:NavController, public connect:ConnectService, public loadingCtrl: LoadingController) {
         this.inputSearchValue = '';
 
@@ -70,13 +76,16 @@ export class SearchPage implements LoadingInterface {
         }
     }
 
+
     onCancel(event) {
 
     }
 
 
     doSearch() {
-        console.log(12111)
+
+        this.products = [];
+
         this.searchFreeze = true;
         this.showLoader();
         this.getProducts().then(
@@ -94,12 +103,13 @@ export class SearchPage implements LoadingInterface {
         );
     }
 
+
     /**
      *
      */
     showLoader() {
         this.loading = this.loadingCtrl.create({
-            content: 'Ищу товары...'
+            content: 'Ищу товары'
         });
 
         this.loading.present();
