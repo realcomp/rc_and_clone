@@ -14,7 +14,9 @@ import { Injectable } from '@angular/core';
 export class ProductService {
 
 
-
+    /**
+     *
+     */
     constructor() {}
 
 
@@ -23,7 +25,7 @@ export class ProductService {
      * @param dangerLevel
      * @returns {boolean}
      */
-    isBlackListProduct(dangerLevel: number) {
+    isBlackListProduct(dangerLevel: number): boolean {
         return dangerLevel > 1;
     }
 
@@ -33,7 +35,7 @@ export class ProductService {
      * @param dangerLevel
      * @returns {boolean}
      */
-    isDangerProduct(dangerLevel: number) {
+    isDangerProduct(dangerLevel: number): boolean {
         return dangerLevel === 1;
     }
 
@@ -43,7 +45,7 @@ export class ProductService {
      * @param tested
      * @returns {boolean}
      */
-    isWaitProduct(tested: boolean) {
+    isWaitProduct(tested: boolean): boolean {
         return tested == false;
     }
 
@@ -54,10 +56,40 @@ export class ProductService {
      * @param dangerLevel
      * @returns {boolean}
      */
-    isFineProduct(tested: boolean, dangerLevel: number) {
+    isFineProduct(tested: boolean, dangerLevel: number): boolean {
         return tested && dangerLevel === 0;
     }
 
 
+    /**
+     *
+     * @param categoryProperties
+     * @param productValues
+     * @returns {Array}
+     */
+    getProperties(categoryProperties: any, productValues: any): any[] {
+
+        let properties = [];
+
+        for(let sectionProperties of categoryProperties) {
+            let currentProperties = {};
+            currentProperties['name'] = sectionProperties['name'];
+            if(sectionProperties['properties'] != null) {
+                currentProperties['properties'] = [];
+                for(let itemProperties of sectionProperties['properties']) {
+                    let idProps = itemProperties['id'];
+                    if(idProps in productValues) {
+                        currentProperties['properties'].push({
+                            name: itemProperties['name'],
+                            value: productValues[idProps]
+                        })
+                    }
+                }
+            }
+            properties.push(currentProperties);
+        }
+
+        return properties;
+    }
 
 }

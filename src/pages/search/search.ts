@@ -33,12 +33,9 @@ export class SearchPage implements LoadingInterface {
 
     public products: Array<any>;
     public productsEmpty: boolean;
+    public categories: any;
     public segment: string;
     public title: string;
-    public slug: string;
-    public filter: string;
-    public lastFilter: string;
-    public totalCount: any;
 
     private limit: number;
     private offset: number;
@@ -58,31 +55,43 @@ export class SearchPage implements LoadingInterface {
 
         this.products = [];
         this.productsEmpty = false;
-        this.segment = 'all';
+        this.categories = {};
         this.title = '';
-        this.slug = '';
-        this.filter = ''
 
         this.limit = 100;
         this.offset = 0;
         this.searchFreeze = false;
-
     }
 
 
-    onInput(event) {
+    ionViewDidEnter() {
+        this.setFocus()
+    }
+
+
+    onInput(event): void {
         if(this.inputSearchValue.length >= 3 && !this.searchFreeze) {
             this.doSearch();
         }
     }
 
 
-    onCancel(event) {
+    private setFocus() {
+        let input = <HTMLElement>document.querySelector('ion-searchbar input');
+        if (input != null) {
+            setTimeout(() => {
+                input.focus();
+            }, 0)
+        }
+    }
+
+
+    onCancel(event): void {
 
     }
 
 
-    doSearch() {
+    doSearch(): void {
 
         this.products = [];
 
@@ -91,13 +100,15 @@ export class SearchPage implements LoadingInterface {
         this.getProducts().then(
             (data) => {
                 this.hideLoader();
-                this.updateProducts(data);
+                this.setFocus();
+                this.buildCategories(data['categories']);
+                this.updateProducts(data['products']);
                 this.searchFreeze = false;
             },
             (error) => {
                 this.hideLoader();
                 this.connect.showErrorAlert();
-                this.searchFreeze = false
+                this.searchFreeze = false;
                 console.error(`Error: ${error}`);
             }
         );
@@ -107,7 +118,7 @@ export class SearchPage implements LoadingInterface {
     /**
      *
      */
-    showLoader() {
+    showLoader(): void {
         this.loading = this.loadingCtrl.create({
             content: 'Ищу товары'
         });
@@ -119,7 +130,7 @@ export class SearchPage implements LoadingInterface {
     /**
      *
      */
-    hideLoader() {
+    hideLoader(): void {
         this.loading.dismissAll();
     }
 
@@ -138,9 +149,13 @@ export class SearchPage implements LoadingInterface {
             let promise = this.connect.load('get', url);
             promise.then((result) => {
                     let data = Utils.jsonParse(result['_body']);
-                    let items = data['data'][1];
-                    if(items != null) {
-                        resolve(items);
+                    let categories = data['data'][0];
+                    let products = data['data'][1];
+                    if(data != null) {
+                        resolve({
+                            categories,
+                            products
+                        });
                     }
                 },
                 (error) => {
@@ -155,7 +170,7 @@ export class SearchPage implements LoadingInterface {
      *
      * @param products
      */
-    private updateProducts(products: any) {
+    private updateProducts(products: any): void {
         this.products = this.sortingProducts(products);
         this.productsEmpty = this.products.length == 0;
     }
@@ -164,7 +179,7 @@ export class SearchPage implements LoadingInterface {
     /**
      *
      */
-    private resetProducts() {
+    private resetProducts(): void {
         this.products = [];
     }
 
@@ -190,6 +205,12 @@ export class SearchPage implements LoadingInterface {
         ));
 
         return products;
+
+    }
+
+
+
+    private buildCategories(categories: any) {
 
     }
 

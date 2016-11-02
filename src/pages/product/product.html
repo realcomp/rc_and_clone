@@ -39,12 +39,7 @@
 
   <product-reviews-component [id]="product.id"></product-reviews-component>
 
-
-  <div class="container-section" *ngIf="productPropsGroupMain.length > 0 || productPropsGroupAddition.length > 0">
-    <div class="b-title">Характеристики</div>
-    <product-props-component [props]="productPropsGroupMain" [title]="productPropsTitleMain"></product-props-component>
-    <product-props-component [props]="productPropsGroupAddition" [title]="productPropsTitleAddition"></product-props-component>
-  </div>
+  <product-props-component [properties]="productProperties"></product-props-component>
 
 
 </ion-content>

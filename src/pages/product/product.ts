@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { App, NavParams } from 'ionic-angular';
 
 import { ProductInterface } from '../../interfaces/product.interface';
+import { ProductService } from '../../services/product.service';
 
 
 @Component({
@@ -16,24 +17,19 @@ export class ProductPage {
   public categoryTitle: string;
   public product: ProductInterface;
   public slug: string;
-  public productPropsTitleMain: string;
-  public productPropsGroupMain;
-  public productPropsTitleAddition: string;
-  public productPropsGroupAddition;
+  public productProperties: any[];
 
 
   /**
    *
    * @param app
    * @param navParams
+   * @param productService
    */
-  constructor(public app:App, public navParams:NavParams) {
+  constructor(private app:App, private navParams:NavParams, private productService: ProductService) {
     this.categoryTitle = '';
     this.product = <ProductInterface>{};
-    this.productPropsTitleMain = 'Основные';
-    this.productPropsGroupMain = [];
-    this.productPropsTitleAddition = 'Дополнительные';
-    this.productPropsGroupAddition = [];
+    this.productProperties = [];
   }
 
 
@@ -43,8 +39,7 @@ export class ProductPage {
   ionViewDidLoad() {
     this.product = this.navParams.get('product');
     this.slug = this.navParams.get('slug');
-    let properties = this.navParams.get('properties');
-    this.buildProductProps(properties);
+    this.buildProductProps(this.navParams.get('properties'));
   }
 
 
@@ -62,38 +57,13 @@ export class ProductPage {
   }
 
 
-
   /**
    *
-   * @param properties
+   * @param categoryProperties
    */
-  private buildProductProps(properties) {
+  private buildProductProps(categoryProperties) {
     let productValues = this.product['property_values'];
-
-    // Main
-    let propsMain = properties[0];
-    for(let item of propsMain['properties']) {
-      let id = item['id'];
-      if(productValues[id] != null) {
-        this.productPropsGroupMain.push({
-            name: [item['name']],
-            value: productValues[id]
-        });
-      }
-    }
-
-    // Addition
-    let propsAddition = properties[1];
-    for(let item of propsAddition['properties']) {
-      let id = item['id'];
-      if(productValues[id] != null) {
-        this.productPropsGroupAddition.push({
-          name: [item['name']],
-          value: productValues[id]
-        });
-      }
-    }
-
+    this.productProperties = this.productService.getProperties(categoryProperties, productValues);
   }
 
 

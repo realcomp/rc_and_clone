@@ -15,8 +15,7 @@ import { Component, Input } from '@angular/core';
 export class ProductProps {
 
 
-    @Input() props: string[];
-    @Input() title: string;
+    @Input() properties: any[];
 
 
     constructor() {
