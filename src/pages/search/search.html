@@ -11,7 +11,6 @@
     placeholder="Название товара..."
     debounce="500"
     [(ngModel)]="inputSearchValue"
-    [showCancelButton]="shouldShowCancel"
     (ionInput)="onInput($event)"
     (ionCancel)="onCancel($event)">
   </ion-searchbar>
@@ -29,9 +28,9 @@
     <div class="container-section grid-flex">
       <div class="grid-padding grid-column-6 grid-column-small-12 grid-left grid-flex" *ngFor="let product of products">
 
-        <product-item-component
+        <product-item-search-component
           [product]="product">
-        </product-item-component>
+        </product-item-search-component>
 
       </div>
     </div>

@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 
 import { NavController } from 'ionic-angular';
 
-import { SignupPage } from '../signup/signup';
 
 
 @Component({
@@ -21,6 +20,6 @@ export class LoginPage {
   }
 
   onSignup() {
-    this.navCtrl.push(SignupPage);
+    console.log(1);
   }
 }

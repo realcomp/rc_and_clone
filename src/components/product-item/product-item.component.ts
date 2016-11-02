@@ -32,7 +32,7 @@ export class ProductItem {
      *
      * @param navCtrl
      */
-    constructor(private navCtrl:NavController) {}
+    constructor(protected navCtrl:NavController) {}
 
 
     /**
@@ -46,7 +46,7 @@ export class ProductItem {
     /**
      *
      */
-    private goToProductPage() {
+    protected goToProductPage() {
         let product = this.product;
         this.navCtrl.push(ProductPage, {
             product,

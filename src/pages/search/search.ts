@@ -76,16 +76,6 @@ export class SearchPage implements LoadingInterface {
     }
 
 
-    private setFocus() {
-        let input = <HTMLElement>document.querySelector('ion-searchbar input');
-        if (input != null) {
-            setTimeout(() => {
-                input.focus();
-            }, 0)
-        }
-    }
-
-
     onCancel(event): void {
 
     }
@@ -100,7 +90,6 @@ export class SearchPage implements LoadingInterface {
         this.getProducts().then(
             (data) => {
                 this.hideLoader();
-                this.setFocus();
                 this.buildCategories(data['categories']);
                 this.updateProducts(data['products']);
                 this.searchFreeze = false;
@@ -172,6 +161,7 @@ export class SearchPage implements LoadingInterface {
      */
     private updateProducts(products: any): void {
         this.products = this.sortingProducts(products);
+        this.setFocus();
         this.productsEmpty = this.products.length == 0;
     }
 
@@ -212,6 +202,16 @@ export class SearchPage implements LoadingInterface {
 
     private buildCategories(categories: any) {
 
+    }
+
+
+    private setFocus() {
+        let input = <HTMLElement>document.querySelector('ion-searchbar input');
+        if (input != null) {
+            setTimeout(() => {
+                input.focus();
+            }, 500)
+        }
     }
 
 

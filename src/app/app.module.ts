@@ -42,7 +42,9 @@ import { ProfilePage } from '../pages/profile/profile';
 import { ShoppingListPage } from '../pages/shopping-list/shopping-list';
 import { AboutPage } from '../pages/about/about';
 import { ScannerPage } from '../pages/scanner/scanner';
+
 import { SearchPage } from '../pages/search/search';
+import { ProductItemSearch } from '../pages/search/components/product-item/product-item-search.component';
 
 
 @NgModule({
@@ -76,7 +78,9 @@ import { SearchPage } from '../pages/search/search';
     ProductPage,
     JournalPage,
     ScannerPage,
-    SearchPage
+
+    SearchPage,
+    ProductItemSearch
 
   ],
   imports: [
@@ -113,7 +117,9 @@ import { SearchPage } from '../pages/search/search';
     ProductPage,
     JournalPage,
     ScannerPage,
-    SearchPage
+
+    SearchPage,
+    ProductItemSearch
 
   ],
   providers: [ConnectService, ProductService]
