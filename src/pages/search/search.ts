@@ -35,6 +35,7 @@ export class SearchPage implements LoadingInterface {
     public productsEmpty: boolean;
     public categories: any;
     public segment: string;
+    public currentCategory: any;
     public title: string;
 
     private limit: number;
@@ -56,6 +57,7 @@ export class SearchPage implements LoadingInterface {
         this.products = [];
         this.productsEmpty = false;
         this.categories = {};
+        this.currentCategory = {};
         this.title = '';
 
         this.limit = 100;
@@ -64,11 +66,18 @@ export class SearchPage implements LoadingInterface {
     }
 
 
+    /**
+     *
+     */
     ionViewDidEnter() {
         this.setFocus()
     }
 
 
+    /**
+     *
+     * @param event
+     */
     onInput(event): void {
         if(this.inputSearchValue.length >= 3 && !this.searchFreeze) {
             this.doSearch();
@@ -76,15 +85,20 @@ export class SearchPage implements LoadingInterface {
     }
 
 
+    /**
+     *
+     * @param event
+     */
     onCancel(event): void {
 
     }
 
 
+    /**
+     *
+     */
     doSearch(): void {
-
         this.products = [];
-
         this.searchFreeze = true;
         this.showLoader();
         this.getProducts().then(
@@ -96,11 +110,28 @@ export class SearchPage implements LoadingInterface {
             },
             (error) => {
                 this.hideLoader();
-                this.connect.showErrorAlert();
                 this.searchFreeze = false;
+                this.connect.showErrorAlert();
                 console.error(`Error: ${error}`);
             }
         );
+    }
+
+
+    /**
+     * При клике на товар в списке поиска, получаем id его категории и пишем в currentCategory - текущую категорию товара
+     * Далее currentCategory будет проброшен в компонент, как [category]="currentCategory"
+     * После чего будет скорее всего осуществлен переход на страницу товара
+     * @param id
+     */
+    setCurrentCategory(id: number): void {
+        if(id in this.categories) {
+            this.currentCategory = {
+                name: this.categories[id]['name_sg'],
+                properties: this.categories[id]['properties']
+            }
+        }
+
     }
 
 
@@ -161,6 +192,7 @@ export class SearchPage implements LoadingInterface {
      */
     private updateProducts(products: any): void {
         this.products = this.sortingProducts(products);
+        this.addSlugForProducts();
         this.setFocus();
         this.productsEmpty = this.products.length == 0;
     }
@@ -199,13 +231,46 @@ export class SearchPage implements LoadingInterface {
     }
 
 
-
+    /**
+     *
+     * @param categories
+     */
     private buildCategories(categories: any) {
+        if(categories != null) {
+            for(let category of categories) {
+                this.categories[category.id] = {
+                    'show_name_in_product_list': category['show_name_in_product_list'],
+                    'name_sg': category['name_sg'],
+                    properties: category['properties']
+                }
+            }
+        }
+    }
+
+
+    /**
+     *
+     */
+    private addSlugForProducts(): void {
+        if(this.products.length === 0) {
+            return;
+        }
+        for(let product of this.products) {
+            let categoryId = product['category_id'];
+            product['slug'] = '';
+            if(categoryId in this.categories) {
+                let slug = this.categories[categoryId]['show_name_in_product_list'] ? this.categories[categoryId]['name_sg'] : '';
+                product['slug'] = slug;
+            }
+        }
 
     }
 
 
-    private setFocus() {
+    /**
+     *
+     */
+    private setFocus(): void {
         let input = <HTMLElement>document.querySelector('ion-searchbar input');
         if (input != null) {
             setTimeout(() => {

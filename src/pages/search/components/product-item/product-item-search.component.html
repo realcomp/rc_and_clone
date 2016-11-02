@@ -2,6 +2,6 @@
   <div class="product-inner grid-flex grid-flex-align-center">
     <product-rating-component [dangerLevel]="product.danger_level" [rating]="product.rating" [tested]="product.tested"></product-rating-component>
     <img class="product-logo" src="{{ product.thumbnail }}">
-    <div class="product-name">{{ slug }} {{ product.name }}</div>
+    <div class="product-name">{{ product.slug }} {{ product.name }}</div>
   </div>
 </div>

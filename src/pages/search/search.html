@@ -29,6 +29,8 @@
       <div class="grid-padding grid-column-6 grid-column-small-12 grid-left grid-flex" *ngFor="let product of products">
 
         <product-item-search-component
+          (click)="setCurrentCategory(product['category_id'])"
+          [category]="currentCategory"
           [product]="product">
         </product-item-search-component>
 

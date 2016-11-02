@@ -24,6 +24,7 @@ export class ProductItemSearch extends ProductItem {
 
 
     @Input() product: ProductItemInterface;
+    @Input() category;
 
 
     /**
@@ -38,8 +39,16 @@ export class ProductItemSearch extends ProductItem {
     /**
      *
      */
-    protected goToProductPage() {
-       console.log('ready go to page');
+    protected goToProductPage(): void {
+        let product = this.product;
+        setTimeout(() => {
+            this.navCtrl.push(ProductPage, {
+                product,
+                slug: product.slug,
+                categoryTitle: this.category.name,
+                properties: this.category.properties
+            });
+        }, 0);
     }
 
 
