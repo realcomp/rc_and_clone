@@ -36,18 +36,19 @@
     "@ionic/app-scripts": "^0.0.36",
     "typescript": "^2.0.3"
   },
+
   "cordovaPlugins": [
+    "cordova-plugin-compat",
+    "cordova-plugin-device",
+    "cordova-plugin-console",
     "cordova-plugin-whitelist",
-    {
-      "locator": "https://github.com/VersoSolutions/CordovaClipboard",
-      "id": "com.verso.cordova.clipboard"
-    },
-    {
-      "locator": "https://github.com/apache/cordova-plugin-splashscreen.git",
-      "id": "cordova-plugin-splashscreen"
-    },
-    "cordova-plugin-crosswalk-webview"
+    "cordova-plugin-splashscreen",
+    "cordova-plugin-statusbar",
+    "cordova-plugin-network-information",
+    "ionic-plugin-keyboard",
+    "phonegap-plugin-barcodescanner"
   ],
+
   "cordovaPlatforms": [
     "ios",
     "android"

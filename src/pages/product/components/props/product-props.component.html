@@ -1,4 +1,4 @@
-<div class="container-section" *ngIf="properties.length > 0">
+<div class="container-section" *ngIf="properties && properties.length > 0">
   <div class="b-title">Характеристики</div>
   <div class="container-product-props" *ngFor="let property of properties">
     <div class="b-title b-title-small">{{ property.name }}</div>

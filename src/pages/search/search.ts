@@ -131,7 +131,6 @@ export class SearchPage implements LoadingInterface {
                 properties: this.categories[id]['properties']
             }
         }
-
     }
 
 
