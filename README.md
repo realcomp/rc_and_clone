@@ -1,4 +1,4 @@
 # Roscontrol Android Application
 
 
-`ionic state reet`s - install cordovaPlugins
+`ionic state reset` - install cordovaPlugins
