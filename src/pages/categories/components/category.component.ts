@@ -48,7 +48,7 @@ export class Category {
      *
      */
     handlerSelect() {
-        let { id, name, properties } = this.category;
+        let { id, name, properties, ratings } = this.category;
         let subCount = Number(this.category.stats['subcategory_count']);
         let slug = this.category['show_name_in_product_list'] ? this.category['name_sg'] : '';
 
@@ -56,7 +56,7 @@ export class Category {
             this.goToCategoriesPage(id, name);
         }
         else {
-            this.goToProductsPage(id, name, properties, slug);
+            this.goToProductsPage(id, name, properties, ratings, slug);
         }
     }
 
@@ -79,13 +79,15 @@ export class Category {
      * @param id
      * @param title
      * @param properties
+     * @param ratings
      * @param slug
      */
-    private goToProductsPage(id: number, title: string, properties, slug?: string) {
+    private goToProductsPage(id: number, title: string, properties: any, ratings: any, slug?: string) {
         this.navCtrl.push(ProductsPage, {
             id,
             title,
             properties,
+            ratings,
             slug
         });
     }

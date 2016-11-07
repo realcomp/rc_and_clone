@@ -18,6 +18,7 @@ export class ProductPage {
     public product:ProductInterface;
     public slug:string;
     public productProperties:any[];
+    public productRatings:any[];
 
 
     /**
@@ -30,6 +31,7 @@ export class ProductPage {
         this.categoryTitle = '';
         this.product = <ProductInterface>{};
         this.productProperties = [];
+        this.productRatings = [];
     }
 
 
@@ -40,6 +42,7 @@ export class ProductPage {
         this.product = this.navParams.get('product');
         this.slug = this.navParams.get('slug');
         this.buildProductProps(this.navParams.get('properties'));
+        this.buildProductRatings(this.navParams.get('ratings'))
     }
 
 
@@ -61,9 +64,19 @@ export class ProductPage {
      *
      * @param categoryProperties
      */
-    private buildProductProps(categoryProperties) {
+    private buildProductProps(categoryProperties): void {
         let productValues = this.product['property_values'];
         this.productProperties = this.productService.getProperties(categoryProperties, productValues);
+    }
+
+
+    /**
+     *
+     * @param categoryRatings
+     */
+    private buildProductRatings(categoryRatings): void {
+        let productRatings = this.product['rating_values'];
+        this.productRatings = this.productService.getRatingsCategoryAndProduct(categoryRatings, productRatings);
     }
 
 

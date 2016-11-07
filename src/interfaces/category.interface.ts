@@ -9,5 +9,6 @@ export interface CategoryInterface {
     show_brand: boolean,
     name_sg: string,
     stats: any[],
-    properties: any
+    properties: any,
+    ratings: any
 }

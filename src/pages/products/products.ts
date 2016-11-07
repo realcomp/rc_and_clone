@@ -30,7 +30,8 @@ enum ProductStatus {Tested, BlackList, NotTested }
 export class ProductsPage implements LoadingInterface {
 
 
-    public products: Array<any>;
+    public products: any[];
+    public ratings: any[];
     public productsEmpty: boolean;
     public segment: string;
     public title: string;
@@ -58,6 +59,7 @@ export class ProductsPage implements LoadingInterface {
      */
     constructor(public app:App, public navCtrl:NavController, public navParams:NavParams, public connect:ConnectService, public loadingCtrl: LoadingController) {
         this.products = [];
+        this.ratings = [];
         this.productsEmpty = false;
         this.segment = 'all';
         this.title = '';
@@ -78,6 +80,7 @@ export class ProductsPage implements LoadingInterface {
     ionViewDidLoad() {
         this.properties = this.navParams.get('properties');
         this.slug = this.navParams.get('slug');
+        this.ratings = this.navParams.get('ratings');
     }
 
 

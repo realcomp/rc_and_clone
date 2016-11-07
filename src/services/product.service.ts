@@ -92,4 +92,30 @@ export class ProductService {
         return properties;
     }
 
+
+    /**
+     *
+     * @param categoryRatings
+     * @param productRatings
+     * @returns {any[]}
+     */
+    getRatingsCategoryAndProduct(categoryRatings: any, productRatings: any): any[] {
+        let finalRatings: any[] = [];
+
+        if(categoryRatings && productRatings) {
+            for(let id in productRatings) {
+                if(productRatings.hasOwnProperty(id)) {
+                    let ratingsOject: any = {};
+                    if(id in categoryRatings) {
+                        ratingsOject['name'] = categoryRatings[id];
+                        ratingsOject['value'] = productRatings[id];
+                    }
+                    finalRatings.push(ratingsOject);
+                }
+            }
+        }
+
+        return finalRatings;
+    }
+
 }

@@ -7,6 +7,9 @@
       <span class="b-title" *ngIf="isFineProduct()">Результаты экпертизы</span>
       <span class="b-title" *ngIf="isDangerProduct()">Товар с замечаниями</span>
     </div>
+
+    <product-rating-rows-component [ratings]="ratings"></product-rating-rows-component>
+
     <div class="b-title-small">Результаты теста</div>
   </div>
 

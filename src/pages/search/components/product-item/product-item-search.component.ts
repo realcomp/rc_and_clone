@@ -41,7 +41,6 @@ export class ProductItemSearch extends ProductItem {
      */
     protected goToProductPage(): void {
         let product = this.product;
-        console.log(this.category)
         setTimeout(() => {
             this.navCtrl.push(ProductPage, {
                 product,

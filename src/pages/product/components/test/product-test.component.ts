@@ -18,6 +18,7 @@ export class ProductTest {
 
 
     @Input() product: any;
+    @Input() ratings: any;
 
 
     /**

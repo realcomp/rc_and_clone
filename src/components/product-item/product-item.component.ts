@@ -25,7 +25,8 @@ export class ProductItem {
     @Input() product: ProductItemInterface;
     @Input() slug: string;
     @Input() categoryTitle: string;
-    @Input() properties: any;
+    @Input() properties: any[];
+    @Input() ratings: any[];
 
 
     /**
@@ -38,7 +39,7 @@ export class ProductItem {
     /**
      *
      */
-    handlerSelect() {
+    handlerSelect(): void {
         this.goToProductPage();
     }
 
@@ -46,16 +47,17 @@ export class ProductItem {
     /**
      *
      */
-    protected goToProductPage() {
+    protected goToProductPage(): void {
         let product = this.product;
+        let ratings: any = this.ratings;
         this.navCtrl.push(ProductPage, {
             product,
+            ratings,
             slug: this.slug,
             categoryTitle: this.categoryTitle,
             properties: this.properties
         });
     }
-
 
 }
 
