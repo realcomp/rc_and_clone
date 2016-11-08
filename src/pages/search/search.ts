@@ -7,14 +7,12 @@
 
 
 import { Component, ViewChild } from '@angular/core';
-import { App, NavController, LoadingController, Platform, Searchbar } from 'ionic-angular';
+import { Platform, Searchbar } from 'ionic-angular';
 
 import { Utils } from '../../libs/Utils';
 import { UrlManager } from '../../libs/UrlManager';
 import { API } from '../../config/';
 import { ConnectService } from '../../services/connect.service';
-
-import { LoadingInterface } from '../../interfaces/loading.interface';
 
 import { ProductPage } from '../product/product';
 
@@ -25,7 +23,7 @@ import { ProductPage } from '../product/product';
 })
 
 
-export class SearchPage implements LoadingInterface {
+export class SearchPage {
 
 
     @ViewChild('searchbar') searchbar:Searchbar;
@@ -42,19 +40,15 @@ export class SearchPage implements LoadingInterface {
 
     private limit: number;
     private offset: number;
-    private loading: any;
-    private searchFreeze: boolean;
+    private startedSearch: boolean;
 
 
     /**
      *
-     * @param app
-     * @param navCtrl
      * @param connect
-     * @param loadingCtrl
      * @param platform
      */
-    constructor(public app:App, public navCtrl:NavController, public connect:ConnectService, public loadingCtrl: LoadingController, private platform:Platform) {
+    constructor(private connect:ConnectService, private platform:Platform) {
         this.inputSearchValue = '';
 
         this.products = [];
@@ -66,7 +60,7 @@ export class SearchPage implements LoadingInterface {
 
         this.limit = 100;
         this.offset = 0;
-        this.searchFreeze = false;
+        this.startedSearch = false;
     }
 
 
@@ -83,38 +77,27 @@ export class SearchPage implements LoadingInterface {
      * @param event
      */
     onInput(event): void {
-        if(this.inputSearchValue.length >= 3 && !this.searchFreeze) {
+        if(this.inputSearchValue.length >= 3 && !this.startedSearch) {
             this.doSearch();
         }
     }
 
-
-    /**
-     *
-     * @param event
-     */
-    onCancel(event): void {
-
-    }
 
 
     /**
      *
      */
     doSearch(): void {
-        this.products = [];
-        this.searchFreeze = true;
-        //this.showLoader();
+        this.resetProducts();
+        this.startedSearch = true;
         this.getProducts().then(
             (data) => {
-                //this.hideLoader();
                 this.buildCategories(data['categories']);
                 this.updateProducts(data['products']);
-                this.searchFreeze = false;
+                this.startedSearch = false;
             },
             (error) => {
-                //this.hideLoader();
-                this.searchFreeze = false;
+                this.startedSearch = false;
                 this.connect.showErrorAlert();
                 console.error(`Error: ${error}`);
             }
@@ -138,25 +121,6 @@ export class SearchPage implements LoadingInterface {
         }
     }
 
-
-    /**
-     *
-     */
-    showLoader(): void {
-        this.loading = this.loadingCtrl.create({
-            content: 'Ищу товары'
-        });
-
-        this.loading.present();
-    }
-
-
-    /**
-     *
-     */
-    hideLoader(): void {
-        this.loading.dismissAll();
-    }
 
 
     /**
@@ -263,8 +227,7 @@ export class SearchPage implements LoadingInterface {
             let categoryId = product['category_id'];
             product['slug'] = '';
             if(categoryId in this.categories) {
-                let slug = this.categories[categoryId]['show_name_in_product_list'] ? this.categories[categoryId]['name_sg'] : '';
-                product['slug'] = slug;
+                product['slug'] = this.categories[categoryId]['show_name_in_product_list'] ? this.categories[categoryId]['name_sg'] : '';
             }
         }
 

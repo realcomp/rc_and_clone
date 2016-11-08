@@ -24,7 +24,7 @@
 <ion-content no-bounce>
 
 
-  <ion-list no-lines *ngIf="!productsEmpty && inputSearchValue.length >= 3" class="grid-row" no-lines>
+  <ion-list no-lines *ngIf="!productsEmpty && inputSearchValue.length >= 3 && !startedSearch" class="grid-row" no-lines>
 
     <div class="container-section grid-flex">
       <div class="grid-padding grid-column-6 grid-column-small-12 grid-left grid-flex" *ngFor="let product of products">
@@ -40,8 +40,13 @@
 
   </ion-list>
 
-  <div class="b-empty-box" *ngIf="inputSearchValue.length < 3">Начните вводить название товара для поиска</div>
+  <div *ngIf="startedSearch" class="b-search-spinner">
+    <ion-spinner></ion-spinner>
+    <div>Ищу товары...</div>
+  </div>
 
-  <div class="b-empty-box" *ngIf="productsEmpty && inputSearchValue.length >= 3">К сожалению, по вашему запросу ничего не найдено</div>
+  <div class="b-empty-box" *ngIf="inputSearchValue.length < 3 && !startedSearch">Начните вводить название товара для поиска</div>
+
+  <div class="b-empty-box" *ngIf="productsEmpty && inputSearchValue.length >= 3 && !startedSearch">К сожалению, по вашему запросу ничего не найдено</div>
 
 </ion-content>
