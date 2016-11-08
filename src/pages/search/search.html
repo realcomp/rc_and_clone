@@ -8,8 +8,9 @@
   </ion-navbar>
 
   <ion-searchbar
+    #searchbar
     placeholder="Название товара..."
-    debounce="500"
+    debounce="700"
     [(ngModel)]="inputSearchValue"
     (ionInput)="onInput($event)"
     (ionCancel)="onCancel($event)">

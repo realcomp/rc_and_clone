@@ -6,8 +6,8 @@
 'use strict';
 
 
-import { Component } from '@angular/core';
-import { App, NavController, LoadingController } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { App, NavController, LoadingController, Platform, Searchbar } from 'ionic-angular';
 
 import { Utils } from '../../libs/Utils';
 import { UrlManager } from '../../libs/UrlManager';
@@ -26,6 +26,9 @@ import { ProductPage } from '../product/product';
 
 
 export class SearchPage implements LoadingInterface {
+
+
+    @ViewChild('searchbar') searchbar:Searchbar;
 
 
     public inputSearchValue: string;
@@ -49,8 +52,9 @@ export class SearchPage implements LoadingInterface {
      * @param navCtrl
      * @param connect
      * @param loadingCtrl
+     * @param platform
      */
-    constructor(public app:App, public navCtrl:NavController, public connect:ConnectService, public loadingCtrl: LoadingController) {
+    constructor(public app:App, public navCtrl:NavController, public connect:ConnectService, public loadingCtrl: LoadingController, private platform:Platform) {
         this.inputSearchValue = '';
 
         this.products = [];
@@ -70,7 +74,7 @@ export class SearchPage implements LoadingInterface {
      *
      */
     ionViewDidEnter() {
-        this.setFocus()
+        this.setFocus();
     }
 
 
@@ -100,16 +104,16 @@ export class SearchPage implements LoadingInterface {
     doSearch(): void {
         this.products = [];
         this.searchFreeze = true;
-        this.showLoader();
+        //this.showLoader();
         this.getProducts().then(
             (data) => {
-                this.hideLoader();
+                //this.hideLoader();
                 this.buildCategories(data['categories']);
                 this.updateProducts(data['products']);
                 this.searchFreeze = false;
             },
             (error) => {
-                this.hideLoader();
+                //this.hideLoader();
                 this.searchFreeze = false;
                 this.connect.showErrorAlert();
                 console.error(`Error: ${error}`);
@@ -126,7 +130,6 @@ export class SearchPage implements LoadingInterface {
      */
     setCurrentCategory(id: number): void {
         if(id in this.categories) {
-            console.log(this.categories[id])
             this.currentCategory = {
                 name: this.categories[id]['name_sg'],
                 properties: this.categories[id]['properties'],
@@ -194,7 +197,6 @@ export class SearchPage implements LoadingInterface {
     private updateProducts(products: any): void {
         this.products = this.sortingProducts(products);
         this.addSlugForProducts();
-        this.setFocus();
         this.productsEmpty = this.products.length == 0;
     }
 
@@ -273,12 +275,13 @@ export class SearchPage implements LoadingInterface {
      *
      */
     private setFocus(): void {
-        let input = <HTMLElement>document.querySelector('ion-searchbar input');
-        if (input != null) {
-            setTimeout(() => {
-                input.focus();
-            }, 500)
-        }
+        this.platform.ready().then(() => {
+            this.searchbar.setFocus();
+            if ('cordova' in window) {
+                window['cordova'].plugins.Keyboard.show();
+            }
+        });
+
     }
 
 

@@ -288,12 +288,12 @@ export class ProductsPage implements LoadingInterface {
      * @returns {any}
      */
     private sortingProducts(products: any) {
-        products.sort(Utils.sortBy({
-            name: 'danger_level'
-        }, {
-            name: 'rating',
-            reverse: true
-        }));
+        //products.sort(Utils.sortBy({
+        //    name: 'danger_level'
+        //}, {
+        //    name: 'rating',
+        //    reverse: true
+        //}));
 
         return products;
 
