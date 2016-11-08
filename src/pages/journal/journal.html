@@ -8,7 +8,7 @@
 
 
 <ion-content>
-  <ion-list [hidden]="articlesEmpty">
+  <ion-list *ngIf="!articlesEmpty">
 
     <ion-card *ngFor="let article of articles" (click)="handlerSelect(article.id)">
       <img src="{{ article.image }}"/>
@@ -25,7 +25,7 @@
 
   </ion-list>
 
-  <ion-list-header [hidden]="!articlesEmpty">
+  <ion-list-header *ngIf="articlesEmpty">
       Статьи не найдены
   </ion-list-header>
 

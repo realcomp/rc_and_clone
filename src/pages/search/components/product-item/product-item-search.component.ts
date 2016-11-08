@@ -44,6 +44,7 @@ export class ProductItemSearch extends ProductItem {
         setTimeout(() => {
             this.navCtrl.push(ProductPage, {
                 product,
+                ratings: this.category.ratings,
                 slug: product.slug,
                 categoryTitle: this.category.name,
                 properties: this.category.properties

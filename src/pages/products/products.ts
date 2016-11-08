@@ -7,7 +7,7 @@
 
 
 import { Component } from '@angular/core';
-import { App, NavController, NavParams, LoadingController } from 'ionic-angular';
+import { App, NavParams, LoadingController } from 'ionic-angular';
 
 import { Utils } from '../../libs/Utils';
 import { UrlManager } from '../../libs/UrlManager';
@@ -52,12 +52,11 @@ export class ProductsPage implements LoadingInterface {
     /**
      *
      * @param app
-     * @param navCtrl
      * @param navParams
      * @param connect
      * @param loadingCtrl
      */
-    constructor(public app:App, public navCtrl:NavController, public navParams:NavParams, public connect:ConnectService, public loadingCtrl: LoadingController) {
+    constructor(public app:App, public navParams:NavParams, public connect:ConnectService, public loadingCtrl: LoadingController) {
         this.products = [];
         this.ratings = [];
         this.productsEmpty = false;
@@ -138,8 +137,7 @@ export class ProductsPage implements LoadingInterface {
         this.getProducts(this.id).then(
             (data) => {
                 this.hideLoader();
-                let products = this.sortingProducts(data);
-                this.updateProducts(products);
+                this.updateProducts(data);
             },
             (error) => {
                 this.hideLoader();
@@ -155,10 +153,10 @@ export class ProductsPage implements LoadingInterface {
      * @param infiniteScroll
      */
     doInfinite(infiniteScroll: any) {
+        this.offset += this.stepOffset;
         this.getProducts(this.id).then(
             (data) => {
                 infiniteScroll.complete();
-                this.offset += this.stepOffset;
                 this.updateProducts(data);
             },
             (error) => {
@@ -221,8 +219,7 @@ export class ProductsPage implements LoadingInterface {
 
                 callback();
 
-                let products = this.sortingProducts(data);
-                this.updateProducts(products);
+                this.updateProducts(data);
             },
             (error) => {
                 this.hideLoader();
@@ -271,7 +268,7 @@ export class ProductsPage implements LoadingInterface {
      * @param products
      */
     private updateProducts(products: any) {
-        this.products = this.products.concat(products);
+        this.products = this.sortingProducts(this.products.concat(products));
         this.productsEmpty = this.products.length == 0;
     }
 

@@ -22,7 +22,7 @@
 
 <ion-content no-bounce>
 
-  <ion-list [hidden]="categoriesEmpty" class="grid-row" no-lines>
+  <ion-list *ngIf="!categoriesEmpty" class="grid-row" no-lines>
     <div class="container-section grid-flex">
       <div class="grid-padding grid-column-6 grid-column-small-12 grid-left grid-flex" *ngFor="let category of categories">
         <category-component [category]="category" ></category-component>
@@ -30,6 +30,6 @@
     </div>
   </ion-list>
 
-  <div [hidden]="!categoriesEmpty" class="b-empty-box">Категории не найдены</div>
+  <div *ngIf="categoriesEmpty" class="b-empty-box">Категории не найдены</div>
 
 </ion-content>

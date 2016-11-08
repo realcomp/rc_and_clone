@@ -29,9 +29,8 @@ export class SearchPage implements LoadingInterface {
 
 
     public inputSearchValue: string;
-
-
     public products: Array<any>;
+    public ratings: any[];
     public productsEmpty: boolean;
     public categories: any;
     public segment: string;
@@ -55,6 +54,7 @@ export class SearchPage implements LoadingInterface {
         this.inputSearchValue = '';
 
         this.products = [];
+        this.ratings = [];
         this.productsEmpty = false;
         this.categories = {};
         this.currentCategory = {};
@@ -126,9 +126,11 @@ export class SearchPage implements LoadingInterface {
      */
     setCurrentCategory(id: number): void {
         if(id in this.categories) {
+            console.log(this.categories[id])
             this.currentCategory = {
                 name: this.categories[id]['name_sg'],
-                properties: this.categories[id]['properties']
+                properties: this.categories[id]['properties'],
+                ratings: this.categories[id]['ratings']
             }
         }
     }
@@ -240,7 +242,8 @@ export class SearchPage implements LoadingInterface {
                 this.categories[category.id] = {
                     'show_name_in_product_list': category['show_name_in_product_list'],
                     'name_sg': category['name_sg'],
-                    properties: category['properties']
+                    properties: category['properties'],
+                    ratings: category['ratings']
                 }
             }
         }
