@@ -1,6 +1,24 @@
-import { Component } from '@angular/core';
+/**
+ * Created by maxim on 18.10.16.
+ */
 
-import { PopoverController, AlertController, Platform } from 'ionic-angular';
+
+'use strict';
+
+
+import { Component } from '@angular/core';
+import { AlertController, Platform, NavController } from 'ionic-angular';
+
+import { Utils } from '../../libs/Utils';
+import { API } from '../../config/';
+import { UrlManager } from '../../libs/UrlManager';
+import { ConnectService } from '../../services/connect.service';
+import { ProductService } from '../../services/product.service';
+
+import { ProductItemInterface } from '../../interfaces/productItem.interface';
+
+import { ProductPage } from '../product/product';
+import { ScannerNotFoundPage } from '../scanner-not-found/scanner-not-found';
 
 
 @Component({
@@ -12,44 +30,132 @@ import { PopoverController, AlertController, Platform } from 'ionic-angular';
 export class ScannerPage {
 
 
+    public title: string;
+
+
     /**
      *
      * @param platform
      * @param alertCtrl
+     * @param navCtrl
+     * @param connect
+     * @param productService
      */
-    constructor(private platform:Platform, private alertCtrl: AlertController) {}
+    constructor(
+        private platform:Platform,
+        private alertCtrl: AlertController,
+        private navCtrl:NavController,
+        private connect:ConnectService,
+        private productService: ProductService
+    ) {
+        this.title = 'Сканер по штрихкоду';
+    }
 
 
     /**
      *
      */
-    public scan(): void {
+    public onScan(): void {
         this.platform.ready().then(() => {
             if ('cordova' in window) {
                 window['cordova'].plugins.barcodeScanner.scan((result) => {
-                    let alert = this.alertCtrl.create({
-                        title: 'Scan Results',
-                        subTitle: result.text,
-                        buttons: [{
-                            text: 'Ок',
-                        }]
-                    });
-                    alert.present();
+                    this.onSuccessScan(result.text);
                 }, (error) => {
                     let alert = this.alertCtrl.create({
-                        title: 'Attention',
+                        title: 'Ошибка сканирования',
                         subTitle: error,
                         buttons: [{
-                            text: 'Ок',
+                            text: 'Закрыть',
                         }]
                     });
                     alert.present();
                 });
             }
             else {
+                this.onSuccessScan(2912356005845);
                 console.warn('Scanner supported only real devices!')
             }
         });
     }
+
+
+    /**
+     *
+     * @param code
+     */
+    private onSuccessScan(code): void {
+        let promise = this.getProductOnBarcode(code);
+        promise.then(
+            (data) => {
+                this.processApiResult(data);
+            },
+            (error) => {
+                this.connect.showErrorAlert();
+                console.error(`Error: ${error}`);
+            }
+        );
+    }
+
+
+    /**
+     *
+     * @param data
+     */
+    private processApiResult(data: any[]): void {
+        if(data[0].length > 1 && data[1].length > 1) {
+            let category = data[0][0];
+            let product = data[1][0];
+            let slug = this.productService.getSlug(category);
+            this.goToProductPage(product, category['rating_values'], slug, category.name, category['property_values']);
+        }
+        else {
+            this.navCtrl.push(ScannerNotFoundPage);
+        }
+    }
+
+
+    /**
+     *
+     * @param code
+     * @returns {Promise<T>}
+     */
+    private getProductOnBarcode(code): any {
+        return new Promise((resolve, reject) => {
+            let url = UrlManager.createUrlWithParams(API.barcode, {
+                code
+            });
+            let promise = this.connect.load('get', url);
+            promise.then((result) => {
+                    let data = Utils.jsonParse(result['_body']).data;
+                    if (data != null) {
+                        resolve(data);
+                    }
+                },
+                (error) => {
+                    reject(`Error: ${error}`);
+                }
+            );
+        });
+    }
+
+
+    /**
+     *
+     * @param product
+     * @param ratings
+     * @param slug
+     * @param categoryTitle
+     * @param properties
+     */
+    private goToProductPage(product:ProductItemInterface, ratings: any[], slug: string, categoryTitle: string, properties: any[]): void {
+        this.navCtrl.push(ProductPage, {
+            product,
+            slug,
+            categoryTitle,
+            ratings,
+            properties
+        });
+    }
+
 
 }

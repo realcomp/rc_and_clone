@@ -4,10 +4,8 @@
 
 
 import { Component, Input } from '@angular/core';
-
 import { NavController } from 'ionic-angular';
 
-import { ProductService } from '../../../../services/product.service';
 import { ProductItemInterface } from '../../../../interfaces/productItem.interface';
 import { ProductItem } from '../../../../components/product-item/product-item.component';
 

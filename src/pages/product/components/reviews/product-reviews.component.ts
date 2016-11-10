@@ -141,7 +141,7 @@ export class ProductReviews implements LoadingInterface {
      * @param showLoader
      * @returns {Promise<T>}
      */
-    private getReviews(id: number, showLoader?: boolean) {
+    private getReviews(id: number, showLoader?: boolean): Promise<any> {
         return new Promise((resolve, reject) => {
 
             if(showLoader) {

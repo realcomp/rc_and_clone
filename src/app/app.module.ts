@@ -43,6 +43,7 @@ import { ProfilePage } from '../pages/profile/profile';
 import { ShoppingListPage } from '../pages/shopping-list/shopping-list';
 import { AboutPage } from '../pages/about/about';
 import { ScannerPage } from '../pages/scanner/scanner';
+import { ScannerNotFoundPage } from '../pages/scanner-not-found/scanner-not-found';
 
 import { SearchPage } from '../pages/search/search';
 import { ProductItemSearch } from '../pages/search/components/product-item/product-item-search.component';
@@ -80,6 +81,7 @@ import { ProductItemSearch } from '../pages/search/components/product-item/produ
     ProductPage,
     JournalPage,
     ScannerPage,
+    ScannerNotFoundPage,
 
     SearchPage,
     ProductItemSearch
@@ -119,6 +121,7 @@ import { ProductItemSearch } from '../pages/search/components/product-item/produ
     ProductPage,
     JournalPage,
     ScannerPage,
+    ScannerNotFoundPage,
 
     SearchPage,
     ProductItemSearch

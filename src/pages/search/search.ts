@@ -13,8 +13,7 @@ import { Utils } from '../../libs/Utils';
 import { UrlManager } from '../../libs/UrlManager';
 import { API } from '../../config/';
 import { ConnectService } from '../../services/connect.service';
-
-import { ProductPage } from '../product/product';
+import { ProductService } from '../../services/product.service';
 
 
 @Component({
@@ -47,8 +46,9 @@ export class SearchPage {
      *
      * @param connect
      * @param platform
+     * @param productService
      */
-    constructor(private connect:ConnectService, private platform:Platform) {
+    constructor(private connect:ConnectService, private platform:Platform, private productService: ProductService) {
         this.inputSearchValue = '';
 
         this.products = [];
@@ -67,7 +67,7 @@ export class SearchPage {
     /**
      *
      */
-    ionViewDidEnter() {
+    public ionViewDidEnter() {
         this.setFocus();
     }
 
@@ -76,7 +76,7 @@ export class SearchPage {
      *
      * @param event
      */
-    onInput(event): void {
+    public onInput(event): void {
         if(this.inputSearchValue.length >= 3 && !this.startedSearch) {
             this.doSearch();
         }
@@ -87,7 +87,7 @@ export class SearchPage {
     /**
      *
      */
-    doSearch(): void {
+    public doSearch(): void {
         this.resetProducts();
         this.startedSearch = true;
         this.getProducts().then(
@@ -111,7 +111,7 @@ export class SearchPage {
      * После чего будет скорее всего осуществлен переход на страницу товара
      * @param id
      */
-    setCurrentCategory(id: number): void {
+    public setCurrentCategory(id: number): void {
         if(id in this.categories) {
             this.currentCategory = {
                 name: this.categories[id]['name_sg'],
@@ -127,7 +127,7 @@ export class SearchPage {
      *
      * @returns {Promise<T>}
      */
-    private getProducts() {
+    private getProducts(): Promise<any> {
         return new Promise((resolve, reject) => {
             let url = UrlManager.createUrlWithParams(API.search, {
                 limit: this.limit,
@@ -227,7 +227,7 @@ export class SearchPage {
             let categoryId = product['category_id'];
             product['slug'] = '';
             if(categoryId in this.categories) {
-                product['slug'] = this.categories[categoryId]['show_name_in_product_list'] ? this.categories[categoryId]['name_sg'] : '';
+                product['slug'] = this.productService.getSlug(this.categories[categoryId]);
             }
         }
 

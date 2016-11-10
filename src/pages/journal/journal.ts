@@ -24,18 +24,28 @@ export class JournalPage {
     public title: string = 'Журнал покупателя';
 
 
-
+    /**
+     *
+     * @param app
+     * @param navCtrl
+     * @param navParams
+     * @param connect
+     */
     constructor(public app:App, public navCtrl:NavController, public navParams:NavParams, private connect:ConnectService) {}
 
 
-
-    ionViewWillEnter() {
+    /**
+     *
+     */
+    public ionViewWillEnter(): void {
         this.app.setTitle(this.title);
     }
 
 
-
-    ngAfterViewInit() {
+    /**
+     *
+     */
+    public ngAfterViewInit(): void {
         let promise = this.getArticles();
         promise.then(
             (data) => {
@@ -50,7 +60,7 @@ export class JournalPage {
      *
      * @param categories
      */
-    updateArticles(articles: any) {
+    public updateArticles(articles: any): void {
         this.articles = articles;
         this.articlesEmpty = this.articles.length == 0 ? true : false;
     }
@@ -61,7 +71,7 @@ export class JournalPage {
      * @param id
      * @returns {Promise<T>}
      */
-    getArticles(id?: number) {
+    public getArticles(id?: number): Promise<any> {
         return new Promise((resolve, reject) => {
             let url = UrlManager.createUrlWithParams(API.articles);
             let promise = this.connect.load('get', url);
@@ -83,12 +93,16 @@ export class JournalPage {
      *
      * @param category
      */
-    handlerSelect(id: number) {
+    public handlerSelect(id: number): void {
         this.goToProductsPage(id);
     }
 
 
-    private goToProductsPage(id: number) {
+    /**
+     *
+     * @param id
+     */
+    private goToProductsPage(id: number): void {
         this.navCtrl.push(ArticlePage, {
             id,
         });

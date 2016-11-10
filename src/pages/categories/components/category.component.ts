@@ -7,6 +7,7 @@ import { Component, Input } from '@angular/core';
 import { NavController } from 'ionic-angular';
 
 import { Utils } from '../../../libs/Utils';
+import { ProductService } from '../../../services/product.service';
 
 import { CategoryInterface } from '../../../interfaces/category.interface';
 
@@ -32,14 +33,15 @@ export class Category {
     /**
      *
      * @param navCtrl
+     * @param productService
      */
-    constructor(private navCtrl:NavController) {}
+    constructor(private navCtrl:NavController, private productService: ProductService) {}
 
 
     /**
      *
      */
-    ngOnInit() {
+    ngOnInit(): void {
         this.setCountTestedText();
     }
 
@@ -47,10 +49,10 @@ export class Category {
     /**
      *
      */
-    handlerSelect() {
+    handlerSelect(): void {
         let { id, name, properties, ratings } = this.category;
         let subCount = Number(this.category.stats['subcategory_count']);
-        let slug = this.category['show_name_in_product_list'] ? this.category['name_sg'] : '';
+        let slug = this.productService.getSlug(this.category);
 
         if(subCount > 0) {
             this.goToCategoriesPage(id, name);
@@ -66,7 +68,7 @@ export class Category {
      * @param id
      * @param title
      */
-    private goToCategoriesPage(id: number, title: string) {
+    private goToCategoriesPage(id: number, title: string): void {
         this.navCtrl.push(CategoriesPage, {
             id,
             title
@@ -82,7 +84,7 @@ export class Category {
      * @param ratings
      * @param slug
      */
-    private goToProductsPage(id: number, title: string, properties: any, ratings: any, slug?: string) {
+    private goToProductsPage(id: number, title: string, properties: any, ratings: any, slug?: string): void {
         this.navCtrl.push(ProductsPage, {
             id,
             title,
@@ -96,7 +98,7 @@ export class Category {
     /**
      *
      */
-    private setCountTestedText() {
+    private setCountTestedText(): void {
         const count = this.category.stats['product_tested_count'];
         if(count === 0) {
             this.countTestedText = 'Ожидают проверки';

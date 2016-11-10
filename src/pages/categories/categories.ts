@@ -14,7 +14,6 @@ import { UrlManager } from '../../libs/UrlManager';
 import { API } from '../../config/';
 
 import { ConnectService } from '../../services/connect.service';
-
 import { LoadingInterface } from '../../interfaces/loading.interface';
 
 import { AboutPage } from '../about/about';
@@ -48,7 +47,13 @@ export class CategoriesPage implements LoadingInterface {
      * @param connect
      * @param loadingCtrl
      */
-    constructor(public app:App, public navCtrl:NavController, public navParams:NavParams, public connect:ConnectService, public loadingCtrl: LoadingController) {
+    constructor(
+        private app:App,
+        private navCtrl:NavController,
+        private navParams:NavParams,
+        private connect:ConnectService,
+        private loadingCtrl: LoadingController) {
+
         this.categories = [];
         this.categoriesEmpty = false;
         this.isRootCategories = false;
@@ -57,14 +62,13 @@ export class CategoriesPage implements LoadingInterface {
 
         this.limit = 30;
         this.offset = 0;
-
     }
 
 
     /**
      *
      */
-    ionViewWillEnter() {
+    ionViewWillEnter(): void {
         this.title = this.navParams.get('title') || 'Рейтинг товаров';
         this.app.setTitle(this.title);
     }
@@ -73,7 +77,7 @@ export class CategoriesPage implements LoadingInterface {
     /**
      *
      */
-    ngAfterViewInit() {
+    ngAfterViewInit(): void {
         let id = this.navParams.get('id') || 0;
         if(id == 0) {
             this.isRootCategories = true;
@@ -93,20 +97,18 @@ export class CategoriesPage implements LoadingInterface {
     }
 
 
-
     /**
      *
      */
-    handlerLogoClick() {
+    handlerLogoClick(): void {
         this.goToAboutPage();
     }
 
 
-
     /**
      *
      */
-    showLoader(content?: string) {
+    showLoader(content?: string): void {
         this.loading = this.loadingCtrl.create({
             //cssClass: 'loading-stupid',
             content: content || 'Загружаю'
@@ -118,7 +120,7 @@ export class CategoriesPage implements LoadingInterface {
     /**
      *
      */
-    hideLoader() {
+    hideLoader(): void {
         //let loading = <HTMLElement>document.querySelector('.loading-stupid');
         //if(loading != null) {
         //    loading.style.display = 'none';
@@ -127,13 +129,12 @@ export class CategoriesPage implements LoadingInterface {
     }
 
 
-
     /**
      *
      * @param id
      * @returns {Promise<T>}
      */
-    private getCategories(id?: number) {
+    private getCategories(id?: number): Promise<any> {
         return new Promise((resolve, reject) => {
             this.showLoader();
             let url = UrlManager.createUrlWithParams(API.categories, {
@@ -162,7 +163,7 @@ export class CategoriesPage implements LoadingInterface {
      *
      * @param categories
      */
-    private updateCategories(categories: any) {
+    private updateCategories(categories: any): void {
         categories.sort(Utils.sortBy({
             name: 'position',
         }));
@@ -175,7 +176,7 @@ export class CategoriesPage implements LoadingInterface {
     /**
      *
      */
-    private goToAboutPage() {
+    private goToAboutPage(): void {
         this.navCtrl.push(AboutPage);
     }
 

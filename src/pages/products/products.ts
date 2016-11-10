@@ -12,7 +12,6 @@ import { App, NavParams, LoadingController } from 'ionic-angular';
 import { Utils } from '../../libs/Utils';
 import { UrlManager } from '../../libs/UrlManager';
 import { API } from '../../config/';
-
 import { ConnectService } from '../../services/connect.service';
 
 import { LoadingInterface } from '../../interfaces/loading.interface';
@@ -237,7 +236,7 @@ export class ProductsPage implements LoadingInterface {
      * @param id
      * @returns {Promise<T>}
      */
-    private getProducts(id?: number) {
+    private getProducts(id?: number): Promise<any> {
         return new Promise((resolve, reject) => {
             let url = UrlManager.createUrlWithParams(API.products, {
                 category_id: id || 0,

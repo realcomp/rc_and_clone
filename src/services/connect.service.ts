@@ -34,7 +34,7 @@ export class ConnectService {
      * @param url
      * @returns {any}
      */
-    load(type, url) {
+    public load(type, url): any {
 
         let typeFormatted: string = type.toUpperCase();
         let urlFormatted = this.changeUrlForRealDevice(url);
@@ -69,9 +69,9 @@ export class ConnectService {
     /**
      *
      * @param url
-     * @returns {Promise<T>}
+     * @returns {Promise}
      */
-    get(url) {
+    public get(url): Promise<any> {
         return new Promise((resolve, reject) => {
             this.http.get(url)
                 .subscribe((data) => {
@@ -88,7 +88,7 @@ export class ConnectService {
      * @param url
      * @returns {string}
      */
-    post(url) {
+    public post(url) {
         return 'POST';
     }
 
@@ -97,7 +97,7 @@ export class ConnectService {
      *
      * @returns {boolean}
      */
-    noConnection() {
+    public noConnection() {
         return (Network.connection === 'none');
     }
 
@@ -108,7 +108,7 @@ export class ConnectService {
      * @param subTitle
      * @param message
      */
-    showErrorAlert(title: string = 'Ошибка загрузки!', subTitle: string = 'Не удается загрузить данные, попробуйте позже.', message?: string ) {
+    public showErrorAlert(title: string = 'Ошибка загрузки!', subTitle: string = 'Не удается загрузить данные, попробуйте позже.', message?: string ) {
 
         if (this.noConnection()) {
             subTitle = 'Не удается загрузить данные, потеряно соединение с интернетом'

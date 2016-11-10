@@ -25,7 +25,7 @@ export class ProductService {
      * @param dangerLevel
      * @returns {boolean}
      */
-    isBlackListProduct(dangerLevel: number): boolean {
+    public isBlackListProduct(dangerLevel: number): boolean {
         return dangerLevel > 1;
     }
 
@@ -35,7 +35,7 @@ export class ProductService {
      * @param dangerLevel
      * @returns {boolean}
      */
-    isDangerProduct(dangerLevel: number): boolean {
+    public isDangerProduct(dangerLevel: number): boolean {
         return dangerLevel === 1;
     }
 
@@ -45,7 +45,7 @@ export class ProductService {
      * @param tested
      * @returns {boolean}
      */
-    isWaitProduct(tested: boolean): boolean {
+    public isWaitProduct(tested: boolean): boolean {
         return tested == false;
     }
 
@@ -56,7 +56,7 @@ export class ProductService {
      * @param dangerLevel
      * @returns {boolean}
      */
-    isFineProduct(tested: boolean, dangerLevel: number): boolean {
+    public isFineProduct(tested: boolean, dangerLevel: number): boolean {
         return tested && dangerLevel === 0;
     }
 
@@ -67,7 +67,7 @@ export class ProductService {
      * @param productValues
      * @returns {Array}
      */
-    getProperties(categoryProperties: any, productValues: any): any[] {
+    public getProperties(categoryProperties: any, productValues: any): any[] {
 
         let properties = [];
 
@@ -99,7 +99,7 @@ export class ProductService {
      * @param productRatings
      * @returns {any[]}
      */
-    getRatingsCategoryAndProduct(categoryRatings: any, productRatings: any): any[] {
+    public getRatingsCategoryAndProduct(categoryRatings: any, productRatings: any): any[] {
         let finalRatings: any[] = [];
 
         if(categoryRatings && productRatings) {
@@ -116,6 +116,16 @@ export class ProductService {
         }
 
         return finalRatings;
+    }
+
+
+    /**
+     *
+     * @param category
+     * @returns {any}
+     */
+    public getSlug(category: any): string {
+        return category['show_name_in_product_list'] ? category['name_sg'] : '';
     }
 
 }
