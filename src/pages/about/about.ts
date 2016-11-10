@@ -5,6 +5,7 @@ import { Component } from '@angular/core';
   selector: 'page-about',
   templateUrl: 'about.html'
 })
+
 export class AboutPage {
 
   constructor() { }

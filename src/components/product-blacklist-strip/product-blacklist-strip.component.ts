@@ -33,7 +33,7 @@ export class ProductBlackListStrip {
     /**
      *
      */
-    ngOnInit() {
+    public ngOnInit(): void {
         this.createStrip();
         this.dangerLevelText = this.getDangerLevelText(this.dangerLevel);
     }
@@ -42,7 +42,7 @@ export class ProductBlackListStrip {
     /**
      *
      */
-    private createStrip() {
+    private createStrip(): void {
         for (let i = 1; i <= 4; i++) {
             let currentValue = this.dangerLevel >= i ? 'is-black': '';
             this.blackStrip.push(currentValue);
@@ -55,7 +55,7 @@ export class ProductBlackListStrip {
      * @param level
      * @returns {string}
      */
-    private getDangerLevelText(level: number) {
+    private getDangerLevelText(level: number): string {
         let dangerLevelText: string = '';
 
         switch (level) {

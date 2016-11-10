@@ -32,7 +32,7 @@ export class ProductTest {
      *
      * @returns {boolean}
      */
-    isFineProduct() {
+    public isFineProduct(): boolean {
         return this.productService.isFineProduct(this.product['tested'], this.product['danger_level']);
     }
 
@@ -41,7 +41,7 @@ export class ProductTest {
      *
      * @returns {boolean}
      */
-    isDangerProduct() {
+    public isDangerProduct(): boolean {
         return this.productService.isDangerProduct(this.product['danger_level']);
     }
 
@@ -50,17 +50,16 @@ export class ProductTest {
      *
      * @returns {boolean}
      */
-    isBlackList() {
+    public isBlackList(): boolean {
         return this.productService.isBlackListProduct(this.product['danger_level']);
     }
-
 
 
     /**
      *
      * @returns {boolean}
      */
-    isWaitProduct() {
+    public isWaitProduct(): boolean {
         return this.productService.isWaitProduct(this.product['tested']);
     }
 

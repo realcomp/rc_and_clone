@@ -38,7 +38,7 @@ export class ProductPage {
     /**
      *
      */
-    ionViewDidLoad() {
+    public ionViewDidLoad(): void {
         this.product = this.navParams.get('product');
         this.slug = this.navParams.get('slug');
         this.buildProductProps(this.navParams.get('properties'));
@@ -49,14 +49,9 @@ export class ProductPage {
     /**
      *
      */
-    ionViewWillEnter() {
+    public ionViewWillEnter(): void {
         this.categoryTitle = this.navParams.get('categoryTitle');
         this.app.setTitle(this.categoryTitle);
-    }
-
-
-    ngAfterViewInit() {
-
     }
 
 

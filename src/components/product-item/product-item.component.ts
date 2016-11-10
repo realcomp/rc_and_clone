@@ -37,7 +37,7 @@ export class ProductItem {
     /**
      *
      */
-    handlerSelect(): void {
+    public handlerSelect(): void {
         this.goToProductPage();
     }
 

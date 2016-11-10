@@ -75,7 +75,7 @@ export class ProductsPage implements LoadingInterface {
     /**
      *
      */
-    ionViewDidLoad() {
+    public ionViewDidLoad(): void {
         this.properties = this.navParams.get('properties');
         this.slug = this.navParams.get('slug');
         this.ratings = this.navParams.get('ratings');
@@ -85,7 +85,7 @@ export class ProductsPage implements LoadingInterface {
     /**
      *
      */
-    ionViewWillEnter() {
+    public ionViewWillEnter(): void {
         this.title = this.navParams.get('title');
         this.app.setTitle(this.title);
     }
@@ -94,7 +94,7 @@ export class ProductsPage implements LoadingInterface {
     /**
      *
      */
-    ngAfterViewInit() {
+    public ngAfterViewInit(): void {
         this.showLoader();
         this.getProductsBeforeViewInit( ()=> {
             this.hideLoader();
@@ -109,7 +109,7 @@ export class ProductsPage implements LoadingInterface {
      * @param event
      * @returns {boolean}
      */
-    changeFilter(event) {
+    public changeFilter(event): any {
         let value: string = event.value;
 
         if(value == this.lastFilter) {
@@ -151,7 +151,7 @@ export class ProductsPage implements LoadingInterface {
      *
      * @param infiniteScroll
      */
-    doInfinite(infiniteScroll: any) {
+    public doInfinite(infiniteScroll: any): void {
         this.offset += this.stepOffset;
         this.getProducts(this.id).then(
             (data) => {
@@ -170,7 +170,7 @@ export class ProductsPage implements LoadingInterface {
     /**
      *
      */
-    showLoader(content?: string) {
+    public showLoader(content?: string): void {
         this.loading = this.loadingCtrl.create({
             //cssClass: 'loading-stupid',
             content: content || 'Загружаю'
@@ -182,7 +182,7 @@ export class ProductsPage implements LoadingInterface {
     /**
      *
      */
-    hideLoader() {
+    public hideLoader(): void {
         //let loading = <HTMLElement>document.querySelector('.loading-stupid');
         //if(loading != null) {
         //    loading.style.display = 'none';
@@ -195,7 +195,7 @@ export class ProductsPage implements LoadingInterface {
      *
      * @param callback
      */
-    private getProductsBeforeViewInit(callback: any) {
+    private getProductsBeforeViewInit(callback: any): void {
         this.id = this.navParams.get('id');
         let promise = this.getProducts(this.id);
         promise.then(
@@ -230,13 +230,12 @@ export class ProductsPage implements LoadingInterface {
     }
 
 
-
     /**
      *
      * @param id
      * @returns {Promise<T>}
      */
-    private getProducts(id?: number): Promise<any> {
+    private getProducts(id?: number):any {
         return new Promise((resolve, reject) => {
             let url = UrlManager.createUrlWithParams(API.products, {
                 category_id: id || 0,
@@ -266,7 +265,7 @@ export class ProductsPage implements LoadingInterface {
      *
      * @param products
      */
-    private updateProducts(products: any) {
+    private updateProducts(products: any): void {
         this.products = this.sortingProducts(this.products.concat(products));
         this.productsEmpty = this.products.length == 0;
     }
@@ -275,7 +274,7 @@ export class ProductsPage implements LoadingInterface {
     /**
      *
      */
-    private resetProductAndParams() {
+    private resetProductAndParams(): void {
         this.offset = 0;
         this.products = [];
     }
@@ -286,7 +285,7 @@ export class ProductsPage implements LoadingInterface {
      * @param products
      * @returns {any}
      */
-    private sortingProducts(products: any) {
+    private sortingProducts(products: any): any[] {
         //products.sort(Utils.sortBy({
         //    name: 'danger_level'
         //}, {
@@ -295,7 +294,6 @@ export class ProductsPage implements LoadingInterface {
         //}));
 
         return products;
-
     }
 
 

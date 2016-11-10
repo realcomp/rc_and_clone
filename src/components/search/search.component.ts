@@ -28,7 +28,7 @@ export class Search {
     /**
      *
      */
-    handlerClick() {
+    public handlerClick(): void {
         this.goToSearchPage();
     }
 
@@ -36,7 +36,7 @@ export class Search {
     /**
      *
      */
-    private goToSearchPage() {
+    private goToSearchPage(): void {
         this.navCtrl.push(SearchPage);
     }
 

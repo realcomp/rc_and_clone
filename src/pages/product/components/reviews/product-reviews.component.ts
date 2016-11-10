@@ -62,7 +62,7 @@ export class ProductReviews implements LoadingInterface {
     /**
      *
      */
-    ngOnInit() {
+    public ngOnInit() {
         this.loadMoreReviews();
     }
 
@@ -72,7 +72,7 @@ export class ProductReviews implements LoadingInterface {
      * @param showAlert
      * @param showLoader
      */
-    loadMoreReviews(showAlert?:boolean, showLoader?:boolean) {
+    public loadMoreReviews(showAlert?:boolean, showLoader?:boolean): void {
         if(this.id != null) {
             let promise = this.getReviews(this.id, showLoader);
             promise.then(
@@ -100,7 +100,7 @@ export class ProductReviews implements LoadingInterface {
      * @param date
      * @returns {*|string}
      */
-    getDate(date: string) {
+    public getDate(date: string): string {
         return Utils.dateFormatting(date);
     }
 
@@ -108,7 +108,7 @@ export class ProductReviews implements LoadingInterface {
     /**
      *
      */
-    showLoader(content?: string) {
+    public showLoader(content?: string): void {
         this.loading = this.loadingCtrl.create({
             content: content || ''
         });
@@ -119,7 +119,7 @@ export class ProductReviews implements LoadingInterface {
     /**
      *
      */
-    hideLoader() {
+    public hideLoader(): void {
         this.loading.dismissAll();
     }
 
@@ -129,7 +129,7 @@ export class ProductReviews implements LoadingInterface {
      * @param count
      * @returns {any}
      */
-    getDecl(count: number) {
+    public getDecl(count: number): string {
         let decl = ['отзыв', 'отзыва', 'отзывов'];
         return Utils.declOfNum(count, decl);
     }
@@ -141,7 +141,7 @@ export class ProductReviews implements LoadingInterface {
      * @param showLoader
      * @returns {Promise<T>}
      */
-    private getReviews(id: number, showLoader?: boolean): Promise<any> {
+    private getReviews(id: number, showLoader?: boolean) {
         return new Promise((resolve, reject) => {
 
             if(showLoader) {
@@ -184,7 +184,7 @@ export class ProductReviews implements LoadingInterface {
      *
      * @param reviews
      */
-    private updateReviews(reviews: any) {
+    private updateReviews(reviews: any): void {
         this.reviews = this.reviews.concat(reviews);
     }
 
@@ -192,7 +192,7 @@ export class ProductReviews implements LoadingInterface {
     /**
      *
      */
-    private calcProcents() {
+    private calcProcents(): void {
         this.calculate = true;
         if(this.positiveCount == 0 || this.totalCount == 0) {
             return;

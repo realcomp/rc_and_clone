@@ -97,11 +97,6 @@ import { ProductItemSearch } from '../pages/search/components/product-item/produ
     CategoriesPage,
     Category,
 
-    ProductItem,
-    ProductRating,
-    ProductBlackListStrip,
-    Search,
-
     AboutPage,
     AccountPage,
     LoginPage,
@@ -109,9 +104,6 @@ import { ProductItemSearch } from '../pages/search/components/product-item/produ
     ArticlePage,
 
     ProductsPage,
-    ProductTest,
-    ProductProps,
-    ProductReviews,
 
     SignupPage,
     ProfilePage,
@@ -124,7 +116,6 @@ import { ProductItemSearch } from '../pages/search/components/product-item/produ
     ScannerNotFoundPage,
 
     SearchPage,
-    ProductItemSearch
 
   ],
   providers: [ConnectService, ProductService]

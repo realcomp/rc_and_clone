@@ -46,7 +46,7 @@ export class ProductRating {
     /**
      *
      */
-    ngOnInit() {
+    public ngOnInit(): void {
        this.setClassAndRate();
     }
 
@@ -54,7 +54,7 @@ export class ProductRating {
     /**
      *
      */
-    private setClassAndRate() {
+    private setClassAndRate(): void {
 
         if(this.productService.isWaitProduct(this.tested)) {
             this.cl = this.classNameWait;

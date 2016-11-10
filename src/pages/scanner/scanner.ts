@@ -72,7 +72,7 @@ export class ScannerPage {
                 });
             }
             else {
-                this.onSuccessScan(2912356005845);
+                this.onSuccessScan(29123560058451);
                 console.warn('Scanner supported only real devices!')
             }
         });
@@ -102,11 +102,11 @@ export class ScannerPage {
      * @param data
      */
     private processApiResult(data: any[]): void {
-        if(data[0].length > 1 && data[1].length > 1) {
+        if(data[0].length > 0 && data[1].length > 0) {
             let category = data[0][0];
             let product = data[1][0];
             let slug = this.productService.getSlug(category);
-            this.goToProductPage(product, category['rating_values'], slug, category.name, category['property_values']);
+            this.goToProductPage(product, category['ratings'], slug, category.name, category['properties']);
         }
         else {
             this.navCtrl.push(ScannerNotFoundPage);
