@@ -1,0 +1,8 @@
+page-journal {
+  background: $mainAppBg;
+  ion-header.header-md {
+    &:after {
+      background: none;
+    }
+  }
+}

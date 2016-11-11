@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { App, NavController, NavParams } from 'ionic-angular';
+import { App, NavController, NavParams, ActionSheetController } from 'ionic-angular';
 
 import { Utils } from '../../libs/Utils';
 import { UrlManager } from '../../libs/UrlManager';
@@ -19,9 +19,11 @@ import { ArticlePage } from '../article/article';
 export class JournalPage {
 
 
-    public articles: Array<any> = [];
-    public articlesEmpty: boolean = false;
-    public title: string = 'Журнал покупателя';
+    public articles: any[];
+    public articlesEmpty: boolean;
+    public title: string;
+
+    private index: number;
 
 
     /**
@@ -30,8 +32,22 @@ export class JournalPage {
      * @param navCtrl
      * @param navParams
      * @param connect
+     * @param actionSheetCtrl
      */
-    constructor(public app:App, public navCtrl:NavController, public navParams:NavParams, private connect:ConnectService) {}
+    constructor(
+        private app:App,
+        private navCtrl:NavController,
+        private navParams:NavParams,
+        private connect:ConnectService,
+        private actionsheetCtrl: ActionSheetController) {
+
+        this.articles = [];
+        this.articlesEmpty = false;
+        this.title = 'Журнал покупателя';
+
+        this.index = 0;
+
+    }
 
 
     /**
@@ -71,7 +87,7 @@ export class JournalPage {
      * @param id
      * @returns {Promise<T>}
      */
-    public getArticles(id?: number): Promise<any> {
+    public getArticles(id?: number): any {
         return new Promise((resolve, reject) => {
             let url = UrlManager.createUrlWithParams(API.articles);
             let promise = this.connect.load('get', url);
@@ -89,23 +105,29 @@ export class JournalPage {
     }
 
 
-    /**
-     *
-     * @param category
-     */
-    public handlerSelect(id: number): void {
-        this.goToProductsPage(id);
-    }
+    public openMenu() {
+
+        let self = this;
+
+        let buttonsArray = ['Все', 'Продукты', 'Бытовая химия'];
+        let buttons: any[] = buttonsArray.map((item, index) => {
+            return {
+                id: index,
+                text: item,
+                cssClass: (self.index === index ? 'active': ''),
+                handler: function() {
+                    self.index = this.id;
+                }
+            };
+        })
 
 
-    /**
-     *
-     * @param id
-     */
-    private goToProductsPage(id: number): void {
-        this.navCtrl.push(ArticlePage, {
-            id,
+        let actionSheet = this.actionsheetCtrl.create({
+            title: 'Выбор категории',
+            cssClass: 'action-sheets-basic-page',
+            buttons
         });
+        actionSheet.present();
     }
 
 }

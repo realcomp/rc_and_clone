@@ -6,6 +6,9 @@ import { IonicApp, IonicModule } from 'ionic-angular';
 // Сервисы
 import { ConnectService } from '../services/connect.service';
 import { ProductService } from '../services/product.service';
+import { JournalService } from '../services/journal.service';
+import { DbService } from '../services/db.service';
+import { UserService } from '../services/user.service';
 
 
 // Основной компонент
@@ -118,7 +121,7 @@ import { ProductItemSearch } from '../pages/search/components/product-item/produ
     SearchPage,
 
   ],
-  providers: [ConnectService, ProductService]
+  providers: [ConnectService, ProductService, JournalService]
 })
 
 

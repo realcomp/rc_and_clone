@@ -4,10 +4,22 @@
       <ion-title>{{ title }}</ion-title>
     </ion-navbar>
   </ion-navbar>
+
+  <div class="container-control-panel">
+    <div class="container-control-panel-inner">
+      <div class="b-control-panel-item" (click)="openMenu()">Категория</div>
+      <div class="b-control-panel-item">Рубрика</div>
+    </div>
+  </div>
+
+
 </ion-header>
 
 
 <ion-content>
+
+
+
   <ion-list *ngIf="!articlesEmpty">
 
     <ion-card *ngFor="let article of articles" (click)="handlerSelect(article.id)">
