@@ -2,10 +2,22 @@ page-product {
   background: #FFF;
   ion-slides {
     margin: 15px 0;
-    img {
-      max-width: 85%;
+  }
+
+  .swiper-container-horizontal > .swiper-pagination {
+    bottom: 0;
+    .swiper-pagination-bullet {
+      margin: 0 4px;
     }
   }
+
+  .swiper-slide {
+    img {
+      max-width: 85%;
+      max-height: 85%;
+    }
+  }
+
 }
 
 

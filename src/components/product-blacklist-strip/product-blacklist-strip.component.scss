@@ -1,11 +1,7 @@
 
-
-.b-danger-level-text {
-  margin-bottom: 8px;
-}
-
 .b-product-blacklist-strip {
-  max-width: 420px;
+  max-width: 400px;
+  height: 12px;
   margin-bottom: 15px;
   font-size: 0;
   .blacklist-item-out {
@@ -30,4 +26,8 @@
       background: #000;
     }
   }
+}
+
+.b-danger-level-text {
+  margin-bottom: 5px;
 }

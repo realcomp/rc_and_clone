@@ -1,3 +1,13 @@
-<div class="blacklist-item-out" *ngFor="let rating of ratings">
-  <div>{{ rating.name }} {{ rating.value }}</div>
+<div class="b-rating-row" *ngFor="let rating of ratings">
+  <div class="rating-row__value">
+    <span>{{ rating.value }}</span>
+  </div>
+  <div class="rating-row__data">
+    <div class="rating-row__name">
+      {{ rating.name }}
+    </div>
+    <div class="rating-row__rate">
+      <div class="rating-row__rate-inner" [style.width.%]="rating.value"></div>
+    </div>
+  </div>
 </div>

@@ -109,6 +109,7 @@ export class ProductService {
                     if(id in categoryRatings) {
                         ratingsOject['name'] = categoryRatings[id];
                         ratingsOject['value'] = productRatings[id];
+                        console.log(categoryRatings)
                     }
                     finalRatings.push(ratingsOject);
                 }
