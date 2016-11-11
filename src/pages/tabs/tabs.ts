@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { NavParams, NavController } from 'ionic-angular';
+import { App, NavParams, NavController, ViewController } from 'ionic-angular';
 
 import { CategoriesPage } from '../categories/categories';
 import { ShoppingListPage } from '../shopping-list/shopping-list';
@@ -10,28 +10,28 @@ import { ScannerPage } from '../scanner/scanner';
 
 
 @Component({
-  templateUrl: 'tabs.html'
+    templateUrl: 'tabs.html'
 })
 
 
 export class TabsPage {
 
-  tab1Root: any = CategoriesPage;
-  tab2Root: any = ScannerPage;
-  tab3Root: any = ShoppingListPage;
-  tab4Root: any = JournalPage;
-  tab5Root: any = ProfilePage;
-  mySelectedIndex: number;
+    tab1Root:any = CategoriesPage;
+    tab2Root:any = ScannerPage;
+    tab3Root:any = ShoppingListPage;
+    tab4Root:any = JournalPage;
+    tab5Root:any = ProfilePage;
+    mySelectedIndex:number;
 
 
-  constructor(navParams: NavParams, public navCtrl:NavController) {
-    this.mySelectedIndex = navParams.data.tabIndex || 0;
-  }
+    constructor(private app: App, private navParams: NavParams, private navCtrl: NavController) {
+        this.mySelectedIndex = navParams.data.tabIndex || 0;
+    }
 
 
-  handlerSelect() {
-    console.log('tabs selected');
-  }
+    tabChanged($ev) {
+        console.log(this.app)
+    }
 
 
 }

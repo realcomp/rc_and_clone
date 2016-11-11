@@ -37,7 +37,7 @@ export class ScannerNotFoundPage {
     /**
      *
      */
-    public handlerClickScanner() {
+    public handlerClickScanner(): void {
         this.goToScannerPage();
     }
 
@@ -45,7 +45,7 @@ export class ScannerNotFoundPage {
     /**
      *
      */
-    public handlerClickSearch() {
+    public handlerClickSearch(): void {
         this.goToSearchPage();
     }
 
@@ -53,7 +53,7 @@ export class ScannerNotFoundPage {
     /**
      *
      */
-    private goToScannerPage() {
+    private goToScannerPage(): void {
         this.navCtrl.push(ScannerPage);
     }
 
@@ -61,7 +61,7 @@ export class ScannerNotFoundPage {
     /**
      *
      */
-    private goToSearchPage() {
+    private goToSearchPage(): void {
         this.navCtrl.push(SearchPage);
     }
 

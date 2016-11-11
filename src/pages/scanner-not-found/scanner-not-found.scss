@@ -1,3 +1,13 @@
 page-scanner-not-found {
   background: #FFF;
+  text-align: center;
+  ion-icon[name="search"] {
+    margin-right: 10px;
+  }
+}
+
+.b-barcode-icon-not-found {
+  ion-icon {
+    font-size: 8rem;
+  }
 }

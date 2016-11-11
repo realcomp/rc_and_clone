@@ -11,7 +11,6 @@
 
 .container-test-text {
   margin: 5px 0 15px 0;
-  line-height: 1.4em;
 }
 
 
@@ -43,11 +42,11 @@
   color: #000;
 }
 .container-plus {
-  padding: 15px 0;
+  padding: 15px 0 15px 5px;
   border-bottom: 1px solid $borderColor;
 }
 .container-minus {
-  padding: 15px 0;
+  padding: 15px 0 15px 5px;
 }
 .b-plus-and-minus-item {
   margin-bottom: 12px;

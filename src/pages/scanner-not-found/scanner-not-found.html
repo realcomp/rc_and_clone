@@ -7,5 +7,20 @@
 </ion-header>
 
 <ion-content>
-  <ion-icon ios="ios-barcode" md="md-barcode"></ion-icon>
+  <div padding>
+    <div class="b-barcode-icon-not-found">
+      <ion-icon name="ios-barcode-outline"></ion-icon>
+    </div>
+    <div class="b-barcode-text-not-found">
+      К сожалению, товар отсутствует в каталоге или к нему пока не был добавлен штрихкод. <br>
+
+      <div style="margin: 15px 0">
+        <button ion-button (click)="handlerClickSearch()">
+          <ion-icon name="search"></ion-icon>
+          Искать по названию
+        </button>
+      </div>
+    </div>
+  </div>
+
 </ion-content>

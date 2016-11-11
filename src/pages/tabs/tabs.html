@@ -1,5 +1,5 @@
 <ion-tabs [selectedIndex]="mySelectedIndex" #mainTabs>
-  <ion-tab [root]="tab1Root" tabTitle="Каталог" tabIcon="list-box" (ionSelect)="handlerSelect()"></ion-tab>
+  <ion-tab [root]="tab1Root" tabTitle="Каталог" tabIcon="list-box" (ionSelect)="tabChanged($event)"></ion-tab>
   <ion-tab [root]="tab2Root" tabTitle="Сканер" tabIcon="barcode"></ion-tab>
   <ion-tab [root]="tab3Root" tabTitle="Покупки" tabIcon="basket"></ion-tab>
   <ion-tab [root]="tab4Root" tabTitle="Журнал" tabIcon="book"></ion-tab>

@@ -55,7 +55,15 @@ export class ScannerPage {
     /**
      *
      */
-    public onScan(): void {
+    public ionViewWillEnter() : void {
+       this.scan();
+    }
+
+
+    /**
+     *
+     */
+    public scan(): void {
         this.platform.ready().then(() => {
             if ('cordova' in window) {
                 window['cordova'].plugins.barcodeScanner.scan((result) => {
@@ -72,7 +80,6 @@ export class ScannerPage {
                 });
             }
             else {
-                this.onSuccessScan(29123560058451);
                 console.warn('Scanner supported only real devices!')
             }
         });
