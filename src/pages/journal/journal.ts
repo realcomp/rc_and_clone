@@ -8,7 +8,6 @@ import { API } from '../../config/';
 
 import { ConnectService } from '../../services/connect.service';
 
-
 import { ArticlePage } from '../article/article';
 
 
@@ -81,6 +80,15 @@ export class JournalPage {
         let params = this.getParamsForFilter(type);
         let actionSheet = this.createActionSheet(params);
         actionSheet.present();
+    }
+
+
+    /**
+     *
+     * @param id
+     */
+    public handlerSelect(id: number) {
+        this.goToArticlePage(id);
     }
 
 
@@ -215,6 +223,15 @@ export class JournalPage {
     private getCssClassForActionSheet(id, type): string {
         let selectedTypeId: any = type === 'rubric' ? this.selectedRubricId: this.selectedCategoryId;
         return selectedTypeId == id ? 'active': '';
+    }
+
+
+    /**
+     *
+     * @param params
+     */
+    private goToArticlePage(...params): void {
+        this.navCtrl.push(ArticlePage, {id: params[0]});
     }
 
 }

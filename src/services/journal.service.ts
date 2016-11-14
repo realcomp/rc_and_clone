@@ -26,6 +26,10 @@ export class JournalService {
     constructor(private connect: ConnectService) {}
 
 
+    /**
+     *
+     * @returns {Promise<T>}
+     */
     public getRubricsAndCategories(): any {
         return new Promise((resolve, reject) => {
             let url = UrlManager.createUrlWithParams(API.rubricsAndCategories);
@@ -44,6 +48,10 @@ export class JournalService {
     }
 
 
+    /**
+     *
+     * @param rubrics
+     */
     public setRubrics(rubrics: any[]): void {
         rubrics.unshift({
             rubric: null,
@@ -51,6 +59,7 @@ export class JournalService {
         });
         LocalStorage.set('rubrics', rubrics);
     }
+
 
 
     public getRubrics() {
@@ -63,6 +72,10 @@ export class JournalService {
     }
 
 
+    /**
+     *
+     * @param categories
+     */
     public setCategories(categories: any[]): void {
         categories.unshift({
             id: null,

@@ -68,7 +68,7 @@ export class CategoriesPage implements LoadingInterface {
     /**
      *
      */
-    ionViewWillEnter(): void {
+    public ionViewWillEnter(): void {
         this.title = this.navParams.get('title') || 'Рейтинг товаров';
         this.app.setTitle(this.title);
     }
@@ -77,7 +77,7 @@ export class CategoriesPage implements LoadingInterface {
     /**
      *
      */
-    ngAfterViewInit(): void {
+    public ngAfterViewInit(): void {
         let id = this.navParams.get('id') || 0;
         if(id == 0) {
             this.isRootCategories = true;
@@ -100,7 +100,7 @@ export class CategoriesPage implements LoadingInterface {
     /**
      *
      */
-    handlerLogoClick(): void {
+    public handlerLogoClick(): void {
         this.goToAboutPage();
     }
 
@@ -108,7 +108,7 @@ export class CategoriesPage implements LoadingInterface {
     /**
      *
      */
-    showLoader(content?: string): void {
+    public showLoader(content?: string): void {
         this.loading = this.loadingCtrl.create({
             //cssClass: 'loading-stupid',
             content: content || 'Загружаю'
@@ -120,7 +120,7 @@ export class CategoriesPage implements LoadingInterface {
     /**
      *
      */
-    hideLoader(): void {
+    public hideLoader(): void {
         //let loading = <HTMLElement>document.querySelector('.loading-stupid');
         //if(loading != null) {
         //    loading.style.display = 'none';
@@ -134,7 +134,7 @@ export class CategoriesPage implements LoadingInterface {
      * @param id
      * @returns {Promise<T>}
      */
-    private getCategories(id?: number): Promise<any> {
+    private getCategories(id?: number): any {
         return new Promise((resolve, reject) => {
             this.showLoader();
             let url = UrlManager.createUrlWithParams(API.categories, {

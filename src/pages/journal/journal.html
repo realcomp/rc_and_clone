@@ -18,28 +18,18 @@
 
 <ion-content>
 
-
-
-  <ion-list *ngIf="!articlesEmpty">
-
-    <ion-card *ngFor="let article of articles" (click)="handlerSelect(article.id)">
-      <img src="{{ article.image }}"/>
-      <ion-card-content>
-        <ion-card-title>
-          {{ article.title }}
-        </ion-card-title>
-        <p>
-          <a href="#" class="subdued">{{ article.like_count }} Like</a>
-          <a href="#" class="subdued">{{ article.comment_count }} Comments</a>
-        </p>
-      </ion-card-content>
-    </ion-card>
-
+  <ion-list *ngIf="!articlesEmpty" class="grid-row" no-lines>
+    <div class="container-section grid-flex">
+      <div class="grid-padding grid-column-6 grid-column-small-12 grid-left grid-flex" *ngFor="let article of articles"
+           (click)="handlerSelect(article.id)">
+        <div>
+          <img src="{{ article.image }}"/>
+          <div class="">{{ article.title }}</div>
+        </div>
+      </div>
+    </div>
   </ion-list>
 
-  <ion-list-header *ngIf="articlesEmpty">
-      Статьи не найдены
-  </ion-list-header>
-
+  <div *ngIf="articlesEmpty" class="b-empty-box">Статьи не найдены</div>
 
 </ion-content>

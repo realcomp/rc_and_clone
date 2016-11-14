@@ -2,14 +2,17 @@
   <ion-navbar no-border-bottom>
     <ion-navbar>
       <ion-title>
-        Почему в России падают продажи Durex?
+        {{ title }}
       </ion-title>
     </ion-navbar>
   </ion-navbar>
 </ion-header>
 
 <ion-content>
-  <div padding class="about-info">
-    <h4>Статья</h4>
+  <div>
+    {{ articleTitle }}
+  </div>
+  <div>
+    {{ html }}
   </div>
 </ion-content>
