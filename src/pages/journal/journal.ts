@@ -85,15 +85,6 @@ export class JournalPage {
 
     /**
      *
-     * @param id
-     */
-    public handlerSelect(id: number) {
-        this.goToArticlePage(id);
-    }
-
-
-    /**
-     *
      */
     private renderArticles(): void {
         let promise = this.getArticles();
@@ -225,13 +216,5 @@ export class JournalPage {
         return selectedTypeId == id ? 'active': '';
     }
 
-
-    /**
-     *
-     * @param params
-     */
-    private goToArticlePage(...params): void {
-        this.navCtrl.push(ArticlePage, {id: params[0]});
-    }
 
 }

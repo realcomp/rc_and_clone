@@ -19,12 +19,8 @@
 
   <ion-list *ngIf="!articlesEmpty" class="grid-row" no-lines>
     <div class="container-section grid-flex">
-      <div class="grid-padding grid-column-12 grid-left grid-flex" *ngFor="let article of articles"
-           (click)="handlerSelect(article.id)">
-        <div>
-          <img src="{{ article.image }}"/>
-          <div class="">{{ article.title }}</div>
-        </div>
+      <div class="grid-padding grid-column-12 grid-left grid-flex" *ngFor="let article of articles">
+        <article-item-component [article]="article"></article-item-component>
       </div>
     </div>
   </ion-list>
