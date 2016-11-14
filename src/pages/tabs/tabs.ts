@@ -30,7 +30,7 @@ export class TabsPage {
 
 
     tabChanged($ev) {
-        console.log(this.app)
+
     }
 
 

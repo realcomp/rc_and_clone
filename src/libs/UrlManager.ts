@@ -27,7 +27,7 @@ export class UrlManager {
         for (let param in params) {
 
             // null type string - special label for ignore params
-            if (params.hasOwnProperty(param) && params[param] != 'null') {
+            if (params.hasOwnProperty(param) && params[param] != null) {
                 result += index === 0 ? (url.indexOf('?') === -1 ? '?' : '&') : '&';
                 result += `${param}=${params[param]}`;
                 index++;

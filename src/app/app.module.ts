@@ -121,7 +121,7 @@ import { ProductItemSearch } from '../pages/search/components/product-item/produ
     SearchPage,
 
   ],
-  providers: [ConnectService, ProductService, JournalService]
+  providers: [ConnectService, ProductService, JournalService, DbService, UserService]
 })
 
 

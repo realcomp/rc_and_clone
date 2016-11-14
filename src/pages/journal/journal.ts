@@ -1,11 +1,13 @@
 import { Component } from '@angular/core';
-import { App, NavController, NavParams, ActionSheetController } from 'ionic-angular';
+import { App, NavController, ActionSheetController } from 'ionic-angular';
 
+import { LocalStorage } from '../../libs/LocalStorage';
 import { Utils } from '../../libs/Utils';
 import { UrlManager } from '../../libs/UrlManager';
 import { API } from '../../config/';
 
 import { ConnectService } from '../../services/connect.service';
+
 
 import { ArticlePage } from '../article/article';
 
@@ -23,29 +25,34 @@ export class JournalPage {
     public articlesEmpty: boolean;
     public title: string;
 
-    private index: number;
+    private filters: any;
+    private selectedRubricId: any;
+    private selectedCategoryId: any;
 
 
     /**
      *
      * @param app
      * @param navCtrl
-     * @param navParams
      * @param connect
      * @param actionSheetCtrl
      */
     constructor(
-        private app:App,
-        private navCtrl:NavController,
-        private navParams:NavParams,
-        private connect:ConnectService,
-        private actionsheetCtrl: ActionSheetController) {
+        private app: App,
+        private navCtrl: NavController,
+        private connect: ConnectService,
+        private actionSheetCtrl: ActionSheetController) {
 
         this.articles = [];
         this.articlesEmpty = false;
         this.title = 'Журнал покупателя';
 
-        this.index = 0;
+        this.selectedRubricId = null;
+        this.selectedCategoryId = null;
+        this.filters = {
+            rubric: null,
+            category_id: null
+        }
 
     }
 
@@ -62,6 +69,25 @@ export class JournalPage {
      *
      */
     public ngAfterViewInit(): void {
+        this.renderArticles();
+    }
+
+
+    /**
+     *
+     * @param type
+     */
+    public openMenu(type: string): void {
+        let params = this.getParamsForFilter(type);
+        let actionSheet = this.createActionSheet(params);
+        actionSheet.present();
+    }
+
+
+    /**
+     *
+     */
+    private renderArticles(): void {
         let promise = this.getArticles();
         promise.then(
             (data) => {
@@ -74,22 +100,21 @@ export class JournalPage {
 
     /**
      *
-     * @param categories
+     * @param articles
      */
-    public updateArticles(articles: any): void {
+    private updateArticles(articles: any): void {
         this.articles = articles;
-        this.articlesEmpty = this.articles.length == 0 ? true : false;
+        this.articlesEmpty = this.articles.length == 0;
     }
 
 
     /**
      *
-     * @param id
      * @returns {Promise<T>}
      */
-    public getArticles(id?: number): any {
+    private getArticles(): any {
         return new Promise((resolve, reject) => {
-            let url = UrlManager.createUrlWithParams(API.articles);
+            let url = UrlManager.createUrlWithParams(API.articles, this.filters);
             let promise = this.connect.load('get', url);
             promise.then((result) => {
                     let data = Utils.jsonParse(result['_body']).items;
@@ -105,29 +130,91 @@ export class JournalPage {
     }
 
 
-    public openMenu() {
+    /**
+     *
+     */
+    private resetArticles(): void {
+        this.articles = [];
+    }
 
-        let self = this;
 
-        let buttonsArray = ['Все', 'Продукты', 'Бытовая химия'];
-        let buttons: any[] = buttonsArray.map((item, index) => {
+    /**
+     *
+     * @param type
+     * @returns {Array}
+     */
+    private getParamsForFilter(type: string): any[] {
+        let params: any = {};
+        switch (type) {
+            case 'category':
+                params = {
+                    type: 'category',
+                    title: 'Выбор категории',
+                    entity: LocalStorage.get('categories'),
+                    callback: (id) => {
+                        this.selectedCategoryId = id;
+                        this.filters.category_id = id;
+                    }
+                };
+                break;
+            case 'rubric':
+                params = {
+                    type: 'rubric',
+                    title: 'Выбор рубрики',
+                    entity: LocalStorage.get('rubrics'),
+                    callback: (id) => {
+                        this.selectedRubricId = id;
+                        this.filters.rubric = id;
+                    }
+                };
+                break;
+            default:
+                console.error(`${type} not supported! Expected: category or rubric`);
+        }
+
+        return params;
+    }
+
+
+    /**
+     *
+     * @param params
+     * @returns {ActionSheet}
+     */
+    private createActionSheet(params): any {
+        let { title, entity, type, callback } = params;
+
+        let buttons: any[] = entity.map((item) => {
+            let id = item['id'] || item['rubric'];
             return {
-                id: index,
-                text: item,
-                cssClass: (self.index === index ? 'active': ''),
-                handler: function() {
-                    self.index = this.id;
+                id,
+                text: item.name,
+                cssClass: this.getCssClassForActionSheet(id, type),
+                handler: () => {
+                    callback(id);
+                    this.resetArticles();
+                    this.renderArticles();
                 }
             };
         })
 
-
-        let actionSheet = this.actionsheetCtrl.create({
-            title: 'Выбор категории',
+        return this.actionSheetCtrl.create({
+            title,
             cssClass: 'action-sheets-basic-page',
             buttons
         });
-        actionSheet.present();
+    }
+
+
+    /**
+     *
+     * @param id
+     * @param type
+     * @returns {string}
+     */
+    private getCssClassForActionSheet(id, type): string {
+        let selectedTypeId: any = type === 'rubric' ? this.selectedRubricId: this.selectedCategoryId;
+        return selectedTypeId == id ? 'active': '';
     }
 
 }
