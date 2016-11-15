@@ -1,14 +1,12 @@
 import { Component } from '@angular/core';
 import { App, NavController, ActionSheetController } from 'ionic-angular';
 
-import { LocalStorage } from '../../libs/LocalStorage';
 import { Utils } from '../../libs/Utils';
 import { UrlManager } from '../../libs/UrlManager';
 import { API } from '../../config/';
 
 import { ConnectService } from '../../services/connect.service';
-
-import { ArticlePage } from '../article/article';
+import { JournalService } from '../../services/journal.service';
 
 
 @Component({
@@ -23,10 +21,15 @@ export class JournalPage {
     public articles: any[];
     public articlesEmpty: boolean;
     public title: string;
+    public totalCount: number;
+    public rubricsSlugKey: any;
 
     private filters: any;
     private selectedRubricId: any;
     private selectedCategoryId: any;
+    private offset: number;
+    private stepOffset: number;
+    private limit: number;
 
 
     /**
@@ -40,11 +43,14 @@ export class JournalPage {
         private app: App,
         private navCtrl: NavController,
         private connect: ConnectService,
-        private actionSheetCtrl: ActionSheetController) {
+        private actionSheetCtrl: ActionSheetController,
+        private journalService: JournalService
+        ) {
 
         this.articles = [];
         this.articlesEmpty = false;
         this.title = 'Журнал покупателя';
+        this.totalCount = 0;
 
         this.selectedRubricId = null;
         this.selectedCategoryId = null;
@@ -53,6 +59,9 @@ export class JournalPage {
             category_id: null
         }
 
+        this.limit = 10;
+        this.offset = 0;
+        this.stepOffset = 10;
     }
 
 
@@ -68,8 +77,10 @@ export class JournalPage {
      *
      */
     public ngAfterViewInit(): void {
+        this.rubricsSlugKey = this.journalService.getRubricsSlugKey();
         this.renderArticles();
     }
+
 
 
     /**
@@ -80,6 +91,26 @@ export class JournalPage {
         let params = this.getParamsForFilter(type);
         let actionSheet = this.createActionSheet(params);
         actionSheet.present();
+    }
+
+
+    /**
+     *
+     * @param infiniteScroll
+     */
+    public doInfinite(infiniteScroll: any): void {
+        this.offset += this.stepOffset;
+        this.getArticles().then(
+            (data) => {
+                infiniteScroll.complete();
+                this.updateArticles(data);
+            },
+            (error) => {
+                infiniteScroll.complete();
+                this.connect.showErrorAlert();
+                console.error(`Error: ${error}`);
+            }
+        );
     }
 
 
@@ -102,7 +133,7 @@ export class JournalPage {
      * @param articles
      */
     private updateArticles(articles: any): void {
-        this.articles = articles;
+        this.articles = this.articles.concat(articles);
         this.articlesEmpty = this.articles.length == 0;
     }
 
@@ -113,12 +144,15 @@ export class JournalPage {
      */
     private getArticles(): any {
         return new Promise((resolve, reject) => {
-            let url = UrlManager.createUrlWithParams(API.articles, this.filters);
+            let params = Object.assign({}, this.filters, {limit: this.limit, offset: this.offset});
+            let url = UrlManager.createUrlWithParams(API.articles, params);
             let promise = this.connect.load('get', url);
             promise.then((result) => {
-                    let data = Utils.jsonParse(result['_body']).items;
-                    if(data != null) {
-                        resolve(data);
+                    let data = Utils.jsonParse(result['_body']);
+                    this.totalCount = data['total_count'];
+                    let items = data['items'];
+                    if(items != null) {
+                        resolve(items);
                     }
                 },
                 (error) => {
@@ -134,6 +168,7 @@ export class JournalPage {
      */
     private resetArticles(): void {
         this.articles = [];
+        this.offset = 0;
     }
 
 
@@ -149,7 +184,7 @@ export class JournalPage {
                 params = {
                     type: 'category',
                     title: 'Выбор категории',
-                    entity: LocalStorage.get('categories'),
+                    entity: this.journalService.getCategories(),
                     callback: (id) => {
                         this.selectedCategoryId = id;
                         this.filters.category_id = id;
@@ -160,7 +195,7 @@ export class JournalPage {
                 params = {
                     type: 'rubric',
                     title: 'Выбор рубрики',
-                    entity: LocalStorage.get('rubrics'),
+                    entity: this.journalService.getRubrics(),
                     callback: (id) => {
                         this.selectedRubricId = id;
                         this.filters.rubric = id;

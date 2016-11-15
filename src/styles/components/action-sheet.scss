@@ -1,6 +1,9 @@
-
-.action-sheet-button {
-  &.active {
-    color: $mainColor;
+.action-sheet-md {
+  .action-sheet-button {
+    border-top: 1px solid $borderColor;
+    margin-bottom: 0 !important;
+    &.active {
+      color: $mainColor;
+    }
   }
 }

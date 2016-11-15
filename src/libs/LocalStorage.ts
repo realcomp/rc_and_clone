@@ -17,7 +17,7 @@ export class LocalStorage {
      * @param property
      * @param value
      */
-    static set(property: string, value: any) {
+    static set(property: string, value: any): void {
         value = value || {};
         var valueJSON = JSON.stringify(value);
         window.localStorage.setItem(property, valueJSON);
@@ -29,7 +29,7 @@ export class LocalStorage {
      * @param property
      * @returns {null}
      */
-    static get(property: string) {
+    static get(property: string): any {
         var object = window.localStorage.getItem(property);
         return object == null ? null : JSON.parse(object);
     }
@@ -39,7 +39,7 @@ export class LocalStorage {
      *
      * @param property
      */
-    static remove(property: string) {
+    static remove(property: string): void {
         window.localStorage.removeItem(property);
     }
 

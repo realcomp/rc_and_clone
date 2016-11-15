@@ -1,4 +1,6 @@
-<div class="b-article-item" (click)="handlerSelect(article.id)">
-  <img src="{{ article.image }}"/>
-  <div class="">{{ article.title }}</div>
+<div class="b-article-item util-hover-shadow fadeIn animated" (click)="handlerSelect(article.id)">
+  <div class="article-item__image" [style.background-image]="'url(' + article.image + ')'">
+    <div class="article-item__rubric">{{ rubric }}</div>
+  </div>
+  <div class="article-item__title">{{ article.title }}</div>
 </div>

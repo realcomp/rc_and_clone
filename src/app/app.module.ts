@@ -21,7 +21,7 @@ import { ProductRating } from '../components/product-rating/product-rating.compo
 import { ProductBlackListStrip } from '../components/product-blacklist-strip/product-blacklist-strip.component';
 import { ProductRatingRows } from '../components/product-rating-rows/product-rating-rows.component';
 import { Search } from '../components/search/search.component';
-import { ProductItem } from '../components/article-item/article-item.component';
+import { ArticleItem } from '../components/article-item/article-item.component';
 
 
 // Страницы и их компоненты
@@ -65,6 +65,7 @@ import { ProductItemSearch } from '../pages/search/components/product-item/produ
     ProductBlackListStrip,
     ProductRatingRows,
     Search,
+    ArticleItem,
 
     AboutPage,
     AccountPage,

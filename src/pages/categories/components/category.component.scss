@@ -32,22 +32,11 @@ category-component {
     display: block;
     width: 100%;
     margin-bottom: 3px;
-    font-size: 18px;
+    font-size: 1.9rem;
   }
   .category-tested {
     font-size: 16px;
     color: #b2b2b2;
   }
 
-}
-
-
-
-// 360
-@media screen and (max-width: 360px) {
-  .b-category {
-    .category-name {
-      font-size: 17px;
-    }
-  }
 }

@@ -20,11 +20,18 @@
   <ion-list *ngIf="!articlesEmpty" class="grid-row" no-lines>
     <div class="container-section grid-flex">
       <div class="grid-padding grid-column-12 grid-left grid-flex" *ngFor="let article of articles">
-        <article-item-component [article]="article"></article-item-component>
+        <article-item-component [rubrics]="rubricsSlugKey" [article]="article"></article-item-component>
       </div>
     </div>
   </ion-list>
 
   <div *ngIf="articlesEmpty" class="b-empty-box">Статьи не найдены</div>
+
+
+  <ion-infinite-scroll *ngIf="articles.length > 0 && totalCount > articles.length" (ionInfinite)="doInfinite($event)">
+    <ion-infinite-scroll-content loadingText="Загружаю данные...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+
 
 </ion-content>

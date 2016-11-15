@@ -6,5 +6,50 @@ article-item-component {
 
 
 .b-article-item {
+  margin-bottom: 15px;
+  background: #FFF;
+  border: 1px solid $borderColor;
+  .article-item__image {
+    position: relative;
+    height: 210px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-bottom: 1px solid $borderColor;
+  }
+  .article-item__rubric {
+    display: inline-block;
+    padding: 2px 10px;
+    position: absolute;
+    bottom: 15px;
+    left: 15px;
+    color: #000;
+    background: rgba(255, 255, 255, 0.6);
+    font-size: 1.3rem;
+    border-radius: 5px;
+  }
+  .article-item__title {
+    padding: 15px;
+    font-size: 1.8rem;
+    line-height: 1.2em;
+  }
+}
 
+
+
+@media screen and (max-width: 479px) {
+  .b-article-item {
+    .article-item__image {
+      height: 190px;
+    }
+  }
+}
+
+
+@media screen and (max-width: 360px) {
+  .b-article-item {
+    .article-item__image {
+      height: 170px;
+    }
+  }
 }

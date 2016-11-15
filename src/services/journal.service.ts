@@ -61,14 +61,38 @@ export class JournalService {
     }
 
 
-
-    public getRubrics() {
-
+    /**
+     *
+     * @returns {any}
+     */
+    public getRubrics(): any {
+        return LocalStorage.get('rubrics');
     }
 
 
-    public getCategories() {
+    /**
+     *
+     * @returns {{}}
+     */
+    getRubricsSlugKey(): any {
+        let rubrics = LocalStorage.get('rubrics');
+        let rubricsBuild = {};
+        if(Array.isArray(rubrics) && rubrics.length) {
+            rubrics.forEach((rubric) => {
+                rubricsBuild[rubric['rubric']] = rubric['name'];
+            });
+        }
 
+        return rubricsBuild;
+    }
+
+
+    /**
+     *
+     * @returns {any}
+     */
+    public getCategories(): any {
+        return LocalStorage.get('categories');
     }
 
 

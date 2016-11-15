@@ -16,23 +16,35 @@ import { ArticlePage } from '../../pages/article/article';
 })
 
 
-export class ProductItem {
+export class ArticleItem {
 
 
-    @Input() article: any;
+    @Input() article:any;
+    @Input() rubrics:any;
+
+
+    public rubric:string;
+
 
     /**
      *
      * @param navCtrl
      */
-    constructor(protected navCtrl:NavController) {}
+    constructor(protected navCtrl:NavController) {
+
+    }
+
+
+    public ngOnInit():void {
+        this.rubric = this.getRubric();
+    }
 
 
     /**
      *
      * @param id
      */
-    public handlerSelect(id: number) {
+    public handlerSelect(id:number) {
         this.goToArticlePage(id);
     }
 
@@ -41,8 +53,20 @@ export class ProductItem {
      *
      * @param params
      */
-    private goToArticlePage(...params): void {
+    private goToArticlePage(...params):void {
         this.navCtrl.push(ArticlePage, {id: params[0]});
+    }
+
+
+    /**
+     *
+     */
+    private getRubric():string {
+        let rubric = 'Новости'; // Если ничего на найдем, пусть лучше будут новости
+        if (this.article.rubric in this.rubrics) {
+            return this.rubrics[this.article.rubric];
+        }
+        return rubric;
     }
 
 }
