@@ -6,6 +6,7 @@
 'use strict';
 
 import { Component } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
 import { NavParams, LoadingController } from 'ionic-angular';
 
 import { UrlManager } from '../../libs/UrlManager';
@@ -27,8 +28,10 @@ export class ArticlePage implements LoadingInterface {
 
 
     public title: string;
+    public rubric: string;
     public articleTitle: string;
     public html: any;
+    public date: string;
 
     private id: number;
     private loading: any;
@@ -39,11 +42,13 @@ export class ArticlePage implements LoadingInterface {
      * @param navParams
      * @param connect
      * @param loadingCtrl
+     * @param sanitizer
      */
-    constructor(private navParams: NavParams, private connect: ConnectService, private loadingCtrl: LoadingController) {
+    constructor(private navParams: NavParams, private connect: ConnectService, private loadingCtrl: LoadingController, private sanitizer: DomSanitizer) {
         this.title = 'Журнал покупателя';
         this.articleTitle = '';
         this.html = '';
+        this.date = '';
 
         this.id = null;
         this.loading = null;
@@ -55,6 +60,7 @@ export class ArticlePage implements LoadingInterface {
      */
     public ionViewDidLoad(): void {
         this.id = this.navParams.get('id');
+        this.rubric = this.navParams.get('rubric');
     }
 
 
@@ -95,7 +101,11 @@ export class ArticlePage implements LoadingInterface {
             (article) => {
                 this.hideLoader();
                 this.articleTitle = article.title;
-                this.html = article.html;
+                this.html = this.sanitizer.bypassSecurityTrustHtml(article.html);
+                this.date = Utils.dateFormatting(article['published_at']);
+                setTimeout(() => {
+                    Utils.injectScript('/compiled/js/mobile_article.js');
+                }, 0);
             },
             (error) => {
                 this.hideLoader();
@@ -112,7 +122,7 @@ export class ArticlePage implements LoadingInterface {
      */
     private getArticle(): any {
         return new Promise((resolve, reject) => {
-            let url = UrlManager.createUrlWithParams(`${API.articles}/${this.id}`);
+            let url = UrlManager.createUrlWithParams(`${API.articles}/${this.id}?platform=ionic`);
             let promise = this.connect.load('get', url);
             promise.then((result) => {
                     let data = Utils.jsonParse(result['_body']);
@@ -126,6 +136,5 @@ export class ArticlePage implements LoadingInterface {
             );
         });
     }
-
 
 }

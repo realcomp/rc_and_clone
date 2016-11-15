@@ -8,11 +8,18 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content>
-  <div>
-    {{ articleTitle }}
+<ion-content padding>
+
+  <div class="fadeIn animated">
+    <div class="b-article-header">
+      <div class="article-header__title">
+        {{ articleTitle }}
+      </div>
+      <div class="article-header__rubric">{{ rubric }}</div>
+      <div class="article-header__date">{{ date }}</div>
+    </div>
+    <div [innerHTML]="html">
+    </div>
   </div>
-  <div>
-    {{ html }}
-  </div>
+
 </ion-content>

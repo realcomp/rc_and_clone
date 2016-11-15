@@ -45,7 +45,7 @@ export class ArticleItem {
      * @param id
      */
     public handlerSelect(id:number) {
-        this.goToArticlePage(id);
+        this.goToArticlePage(id, this.rubric);
     }
 
 
@@ -54,7 +54,7 @@ export class ArticleItem {
      * @param params
      */
     private goToArticlePage(...params):void {
-        this.navCtrl.push(ArticlePage, {id: params[0]});
+        this.navCtrl.push(ArticlePage, {id: params[0], rubric: params[1]});
     }
 
 

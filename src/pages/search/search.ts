@@ -127,7 +127,7 @@ export class SearchPage {
      *
      * @returns {Promise<T>}
      */
-    private getProducts(): Promise<any> {
+    private getProducts(): any {
         return new Promise((resolve, reject) => {
             let url = UrlManager.createUrlWithParams(API.search, {
                 limit: this.limit,
@@ -179,19 +179,19 @@ export class SearchPage {
      * @returns {any}
      */
     private sortingProducts(products: any) {
-        products.sort(Utils.sortBy(
-            {
-                name: 'tested',
-                reverse: true
-            },
-            {
-                name: 'danger_level'
-            },
-            {
-                name: 'rating',
-                reverse: true
-            }
-        ));
+        //products.sort(Utils.sortBy(
+        //    {
+        //        name: 'tested',
+        //        reverse: true
+        //    },
+        //    {
+        //        name: 'danger_level'
+        //    },
+        //    {
+        //        name: 'rating',
+        //        reverse: true
+        //    }
+        //));
 
         return products;
 

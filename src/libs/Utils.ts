@@ -63,7 +63,7 @@ export class Utils {
      * @param object
      * @returns {string}
      */
-    static getConstructor(object) {
+    static getConstructor(object): string {
         return Object.prototype.toString.call(object).slice(8, -1);
     }
 
@@ -73,7 +73,7 @@ export class Utils {
      * @param json
      * @returns {*}
      */
-    static jsonParse(json) {
+    static jsonParse(json): any {
         let result = null;
         try {
             result = JSON.parse(json);
@@ -91,7 +91,7 @@ export class Utils {
      * @param date
      * @returns {*}
      */
-    static dateFormatting(date) {
+    static dateFormatting(date): string {
         let result = '';
         if(typeof date === 'string') {
 
@@ -125,7 +125,7 @@ export class Utils {
      * @param ms
      * @returns {Function}
      */
-    static debounce(func, ms) {
+    static debounce(func, ms): any {
         var state = null;
         var COOLDOWN = 1;
         return function() {
@@ -148,7 +148,7 @@ export class Utils {
      * @param fields
      * @returns {function(any, any): *}
      */
-    static sortBy (...fields) {
+    static sortBy (...fields): any {
         return function(A, B) {
             var a, b, field, key, reverse, result;
             for (var i = 0, l = fields.length; i < l; i++) {
@@ -177,9 +177,23 @@ export class Utils {
      * @param titles
      * @returns {any}
      */
-    static declOfNum(number:any, titles:any) {
+    static declOfNum(number:any, titles:any): string {
         const cases = [2, 0, 1, 1, 1, 2];
         return titles[(number % 100 > 4 && number % 100 < 20) ? 2 : cases[(number % 10 < 5) ? number % 10 : 5]];
+    }
+
+
+    /**
+     *
+     * @param url
+     */
+    static injectScript(url: string): void {
+        let node = document.createElement('script');
+        node.src = url;
+        node.type = 'text/javascript';
+        node.async = true;
+        node.charset = 'utf-8';
+        document.getElementsByTagName('head')[0].appendChild(node);
     }
 
 
