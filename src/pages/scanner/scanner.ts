@@ -7,7 +7,7 @@
 
 
 import { Component } from '@angular/core';
-import { AlertController, Platform, NavController } from 'ionic-angular';
+import { App, AlertController, Platform, NavController } from 'ionic-angular';
 
 import { Utils } from '../../libs/Utils';
 import { API } from '../../config/';
@@ -18,6 +18,7 @@ import { ProductService } from '../../services/product.service';
 import { ProductItemInterface } from '../../interfaces/productItem.interface';
 
 import { ProductPage } from '../product/product';
+import { TabsPage } from '../tabs/tabs';
 import { ScannerNotFoundPage } from '../scanner-not-found/scanner-not-found';
 
 
@@ -35,6 +36,7 @@ export class ScannerPage {
 
     /**
      *
+     * @param app
      * @param platform
      * @param alertCtrl
      * @param navCtrl
@@ -42,6 +44,7 @@ export class ScannerPage {
      * @param productService
      */
     constructor(
+        private app: App,
         private platform:Platform,
         private alertCtrl: AlertController,
         private navCtrl:NavController,
@@ -67,7 +70,12 @@ export class ScannerPage {
         this.platform.ready().then(() => {
             if ('cordova' in window) {
                 window['cordova'].plugins.barcodeScanner.scan((result) => {
-                    this.onSuccessScan(result.text);
+                    if(!result.cancelled) {
+                        this.onSuccessScan(result.text);
+                    }
+                    else {
+                        this.app.getRootNav().push(TabsPage);
+                    }
                 }, (error) => {
                     let alert = this.alertCtrl.create({
                         title: 'Ошибка сканирования',

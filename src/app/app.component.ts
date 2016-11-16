@@ -10,7 +10,6 @@ import { DbService } from '../services/db.service';
 import { JournalService } from '../services/journal.service';
 
 
-
 @Component({
     templateUrl: 'app.template.html',
 })
@@ -19,7 +18,7 @@ import { JournalService } from '../services/journal.service';
 export class App {
 
 
-    private rootPage: any;
+    public rootPage: any;
     private prevLaunched: any;
 
 
@@ -29,7 +28,7 @@ export class App {
      * @param dbService
      * @param journalService
      */
-    constructor(private platform:Platform, private dbService:DbService, private journalService: JournalService) {
+    constructor(private platform: Platform, private dbService: DbService, private journalService: JournalService) {
 
         // Call any initial plugins when ready
         platform.ready().then(() => {
@@ -64,10 +63,10 @@ export class App {
                     // Journal
                     this.journalService.getRubricsAndCategories().then(
                         (data) => {
-                            if(data['rubrics'] != null) {
+                            if (data['rubrics'] != null) {
                                 this.journalService.setRubrics(data['rubrics']);
                             }
-                            if(data['categories'] != null) {
+                            if (data['categories'] != null) {
                                 this.journalService.setCategories(data['categories']);
                             }
                         },

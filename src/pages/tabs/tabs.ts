@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { App, NavParams, NavController } from 'ionic-angular';
+import { NavParams } from 'ionic-angular';
 
 import { CategoriesPage } from '../categories/categories';
 import { ShoppingListPage } from '../shopping-list/shopping-list';
@@ -24,14 +24,27 @@ export class TabsPage {
     mySelectedIndex:number;
 
 
+    /**
+     *
+     * @param navParams
+     */
     constructor(private navParams: NavParams) {
         this.mySelectedIndex = navParams.data.tabIndex || 0;
     }
 
 
-    tabChanged($ev) {
+    /**
+     *
+     * @param $ev
+     */
+    public tabChanged($ev): void {
         console.log('change')
     }
 
+
+    public con($ev) {
+        console.log('con!')
+        this.mySelectedIndex = 0;
+    }
 
 }

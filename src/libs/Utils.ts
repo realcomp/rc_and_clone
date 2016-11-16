@@ -186,13 +186,21 @@ export class Utils {
     /**
      *
      * @param url
+     * @param id
      */
-    static injectScript(url: string): void {
+    static injectScript(url: string, id: string): void {
+
+        if(document.querySelector('#' + id) != null) {
+            console.log('It has been added');
+            return;
+        }
+
         let node = document.createElement('script');
         node.src = url;
         node.type = 'text/javascript';
         node.async = true;
         node.charset = 'utf-8';
+        node.setAttribute('id', id);
         document.getElementsByTagName('head')[0].appendChild(node);
     }
 

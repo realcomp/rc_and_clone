@@ -3,10 +3,8 @@
  */
 
 
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { NavController, ViewController, NavParams } from 'ionic-angular';
-
-import { TabsPage } from '../../pages/tabs/tabs';
 
 
 @Component({
@@ -40,7 +38,7 @@ export class BasicModal {
     public close(): void {
         this.viewCtrl.dismiss();
         let callback = this.navParams.get('callback');
-        if(typeof callback === 'function') {
+        if (typeof callback === 'function') {
             callback();
         }
     }

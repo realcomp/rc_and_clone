@@ -36,10 +36,10 @@ export class SearchPage {
     public segment: string;
     public currentCategory: any;
     public title: string;
+    public startedSearch: boolean;
 
     private limit: number;
     private offset: number;
-    private startedSearch: boolean;
 
 
     /**
@@ -81,7 +81,6 @@ export class SearchPage {
             this.doSearch();
         }
     }
-
 
 
     /**

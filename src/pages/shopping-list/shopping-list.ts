@@ -10,8 +10,6 @@ import { Component } from '@angular/core';
 import { App, NavController, ModalController } from 'ionic-angular';
 
 import { UserService } from '../../services/user.service';
-
-import { AuthModalComponent } from '../../components/basic-modal/auth-modal.component';
 import { TabsPage } from '../../pages/tabs/tabs';
 
 

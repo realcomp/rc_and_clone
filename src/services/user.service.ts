@@ -9,7 +9,6 @@
 import { Injectable } from '@angular/core';
 import { ModalController } from 'ionic-angular';
 
-
 import { AuthModal } from '../components/auth-modal/auth-modal.component';
 
 
@@ -20,8 +19,7 @@ export class UserService {
     /**
      *
      */
-    constructor(public modalCtrl: ModalController) {
-    }
+    constructor(public modalCtrl: ModalController) {}
 
 
     /**

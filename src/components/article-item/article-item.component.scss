@@ -19,14 +19,15 @@ article-item-component {
   }
   .article-item__rubric {
     display: inline-block;
-    padding: 2px 10px;
+    padding: 3px 10px;
     position: absolute;
     bottom: 15px;
     left: 15px;
     color: #000;
     background: rgba(255, 255, 255, 0.6);
     font-size: 1.3rem;
-    border-radius: 5px;
+    line-height: normal;
+    border-radius: 3px;
   }
   .article-item__title {
     padding: 15px;

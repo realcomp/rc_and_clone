@@ -104,7 +104,11 @@ export class ArticlePage implements LoadingInterface {
                 this.html = this.sanitizer.bypassSecurityTrustHtml(article.html);
                 this.date = Utils.dateFormatting(article['published_at']);
                 setTimeout(() => {
-                    Utils.injectScript('/compiled/js/mobile_article.js');
+                    let MobileScriptUrl = '/compiled/js/mobile_article.js';
+                    if ('cordova' in window) {
+                        MobileScriptUrl = 'http://api.roscontrol.com' + MobileScriptUrl;
+                    }
+                    Utils.injectScript(MobileScriptUrl, 'mobile-article-script');
                 }, 0);
             },
             (error) => {
