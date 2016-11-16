@@ -24,6 +24,11 @@ import { Search } from '../components/search/search.component';
 import { ArticleItem } from '../components/article-item/article-item.component';
 
 
+// Всплывающие окна
+import { BasicModal } from '../components/basic-modal/basic-modal.component';
+import { AuthModal } from '../components/auth-modal/auth-modal.component';
+
+
 // Страницы и их компоненты
 import { PopoverPage } from '../pages/about-popover/about-popover';
 import { AccountPage } from '../pages/account/account';
@@ -53,6 +58,8 @@ import { SearchPage } from '../pages/search/search';
 import { ProductItemSearch } from '../pages/search/components/product-item/product-item-search.component';
 
 
+
+
 @NgModule({
   declarations: [
     App,
@@ -66,6 +73,9 @@ import { ProductItemSearch } from '../pages/search/components/product-item/produ
     ProductRatingRows,
     Search,
     ArticleItem,
+
+    BasicModal,
+    AuthModal,
 
     AboutPage,
     AccountPage,
@@ -101,6 +111,9 @@ import { ProductItemSearch } from '../pages/search/components/product-item/produ
 
     CategoriesPage,
     Category,
+
+    BasicModal,
+    AuthModal,
 
     AboutPage,
     AccountPage,

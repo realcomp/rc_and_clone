@@ -24,13 +24,13 @@ export class TabsPage {
     mySelectedIndex:number;
 
 
-    constructor(private app: App, private navParams: NavParams, private navCtrl: NavController) {
+    constructor(private navParams: NavParams) {
         this.mySelectedIndex = navParams.data.tabIndex || 0;
     }
 
 
     tabChanged($ev) {
-
+        console.log('change')
     }
 
 

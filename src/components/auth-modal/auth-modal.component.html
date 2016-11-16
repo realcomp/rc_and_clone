@@ -1,0 +1,33 @@
+<ion-header>
+  <ion-navbar no-border-bottom>
+
+    <ion-title>
+      {{ title }}
+    </ion-title>
+
+    <ion-buttons end>
+      <button ion-button clear (click)="close()">Отмена</button>
+    </ion-buttons>
+
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+
+  <div class="b-title" *ngIf="subTitle">{{ subTitle }}</div>
+
+  <ion-item>
+    <ion-input placeholder="Email" type="text"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-input placeholder="Пароль" type="password"></ion-input>
+  </ion-item>
+
+  <div class="util-align-center">
+    <button style="margin: 15px 0; width: 100%; max-width: 320px;" ion-button>Войти</button>
+  </div>
+
+</ion-content>
+
+// https://ionicframework.com/docs/v2/resources/forms/

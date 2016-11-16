@@ -1,13 +1,13 @@
 <ion-header>
   <ion-navbar no-border-bottom>
     <ion-navbar>
-      <ion-title>Мой профиль</ion-title>
+      <ion-title>{{ title }}</ion-title>
     </ion-navbar>
   </ion-navbar>
 </ion-header>
 
 <ion-content>
-  <div padding class="about-info">
+  <div padding class="about-info" *ngIf="isAuth()">
     <h4>Профиль пользователя</h4>
   </div>
 </ion-content>

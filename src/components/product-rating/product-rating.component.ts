@@ -35,7 +35,7 @@ export class ProductRating {
      *
      * @param productService
      */
-    constructor(public productService:ProductService) {
+    constructor(public productService: ProductService) {
         this.classNameFine = 'fine';
         this.classNameDanger = 'danger';
         this.classNameWait = 'wait';
@@ -47,7 +47,7 @@ export class ProductRating {
      *
      */
     public ngOnInit(): void {
-       this.setClassAndRate();
+        this.setClassAndRate();
     }
 
 
@@ -56,22 +56,22 @@ export class ProductRating {
      */
     private setClassAndRate(): void {
 
-        if(this.productService.isWaitProduct(this.tested)) {
+        if (this.productService.isWaitProduct(this.tested)) {
             this.cl = this.classNameWait;
             this.rate = '?';
         }
 
-        else if(this.productService.isDangerProduct(this.dangerLevel)) {
+        else if (this.productService.isDangerProduct(this.dangerLevel)) {
             this.cl = this.classNameDanger;
             this.rate = String(this.rating);
         }
 
-        else if(this.productService.isBlackListProduct(this.dangerLevel)) {
+        else if (this.productService.isBlackListProduct(this.dangerLevel)) {
             this.cl = this.classNameBlackList;
             this.rate = '';
         }
 
-        else  {
+        else {
             this.cl = this.classNameFine;
             this.rate = String(this.rating);
         }

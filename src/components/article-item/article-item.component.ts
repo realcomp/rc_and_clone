@@ -19,23 +19,23 @@ import { ArticlePage } from '../../pages/article/article';
 export class ArticleItem {
 
 
-    @Input() article:any;
-    @Input() rubrics:any;
+    @Input() article: any;
+    @Input() rubrics: any;
 
 
-    public rubric:string;
+    public rubric: string;
 
 
     /**
      *
      * @param navCtrl
      */
-    constructor(protected navCtrl:NavController) {
+    constructor(protected navCtrl: NavController) {
 
     }
 
 
-    public ngOnInit():void {
+    public ngOnInit(): void {
         this.rubric = this.getRubric();
     }
 
@@ -44,7 +44,7 @@ export class ArticleItem {
      *
      * @param id
      */
-    public handlerSelect(id:number) {
+    public handlerSelect(id: number): void {
         this.goToArticlePage(id, this.rubric);
     }
 
@@ -53,7 +53,7 @@ export class ArticleItem {
      *
      * @param params
      */
-    private goToArticlePage(...params):void {
+    private goToArticlePage(...params): void {
         this.navCtrl.push(ArticlePage, {id: params[0], rubric: params[1]});
     }
 
@@ -61,7 +61,7 @@ export class ArticleItem {
     /**
      *
      */
-    private getRubric():string {
+    private getRubric(): string {
         let rubric = 'Новости'; // Если ничего на найдем, пусть лучше будут новости
         if (this.article.rubric in this.rubrics) {
             return this.rubrics[this.article.rubric];

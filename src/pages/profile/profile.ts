@@ -7,39 +7,71 @@
 
 
 import { Component } from '@angular/core';
+import { App, NavController, ModalController } from 'ionic-angular';
 
-import { NavController, NavParams, AlertController } from 'ionic-angular';
+import { UserService } from '../../services/user.service';
 
+import { AuthModalComponent } from '../../components/basic-modal/auth-modal.component';
+import { TabsPage } from '../../pages/tabs/tabs';
 
 
 @Component({
-  selector: 'page-profile',
-  templateUrl: 'profile.html'
+    selector: 'page-profile',
+    templateUrl: 'profile.html'
 })
+
+
 export class ProfilePage {
-  speaker: any;
-  confirmedExit: boolean = false;
-
-  constructor(public nav: NavController, public navParams: NavParams, public alertCtrl: AlertController) {
-    this.speaker = this.navParams.data;
-  }
 
 
+    public title: string;
 
-  ionViewWillEnter() {
-    let alert = this.alertCtrl.create({
-      title: 'Auth',
-      buttons: [{
-        text: 'OK',
-        handler: () => {
-          // close the sliding item
 
+    /**
+     *
+     * @param app
+     * @param modalCtrl
+     * @param userService
+     * @param navCtrl
+     */
+    constructor(private app: App, public modalCtrl: ModalController, private userService: UserService, private navCtrl: NavController) {
+    }
+
+
+    /**
+     *
+     */
+    public ionViewWillEnter(): void {
+        if (this.isAuth()) {
+            this.title = 'Мой профиль';
         }
-      }]
-    });
-    // now present the alert on top of all other content
-    alert.present();
-  }
+        else {
+            this.presentAuthModal();
+        }
+    }
+
+
+    /**
+     *
+     * @returns {boolean}
+     */
+    public isAuth(): boolean {
+        return this.userService.isAuth();
+    }
+
+
+    /**
+     *
+     */
+    private presentAuthModal(): void {
+        this.userService.createAuthModal({
+            title: 'Авторизация',
+            subTitle: 'Войдите для просмотра профиля',
+            callback: () => {
+                this.app.getRootNav().push(TabsPage);
+            }
+        });
+    }
 
 
 }
