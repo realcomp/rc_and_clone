@@ -7,10 +7,10 @@
 
 
 import { Component } from '@angular/core';
-import { App, NavController, ModalController } from 'ionic-angular';
+import { NavController, ModalController } from 'ionic-angular';
 
 import { UserService } from '../../services/user.service';
-import { TabsPage } from '../../pages/tabs/tabs';
+import { TabsService } from '../../services/tabs.service';
 
 
 @Component({
@@ -27,12 +27,16 @@ export class ProfilePage {
 
     /**
      *
-     * @param app
      * @param modalCtrl
      * @param userService
      * @param navCtrl
+     * @param tabsService
      */
-    constructor(private app: App, public modalCtrl: ModalController, private userService: UserService, private navCtrl: NavController) {
+    constructor(
+        private modalCtrl: ModalController,
+        private userService: UserService,
+        private navCtrl: NavController,
+        private tabsService: TabsService) {
     }
 
 
@@ -66,7 +70,7 @@ export class ProfilePage {
             title: 'Авторизация',
             subTitle: 'Войдите для просмотра профиля',
             callback: () => {
-                this.app.getRootNav().push(TabsPage);
+                this.tabsService.selectTab(this);
             }
         });
     }

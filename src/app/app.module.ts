@@ -9,6 +9,7 @@ import { ProductService } from '../services/product.service';
 import { JournalService } from '../services/journal.service';
 import { DbService } from '../services/db.service';
 import { UserService } from '../services/user.service';
+import { TabsService } from '../services/tabs.service';
 
 
 // Основной компонент
@@ -136,7 +137,7 @@ import { ProductItemSearch } from '../pages/search/components/product-item/produ
     SearchPage,
 
   ],
-  providers: [ConnectService, ProductService, JournalService, DbService, UserService]
+  providers: [ConnectService, ProductService, JournalService, DbService, UserService, TabsService]
 })
 
 

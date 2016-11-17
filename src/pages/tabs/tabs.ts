@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-
 import { NavParams } from 'ionic-angular';
+
+import { TabsService } from '../../services/tabs.service';
 
 import { CategoriesPage } from '../categories/categories';
 import { ShoppingListPage } from '../shopping-list/shopping-list';
@@ -16,19 +17,20 @@ import { ScannerPage } from '../scanner/scanner';
 
 export class TabsPage {
 
-    tab1Root:any = CategoriesPage;
-    tab2Root:any = ScannerPage;
-    tab3Root:any = ShoppingListPage;
-    tab4Root:any = JournalPage;
-    tab5Root:any = ProfilePage;
-    mySelectedIndex:number;
+    tab1Root: any = CategoriesPage;
+    tab2Root: any = ScannerPage;
+    tab3Root: any = ShoppingListPage;
+    tab4Root: any = JournalPage;
+    tab5Root: any = ProfilePage;
+    mySelectedIndex: number;
 
 
     /**
      *
      * @param navParams
+     * @param tabsService
      */
-    constructor(private navParams: NavParams) {
+    constructor(private navParams: NavParams, private tabsService: TabsService) {
         this.mySelectedIndex = navParams.data.tabIndex || 0;
     }
 
@@ -38,13 +40,8 @@ export class TabsPage {
      * @param $ev
      */
     public tabChanged($ev): void {
-        console.log('change')
+        this.tabsService.setIndexActiveTab($ev.index);
     }
 
-
-    public con($ev) {
-        console.log('con!')
-        this.mySelectedIndex = 0;
-    }
 
 }

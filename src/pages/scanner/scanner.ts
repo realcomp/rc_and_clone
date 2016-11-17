@@ -7,18 +7,18 @@
 
 
 import { Component } from '@angular/core';
-import { App, AlertController, Platform, NavController } from 'ionic-angular';
+import { AlertController, Platform, NavController } from 'ionic-angular';
 
 import { Utils } from '../../libs/Utils';
 import { API } from '../../config/';
 import { UrlManager } from '../../libs/UrlManager';
 import { ConnectService } from '../../services/connect.service';
 import { ProductService } from '../../services/product.service';
+import { TabsService } from '../../services/tabs.service';
 
 import { ProductItemInterface } from '../../interfaces/productItem.interface';
 
 import { ProductPage } from '../product/product';
-import { TabsPage } from '../tabs/tabs';
 import { ScannerNotFoundPage } from '../scanner-not-found/scanner-not-found';
 
 
@@ -36,20 +36,20 @@ export class ScannerPage {
 
     /**
      *
-     * @param app
      * @param platform
      * @param alertCtrl
      * @param navCtrl
      * @param connect
      * @param productService
+     * @param tabsService
      */
     constructor(
-        private app: App,
         private platform:Platform,
         private alertCtrl: AlertController,
         private navCtrl:NavController,
         private connect:ConnectService,
-        private productService: ProductService
+        private productService: ProductService,
+        private tabsService: TabsService
     ) {
         this.title = 'Сканер по штрихкоду';
     }
@@ -74,7 +74,7 @@ export class ScannerPage {
                         this.onSuccessScan(result.text);
                     }
                     else {
-                        this.app.getRootNav().push(TabsPage);
+                        this.tabsService.selectTab(this, 0);
                     }
                 }, (error) => {
                     let alert = this.alertCtrl.create({
@@ -88,7 +88,7 @@ export class ScannerPage {
                 });
             }
             else {
-                console.warn('Scanner supported only real devices!')
+                console.warn('Scanner supported only real devices!');
             }
         });
     }
