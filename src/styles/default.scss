@@ -1,4 +1,9 @@
 
+.ion-body {
+  line-height: normal;
+}
+
+
 //
 .loading-md .spinner-crescent circle {
   stroke: $mainColor;
@@ -17,16 +22,6 @@
 
 .ion-app.md {
   line-height: 1.2em;
-}
-
-.b-empty-box {
-  margin: 15px 0;
-  padding: 20px 15px;
-  background: #FFF;
-  text-align: center;
-  border: 1px solid $borderColor;
-  border-left: 0;
-  border-right: 0;
 }
 
 

@@ -1,6 +1,11 @@
 page-article {
   background: #FFF;
 
+  img {
+    display: block;
+    width: 100%;
+  }
+
   p {
     font-size: 1.6rem;
     line-height: 1.45em;
@@ -17,6 +22,20 @@ page-article {
       height: 100%;
     }
   }
+
+
+  // photos
+  .photos {
+    overflow: hidden;
+    margin: 25px 0;
+  }
+
+
+  // data
+  .p-data {
+    margin-bottom: 20px;
+  }
+
 
   /** Таблица */
   .container-table_with_list {
