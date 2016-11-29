@@ -16,18 +16,24 @@
 
   <div class="b-title" *ngIf="subTitle">{{ subTitle }}</div>
 
-  <ion-item>
-    <ion-input placeholder="Email" type="text"></ion-input>
-  </ion-item>
+  <form (ngSubmit)="onAuthForEmail()" novalidate>
+    <ion-item [ngClass]="{'is-invalid': messageError.length > 0}">
+      <ion-input [(ngModel)]="email" name="email" placeholder="Email" type="text" minlength="3"></ion-input>
+    </ion-item>
 
-  <ion-item>
-    <ion-input placeholder="Пароль" type="password"></ion-input>
-  </ion-item>
+    <ion-item [ngClass]="{'is-invalid': messageError.length > 0}">
+      <ion-input [(ngModel)]="password" name="password" placeholder="Пароль" type="password" minlength="3"></ion-input>
+    </ion-item>
 
-  <div class="util-align-center">
-    <button style="margin: 15px 0; width: 100%; max-width: 320px;" ion-button>Войти</button>
-  </div>
+    <div class="util-align-center">
+      <button [disabled]="email.length === 0 || password.length === 0" type="submit" style="margin: 15px 0; width: 100%; max-width: 320px;" ion-button>Войти</button>
+    </div>
+
+
+    <div *ngIf="messageError.length > 0" class="util-message-error">{{ messageError }}</div>
+
+  </form>
+
+
 
 </ion-content>
-
-// https://ionicframework.com/docs/v2/resources/forms/

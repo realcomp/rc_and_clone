@@ -11,6 +11,7 @@ import { NavController, ModalController } from 'ionic-angular';
 
 import { UserService } from '../../services/user.service';
 import { TabsService } from '../../services/tabs.service';
+import { ModalService } from '../../services/modal.service';
 
 
 @Component({
@@ -29,12 +30,14 @@ export class ShoppingListPage {
      *
      * @param modalCtrl
      * @param userService
+     * @param modalService
      * @param navCtrl
      * @param tabsService
      */
     constructor(
         private modalCtrl: ModalController,
         private userService: UserService,
+        private modalService: ModalService,
         private navCtrl: NavController,
         private tabsService: TabsService) {
     }
@@ -66,7 +69,7 @@ export class ShoppingListPage {
      *
      */
     private presentAuthModal(): void {
-        this.userService.createAuthModal({
+        this.modalService.createAuthModal({
             title: 'Авторизация',
             subTitle: 'Для использования списка покупок войдите на сайт',
             callback: () => {

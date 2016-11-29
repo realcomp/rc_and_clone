@@ -34,11 +34,16 @@ export class BasicModal {
 
     /**
      *
+     * @param ignoreCallback
      */
     public close(): void {
         this.viewCtrl.dismiss();
         let callback = this.navParams.get('callback');
-        if (typeof callback === 'function') {
+        let success = this.navParams.get('success');
+        if(typeof success === 'function') {
+            success();
+        }
+        else if (typeof callback === 'function') {
             callback();
         }
     }

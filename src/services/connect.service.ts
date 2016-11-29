@@ -69,9 +69,9 @@ export class ConnectService {
     /**
      *
      * @param url
-     * @returns {Promise}
+     * @returns {Promise<T>}
      */
-    public get(url): Promise<any> {
+    public get(url): any {
         return new Promise((resolve, reject) => {
             this.http.get(url)
                 .subscribe((data) => {
@@ -111,7 +111,7 @@ export class ConnectService {
     public showErrorAlert(title: string = 'Ошибка загрузки!', subTitle: string = 'Не удается загрузить данные, попробуйте позже.', message?: string ) {
 
         if (this.noConnection()) {
-            subTitle = 'Не удается загрузить данные, потеряно соединение с интернетом'
+            subTitle = 'Не удается загрузить данные, потеряно соединение с интернетом';
         }
 
         const alert = this.alertCtrl.create({

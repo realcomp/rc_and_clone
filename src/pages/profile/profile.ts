@@ -7,10 +7,13 @@
 
 
 import { Component } from '@angular/core';
-import { NavController, ModalController } from 'ionic-angular';
+import { NavController, ModalController, LoadingController } from 'ionic-angular';
 
 import { UserService } from '../../services/user.service';
 import { TabsService } from '../../services/tabs.service';
+import { ModalService } from '../../services/modal.service';
+
+import { LoadingInterface } from '../../interfaces/loading.interface';
 
 
 @Component({
@@ -19,24 +22,33 @@ import { TabsService } from '../../services/tabs.service';
 })
 
 
-export class ProfilePage {
+export class ProfilePage implements LoadingInterface{
 
 
     public title: string;
+    public profile: any;
+
+    private loading: any;
 
 
     /**
      *
      * @param modalCtrl
+     * @param modalService
      * @param userService
      * @param navCtrl
+     * @param loadingCtrl
      * @param tabsService
      */
     constructor(
         private modalCtrl: ModalController,
+        private modalService: ModalService,
         private userService: UserService,
         private navCtrl: NavController,
-        private tabsService: TabsService) {
+        private loadingCtrl: LoadingController,
+        private tabsService: TabsService
+    ) {
+        this.profile = {};
     }
 
 
@@ -44,12 +56,7 @@ export class ProfilePage {
      *
      */
     public ionViewWillEnter(): void {
-        if (this.isAuth()) {
-            this.title = 'Мой профиль';
-        }
-        else {
-            this.presentAuthModal();
-        }
+        this.getProfile();
     }
 
 
@@ -65,14 +72,76 @@ export class ProfilePage {
     /**
      *
      */
+    public showLoader(content?: string): void {
+        this.loading = this.loadingCtrl.create({
+            content: content || 'Получение профиля'
+        });
+        this.loading.present();
+    }
+
+
+    /**
+     *
+     */
+    public hideLoader(): void {
+        this.loading.dismissAll();
+    }
+
+
+    /**
+     *
+     */
     private presentAuthModal(): void {
-        this.userService.createAuthModal({
+        this.modalService.createAuthModal({
             title: 'Авторизация',
             subTitle: 'Войдите для просмотра профиля',
+            success: ()=> {
+                this.getProfile();
+                this.tabsService.selectTab(this, 4);
+            },
             callback: () => {
                 this.tabsService.selectTab(this);
-            }
+            },
         });
+    }
+
+
+    /**
+     *
+     */
+    private getProfile(): void {
+        if (this.isAuth()) {
+            this.title = 'Мой профиль';
+            if(Object.keys(this.profile).length === 0) {
+                this.showLoader();
+                let promise = this.userService.getUserInfo();
+                promise.then(
+                    (data) => {
+                        this.hideLoader();
+                        this.updateProfile(data);
+                    },
+                    (error) => {
+                        this.hideLoader();
+                        console.error(`Error: ${error}`);
+                    }
+                );
+            }
+        }
+        else {
+            this.presentAuthModal();
+        }
+    }
+
+
+    /**
+     *
+     * @param profile
+     */
+    private updateProfile(profile: any): void {
+        if(profile) {
+            this.profile = profile;
+            console.log(profile);
+        }
     }
 
 

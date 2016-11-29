@@ -9,5 +9,10 @@
 <ion-content>
   <div padding class="about-info" *ngIf="isAuth()">
     <h4>Профиль пользователя</h4>
+    <div>
+      активность
+    </div>
+    <div>Комментарии {{ profile.comment_count }}</div>
+    <div>Отзывы {{ profile.review_count }}</div>
   </div>
 </ion-content>

@@ -18,7 +18,9 @@ export const API = {
     search: '/v1/catalog/search',
 
     user: {
-        register: '/v1/user/register'
+        authForEmail: 'v1/auth/email',
+        register: '/v1/user/register',
+        profile: '/v1/user/profile'
     },
 
     db: {
