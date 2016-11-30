@@ -8,24 +8,34 @@
 
 <ion-content padding>
 
-  <ion-list class="util-list-clear-padding">
 
-    <ion-item>
-      <ion-input [(ngModel)]="profile.first_name" name="firstName" placeholder="Имя" type="text"></ion-input>
-    </ion-item>
+  <form (ngSubmit)="handlerSaveProfileData($event)">
+    <div class="util-list-clear-padding">
 
-    <ion-item>
-      <ion-input [(ngModel)]="profile.last_name" name="lastName" placeholder="Фамилия" type="text"></ion-input>
-    </ion-item>
+      <ion-item>
+        <ion-input [(ngModel)]="profile.first_name" name="firstName" placeholder="Имя" type="text"></ion-input>
+      </ion-item>
 
-    <ion-item>
-      <ion-input [(ngModel)]="profile.email" name="email" placeholder="Email" type="email" disabled></ion-input>
-    </ion-item>
+      <ion-item>
+        <ion-input [(ngModel)]="profile.last_name" name="lastName" placeholder="Фамилия" type="text"></ion-input>
+      </ion-item>
 
-    <ion-item>
-      <ion-input [(ngModel)]="profile.phone" name="phone" placeholder="Телефон" type="text"></ion-input>
-    </ion-item>
+      <ion-item>
+        <ion-input [(ngModel)]="profile.email" name="email" placeholder="Email" type="email" disabled></ion-input>
+      </ion-item>
 
-  </ion-list>
+      <ion-item>
+        <ion-input [(ngModel)]="profile.phone" name="phone" placeholder="Телефон" type="text"></ion-input>
+      </ion-item>
+
+    </div>
+
+    <div class="util-align-center">
+      <button class="util-button"  type="submit" ion-button>Сохранить</button>
+    </div>
+
+  </form>
+
+
 
 </ion-content>

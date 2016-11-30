@@ -75,17 +75,11 @@ export class UserService {
                     }
                 },
                 (result) => {
-                    let error: string = '';
-                    if(typeof result['_body'] === 'string') {
-                        let data = Utils.jsonParse(result['_body']);
-                        if(data != null && data['user_message'] != null) {
-                            error = data['user_message'];
-                        }
-                    }
-                    else {
+                    let messageError: string = this.connect.getMessageError(result['_body'] , 'user_message');
+                    if (!messageError) {
                         this.connect.showErrorAlert();
                     }
-                    reject(error);
+                    reject(messageError);
                 }
             );
         });
@@ -110,6 +104,33 @@ export class UserService {
                 (error) => {
                     this.connect.showErrorAlert();
                     reject(`Error: ${error}`);
+                }
+            );
+        });
+    }
+
+
+    /**
+     *
+     * @param data
+     * @returns {Promise<T>}
+     */
+    public updateUserInfo(data: any): any {
+        return new Promise((resolve, reject) => {
+            let url = UrlManager.createUrlWithParams(API.user.profile, {
+                api_token: this.getToken()
+            });
+            let promise = this.connect.load('post', url, data);
+            promise.then((result) => {
+                    let data = Utils.jsonParse(result['_body']);
+                    resolve(data);
+                },
+                (result) => {
+                    let messageError: string = this.connect.getMessageError(result['_body'] , 'user_message');
+                    if (!messageError) {
+                        this.connect.showErrorAlert();
+                    }
+                    reject(messageError);
                 }
             );
         });

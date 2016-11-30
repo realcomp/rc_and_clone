@@ -52,7 +52,7 @@ export class AuthModal extends BasicModal implements LoadingInterface {
     /**
      *
      */
-    public onAuthForEmail(): void {
+    public handlerAuthForEmail(): void {
         this.showLoader();
         let promise = this.userService.authForEmail(this.email, this.password);
         promise.then((result) => {

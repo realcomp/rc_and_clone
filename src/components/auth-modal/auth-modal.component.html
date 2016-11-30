@@ -16,9 +16,10 @@
 
   <div class="b-title" *ngIf="subTitle">{{ subTitle }}</div>
 
-  <form (ngSubmit)="onAuthForEmail()" novalidate>
+  <form (ngSubmit)="handlerAuthForEmail($event)">
 
     <div class="util-list-clear-padding">
+
       <ion-item [ngClass]="{'is-invalid': messageError.length > 0}">
         <ion-input [(ngModel)]="email" name="email" placeholder="Email" type="text" minlength="3"></ion-input>
       </ion-item>

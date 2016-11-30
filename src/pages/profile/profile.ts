@@ -23,7 +23,7 @@ import { EditProfilePage } from '../../pages/edit-profile/edit-profile';
 })
 
 
-export class ProfilePage implements LoadingInterface{
+export class ProfilePage implements LoadingInterface {
 
 
     public title: string;

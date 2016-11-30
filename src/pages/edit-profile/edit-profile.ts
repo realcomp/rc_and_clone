@@ -22,7 +22,7 @@ import { LoadingInterface } from '../../interfaces/loading.interface';
 })
 
 
-export class EditProfilePage {
+export class EditProfilePage implements LoadingInterface {
 
 
     public title: string;
@@ -63,10 +63,53 @@ export class EditProfilePage {
     public ionViewWillEnter(): void {
         this.profile = this.navParams.get('profile');
         this.app.setTitle(this.title);
+    }
 
 
-        console.log(this.profile);
+    /**
+     *
+     */
+    public showLoader(content?: string): void {
+        this.loading = this.loadingCtrl.create({
+            content: content || 'Сохранение профиля'
+        });
+        this.loading.present();
+    }
 
+
+    /**
+     *
+     */
+    public hideLoader(): void {
+        this.loading.dismissAll();
+    }
+
+
+    /**
+     *
+     */
+    public handlerSaveProfileData(): void {
+        let {first_name, last_name, phone, avatar} = this.profile;
+
+        this.showLoader();
+
+        let promise = this.userService.updateUserInfo({
+            first_name,
+            last_name,
+            phone,
+            avatar
+        });
+
+        promise.then(
+            (data) => {
+                this.hideLoader();
+                console.log('saved profile!');
+            },
+            (error) => {
+                this.hideLoader();
+                console.error(error);
+            }
+        );
     }
 
 

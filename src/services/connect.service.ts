@@ -11,6 +11,7 @@ import { Injectable } from '@angular/core';
 import { AlertController } from 'ionic-angular';
 import { Network } from 'ionic-native';
 
+import { Utils } from '../libs/Utils';
 
 
 @Injectable()
@@ -32,12 +33,13 @@ export class ConnectService {
      *
      * @param type
      * @param url
+     * @param data
      * @returns {any}
      */
-    public load(type, url): any {
+    public load(type: string, url: string, data?: any): any {
 
         let typeFormatted: string = type.toUpperCase();
-        let urlFormatted = this.changeUrlForRealDevice(url);
+        let urlFormatted = this.formatUrlForRealDevice(url);
 
         this.promise = new Promise((resolve, reject) => {
 
@@ -47,7 +49,7 @@ export class ConnectService {
                     httpPromise = this.get(urlFormatted);
                     break;
                 case 'POST':
-                    httpPromise = this.post(urlFormatted);
+                    httpPromise = this.post(urlFormatted, data);
                     break;
                 default :
                     console.warn(`type ${typeFormatted} not supported!`);
@@ -71,7 +73,7 @@ export class ConnectService {
      * @param url
      * @returns {Promise<T>}
      */
-    public get(url): any {
+    public get(url: string): any {
         return new Promise((resolve, reject) => {
             this.http.get(url)
                 .subscribe((data) => {
@@ -86,10 +88,18 @@ export class ConnectService {
     /**
      *
      * @param url
-     * @returns {string}
+     * @param data
+     * @returns {Promise<T>}
      */
-    public post(url) {
-        return 'POST';
+    public post(url: string, data: any): any {
+        return new Promise((resolve, reject) => {
+            this.http.post(url, data)
+                .subscribe((data) => {
+                    resolve(data);
+                }, (error) => {
+                    reject(error);
+                });
+        });
     }
 
 
@@ -97,9 +107,28 @@ export class ConnectService {
      *
      * @returns {boolean}
      */
-    public noConnection() {
+    public noConnection(): boolean {
         return (Network.connection === 'none');
     }
+
+
+    /**
+     *
+     * @param body
+     * @param field
+     * @returns {string}
+     */
+    public getMessageError(body: any, field: string): string {
+        let error: string = '';
+        if(typeof body === 'string') {
+            let data: any = Utils.jsonParse(body);
+            if(data != null && data[field] != null) {
+                error = data[field];
+            }
+        }
+        return error;
+    }
+
 
 
     /**
@@ -131,7 +160,7 @@ export class ConnectService {
      * @param url
      * @returns {string}
      */
-    private changeUrlForRealDevice(url: string) {
+    private formatUrlForRealDevice(url: string) {
         if ('cordova' in window) {
             return 'http://api.roscontrol.com' + url;
         }
