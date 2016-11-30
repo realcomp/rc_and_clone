@@ -51,6 +51,7 @@ import { ProductReviews } from '../pages/product/components/reviews/product-revi
 import { JournalPage } from '../pages/journal/journal';
 import { ProductPage } from '../pages/product/product';
 import { ProfilePage } from '../pages/profile/profile';
+import { EditProfilePage } from '../pages/edit-profile/edit-profile';
 import { ShoppingListPage } from '../pages/shopping-list/shopping-list';
 import { AboutPage } from '../pages/about/about';
 import { ScannerPage } from '../pages/scanner/scanner';
@@ -92,6 +93,7 @@ import { ProductItemSearch } from '../pages/search/components/product-item/produ
 
     SignupPage,
     ProfilePage,
+    EditProfilePage,
     ShoppingListPage,
     TabsPage,
     TutorialPage,
@@ -127,6 +129,7 @@ import { ProductItemSearch } from '../pages/search/components/product-item/produ
 
     SignupPage,
     ProfilePage,
+    EditProfilePage,
     ShoppingListPage,
     TabsPage,
     TutorialPage,

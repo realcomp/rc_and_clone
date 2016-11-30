@@ -26,7 +26,7 @@
     </div>
   </ion-list>
 
-  <div *ngIf="articlesEmpty" class="b-empty-box">Статьи не найдены</div>
+  <div *ngIf="articlesEmpty" class="util-empty-box">Статьи не найдены</div>
 
 
   <ion-infinite-scroll *ngIf="articles.length > 0 && totalCount > articles.length" (ionInfinite)="doInfinite($event)">

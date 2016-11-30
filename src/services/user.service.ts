@@ -15,7 +15,6 @@ import { ConnectService } from './connect.service';
 import { Utils } from '../libs/Utils';
 import { LocalStorage } from '../libs/LocalStorage';
 
-import { AuthModal } from '../components/auth-modal/auth-modal.component';
 
 
 @Injectable()

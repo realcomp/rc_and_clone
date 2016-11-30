@@ -44,8 +44,8 @@
     <div>Ищу товары...</div>
   </div>
 
-  <div class="b-empty-box" *ngIf="inputSearchValue.length < 3 && !startedSearch">Начните вводить название товара для поиска</div>
+  <div class="util-empty-box" *ngIf="inputSearchValue.length < 3 && !startedSearch">Начните вводить название товара для поиска</div>
 
-  <div class="b-empty-box" *ngIf="productsEmpty && inputSearchValue.length >= 3 && !startedSearch">К сожалению, по вашему запросу ничего не найдено</div>
+  <div class="util-empty-box" *ngIf="productsEmpty && inputSearchValue.length >= 3 && !startedSearch">К сожалению, по вашему запросу ничего не найдено</div>
 
 </ion-content>

@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-navbar no-border-bottom>
+    <ion-navbar>
+      <ion-title>{{ title }}</ion-title>
+    </ion-navbar>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+
+  <ion-list class="util-list-clear-padding">
+
+    <ion-item>
+      <ion-input [(ngModel)]="profile.first_name" name="firstName" placeholder="Имя" type="text"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-input [(ngModel)]="profile.last_name" name="lastName" placeholder="Фамилия" type="text"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-input [(ngModel)]="profile.email" name="email" placeholder="Email" type="email" disabled></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-input [(ngModel)]="profile.phone" name="phone" placeholder="Телефон" type="text"></ion-input>
+    </ion-item>
+
+  </ion-list>
+
+</ion-content>

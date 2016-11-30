@@ -14,6 +14,7 @@ import { TabsService } from '../../services/tabs.service';
 import { ModalService } from '../../services/modal.service';
 
 import { LoadingInterface } from '../../interfaces/loading.interface';
+import { EditProfilePage } from '../../pages/edit-profile/edit-profile';
 
 
 @Component({
@@ -33,7 +34,6 @@ export class ProfilePage implements LoadingInterface{
 
     /**
      *
-     * @param modalCtrl
      * @param modalService
      * @param userService
      * @param navCtrl
@@ -41,7 +41,6 @@ export class ProfilePage implements LoadingInterface{
      * @param tabsService
      */
     constructor(
-        private modalCtrl: ModalController,
         private modalService: ModalService,
         private userService: UserService,
         private navCtrl: NavController,
@@ -91,16 +90,24 @@ export class ProfilePage implements LoadingInterface{
     /**
      *
      */
+    public handlerClickEdit(): void {
+        this.goToEditProfilePage();
+    }
+
+
+    /**
+     *
+     */
     private presentAuthModal(): void {
         this.modalService.createAuthModal({
             title: 'Авторизация',
             subTitle: 'Войдите для просмотра профиля',
+            callbackClick: () => {
+                this.tabsService.selectTab(this);
+            },
             success: ()=> {
                 this.getProfile();
                 this.tabsService.selectTab(this, 4);
-            },
-            callback: () => {
-                this.tabsService.selectTab(this);
             },
         });
     }
@@ -140,9 +147,18 @@ export class ProfilePage implements LoadingInterface{
     private updateProfile(profile: any): void {
         if(profile) {
             this.profile = profile;
-            console.log(profile);
         }
     }
+
+
+    /**
+     *
+     */
+    private goToEditProfilePage(): void {
+        this.navCtrl.push(EditProfilePage, {profile: this.profile});
+    }
+
+
 
 
 }

@@ -6,7 +6,7 @@
     </ion-navbar>
 
     <ion-buttons end>
-      <button ion-button clear (click)="close()">Отмена</button>
+      <button ion-button clear (click)="close(true)">Отмена</button>
     </ion-buttons>
 
   </ion-navbar>
@@ -17,18 +17,21 @@
   <div class="b-title" *ngIf="subTitle">{{ subTitle }}</div>
 
   <form (ngSubmit)="onAuthForEmail()" novalidate>
-    <ion-item [ngClass]="{'is-invalid': messageError.length > 0}">
-      <ion-input [(ngModel)]="email" name="email" placeholder="Email" type="text" minlength="3"></ion-input>
-    </ion-item>
 
-    <ion-item [ngClass]="{'is-invalid': messageError.length > 0}">
-      <ion-input [(ngModel)]="password" name="password" placeholder="Пароль" type="password" minlength="3"></ion-input>
-    </ion-item>
+    <div class="util-list-clear-padding">
+      <ion-item [ngClass]="{'is-invalid': messageError.length > 0}">
+        <ion-input [(ngModel)]="email" name="email" placeholder="Email" type="text" minlength="3"></ion-input>
+      </ion-item>
 
-    <div class="util-align-center">
-      <button [disabled]="email.length === 0 || password.length === 0" type="submit" style="margin: 15px 0; width: 100%; max-width: 320px;" ion-button>Войти</button>
+      <ion-item [ngClass]="{'is-invalid': messageError.length > 0}">
+        <ion-input [(ngModel)]="password" name="password" placeholder="Пароль" type="password" minlength="3"></ion-input>
+      </ion-item>
+
+      <div class="util-align-center">
+        <button class="util-button" [disabled]="email.length === 0 || password.length === 0" type="submit" ion-button>Войти</button>
+      </div>
+
     </div>
-
 
     <div *ngIf="messageError.length > 0" class="util-message-error">{{ messageError }}</div>
 

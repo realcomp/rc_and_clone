@@ -16,6 +16,7 @@ export const API = {
     reviews: '/v1/catalog/reviews',
     barcode: '/v1/barcode/product',
     search: '/v1/catalog/search',
+    votes: '/v1/votes/products',
 
     user: {
         authForEmail: 'v1/auth/email',

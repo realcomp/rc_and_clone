@@ -48,10 +48,10 @@ export class CategoriesPage implements LoadingInterface {
      * @param loadingCtrl
      */
     constructor(
-        private app:App,
-        private navCtrl:NavController,
-        private navParams:NavParams,
-        private connect:ConnectService,
+        private app: App,
+        private navCtrl: NavController,
+        private navParams: NavParams,
+        private connect: ConnectService,
         private loadingCtrl: LoadingController) {
 
         this.categories = [];
@@ -79,7 +79,7 @@ export class CategoriesPage implements LoadingInterface {
      */
     public ngAfterViewInit(): void {
         let id = this.navParams.get('id') || 0;
-        if(id == 0) {
+        if (id == 0) {
             this.isRootCategories = true;
         }
 
@@ -145,7 +145,7 @@ export class CategoriesPage implements LoadingInterface {
             let promise = this.connect.load('get', url);
             promise.then((result) => {
                     let data = Utils.jsonParse(result['_body']).data;
-                    if(data != null) {
+                    if (data != null) {
                         resolve(data);
                     }
                     this.hideLoader();
