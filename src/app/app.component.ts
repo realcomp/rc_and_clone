@@ -8,6 +8,7 @@ import { TutorialPage } from '../pages/tutorial/tutorial';
 import { LocalStorage } from '../libs/LocalStorage';
 import { DbService } from '../services/db.service';
 import { JournalService } from '../services/journal.service';
+import { UserService } from '../services/user.service';
 
 
 @Component({
@@ -26,9 +27,14 @@ export class App {
      *
      * @param platform
      * @param dbService
+     * @param userService
      * @param journalService
      */
-    constructor(private platform: Platform, private dbService: DbService, private journalService: JournalService) {
+    constructor(
+        private platform: Platform,
+        private dbService: DbService,
+        private userService: UserService,
+        private journalService: JournalService) {
 
         // Call any initial plugins when ready
         platform.ready().then(() => {
@@ -55,7 +61,14 @@ export class App {
      */
     private prepareData(): void {
 
-        //
+
+        // Votes products for auth user
+        if(this.userService.isAuth()) {
+            this.userService.setVotesProductsInStorage();
+        }
+
+
+        // Update Db Version
         this.dbService.updateDbVersion().then(
             (updated) => {
                 if (updated) {

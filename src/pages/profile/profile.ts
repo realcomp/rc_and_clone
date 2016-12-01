@@ -100,6 +100,7 @@ export class ProfilePage implements LoadingInterface {
      */
     public handlerClickLogout(): void {
         this.userService.logout();
+        this.title = '';
         this.tabsService.selectTab(this);
     }
 
@@ -109,14 +110,12 @@ export class ProfilePage implements LoadingInterface {
      */
     private presentAuthModal(): void {
         this.modalService.createAuthModal({
-            title: 'Авторизация',
             subTitle: 'Войдите для просмотра профиля',
             callbackClick: () => {
                 this.tabsService.selectTab(this);
             },
             success: ()=> {
                 this.getProfile();
-                this.tabsService.selectTab(this, 4);
             },
         });
     }

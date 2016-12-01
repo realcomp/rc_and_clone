@@ -6,8 +6,9 @@
     <div class="product-name">{{ product.slug }} {{ product.name }}</div>
   </div>
 
-  <div *ngIf="type === 'wait'" class="product-action">
+  <div *ngIf="type === 'wait'" (click)="handlerClickVoteProduct($event)" class="product-action">
     <ion-icon name="flask"></ion-icon>
   </div>
+
 
 </div>

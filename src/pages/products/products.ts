@@ -11,6 +11,7 @@ import { App, NavParams, LoadingController } from 'ionic-angular';
 
 import { Utils } from '../../libs/Utils';
 import { UrlManager } from '../../libs/UrlManager';
+import { LocalStorage } from '../../libs/LocalStorage';
 import { API } from '../../config/';
 import { ConnectService } from '../../services/connect.service';
 
@@ -38,6 +39,7 @@ export class ProductsPage implements LoadingInterface {
     public filter: string;
     public lastFilter: string;
     public totalCount: any;
+    public votesProducts: number[];
 
     private id: number;
     private properties;
@@ -55,7 +57,7 @@ export class ProductsPage implements LoadingInterface {
      * @param connect
      * @param loadingCtrl
      */
-    constructor(public app:App, public navParams:NavParams, public connect:ConnectService, public loadingCtrl: LoadingController) {
+    constructor(public app: App, public navParams: NavParams, public connect:ConnectService, public loadingCtrl: LoadingController) {
         this.products = [];
         this.ratings = [];
         this.productsEmpty = false;
@@ -79,6 +81,7 @@ export class ProductsPage implements LoadingInterface {
         this.properties = this.navParams.get('properties');
         this.slug = this.navParams.get('slug');
         this.ratings = this.navParams.get('ratings');
+        this.votesProducts = LocalStorage.get('voteProducts');
     }
 
 

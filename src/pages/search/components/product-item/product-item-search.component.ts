@@ -7,8 +7,11 @@ import { Component, Input } from '@angular/core';
 import { NavController } from 'ionic-angular';
 
 import { ProductItemInterface } from '../../../../interfaces/productItem.interface';
-import { ProductService } from '../../../../services/product.service';
 import { ProductItem } from '../../../../components/product-item/product-item.component';
+
+import { ProductService } from '../../../../services/product.service';
+import { ModalService } from '../../../../services/modal.service';
+import { UserService } from '../../../../services/user.service';
 
 import { ProductPage } from '../../../../pages/product/product';
 
@@ -30,9 +33,14 @@ export class ProductItemSearch extends ProductItem {
      *
      * @param navCtrl
      * @param productService
+     * @param userService
+     * @param modalService
      */
-    constructor(protected navCtrl: NavController, protected productService: ProductService) {
-        super(navCtrl, productService);
+    constructor(protected navCtrl:NavController,
+                protected productService: ProductService,
+                protected userService: UserService,
+                protected modalService: ModalService) {
+        super(navCtrl, productService, userService, modalService);
     }
 
 

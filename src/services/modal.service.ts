@@ -28,6 +28,15 @@ export class ModalService {
      * @param options
      */
     public createAuthModal(options?: any): void {
+
+        if(options.title == null) {
+            options.title = 'Авторизация';
+        }
+
+        if(options.subTitle == null) {
+            options.subTitle = 'Войдите для совершения действия';
+        }
+
         this.modalCtrl.create(AuthModal, options).present();
     }
 

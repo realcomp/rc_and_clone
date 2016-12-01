@@ -59,6 +59,7 @@ export class AuthModal extends BasicModal implements LoadingInterface {
                 this.messageError = '';
                 this.hideLoader();
                 this.close();
+                this.userService.setVotesProductsInStorage();
             },
             (error) => {
                 this.hideLoader();

@@ -43,6 +43,7 @@ export class UserService {
      */
     public logout(): void {
         LocalStorage.remove('api_token');
+        LocalStorage.remove('voteProducts');
     }
 
 
@@ -139,5 +140,84 @@ export class UserService {
         });
     }
 
+
+    /**
+     *
+     * @param votes
+     */
+    public addVoteProduct(votes: any[]): any {
+        return new Promise((resolve, reject) => {
+            let url = UrlManager.createUrlWithParams(API.user.votes, {
+                api_token: this.getToken()
+            });
+
+            let promise = this.connect.load('POST', url, `votes=${JSON.stringify(votes)}`);
+            promise.then((result) => {
+                    let data = Utils.jsonParse(result['_body']);
+                    resolve(data);
+                },
+                (error) => {
+                    reject(error);
+                }
+            );
+        });
+    }
+
+
+
+    /**
+     *
+     * @returns {Promise<T>}
+     */
+    public getVotesProducts(): any {
+        return new Promise((resolve, reject) => {
+            let url = UrlManager.createUrlWithParams(API.user.votes, {
+                api_token: this.getToken(),
+                limit: 1e4
+            });
+            let promise = this.connect.load('get', url);
+            promise.then((result) => {
+                    let data = Utils.jsonParse(result['_body']);
+                    resolve(data);
+                },
+                (error) => {
+                    this.connect.showErrorAlert();
+                    reject(`Error: ${error}`);
+                }
+            );
+        });
+    }
+
+
+    /**
+     *
+     */
+    public setVotesProductsInStorage(): void {
+        this.getVotesProducts().then((data) => {
+            let ids = data['product_ids'];
+            if(ids != null && Object.keys(ids).length > 0) {
+                let votes: number[] = [];
+                for(let id of ids) {
+                    votes.push(id);
+                }
+                LocalStorage.set('voteProducts', votes);
+            }
+        },
+        (error) => {
+            console.error(`Error: ${error}`);
+        })
+    }
+
+
+    /**
+     *
+     */
+    public updateVotesProductsInStorage(id: number): void {
+        if(id) {
+            let ids: number[] = LocalStorage.get('voteProducts');
+            ids.push(id);
+            LocalStorage.set('voteProducts', ids);
+        }
+    }
 
 }

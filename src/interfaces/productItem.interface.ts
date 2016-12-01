@@ -4,6 +4,7 @@
 
 
 export interface ProductItemInterface {
+    id: number,
     name: string,
     slug: string,
     thumbnail: string,
