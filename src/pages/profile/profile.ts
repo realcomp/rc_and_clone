@@ -98,6 +98,15 @@ export class ProfilePage implements LoadingInterface {
     /**
      *
      */
+    public handlerClickLogout(): void {
+        this.userService.logout();
+        this.tabsService.selectTab(this);
+    }
+
+
+    /**
+     *
+     */
     private presentAuthModal(): void {
         this.modalService.createAuthModal({
             title: 'Авторизация',
@@ -155,7 +164,9 @@ export class ProfilePage implements LoadingInterface {
      *
      */
     private goToEditProfilePage(): void {
-        this.navCtrl.push(EditProfilePage, {profile: this.profile});
+        this.navCtrl.push(EditProfilePage, {profile: this.profile, updateProfile: (profile: any) => {
+            this.updateProfile(profile);
+        }});
     }
 
 

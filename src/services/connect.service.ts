@@ -6,7 +6,7 @@
 'use strict';
 
 
-import { Http } from '@angular/http';
+import { Http, Headers, RequestOptions } from '@angular/http';
 import { Injectable } from '@angular/core';
 import { AlertController } from 'ionic-angular';
 import { Network } from 'ionic-native';
@@ -92,8 +92,10 @@ export class ConnectService {
      * @returns {Promise<T>}
      */
     public post(url: string, data: any): any {
+        let headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
+        let options = new RequestOptions({ headers: headers });
         return new Promise((resolve, reject) => {
-            this.http.post(url, data)
+            this.http.post(url, data, options)
                 .subscribe((data) => {
                     resolve(data);
                 }, (error) => {

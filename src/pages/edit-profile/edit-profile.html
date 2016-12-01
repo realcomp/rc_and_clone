@@ -34,6 +34,9 @@
       <button class="util-button"  type="submit" ion-button>Сохранить</button>
     </div>
 
+    <div *ngIf="messageError.length > 0" class="util-message-error">{{ messageError }}</div>
+    <div *ngIf="messageSuccess.length > 0" class="util-message-success">{{ messageSuccess }}</div>
+
   </form>
 
 

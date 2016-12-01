@@ -120,7 +120,10 @@ export class UserService {
             let url = UrlManager.createUrlWithParams(API.user.profile, {
                 api_token: this.getToken()
             });
-            let promise = this.connect.load('post', url, data);
+
+            let dataString: string = UrlManager.createUrlWithParams('', data).slice(1);
+
+            let promise = this.connect.load('POST', url, dataString);
             promise.then((result) => {
                     let data = Utils.jsonParse(result['_body']);
                     resolve(data);

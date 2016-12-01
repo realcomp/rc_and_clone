@@ -26,10 +26,11 @@ export class EditProfilePage implements LoadingInterface {
 
 
     public title: string;
+    public messageError: string;
+    public messageSuccess: string;
     public profile: any;
 
     private loading: any;
-
 
     /**
      *
@@ -53,6 +54,8 @@ export class EditProfilePage implements LoadingInterface {
         private tabsService: TabsService
     ) {
         this.title = 'Редактирование профиля';
+        this.messageError = '';
+        this.messageSuccess = '';
         this.profile = {};
     }
 
@@ -61,7 +64,7 @@ export class EditProfilePage implements LoadingInterface {
      *
      */
     public ionViewWillEnter(): void {
-        this.profile = this.navParams.get('profile');
+        this.profile = Object.assign({}, this.navParams.get('profile'));
         this.app.setTitle(this.title);
     }
 
@@ -92,6 +95,7 @@ export class EditProfilePage implements LoadingInterface {
         let {first_name, last_name, phone, avatar} = this.profile;
 
         this.showLoader();
+        this.cleanMessages();
 
         let promise = this.userService.updateUserInfo({
             first_name,
@@ -103,16 +107,29 @@ export class EditProfilePage implements LoadingInterface {
         promise.then(
             (data) => {
                 this.hideLoader();
-                console.log('saved profile!');
+                let updateProfile = this.navParams.get('updateProfile');
+                if(typeof updateProfile === 'function') {
+                    updateProfile(this.profile);
+                }
+                this.messageSuccess = 'Профиль успешно сохранен!';
+                console.info('saved profile!');
             },
             (error) => {
                 this.hideLoader();
+                this.messageError = error;
                 console.error(error);
             }
         );
     }
 
 
+    /**
+     *
+     */
+    private cleanMessages(): void {
+        this.messageError = '';
+        this.messageSuccess = '';
+    }
 
 }
 

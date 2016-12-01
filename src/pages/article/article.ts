@@ -67,8 +67,13 @@ export class ArticlePage implements LoadingInterface {
     /**
      *
      */
-    public ngAfterViewInit(): void {
+    public ionViewWillEnter(): void {
         this.renderArticle();
+    }
+
+
+    public ionViewDidLeave(): void {
+        this.removeStyleArticle();
     }
 
 
@@ -140,5 +145,17 @@ export class ArticlePage implements LoadingInterface {
             );
         });
     }
+
+
+    /**
+     *
+     */
+    private removeStyleArticle(): void {
+        let ArticleStyle = document.querySelector('#mobile-article-css');
+        if(ArticleStyle != null) {
+            ArticleStyle.parentNode.removeChild(ArticleStyle);
+        }
+    }
+
 
 }
