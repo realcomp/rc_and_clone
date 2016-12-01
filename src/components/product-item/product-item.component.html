@@ -1,7 +1,13 @@
 <div class="b-product util-container-style util-hover-shadow fadeIn animated" (click)="handlerSelect()">
+
   <div class="product-inner grid-flex grid-flex-align-center">
     <product-rating-component [dangerLevel]="product.danger_level" [rating]="product.rating" [tested]="product.tested"></product-rating-component>
     <img class="product-logo" src="{{ product.thumbnail }}">
     <div class="product-name">{{ slug }} {{ product.name }}</div>
   </div>
+
+  <div *ngIf="type === 'wait'" class="product-action">
+    <ion-icon name="flask"></ion-icon>
+  </div>
+
 </div>

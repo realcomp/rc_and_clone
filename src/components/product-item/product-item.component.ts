@@ -7,7 +7,7 @@ import { Component, Input } from '@angular/core';
 import { NavController } from 'ionic-angular';
 
 import { ProductItemInterface } from '../../interfaces/productItem.interface';
-
+import { ProductService } from '../../services/product.service';
 import { ProductPage } from '../../pages/product/product';
 
 
@@ -27,11 +27,24 @@ export class ProductItem {
     @Input() ratings: any[];
 
 
+    public type: string;
+
+
     /**
      *
      * @param navCtrl
+     * @param productService
      */
-    constructor(protected navCtrl:NavController) {}
+    constructor(protected navCtrl: NavController, protected productService: ProductService) {}
+
+
+    /**
+     *
+     */
+    public ngAfterContentInit(): void {
+        this.setProductType();
+    }
+
 
 
     /**
@@ -56,6 +69,18 @@ export class ProductItem {
             properties: this.properties
         });
     }
+
+
+    /**
+     *
+     */
+    protected setProductType() {
+        console.log('set!');
+        if(this.productService.isWaitProduct(this.product.tested)) {
+            this.type = 'wait';
+        }
+    }
+
 
 }
 
