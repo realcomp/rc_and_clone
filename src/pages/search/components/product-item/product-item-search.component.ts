@@ -27,6 +27,7 @@ export class ProductItemSearch extends ProductItem {
 
     @Input() product: ProductItemInterface;
     @Input() category;
+    @Input() votesProducts: number[];
 
 
     /**

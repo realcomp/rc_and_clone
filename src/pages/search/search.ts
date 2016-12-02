@@ -11,6 +11,7 @@ import { Platform, Searchbar } from 'ionic-angular';
 
 import { Utils } from '../../libs/Utils';
 import { UrlManager } from '../../libs/UrlManager';
+import { LocalStorage } from '../../libs/LocalStorage';
 import { API } from '../../config/';
 import { ConnectService } from '../../services/connect.service';
 import { ProductService } from '../../services/product.service';
@@ -31,6 +32,7 @@ export class SearchPage {
     public inputSearchValue: string;
     public products: Array<any>;
     public ratings: any[];
+    public votesProducts: number[];
     public productsEmpty: boolean;
     public categories: any;
     public segment: string;
@@ -52,6 +54,7 @@ export class SearchPage {
         this.inputSearchValue = '';
 
         this.products = [];
+        this.votesProducts = [];
         this.ratings = [];
         this.productsEmpty = false;
         this.categories = {};
@@ -158,6 +161,7 @@ export class SearchPage {
      * @param products
      */
     private updateProducts(products: any): void {
+        this.votesProducts = LocalStorage.get('voteProducts');
         this.products = this.sortingProducts(products);
         this.addSlugForProducts();
         this.productsEmpty = this.products.length == 0;

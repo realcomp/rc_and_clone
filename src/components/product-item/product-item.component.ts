@@ -47,6 +47,7 @@ export class ProductItem {
         protected userService: UserService,
         protected modalService: ModalService) {
         this.isVoted = false;
+        this.votesProducts = [];
     }
 
 
@@ -126,7 +127,9 @@ export class ProductItem {
      *
      */
     protected setVoted(): void {
-        this.isVoted = this.votesProducts.indexOf(this.product.id) > -1;
+        if(Array.isArray(this.votesProducts)) {
+            this.isVoted = this.votesProducts.indexOf(this.product.id) > -1;
+        }
     }
 
 

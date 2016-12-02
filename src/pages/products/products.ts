@@ -81,7 +81,6 @@ export class ProductsPage implements LoadingInterface {
         this.properties = this.navParams.get('properties');
         this.slug = this.navParams.get('slug');
         this.ratings = this.navParams.get('ratings');
-        this.votesProducts = LocalStorage.get('voteProducts');
     }
 
 
@@ -91,19 +90,11 @@ export class ProductsPage implements LoadingInterface {
     public ionViewWillEnter(): void {
         this.title = this.navParams.get('title');
         this.app.setTitle(this.title);
-    }
-
-
-    /**
-     *
-     */
-    public ngAfterViewInit(): void {
         this.showLoader();
-        this.getProductsBeforeViewInit( ()=> {
+        this.getProductsBeforeViewInit(() => {
             this.hideLoader();
         });
     }
-
 
 
 
@@ -199,6 +190,7 @@ export class ProductsPage implements LoadingInterface {
      * @param callback
      */
     private getProductsBeforeViewInit(callback: any): void {
+        this.products = [];
         this.id = this.navParams.get('id');
         let promise = this.getProducts(this.id);
         promise.then(
@@ -269,6 +261,7 @@ export class ProductsPage implements LoadingInterface {
      * @param products
      */
     private updateProducts(products: any): void {
+        this.votesProducts = LocalStorage.get('voteProducts');
         this.products = this.sortingProducts(this.products.concat(products));
         this.productsEmpty = this.products.length == 0;
     }

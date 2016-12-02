@@ -215,8 +215,10 @@ export class UserService {
     public updateVotesProductsInStorage(id: number): void {
         if(id) {
             let ids: number[] = LocalStorage.get('voteProducts');
-            ids.push(id);
-            LocalStorage.set('voteProducts', ids);
+            if(ids.indexOf(id) === -1) {
+                ids.push(id);
+                LocalStorage.set('voteProducts', ids);
+            }
         }
     }
 
