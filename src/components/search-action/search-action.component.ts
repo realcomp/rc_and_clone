@@ -10,12 +10,12 @@ import { SearchPage } from '../../pages/search/search';
 
 
 @Component({
-    selector: 'search-component',
-    templateUrl: 'search.component.html'
+    selector: 'search-action-component',
+    templateUrl: 'search-action.component.html'
 })
 
 
-export class Search {
+export class SearchAction {
 
 
     /**

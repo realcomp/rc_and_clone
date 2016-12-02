@@ -22,7 +22,7 @@ import { ProductItem } from '../components/product-item/product-item.component';
 import { ProductRating } from '../components/product-rating/product-rating.component';
 import { ProductBlackListStrip } from '../components/product-blacklist-strip/product-blacklist-strip.component';
 import { ProductRatingRows } from '../components/product-rating-rows/product-rating-rows.component';
-import { Search } from '../components/search/search.component';
+import { SearchAction } from '../components/search-action/search-action.component';
 import { ArticleItem } from '../components/article-item/article-item.component';
 
 
@@ -74,7 +74,7 @@ import { ProductItemSearch } from '../pages/search/components/product-item/produ
     ProductRating,
     ProductBlackListStrip,
     ProductRatingRows,
-    Search,
+    SearchAction,
     ArticleItem,
 
     BasicModal,
