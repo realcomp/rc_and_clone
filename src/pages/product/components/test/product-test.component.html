@@ -36,6 +36,11 @@
     <div class="container-test-text">
       Помогите товару набрать больше голосов и попасть в список тестируемых товаров.
     </div>
+    <div class="container-test-vote-buttons">
+      <button *ngIf="isVoted" type="button" outline ion-button>Вы проголосовали за тест</button>
+      <button *ngIf="!isVoted" type="button" ion-button (click)="handlerClickVoteProduct($event)">Проголосовать за тест</button>
+    </div>
+
   </div>
 
 

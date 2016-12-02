@@ -125,7 +125,7 @@ export class ProductService {
      * @returns {any}
      */
     public getSlug(category: any): string {
-        return category['show_name_in_product_list'] ? category['name_sg'] : '';
+        return category['show_name_in_product_list'] ? category['name'] : '';
     }
 
 }

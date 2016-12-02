@@ -115,8 +115,9 @@ export class SearchPage {
      */
     public setCurrentCategory(id: number): void {
         if(id in this.categories) {
+            console.log(this.categories[id])
             this.currentCategory = {
-                name: this.categories[id]['name_sg'],
+                name: this.categories[id]['name'],
                 properties: this.categories[id]['properties'],
                 ratings: this.categories[id]['ratings']
             }
@@ -210,7 +211,7 @@ export class SearchPage {
             for(let category of categories) {
                 this.categories[category.id] = {
                     'show_name_in_product_list': category['show_name_in_product_list'],
-                    'name_sg': category['name_sg'],
+                    'name': category['name'],
                     properties: category['properties'],
                     ratings: category['ratings']
                 }

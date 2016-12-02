@@ -4,7 +4,7 @@
 
 
 import { Component, Input } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, ToastController } from 'ionic-angular';
 
 import { ProductItemInterface } from '../../../../interfaces/productItem.interface';
 import { ProductItem } from '../../../../components/product-item/product-item.component';
@@ -40,8 +40,9 @@ export class ProductItemSearch extends ProductItem {
     constructor(protected navCtrl:NavController,
                 protected productService: ProductService,
                 protected userService: UserService,
-                protected modalService: ModalService) {
-        super(navCtrl, productService, userService, modalService);
+                protected modalService: ModalService,
+                protected toastCtrl: ToastController) {
+        super(navCtrl, productService, userService, modalService, toastCtrl);
     }
 
 
@@ -54,6 +55,7 @@ export class ProductItemSearch extends ProductItem {
             this.navCtrl.push(ProductPage, {
                 product,
                 ratings: this.category.ratings,
+                isVoted: this.isVoted,
                 slug: product.slug,
                 categoryTitle: this.category.name,
                 properties: this.category.properties

@@ -14,11 +14,12 @@ import { ProductService } from '../../services/product.service';
 export class ProductPage {
 
 
-    public categoryTitle:string;
-    public product:ProductInterface;
-    public slug:string;
-    public productProperties:any[];
-    public productRatings:any[];
+    public categoryTitle: string;
+    public product: ProductInterface;
+    public slug: string;
+    public isVoted: boolean;
+    public productProperties: any[];
+    public productRatings: any[];
 
 
     /**
@@ -27,7 +28,7 @@ export class ProductPage {
      * @param navParams
      * @param productService
      */
-    constructor(private app:App, private navParams:NavParams, private productService:ProductService) {
+    constructor(private app: App, private navParams: NavParams, private productService: ProductService) {
         this.categoryTitle = '';
         this.product = <ProductInterface>{};
         this.productProperties = [];
@@ -41,6 +42,7 @@ export class ProductPage {
     public ionViewDidLoad(): void {
         this.product = this.navParams.get('product');
         this.slug = this.navParams.get('slug');
+        this.isVoted = this.navParams.get('isVoted');
         this.buildProductProps(this.navParams.get('properties'));
         this.buildProductRatings(this.navParams.get('ratings'))
     }

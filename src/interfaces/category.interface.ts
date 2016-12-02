@@ -7,7 +7,6 @@ export interface CategoryInterface {
     logo: string;
     name: string;
     show_brand: boolean,
-    name_sg: string,
     stats: any[],
     properties: any,
     ratings: any

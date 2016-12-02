@@ -5,6 +5,8 @@
 
 import { Component, Input } from '@angular/core';
 
+import { ModalService } from '../../../../services/modal.service';
+import { UserService } from '../../../../services/user.service';
 import { ProductService } from '../../../../services/product.service';
 
 
@@ -19,13 +21,16 @@ export class ProductTest {
 
     @Input() product: any;
     @Input() ratings: any;
+    @Input() isVoted: boolean;
 
 
     /**
      *
      * @param productService
+     * @param modalService
+     * @param userService
      */
-    constructor(private productService: ProductService) {}
+    constructor(private productService: ProductService, private modalService: ModalService, private userService: UserService) {}
 
 
     /**
@@ -61,6 +66,34 @@ export class ProductTest {
      */
     public isWaitProduct(): boolean {
         return this.productService.isWaitProduct(this.product['tested']);
+    }
+
+
+    /**
+     *
+     * @param event
+     */
+    public handlerClickVoteProduct(event: any): void {
+        event.stopPropagation();
+        if(this.userService.isAuth()) {
+            if(!this.isVoted) {
+                let id: number = this.product.id;
+                this.userService.addVoteProduct([[id, 1]]);
+                this.userService.updateVotesProductsInStorage(id);
+                this.isVoted = true;
+            }
+        }
+        else {
+            this.presentAuthModal();
+        }
+    }
+
+
+    /**
+     *
+     */
+    private presentAuthModal(): void {
+        this.modalService.createAuthModal({});
     }
 
 

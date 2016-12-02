@@ -4,7 +4,7 @@
 
 
 import { Component, Input } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, ToastController } from 'ionic-angular';
 
 import { ProductItemInterface } from '../../interfaces/productItem.interface';
 import { ProductService } from '../../services/product.service';
@@ -40,12 +40,14 @@ export class ProductItem {
      * @param productService
      * @param userService
      * @param modalService
+     * @param toastCtrl
      */
     constructor(
         protected navCtrl: NavController,
         protected productService: ProductService,
         protected userService: UserService,
-        protected modalService: ModalService) {
+        protected modalService: ModalService,
+        protected toastCtrl: ToastController) {
         this.isVoted = false;
         this.votesProducts = [];
     }
@@ -81,6 +83,12 @@ export class ProductItem {
                 this.userService.addVoteProduct([[id, 1]]);
                 this.userService.updateVotesProductsInStorage(id);
                 this.isVoted = true;
+                this.toastCtrl.create({
+                    message: 'Спасибо за ваш голос!',
+                    duration: 2000,
+                    showCloseButton: true,
+                    closeButtonText: 'ок'
+                }).present();
             }
         }
         else {
@@ -106,6 +114,7 @@ export class ProductItem {
         this.navCtrl.push(ProductPage, {
             product,
             ratings,
+            isVoted: this.isVoted,
             slug: this.slug,
             categoryTitle: this.categoryTitle,
             properties: this.properties
