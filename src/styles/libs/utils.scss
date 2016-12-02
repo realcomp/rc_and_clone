@@ -151,3 +151,17 @@
     padding-left: 0;
   }
 }
+
+
+.container-button-float {
+  position: fixed;
+  bottom: 80px;
+  right: 15px;
+  button {
+    height: 5.3rem;
+    width: 5.3rem;
+    margin: 0;
+    border-radius: 100%;
+    transition: right .3s;
+  }
+}

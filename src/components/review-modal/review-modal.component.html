@@ -1,0 +1,57 @@
+<ion-header>
+  <ion-navbar no-border-bottom>
+
+    <ion-navbar>
+      <ion-title>{{ title }}</ion-title>
+    </ion-navbar>
+
+    <ion-buttons end>
+      <button ion-button clear (click)="close(true)">Отмена</button>
+    </ion-buttons>
+
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+
+  <form (ngSubmit)="handlerAddReviewProduct($event)">
+
+    <div class="util-list-clear-padding">
+
+      <ion-item>
+        <ion-label class="b-label-form" stacked><ion-icon name="create"><span class="text">Текст отзыва</span></ion-icon></ion-label>
+        <ion-textarea name="text" [(ngModel)]="text"></ion-textarea>
+      </ion-item>
+
+      <ion-item>
+        <ion-label class="b-label-form" stacked><ion-icon name="add-circle"><span class="text">Достоинства</span></ion-icon></ion-label>
+        <ion-textarea name="advantages" [(ngModel)]="advantages"></ion-textarea>
+      </ion-item>
+
+      <ion-item>
+        <ion-label class="b-label-form" stacked><ion-icon name="remove-circle"><span class="text">Недостатки</span></ion-icon></ion-label>
+        <ion-textarea name="advantages" [(ngModel)]="disadvantages"></ion-textarea>
+      </ion-item>
+
+      <ion-item>
+        <ion-label class="b-label-form"><ion-icon name="basket"><span class="text">Опыт использования</span></ion-icon></ion-label>
+        <ion-select name="practice" [(ngModel)]="practice" cancelText="Закрыть">
+          <ion-option checked="true" value="1">Меньше месяца</ion-option>
+          <ion-option value="3">Больше месяца</ion-option>
+          <ion-option value="2">Несколько месяцев</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <div class="util-align-center">
+        <button class="util-button" [disabled]="text.length === 0 || advantages.length === 0 || disadvantages.length === 0" type="submit" ion-button>Отправить отзыв</button>
+      </div>
+
+    </div>
+
+    <div *ngIf="messageError.length > 0" class="util-message-error">{{ messageError }}</div>
+
+  </form>
+
+
+
+</ion-content>

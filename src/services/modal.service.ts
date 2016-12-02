@@ -10,6 +10,7 @@ import { Injectable } from '@angular/core';
 import { ModalController } from 'ionic-angular';
 
 import { AuthModal } from '../components/auth-modal/auth-modal.component';
+import { ReviewModal } from '../components/review-modal/review-modal.component';
 
 
 @Injectable()
@@ -39,5 +40,20 @@ export class ModalService {
 
         this.modalCtrl.create(AuthModal, options).present();
     }
+
+
+    /**
+     *
+     * @param options
+     */
+    public createReviewModal(options?: any): void {
+
+        if(options.title == null) {
+            options.title = 'Оценка товара';
+        }
+
+        this.modalCtrl.create(ReviewModal, options).present();
+    }
+
 
 }

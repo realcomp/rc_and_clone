@@ -92,7 +92,7 @@ export class EditProfilePage implements LoadingInterface {
      *
      */
     public handlerSaveProfileData(): void {
-        let {first_name, last_name, phone, avatar} = this.profile;
+        let { first_name, last_name, phone, avatar } = this.profile;
 
         this.showLoader();
         this.cleanMessages();

@@ -3,7 +3,8 @@ import { App, NavParams } from 'ionic-angular';
 
 import { ProductInterface } from '../../interfaces/product.interface';
 import { ProductService } from '../../services/product.service';
-
+import { UserService } from '../../services/user.service';
+import { ModalService } from '../../services/modal.service';
 
 @Component({
     selector: 'page-product',
@@ -27,8 +28,16 @@ export class ProductPage {
      * @param app
      * @param navParams
      * @param productService
+     * @param userService
+     * @param modalService
      */
-    constructor(private app: App, private navParams: NavParams, private productService: ProductService) {
+    constructor(
+        private app: App,
+        private navParams: NavParams,
+        private productService: ProductService,
+        private userService: UserService,
+        private modalService: ModalService)
+    {
         this.categoryTitle = '';
         this.product = <ProductInterface>{};
         this.productProperties = [];
@@ -54,6 +63,23 @@ export class ProductPage {
     public ionViewWillEnter(): void {
         this.categoryTitle = this.navParams.get('categoryTitle');
         this.app.setTitle(this.categoryTitle);
+    }
+
+
+    /**
+     *
+     */
+    public openPopupAddReview(): void {
+        if(this.userService.isAuth()) {
+            this.modalService.createReviewModal({
+                product_id: this.product.id
+            });
+        }
+        else {
+            this.modalService.createAuthModal({
+                subTitle: 'Войдите, чтобы оставить отзыв',
+            });
+        }
     }
 
 

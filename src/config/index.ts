@@ -22,6 +22,7 @@ export const API = {
         register: '/v1/user/register',
         profile: '/v1/user/profile',
         votes: '/v1/votes/products',
+
     },
 
     db: {

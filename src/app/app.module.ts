@@ -29,6 +29,7 @@ import { ArticleItem } from '../components/article-item/article-item.component';
 // Всплывающие окна
 import { BasicModal } from '../components/basic-modal/basic-modal.component';
 import { AuthModal } from '../components/auth-modal/auth-modal.component';
+import { ReviewModal } from '../components/review-modal/review-modal.component';
 
 
 // Страницы и их компоненты
@@ -79,6 +80,7 @@ import { ProductItemSearch } from '../pages/search/components/product-item/produ
 
     BasicModal,
     AuthModal,
+    ReviewModal,
 
     AboutPage,
     AccountPage,
@@ -118,6 +120,7 @@ import { ProductItemSearch } from '../pages/search/components/product-item/produ
 
     BasicModal,
     AuthModal,
+    ReviewModal,
 
     AboutPage,
     AccountPage,

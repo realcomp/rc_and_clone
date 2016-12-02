@@ -222,4 +222,32 @@ export class UserService {
         }
     }
 
+
+    /**
+     *
+     * @param data
+     * @returns {Promise<T>}
+     */
+    public addReviewProduct(data: any): any {
+        return new Promise((resolve, reject) => {
+            let url = UrlManager.createUrlWithParams(API.reviews, {
+                api_token: this.getToken(),
+            });
+            let dataString: string = UrlManager.createUrlWithParams('', data).slice(1);
+            let promise = this.connect.load('POST', url, dataString);
+            promise.then((result) => {
+                    let data = Utils.jsonParse(result['_body']);
+                    resolve(data);
+                },
+                (result) => {
+                    let messageError: string = this.connect.getMessageError(result['_body'] , 'user_message');
+                    if (!messageError) {
+                        this.connect.showErrorAlert();
+                    }
+                    reject(messageError);
+                }
+            );
+        });
+    }
+
 }
