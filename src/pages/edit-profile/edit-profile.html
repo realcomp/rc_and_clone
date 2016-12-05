@@ -6,8 +6,15 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content>
 
+  <div class="container-profile-top">
+    <div class="container-profile-flex">
+      <div class="container-profile-avatar">
+        <img *ngIf="profile.avatar" [src]="profile.avatar">
+      </div>
+    </div>
+  </div>
 
   <form (ngSubmit)="handlerSaveProfileData($event)">
     <div class="util-list-clear-padding">

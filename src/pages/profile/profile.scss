@@ -4,9 +4,108 @@ page-profile {
 
 
 .container-profile-top {
+  padding: 20px 0;
+  position: r
+;
   background: #6e5076;
   background: -moz-linear-gradient(top, #6e5076 0%, #5e5978 100%);
   background: -webkit-linear-gradient(top, #6e5076 0%,#5e5978 100%);
   background: linear-gradient(to bottom, #6e5076 0%,#5e5978 100%);
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#6e5076', endColorstr='#5e5978',GradientType=0 );
+  ion-icon {
+    cursor: pointer;
+  }
+  ion-spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -14px;
+    margin-left: -14px;
+    circle {
+      stroke: #FFF;
+      opacity: 0.8;
+    }
+  }
 }
+
+.container-profile-flex {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.container-profile-avatar {
+  width: 150px;
+  height: 150px;
+  img {
+    display: block;
+    border-radius: 100%;
+    border: 2px solid white;
+  }
+}
+
+.b-profile-action {
+  margin: 0 15px;
+  font-size: 2rem;
+  color: #fff;
+  opacity: 0.5;
+  &:hover,
+  &:active {
+    opacity: 1;
+  }
+}
+
+
+.container-profile-content {
+
+}
+.b-profile-title {
+  height: 50px;
+  display: flex;
+  align-items: center;
+  padding: 0 15px;
+  font-size: 1.8rem;
+  color: #000;
+  background: $mainAppBg;
+  border-bottom: 1px solid $borderColor;
+}
+
+.container-profile-list {
+
+}
+.b-profile-item {
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 15px;
+  background: #FFF;
+  color: #000;
+  border-bottom: 1px solid $borderColor;
+  .profile-item-key {
+    font-size: 1.6rem;
+  }
+  .profile-item-value {
+    font-size: 2rem;
+  }
+}
+
+
+
+
+@media screen and (max-width: 480px) {
+  .container-profile-avatar {
+    width: 120px;
+    height: 120px;
+  }
+}
+
+
+
+@media screen and (max-width: 380px) {
+  .container-profile-avatar {
+    width: 100px;
+    height: 100px;
+  }
+}
+

@@ -7,14 +7,43 @@
 </ion-header>
 
 <ion-content>
-  <div padding class="about-info" *ngIf="isAuth()">
-    <h4>Профиль пользователя</h4>
-    <a href="#" (click)="handlerClickEdit()">edit</a>
-    <a href="#" (click)="handlerClickLogout()">Выйти</a>
-    <div>
-      активность
+  <div *ngIf="isAuth()">
+    <div class="container-profile-top">
+      <div class="container-profile-flex">
+        <a class="b-profile-action" href="#" (click)="handlerClickEdit()">
+          <ion-icon name="create"></ion-icon>
+        </a>
+        <div class="container-profile-avatar">
+          <ion-spinner *ngIf="!profile.avatar"></ion-spinner>
+          <img *ngIf="profile.avatar" [src]="profile.avatar">
+        </div>
+        <a class="b-profile-action" href="#" (click)="handlerClickLogout()">
+          <ion-icon name="exit"></ion-icon>
+        </a>
+      </div>
     </div>
-    <div>Комментарии {{ profile.comment_count }}</div>
-    <div>Отзывы {{ profile.review_count }}</div>
+    <div class="container-profile-content">
+      <div class="b-profile-title">
+        Активность
+      </div>
+      <div class="container-profile-list">
+        <div class="b-profile-item">
+          <div class="profile-item-key">
+            Комментарии
+          </div>
+          <div class="profile-item-value">
+            {{ profile.comment_count }}
+          </div>
+        </div>
+        <div class="b-profile-item">
+          <div class="profile-item-key">
+            Отзывы
+          </div>
+          <div class="profile-item-value">
+            {{ profile.review_count }}
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </ion-content>

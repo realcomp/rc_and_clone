@@ -99,9 +99,12 @@ export class ProfilePage implements LoadingInterface {
      *
      */
     public handlerClickLogout(): void {
-        this.userService.logout();
-        this.title = '';
-        this.tabsService.selectTab(this);
+        let confirmResult: boolean = confirm('Вы действительно хотите выйти из учетной записи?');
+        if(confirmResult) {
+            this.userService.logout();
+            this.title = '';
+            this.tabsService.selectTab(this);
+        }
     }
 
 
@@ -155,6 +158,9 @@ export class ProfilePage implements LoadingInterface {
     private updateProfile(profile: any): void {
         if(profile) {
             this.profile = profile;
+            if(this.profile.avatar == null) {
+                this.profile.avatar = 'assets/img/no-avatar.png';
+            }
         }
     }
 
