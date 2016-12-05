@@ -25,6 +25,7 @@ export class BasicModal {
      * @param navCtrl
      * @param viewCtrl
      * @param navParams
+     * @param test
      */
     constructor(protected navCtrl: NavController, protected viewCtrl: ViewController, protected navParams: NavParams) {
         this.title = this.navParams.get('title') || '';

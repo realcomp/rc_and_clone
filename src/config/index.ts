@@ -18,7 +18,7 @@ export const API = {
     search: '/v1/catalog/search',
 
     user: {
-        authForEmail: 'v1/auth/email',
+        authForEmail: '/v1/auth/email',
         register: '/v1/user/register',
         profile: '/v1/user/profile',
         votes: '/v1/votes/products',

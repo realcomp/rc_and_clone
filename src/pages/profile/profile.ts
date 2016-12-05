@@ -7,7 +7,7 @@
 
 
 import { Component } from '@angular/core';
-import { NavController, ModalController, LoadingController } from 'ionic-angular';
+import { NavController, LoadingController } from 'ionic-angular';
 
 import { UserService } from '../../services/user.service';
 import { TabsService } from '../../services/tabs.service';

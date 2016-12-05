@@ -51,8 +51,9 @@ export class AuthModal extends BasicModal implements LoadingInterface {
 
     /**
      *
+     * @param event
      */
-    public handlerAuthForEmail(): void {
+    public handlerAuthForEmail(event: any): void {
         this.showLoader();
         let promise = this.userService.authForEmail(this.email, this.password);
         promise.then((result) => {

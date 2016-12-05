@@ -90,8 +90,9 @@ export class EditProfilePage implements LoadingInterface {
 
     /**
      *
+     * @param event
      */
-    public handlerSaveProfileData(): void {
+    public handlerSaveProfileData(event: any): void {
         let { first_name, last_name, phone, avatar } = this.profile;
 
         this.showLoader();

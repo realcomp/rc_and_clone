@@ -68,8 +68,9 @@ export class ProductPage {
 
     /**
      *
+     * @param event
      */
-    public openPopupAddReview(): void {
+    public openPopupAddReview(event: any): void {
         if(this.userService.isAuth()) {
             this.modalService.createReviewModal({
                 product_id: this.product.id

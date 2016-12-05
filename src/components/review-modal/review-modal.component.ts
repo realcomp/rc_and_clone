@@ -4,7 +4,7 @@
 
 
 import { Component } from '@angular/core';
-import { NavController, ViewController, NavParams, LoadingController, ToastController } from 'ionic-angular';
+import { NavController, ViewController, NavParams, ToastController } from 'ionic-angular';
 
 import { BasicModal } from '../basic-modal/basic-modal.component';
 import { UserService } from '../../services/user.service';
@@ -40,8 +40,8 @@ export class ReviewModal extends BasicModal {
         protected navCtrl: NavController,
         protected viewCtrl: ViewController,
         protected navParams: NavParams,
-        private toastCtrl: ToastController,
-        private userService: UserService) {
+        protected toastCtrl: ToastController,
+        protected userService: UserService) {
         super(navCtrl, viewCtrl, navParams);
 
         this.product_id = this.navParams.get('product_id');
@@ -56,8 +56,9 @@ export class ReviewModal extends BasicModal {
 
     /**
      *
+     * @param event
      */
-    public handlerAddReviewProduct(): void {
+    public handlerAddReviewProduct(event: any): void {
         this.userService.addReviewProduct({
             product_id: this.product_id,
             mark: this.mark,

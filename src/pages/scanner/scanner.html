@@ -7,7 +7,16 @@
 </ion-header>
 
 <ion-content padding>
-  <div class="util-align-center">
-    Загрузка...
+
+  <div *ngIf="!cancelled" class="util-align-center">
+    <ion-spinner></ion-spinner>
   </div>
+
+
+  <div *ngIf="cancelled" class="util-align-center">
+    <button ion-button (click)="scan()">
+      Включить сканер
+    </button>
+  </div>
+
 </ion-content>

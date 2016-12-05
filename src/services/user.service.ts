@@ -7,7 +7,6 @@
 
 
 import { Injectable } from '@angular/core';
-import { ModalController } from 'ionic-angular';
 
 import { UrlManager } from '../libs/UrlManager';
 import { API } from '../config/';
@@ -23,7 +22,6 @@ export class UserService {
 
     /**
      *
-     * @param modalCtrl
      * @param connect
      */
     constructor(private connect: ConnectService) {}

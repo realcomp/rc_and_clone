@@ -32,6 +32,7 @@ export class ScannerPage {
 
 
     public title: string;
+    public cancelled: boolean;
 
 
     /**
@@ -69,12 +70,13 @@ export class ScannerPage {
     public scan(): void {
         this.platform.ready().then(() => {
             if ('cordova' in window) {
+                this.cancelled = false;
                 window['cordova'].plugins.barcodeScanner.scan((result) => {
                     if(!result.cancelled) {
                         this.onSuccessScan(result.text);
                     }
                     else {
-                        this.tabsService.selectTab(this, 0);
+                        this.cancelled = true;
                     }
                 }, (error) => {
                     let alert = this.alertCtrl.create({
