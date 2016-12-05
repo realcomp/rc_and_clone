@@ -16,9 +16,23 @@
 
   <form (ngSubmit)="handlerAddReviewProduct($event)">
 
+
+    <div class="container-review-thumbs">
+      <div class="grid-row grid-flex">
+        <div class="grid-column-6 grid-left grid-padding">
+          <ion-icon [ngClass]="{'b-review-thumb': true, 'is-selected': mark == 1}" name="ios-thumbs-down" (click)="handlerClickThumb(1)"></ion-icon>
+        </div>
+        <div class="grid-column-6 grid-left grid-padding">
+          <ion-icon [ngClass]="{'b-review-thumb': true, 'is-selected': mark == 5}" name="ios-thumbs-up" (click)="handlerClickThumb(5)"></ion-icon>
+        </div>
+      </div>
+    </div>
+
+
+
     <div class="util-list-clear-padding">
 
-      <ion-item>
+      <ion-item class="ion-item-first">
         <ion-label class="b-label-form" stacked><ion-icon name="create"><span class="text">Текст отзыва</span></ion-icon></ion-label>
         <ion-textarea name="text" [(ngModel)]="text"></ion-textarea>
       </ion-item>
@@ -43,7 +57,7 @@
       </ion-item>
 
       <div class="util-align-center">
-        <button class="util-button" [disabled]="text.length === 0 || advantages.length === 0 || disadvantages.length === 0" type="submit" ion-button>Отправить отзыв</button>
+        <button class="util-button" [disabled]="text.length === 0 || advantages.length === 0 || disadvantages.length === 0 || mark == 0" type="submit" ion-button>Отправить отзыв</button>
       </div>
 
     </div>

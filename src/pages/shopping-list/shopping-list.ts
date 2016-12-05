@@ -71,7 +71,7 @@ export class ShoppingListPage {
     private presentAuthModal(): void {
         this.modalService.createAuthModal({
             title: 'Авторизация',
-            subTitle: 'Для использования списка покупок войдите на сайт',
+            subTitle: 'Войдите для использования списка покупок',
             callback: () => {
                 this.tabsService.selectTab(this);
             }

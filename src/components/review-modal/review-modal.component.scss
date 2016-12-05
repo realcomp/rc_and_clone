@@ -1,0 +1,24 @@
+.container-review-thumbs {
+  max-width: 500px;
+  margin: 5px auto 20px;
+  text-align: center;
+}
+
+.b-review-thumb {
+  font-size: 4rem;
+  color: #999;
+  cursor: pointer;
+}
+.b-review-thumb.is-selected.ion-ios-thumbs-up {
+  color: $greenColor;
+}
+.b-review-thumb.is-selected.ion-ios-thumbs-down {
+  color: #000;
+}
+
+
+.ion-item-first {
+  .item-inner {
+    border-top: 1px solid #dedede;
+  }
+}

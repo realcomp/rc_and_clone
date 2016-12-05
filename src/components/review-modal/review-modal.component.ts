@@ -45,10 +45,11 @@ export class ReviewModal extends BasicModal {
         super(navCtrl, viewCtrl, navParams);
 
         this.product_id = this.navParams.get('product_id');
-        this.mark = 5;
+        this.mark = 0;
         this.text = '';
         this.advantages = '';
         this.disadvantages = '';
+        this.practice = '1';
         this.messageError = '';
     }
 
@@ -79,6 +80,15 @@ export class ReviewModal extends BasicModal {
                 console.error(error);
             }
         );
+    }
+
+
+    /**
+     *
+     * @param mark
+     */
+    public handlerClickThumb(mark: number): void {
+        this.mark = mark
     }
 
 
