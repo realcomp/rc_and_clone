@@ -89,6 +89,15 @@ export class AuthModal extends BasicModal implements LoadingInterface {
     }
 
 
+    /**
+     *
+     * @param event
+     */
+    public handlerCreateAccount(event) {
+        event.preventDefault();
+        window.open('https://roscontrol.com/user/register', '_system', 'location=yes')
+    }
+
 
 
 }
