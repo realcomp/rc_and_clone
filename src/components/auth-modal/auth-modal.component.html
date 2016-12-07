@@ -32,6 +32,10 @@
         <button class="util-button" [disabled]="email.length === 0 || password.length === 0" type="submit" ion-button>Войти</button>
       </div>
 
+      <div class="util-align-center">
+        <a class="b-link-registration" href="https://roscontrol.com/user/register">Создать аккаунт</a>
+      </div>
+
     </div>
 
     <div *ngIf="messageError.length > 0" class="util-message-error">{{ messageError }}</div>

@@ -101,7 +101,8 @@ export class CategoriesPage implements LoadingInterface {
      *
      */
     public handlerLogoClick(): void {
-        this.goToAboutPage();
+        // Пока уберем переход на страницу о приложении
+        //this.goToAboutPage();
     }
 
 
