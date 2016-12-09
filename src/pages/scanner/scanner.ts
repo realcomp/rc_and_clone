@@ -15,6 +15,7 @@ import { UrlManager } from '../../libs/UrlManager';
 import { ConnectService } from '../../services/connect.service';
 import { ProductService } from '../../services/product.service';
 import { TabsService } from '../../services/tabs.service';
+import { UserService } from '../../services/user.service';
 
 import { ProductItemInterface } from '../../interfaces/productItem.interface';
 
@@ -43,6 +44,7 @@ export class ScannerPage {
      * @param connect
      * @param productService
      * @param tabsService
+     * @param userService
      */
     constructor(
         private platform:Platform,
@@ -50,7 +52,8 @@ export class ScannerPage {
         private navCtrl:NavController,
         private connect:ConnectService,
         private productService: ProductService,
-        private tabsService: TabsService
+        private tabsService: TabsService,
+        private userService: UserService
     ) {
         this.title = 'Сканер по штрихкоду';
     }
@@ -138,8 +141,13 @@ export class ScannerPage {
      */
     private getProductOnBarcode(code): any {
         return new Promise((resolve, reject) => {
+            let apiToken = this.userService.getToken();
+            if(apiToken == null) {
+                apiToken = 0;
+            }
             let url = UrlManager.createUrlWithParams(API.barcode, {
-                code
+                code,
+                api_token: apiToken
             });
             let promise = this.connect.load('get', url);
             promise.then((result) => {
