@@ -68,24 +68,6 @@ export class ProductPage {
 
     /**
      *
-     * @param event
-     */
-    public openPopupAddReview(event: any): void {
-        if(this.userService.isAuth()) {
-            this.modalService.createReviewModal({
-                product_id: this.product.id
-            });
-        }
-        else {
-            this.modalService.createAuthModal({
-                subTitle: 'Войдите, чтобы оставить отзыв',
-            });
-        }
-    }
-
-
-    /**
-     *
      * @param categoryProperties
      */
     private buildProductProps(categoryProperties): void {

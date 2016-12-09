@@ -11,6 +11,8 @@ import { UrlManager } from '../../../../libs/UrlManager';
 import { API } from '../../../../config/';
 
 import { ConnectService } from '../../../../services/connect.service';
+import { ModalService } from '../../../../services/modal.service';
+import { UserService } from '../../../../services/user.service';
 
 import { LoadingInterface } from '../../../../interfaces/loading.interface';
 
@@ -44,8 +46,14 @@ export class ProductReviews implements LoadingInterface {
      *
      * @param connect
      * @param loadingCtrl
+     * @param modalService
+     * @param userService
      */
-    constructor(private connect:ConnectService, private loadingCtrl: LoadingController) {
+    constructor(
+        private connect:ConnectService,
+        private loadingCtrl: LoadingController,
+        private modalService: ModalService,
+        private userService: UserService) {
         this.reviews = [];
         this.totalCount = 0;
         this.positiveCount = 0;
@@ -133,6 +141,25 @@ export class ProductReviews implements LoadingInterface {
         let decl = ['отзыв', 'отзыва', 'отзывов'];
         return Utils.declOfNum(count, decl);
     }
+
+
+    /**
+     *
+     * @param event
+     */
+    public openPopupAddReview(event: any): void {
+        if(this.userService.isAuth()) {
+            this.modalService.createReviewModal({
+                product_id: this.id
+            });
+        }
+        else {
+            this.modalService.createAuthModal({
+                subTitle: 'Войдите, чтобы оставить отзыв',
+            });
+        }
+    }
+
 
 
     /**

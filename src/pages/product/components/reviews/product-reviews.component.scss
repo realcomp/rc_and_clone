@@ -1,9 +1,16 @@
 .container-reviews {
   margin-bottom: 10px;
+  position: relative;
   .button-default {
     width: 300px;
     margin-top: 20px;
   }
+}
+
+.b-button-add-review {
+  position: absolute;
+  right: 12px;
+  top: 7px;
 }
 
 .b-header-review {

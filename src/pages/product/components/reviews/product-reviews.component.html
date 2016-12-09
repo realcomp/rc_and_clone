@@ -1,10 +1,13 @@
 
 
-<div class="container-reviews container-section" *ngIf="reviews.length > 0">
+<div class="container-reviews container-section">
 
   <div class="b-title">Отзывы покупателей</div>
 
-  <div class="b-header-review">
+  <button class="b-button-blue b-button-add-review" ion-button clear (click)="openPopupAddReview($event)">+ Отзыв</button>
+
+
+  <div class="b-header-review" *ngIf="reviews.length > 0">
     <div class="header-review-stats">
       <ion-icon class="positive" name="ios-thumbs-up">
         <span class="header-review-stats__text">
@@ -23,7 +26,7 @@
   </div>
 
 
-  <div class="container-reviews-list">
+  <div *ngIf="reviews.length > 0" class="container-reviews-list">
     <div *ngFor="let review of reviews" class="b-review">
 
       <div class="review-meta">
